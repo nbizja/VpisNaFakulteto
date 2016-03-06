@@ -1,0 +1,37 @@
+---
+ip: "192.168.101.101"
+memory: 2048
+cpus: 1
+hostname: vpisnafakulteto
+name: vpisnafakulteto
+provider: virtualbox
+mariadb: true
+
+authorize: ~/.ssh/id_rsa.pub
+
+keys:
+    - ~/.ssh/id_rsa
+
+folders:
+    - map: "D:/smrpo/VpisNaFakulteto"
+      to: "/home/vagrant/vpisnafakulteto"
+
+sites:
+    - map: vpis-na-fakulteto.si
+      to: "/home/vagrant/vpisnafakulteto/public"
+
+databases:
+    - vpisnafakulteto
+
+# blackfire:
+#     - id: foo
+#       token: bar
+#       client-id: foo
+#       client-token: bar
+
+# ports:
+#     - send: 50000
+#       to: 5000
+#     - send: 7777
+#       to: 777
+#       protocol: udp
