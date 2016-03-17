@@ -1,4 +1,11 @@
-/vendor
+vendor/*
+!vendor/laravel/
+vendor/laravel/*
+!vendor/laravel/homestead/
+
+
+
+
 /node_modules
 /public/storage
 Homestead.yaml
