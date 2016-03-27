@@ -12,14 +12,17 @@ class CreateMaturaPredmet extends Migration
      */
     public function up()
     {
-        Schema::create('matura_predmet', function(Blueprint $table) {
+        Schema::create('matura_predmet', function(BluePrint $table) { 
+            $table->engine = 'InnoDB';
+            $table->increments('id');
             $table->string('emso');
-            $table->integer('id_predmeta');
+            $table->string('id_predmeta');
             $table->integer('ocena');
             $table->boolean('opravil');
             $table->integer('ocena_3_letnik');
             $table->integer('ocena_4_letnik');
             $table->string('tip_predmeta');
+            $table->timestamps();
         });
     }
 

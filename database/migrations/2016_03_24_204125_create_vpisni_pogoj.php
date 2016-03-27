@@ -12,11 +12,13 @@ class CreateVpisniPogoj extends Migration
      */
     public function up()
     {
-        Schema::create('vpisni_pogoj', function(Blueprint $table) {
+        Schema::create('vpisni_pogoj', function(BluePrint $table) { 
+            $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->integer('id_programa');
-            $table->integer('id_elementa');
+            $table->integer('id_programa')->unsigned();
+            $table->string('id_elementa');
             $table->string('tip');
+            $table->timestamps();
         });
     }
 

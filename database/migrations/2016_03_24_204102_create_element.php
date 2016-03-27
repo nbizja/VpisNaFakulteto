@@ -12,9 +12,12 @@ class CreateElement extends Migration
      */
     public function up()
     {
-        Schema::create('element', function(Blueprint $table) {
+        Schema::create('element', function(BluePrint $table) { 
+            $table->engine = 'InnoDB';
             $table->string('id');
             $table->string('ime');
+
+            $table->primary('id');
         });
     }
 

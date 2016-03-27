@@ -12,7 +12,8 @@ class CreateKoncanaSrednjaSola extends Migration
      */
     public function up()
     {
-        Schema::create('koncana_srednja_sola', function(Blueprint $table) {
+        Schema::create('koncana_srednja_sola', function(BluePrint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('ime');
         });

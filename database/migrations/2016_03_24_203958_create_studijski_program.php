@@ -12,10 +12,11 @@ class CreateStudijskiProgram extends Migration
      */
     public function up()
     {
-        Schema::create('studijski_program', function(Blueprint $table) {
+        Schema::create('studijski_program', function(BluePrint $table) { 
+            $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->integer('id_zavoda');
-            $table->string('nacin');
+            $table->integer('id_zavoda')->unsigned();
+            $table->string('nacin_studija');
             $table->string('ime');
             $table->integer('stevilo_vpisnih_mest');
             $table->integer('omejitev_vpisa');

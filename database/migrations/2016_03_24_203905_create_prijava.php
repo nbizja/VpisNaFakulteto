@@ -12,13 +12,15 @@ class CreatePrijava extends Migration
      */
     public function up()
     {
-        Schema::create('prijava', function(Blueprint $table) {
+        Schema::create('prijava', function(BluePrint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->integer('id_kandidata');
-            $table->integer('id_studijskega_programa');
+            $table->integer('id_kandidata')->unsigned();
+            $table->integer('id_studijskega_programa')->unsigned();
             $table->integer('zelja');
             $table->date('datum_prijave');
             $table->integer('tocke');
+            $table->timestamps();
         });
     }
 
