@@ -12,9 +12,12 @@ class CreatePosta extends Migration
      */
     public function up()
     {
-        Schema::create('posta', function(Blueprint $table) {
+        Schema::create('posta', function(BluePrint $table) { 
+            $table->engine = 'InnoDB';
             $table->integer('postna_stevilka');
             $table->string('ime');
+
+            $table->primary('postna_stevilka');
         });
     }
 

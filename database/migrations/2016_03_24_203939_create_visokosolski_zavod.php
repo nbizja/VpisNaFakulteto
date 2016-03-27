@@ -12,12 +12,14 @@ class CreateVisokosolskiZavod extends Migration
      */
     public function up()
     {
-        Schema::create('visokosolski_zavod', function(Blueprint $table) {
+        Schema::create('visokosolski_zavod', function(BluePrint $table) { 
+            $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->integer('id_obcine');
-            $table->integer('id_skrbnika');
+            $table->integer('id_obcine')->unsigned();
+            $table->integer('id_skrbnika')->unsigned();
             $table->string('ime');
             $table->string('kratica');
+            $table->timestamps();
         });
     }
 

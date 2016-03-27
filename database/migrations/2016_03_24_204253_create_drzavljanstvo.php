@@ -12,7 +12,8 @@ class CreateDrzavljanstvo extends Migration
      */
     public function up()
     {
-        Schema::create('drzavljanstvo', function(Blueprint $table) {
+        Schema::create('drzavljanstvo', function(BluePrint $table) { 
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('ime');
         });

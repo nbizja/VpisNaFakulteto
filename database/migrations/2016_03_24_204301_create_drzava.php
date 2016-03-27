@@ -12,7 +12,8 @@ class CreateDrzava extends Migration
      */
     public function up()
     {
-        Schema::create('drzava', function(Blueprint $table) {
+        Schema::create('drzava', function(BluePrint $table) { 
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('ime');
             $table->boolean('eu');

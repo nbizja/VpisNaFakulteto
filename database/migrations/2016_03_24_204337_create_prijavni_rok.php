@@ -12,7 +12,8 @@ class CreatePrijavniRok extends Migration
      */
     public function up()
     {
-        Schema::create('prijavni_rok', function(Blueprint $table) {
+        Schema::create('prijavni_rok', function(BluePrint $table) { 
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('studijsko_leto');
             $table->date('zacetek');

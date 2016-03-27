@@ -12,11 +12,12 @@ class CreateKriterij extends Migration
      */
     public function up()
     {
-        Schema::create('kriterij', function(Blueprint $table) {
+        Schema::create('kriterij', function(BluePrint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->integer('id_programa');
-            $table->integer('id_elementa');
-            $table->integer('utez');
+            $table->integer('id_programa')->unsigned();
+            $table->string('id_elementa');
+            $table->decimal('utez', 5, 2); //decimal, ker je v procentih
         });
     }
 

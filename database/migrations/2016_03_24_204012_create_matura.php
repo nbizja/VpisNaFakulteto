@@ -12,7 +12,9 @@ class CreateMatura extends Migration
      */
     public function up()
     {
-        Schema::create('matura', function(Blueprint $table) {
+        Schema::create('matura', function(BluePrint $table) { 
+            $table->engine = 'InnoDB';
+            $table->increments('id');
             $table->string('emso');
             $table->string('ime');
             $table->string('priimek');
@@ -21,9 +23,10 @@ class CreateMatura extends Migration
             $table->integer('ocena_3_letnik');
             $table->integer('ocena_4_letnik');
             $table->string('tip_kandidata');
-            $table->integer('id_srednje_sole');
-            $table->integer('id_poklica');
+            $table->integer('id_srednje_sole')->unsigned();
+            $table->integer('id_poklica')->unsigned();
             $table->integer('maksimum');
+            $table->timestamps();
         });
     }
 

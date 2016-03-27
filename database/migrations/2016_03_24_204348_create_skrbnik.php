@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOsebje extends Migration
+class CreateSkrbnik extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,8 @@ class CreateOsebje extends Migration
      */
     public function up()
     {
-        Schema::create('osebje', function(Blueprint $table) {
+        Schema::create('skrbnik', function(BluePrint $table) { 
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('email');
             $table->string('geslo');
@@ -28,6 +29,6 @@ class CreateOsebje extends Migration
     public function down()
     {
         DB::statement('SET FOREIGN_KEY_CHECKS = 0;');
-        Schema::drop('osebje');
+        Schema::drop('skrbnik');
     }
 }
