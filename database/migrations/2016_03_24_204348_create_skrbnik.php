@@ -15,9 +15,15 @@ class CreateSkrbnik extends Migration
         Schema::create('skrbnik', function(BluePrint $table) { 
             $table->engine = 'InnoDB';
             $table->increments('id');
+            $table->string('ime');
+            $table->string('priimek');
+            $table->string('uporabnisko_ime')->unique();
             $table->string('email');
-            $table->string('geslo');
+            $table->string('password');
             $table->string('vloga');
+            $table->rememberToken();
+            $table->timestamps();
+
         });
     }
 

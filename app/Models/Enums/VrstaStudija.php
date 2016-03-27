@@ -1,12 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nejc
- * Date: 27. 03. 2016
- * Time: 13:26
- */
 
-namespace app\Models\Enums;
+namespace App\Models\Enums;
 
 
 class VrstaStudija

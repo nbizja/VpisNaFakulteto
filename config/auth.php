@@ -38,7 +38,7 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'skrbnik',
         ],
 
         'api' => [
@@ -65,10 +65,14 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'kandidati' => [
             'driver' => 'eloquent',
-            'model' => App\User::class,
+            'model' => App\Models\Kandidat::class,
         ],
+        'skrbnik' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Skrbnik::class
+        ]
 
         // 'users' => [
         //     'driver' => 'database',

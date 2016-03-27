@@ -22,7 +22,7 @@ class CreateKandidat extends Migration
             $table->string('priimek');
             $table->string('uporabnisko_ime')->unique();
             $table->string('email');
-            $table->string('geslo');
+            $table->string('password');
             $table->string('zeton');
             $table->integer('obcina_rojstva')->unsigned();
             $table->integer('id_drzave')->unsigned();

@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+
 Route::get('/helper', function () {
     return view('helper');
 });
@@ -30,5 +28,14 @@ Route::get('/helper', function () {
 */
 
 Route::group(['middleware' => ['web']], function () {
-    //
+    Route::auth();
+    Route::get('/', function () {
+        return view('index');
+    });
+
+});
+
+Route::group(['middleware' => 'auth'], function () {
+    
+    Route::get('/home', 'HomeController@index');
 });
