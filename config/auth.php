@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+        'guard' => 'prijavljen',
         'passwords' => 'users',
     ],
 
@@ -36,9 +36,9 @@ return [
     */
 
     'guards' => [
-        'web' => [
+        'prijavljen' => [
             'driver' => 'session',
-            'provider' => 'skrbnik',
+            'provider' => 'uporabnik',
         ],
 
         'api' => [
@@ -65,14 +65,10 @@ return [
     */
 
     'providers' => [
-        'kandidati' => [
+        'uporabnik' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Kandidat::class,
+            'model' => App\Models\Uporabnik::class,
         ],
-        'skrbnik' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Skrbnik::class
-        ]
 
         // 'users' => [
         //     'driver' => 'database',

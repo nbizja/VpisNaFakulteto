@@ -3,7 +3,7 @@
 namespace database\seeds;
 
 
-use App\Models\Enums\VlogaSkrbnika;
+use App\Models\Enums\VlogaUporabnika;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -11,14 +11,14 @@ class SkrbnikTableSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('skrbnik')->insert([
+        DB::table('uporabnik')->insert([
             'id' => 1,
             'ime' => 'Skrba',
-            'Priimek' => 'Brba',
-            'uporabnisko_ime' => 'skrbnik',
+            'priimek' => 'Brba',
+            'username' => 'skrbnik',
             'email' => 'skrbnik@faks.me',
             'password' => bcrypt('skrbnik'),
-            'vloga' => VlogaSkrbnika::ADMIN
+            'vloga' => VlogaUporabnika::ADMIN
         ]);
     }
 

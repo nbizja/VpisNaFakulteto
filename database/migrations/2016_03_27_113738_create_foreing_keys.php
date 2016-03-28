@@ -12,20 +12,20 @@ class CreateForeingKeys extends Migration
      */
     public function up()
     {
-        Schema::table('kandidat', function ($table) {
+        Schema::table('uporabnik', function ($table) {
             $table->foreign('id_drzave')->references('id')->on('drzava');
             $table->foreign('id_drzavljanstva')->references('id')->on('drzavljanstvo');
             $table->foreign('obcina_rojstva')->references('id')->on('obcina');
         });
 
         Schema::table('prijava', function ($table) {
-            $table->foreign('id_kandidata')->references('id')->on('kandidat');
+            $table->foreign('id_kandidata')->references('id')->on('uporabnik');
             $table->foreign('id_studijskega_programa')->references('id')->on('studijski_program');
         });
 
         Schema::table('visokosolski_zavod', function ($table) {
             $table->foreign('id_obcine')->references('id')->on('obcina');
-            $table->foreign('id_skrbnika')->references('id')->on('skrbnik');
+            $table->foreign('id_skrbnika')->references('id')->on('uporabnik');
         });
 
         Schema::table('studijski_program', function ($table) {

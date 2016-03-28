@@ -11,10 +11,36 @@
 |
 */
 
-
 Route::get('/helper', function () {
     return view('helper');
 });
+
+Route::group(['middleware' => ['prijavljen']], function () {
+
+    // Authentication Routes...
+    Route::get('prijava', 'Auth\AuthController@showLoginForm');
+    Route::post('prijava', 'Auth\AuthController@login');
+    Route::get('odjava', 'Auth\AuthController@logout');
+
+// Registration Routes...
+    Route::get('registracija', 'Auth\AuthController@showRegistrationForm');
+    Route::post('registracija', 'Auth\AuthController@register');
+
+// Password Reset Routes...
+    Route::get('geslo/ponastavi/{zeton?}', 'Auth\PasswordController@showResetForm');
+    Route::post('geslo/email', 'Auth\PasswordController@sendResetLinkEmail');
+    Route::post('geslo/ponastavi', 'Auth\PasswordController@reset');
+
+    Route::get('/', 'HomeController@index');
+
+
+});
+
+
+
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -27,15 +53,3 @@ Route::get('/helper', function () {
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
-    Route::auth();
-    Route::get('/', function () {
-        return view('index');
-    });
-
-});
-
-Route::group(['middleware' => 'auth'], function () {
-    
-    Route::get('/home', 'HomeController@index');
-});
