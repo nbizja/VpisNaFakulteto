@@ -13,7 +13,8 @@ class Kandidat extends Model implements AuthenticatableContract, CanResetPasswor
     use Authenticatable, CanResetPassword;
 
     protected $table = 'kandidat';
-    protected $fillable = ['name', 'email', 'password'];
-    protected $hidden = ['password', 'remember_token'];
+    protected $fillable = ['ime', 'priimek', 'emso', 'uporabnisko_ime', 'email', 'geslo', 'zeton', 'obcina_rojstva', 'drzava', 'drzavljanstvo'];
+    protected $guarded = ['id'];
+    protected $hidden = ['geslo'];
 
 }
