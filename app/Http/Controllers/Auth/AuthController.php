@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\Kandidat;
 use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -29,6 +33,7 @@ class AuthController extends Controller
      * @var string
      */
     protected $redirectTo = '/';
+    
 
     /**
      * Create a new authentication controller instance.
@@ -37,9 +42,28 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => 'logout']);
+        //$this->middleware('guest', ['except' => 'logout']);
     }
 
+    public function prijavniObrazec()
+    {
+        return view('auth.login');
+    }
+
+
+
+    /**
+     * Handle an authentication attempt.
+     *
+     * @return Response
+     */
+    public function authenticate($uporabniskoIme, $password)
+    {
+        if (Auth::attempt(['username' => $uporabniskoIme, 'password' => $password])) {
+            // Authentication passed...
+            return redirect()->intended('/');
+        }
+    }
     /**
      * Get a validator for an incoming registration request.
      *
@@ -63,7 +87,7 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        return Uporabnik::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),

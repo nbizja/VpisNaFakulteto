@@ -5,7 +5,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\Schema;
 
 
-class CreateKandidat extends Migration
+class CreateUporabnik extends Migration
 {
     /**
      * Run the migrations.
@@ -14,19 +14,21 @@ class CreateKandidat extends Migration
      */
     public function up()
     {
-        Schema::create('kandidat', function(Blueprint $table)
+        Schema::create('uporabnik', function(Blueprint $table)
         {
             $table->increments('id');
-            $table->string('emso')->index();
+            $table->string('emso')->index()->nullable();
             $table->string('ime');
             $table->string('priimek');
-            $table->string('uporabnisko_ime')->unique();
+            $table->string('username')->unique();
             $table->string('email');
-            $table->string('geslo');
+            $table->string('password');
             $table->string('zeton');
-            $table->integer('obcina_rojstva')->unsigned();
-            $table->integer('id_drzave')->unsigned();
-            $table->integer('id_drzavljanstva')->unsigned();
+            $table->string('remember_token');
+            $table->string('vloga');
+            $table->integer('obcina_rojstva')->unsigned()->nullable();
+            $table->integer('id_drzave')->unsigned()->nullable();
+            $table->integer('id_drzavljanstva')->unsigned()->nullable();
             $table->timestamps();
 
         });
@@ -40,6 +42,6 @@ class CreateKandidat extends Migration
     public function down()
     {
         DB::statement('SET FOREIGN_KEY_CHECKS = 0;');
-        Schema::drop('kandidat');
+        Schema::drop('uporabnik');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Models\Enums;
+namespace App\Models\Enums;
 
 
 class NacinStudija
