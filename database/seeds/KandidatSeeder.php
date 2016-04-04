@@ -13,8 +13,7 @@ class KandidatSeeder extends Seeder
      */
     public function run()
     {
-        /*
-        DB::table('skrbnik')->insert([
+        DB::table('uporabnik')->insert([
             'emso' => '1307991500075',
             'ime' => 'Nejc',
             'priimek' => 'Bizjak',
@@ -25,6 +24,5 @@ class KandidatSeeder extends Seeder
             'id_drzave' => '',
             'id_drzavljanstva' => ''
         ]);
-        */
     }
 }
