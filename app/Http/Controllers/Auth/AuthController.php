@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Models\Kandidat;
-use App\User;
+use App\Models\Uporabnik;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use Validator;
+use Illuminate\Validation\Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -50,20 +50,21 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-
-
-    /**
-     * Handle an authentication attempt.
-     *
-     * @return Response
-     */
-    public function authenticate($uporabniskoIme, $password)
+    public function login(Request $request)
     {
-        if (Auth::attempt(['username' => $uporabniskoIme, 'password' => $password])) {
-            // Authentication passed...
+        if (Auth::attempt(['username' => $request->request->get('username'), 'password' => $request->request->get('password')])) {
             return redirect()->intended('/');
         }
+
+        return redirect('prijava')
+                ->withInput()
+                ->with([
+                    'status' => 'danger',
+                    'message' =>'Napačna prijava'
+                ]);
     }
+
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -83,7 +84,7 @@ class AuthController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return User
+     * @return Uporabnik
      */
     protected function create(array $data)
     {

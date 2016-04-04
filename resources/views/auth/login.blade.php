@@ -57,6 +57,7 @@
                                 <a class="btn btn-link" href="{{ url('/password/reset') }}">Pozabljeno geslo?</a>
                             </div>
                         </div>
+                        @include('flash_message')
                     </form>
                 </div>
             </div>
