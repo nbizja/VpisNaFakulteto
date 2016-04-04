@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\Repositories\PrijavaRepository;
 use App\Models\Uporabnik;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -33,6 +35,8 @@ class AuthController extends Controller
      * @var string
      */
     protected $redirectTo = '/';
+
+    private $prijavaRepo;
     
 
     /**
@@ -40,8 +44,9 @@ class AuthController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(PrijavaRepository $prijavaRepository)
     {
+        $this->prijavaRepo = $prijavaRepository;
         //$this->middleware('guest', ['except' => 'logout']);
     }
 
@@ -70,12 +75,35 @@ class AuthController extends Controller
             return redirect()->intended('/');
         }
 
+        $message = 'Napačna prijava';
+
+        if ($this->jeNepotrjenUporabnik($request->request->get('username'), $request->request->get('password'))) {
+            $message = 'Račun še ni potrjen. Povezava za potrditev je bila poslalana na vaš elektronski naslov.';
+        }
+
         return redirect('prijava')
                 ->withInput()
                 ->with([
                     'status' => 'danger',
-                    'message' =>'Napačna prijava'
+                    'message' => $message
                 ]);
+    }
+
+    /**
+     * Vrne true, če je je kombinacija uporabniškega imena in gesla pravilna, vendar uporabnik nima še potrjenega računa.
+     * 
+     * @param $username
+     * @param $password
+     * @return bool
+     */
+    private function jeNepotrjenUporabnik($username, $password)
+    {
+        $uporabnik = $this->prijavaRepo->uporabnikByUsername($username);
+        if (!empty($uporabnik)) {
+            return Hash::check($password, $uporabnik->password) && !empty($uporabnik->zeton);
+        }
+
+        return false;
     }
 
 

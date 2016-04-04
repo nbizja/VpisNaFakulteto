@@ -14,7 +14,7 @@ class Uporabnik extends Model implements AuthenticatableContract, CanResetPasswo
     use Authenticatable, CanResetPassword;
 
     protected $table = 'uporabnik';
-    protected $fillable = ['name', 'email', 'username', 'password', 'zadnja_prijava'];
+    protected $fillable = ['name', 'email', 'username', 'password', 'zeton', 'zadnja_prijava'];
     protected $guarded = ['password', 'remember_token'];
     protected $hidden = ['password', 'remember_token'];
 
