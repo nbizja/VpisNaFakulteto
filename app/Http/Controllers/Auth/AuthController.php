@@ -50,9 +50,23 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
+    /**
+     * Prijava uporabnika
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function login(Request $request)
     {
-        if (Auth::attempt(['username' => $request->request->get('username'), 'password' => $request->request->get('password')])) {
+        if (Auth::attempt([
+            'username' => $request->request->get('username'),
+            'password' => $request->request->get('password'),
+            'zeton' => ''
+        ])) {
+            $authenticatedUser = Auth::user();
+            $authenticatedUser->zadnja_prijava = date('Y-m-d H:i:s');
+            $authenticatedUser->save();
+
             return redirect()->intended('/');
         }
 

@@ -15,24 +15,25 @@ Route::get('/helper', function () {
     return view('helper');
 });
 
+//Throttle middleware za 5 min zaklene sistem po 3 neuspešnih poizkusih
+Route::group(['middleware' => ['prijavljen', 'throttle:3,5']], function () {
+    Route::post('prijava', 'Auth\AuthController@login');
+});
+
+//Uporabnik mora biti prijavljen za dosto do teh strani
 Route::group(['middleware' => ['prijavljen']], function () {
 
-    // Authentication Routes...
     Route::get('prijava', 'Auth\AuthController@showLoginForm');
-    Route::post('prijava', 'Auth\AuthController@login');
     Route::get('odjava', 'Auth\AuthController@logout');
 
-// Registration Routes...
     Route::get('registracija', 'Auth\AuthController@showRegistrationForm');
     Route::post('registracija', 'Auth\AuthController@register');
 
-// Password Reset Routes...
     Route::get('geslo/ponastavi/{zeton?}', 'Auth\PasswordController@showResetForm');
     Route::post('geslo/email', 'Auth\PasswordController@sendResetLinkEmail');
     Route::post('geslo/ponastavi', 'Auth\PasswordController@reset');
 
     Route::get('/', 'HomeController@index');
-
 
 });
 
