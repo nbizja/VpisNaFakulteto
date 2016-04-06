@@ -41,7 +41,7 @@ class LoginTest extends TestCase
         Uporabnik::create([
             'username' => 'nepotrjeni',
             'password' => Hash::make('geslo'),
-            'zeton' => str_random(8)
+            'zeton' => 'd321DSda2ddsj230dd0ed23dsdwe'
         ]);
         $response = $this->call('POST', 'prijava', ['username' => 'nepotrjeni', 'password' => 'geslo']);
         $this->assertEquals($this->baseUrl . '/prijava', $response->headers->get('location'));
