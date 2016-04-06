@@ -36,12 +36,12 @@ machine:
     MAIL_PASSWORD: null
     MAIL_ENCRYPTION: null
 
-  dependencies:
-    post:
-      - php artisan migrate
-      - php artisan db:seed
+dependencies:
+  post:
+    - php artisan migrate
+    - php artisan db:seed
 
-    test:
-      override:
-        - ./vendor/phpunit/phpunit/phpunit
+test:
+  override:
+    - ./vendor/phpunit/phpunit/phpunit
 
