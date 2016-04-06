@@ -15,12 +15,7 @@ machine:
     APP_ENV: local
     APP_DEBUG: true
     APP_KEY: Rw3mveMreAjYixoEtHYcCAwC0ueRLiBK
-    
 
-    DB_DATABASE: vpisnafakulteto
-    DB_USERNAME: homestead
-    DB_PASSWORD: secret
-    
     CACHE_DRIVER: file
     SESSION_DRIVER: file
     QUEUE_DRIVER: sync
