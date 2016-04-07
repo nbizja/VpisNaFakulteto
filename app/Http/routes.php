@@ -35,6 +35,9 @@ Route::group(['middleware' => ['prijavljen']], function () {
 
     Route::get('/', 'HomeController@index');
 
+    Route::get('kreiranjeRacuna/zaposleni', 'AddEmployeeController@loadPage');
+    Route::post('kreiranjeRacuna/zaposleni', 'AddEmployeeController@validateInput');
+
 });
 
 
