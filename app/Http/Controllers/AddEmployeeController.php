@@ -79,7 +79,7 @@ class AddEmployeeController extends Controller
         if($isValid)
         {
             DB::table('uporabnik')->insert([
-                'ime' => $name, 'priimek' => $surname, 'email' => $email, 'password' => $password, 'username' => $username
+                'ime' => $name, 'priimek' => $surname, 'email' => $email, 'password' => $password, 'username' => $username, 'vloga' => 'zaposleni'
             ]);
 
             redirect('/');
