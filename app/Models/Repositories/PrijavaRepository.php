@@ -9,6 +9,7 @@
 namespace App\Models\Repositories;
 
 
+use App\Models\Enums\VlogaUporabnika;
 use App\Models\Uporabnik;
 
 class PrijavaRepository

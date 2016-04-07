@@ -70,6 +70,9 @@ class RegisterController extends Controller
 
         if( $validator->passes() ) {
             $this->registracija->createUser($request->request->all());
+            $user = $this->prijava->uporabnikByEmail($request->request->get('email'));
+            $user->vloga = VlogaUporabnika::KANDIDAT;
+            $user->save();
             $this->sendActivationEmail($request->request->get('email'), $request->url());
             return view('auth.register')
                 ->with(['success' => 'success']);
