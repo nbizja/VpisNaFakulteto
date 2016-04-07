@@ -59,6 +59,28 @@
                                     @endforeach
                                 </div>
                             @endif
+
+                            @if (isset($success))
+                                <div class="alert alert-success">
+                                    Registracija je bila uspešna. Na vaš email naslov so bili poslani aktivacijski podatki.
+                                </div>
+                            @endif
+
+                            @if (isset($comment))
+
+                                @if ($comment == 'success')
+                                    <div class="alert alert-success">
+                                        Uporabniški račun uspešno aktiviran. Lahko se prijavite.
+                                @elseif ($comment == 'fail')
+                                    <div class="alert alert-danger">
+                                        Aktivacija neuspešna.
+                                @else
+                                    <div class="alert alert-danger">
+                                        Čas za aktivacijo je potekel.
+                                @endif
+                                    </div>
+                            @endif
+
                             @include('flash_message')
                         </form>
                     </div>

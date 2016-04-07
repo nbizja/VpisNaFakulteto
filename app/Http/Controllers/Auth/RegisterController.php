@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\Logic\Registracija;
+use App\Models\Repositories\PrijavaRepository;
 use App\Models\Uporabnik;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -22,6 +24,17 @@ class RegisterController extends Controller
      */
     protected $redirectTo = '/';
 
+    /**
+     * @var Registracija
+     */
+    private $registracija;
+    private $prijava;
+
+    public function __construct(Registracija $registracija, PrijavaRepository $prijava)
+    {
+        $this->registracija = $registracija;
+        $this->prijava = $prijava;
+    }
 
     /**
      * Registracija uporabnika
@@ -55,11 +68,11 @@ class RegisterController extends Controller
         ], $messages);
 
 
-
         if( $validator->passes() ) {
-            $this->sendActivationEmail("nezabelej@gmail.com");
-            return "jej";
-            //ustvari uporabnika, poslji email...
+            $this->registracija->createUser($request->request->all());
+            $this->sendActivationEmail($request->request->get('email'), $request->url());
+            return view('auth.register')
+                ->with(['success' => 'success']);
         } else {
             return view('auth.register')
                 ->with(['errors' => $validator->errors()->all()]);
@@ -67,26 +80,34 @@ class RegisterController extends Controller
 
     }
 
-    public function sendActivationEmail($email)
+    public function sendActivationEmail($email, $url)
     {
-        Mail::send('auth.emails.registration', [], function ($m) use($email){
+        Mail::send('auth.emails.registration', ['user' => $this->prijava->uporabnikByEmail($email), 'url' => $url], function ($m) use($email){
             $m->from('skrbnik@faks.me', 'Vpis v visoko šolstvo.');
             $m->to($email)->subject('Aktivacija računa');
         });
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return Uporabnik
-     */
-    protected function create(array $data)
+    public function showActivation($zeton)
     {
-        return Uporabnik::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        $user = $this->prijava->uporabnikByZeton($zeton);
+        if (!empty($user)) {
+            if ($user->created_at < date('Y-m-d H:i:s', strtotime('- 1 min'))) {
+                $user->forceDelete();
+                return view('auth.register')
+                    ->with(['comment' => 'timeout']);
+            } else {
+                $user->zeton = '';
+                $user->save();
+                return view('auth.register')
+                    ->with(['comment' => 'success']);
+            }
+
+        } else {
+            return view('auth.register')
+                ->with(['comment' => 'fail']);
+        }
+
     }
+
 }

@@ -22,10 +22,10 @@ Route::group(['middleware' => ['prijavljen', 'throttle:3,2']], function () {
 });
 
 
-    Route::get('registracija', 'Auth\RegisterController@showRegister');
-    Route::post('registracija', 'Auth\RegisterController@register');
+Route::get('registracija', 'Auth\RegisterController@showRegister');
+Route::post('registracija', 'Auth\RegisterController@register');
 
-
+Route::get('registracija/{zeton?}', 'Auth\RegisterController@showActivation');
 
 //Uporabnik mora biti prijavljen za dosto do teh strani
 Route::group(['middleware' => ['prijavljen']], function () {

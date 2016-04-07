@@ -7,8 +7,9 @@
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
-        "aws/aws-sdk-php": "^3.17"
+        "guzzlehttp/guzzle": "~5.3|~6.0"
     },
+
     "require-dev": {
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
@@ -53,3 +54,4 @@
         "preferred-install": "dist"
     }
 }
+

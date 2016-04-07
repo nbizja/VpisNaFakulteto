@@ -17,4 +17,14 @@ class PrijavaRepository
     {
         return Uporabnik::where('username', $username)->first();
     }
+
+    public function uporabnikByEmail($email)
+    {
+        return Uporabnik::where('email', $email)->first();
+    }
+
+    public function uporabnikByZeton($zeton)
+    {
+        return Uporabnik::where('zeton', $zeton)->first();
+    }
 }
