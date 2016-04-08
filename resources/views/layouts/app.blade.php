@@ -42,6 +42,7 @@
                 <a class="navbar-brand" href="{{ url('/') }}">
                     Vpis v visoko šolstvo
                 </a>
+
             </div>
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
@@ -64,7 +65,10 @@
                         </li>
                     @endif
                 </ul>
+                <p class="navbar-text navbar-right">Zadnja prijava: {{ date('d. m. Y H:i:s', strtotime(Auth::user()->zadnja_prijava)) }}</p>
+
             </div>
+
         </div>
     </nav>
 
