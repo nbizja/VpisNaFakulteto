@@ -12,7 +12,7 @@ use Flynsarmy\CsvSeeder\CsvSeeder;
  * Names of colums in data file must exactly match colums in database
  * table.
  */
-class DatabaseSeeder extends Seeder
+class DatabaseSeeder extends CsvSeeder
 {
     /**
      * Initialize the DatabaseSeeder object.
@@ -24,10 +24,10 @@ class DatabaseSeeder extends Seeder
      {
          $this->seeder_list = array(DrzavljanstvoSeeder::class,
              DrzavaSeeder::class, ElementSeeder::class, 
-             KoncanaSrednjaSolaSeeder::class, NacinStudijaSeeder::class,
+             KoncanaSrednjaSolaSeeder::class, 
              ObcinaSeeder::class, PoklicSeeder::class, PostaSeeder::class,
              SrednjaSolaSeeder::class, StudijskiProgramSeeder::class,
-             UniverzaSeeder::class, VisokosolskiZavodSeeder::class,
+             VisokosolskiZavodSeeder::class,
              VrstaStudijaSeeder::class);
      }
 
@@ -39,9 +39,11 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         DB::disableQueryLog();
+		Eloquent::unguard();
+		DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         foreach ($this->seeder_list as $seeder) {
             $this->call($seeder);
         }
+		DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }
-

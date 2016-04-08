@@ -12,13 +12,13 @@ use Flynsarmy\CsvSeeder\CsvSeeder;
  * Names of colums in data file must exactly match colums in database
  * table.
  */
-class NacinStudijaSeeder extends CsvSeeder
+class DrzavaSeeder extends CsvSeeder
 {
     /**
      * Path to a directory containing data files.
      */
     const DATA_DIR = '/database/seeds/sifranti/';
-    const FILE_NAME = 'nacin_studija';
+    const FILE_NAME = 'drzava';
 
     /**
      * Extension of datafiles in `DATA_DIR`, including the leading
@@ -50,12 +50,10 @@ class NacinStudijaSeeder extends CsvSeeder
     {
         DB::disableQueryLog();
         if (!is_null($this->data_file)) {
-			DB::statement('SET FOREIGN_KEY_CHECKS = 0;');
-			DB::table($this->table)->truncate();
             $this->table = self::FILE_NAME;
             $this->filename = $this->data_file;
+			DB::table($this->table)->truncate();
             parent::run();
-			DB::statement('SET FOREIGN_KEY_CHECKS = 1;');
         } else {
             throw new Exception("$this->data_file ni veljavna datoteka.");
         }
