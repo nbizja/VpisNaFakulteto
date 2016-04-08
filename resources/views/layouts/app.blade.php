@@ -65,7 +65,9 @@
                         </li>
                     @endif
                 </ul>
-                <p class="navbar-text navbar-right">Zadnja prijava: {{ date('d. m. Y H:i:s', strtotime(Auth::user()->zadnja_prijava)) }}</p>
+                @if (Auth::check())
+                    <p class="navbar-text navbar-right">Zadnja prijava: {{ date('d. m. Y H:i:s', strtotime(Auth::user()->zadnja_prijava)) }}</p>
+                @endif
 
             </div>
 
