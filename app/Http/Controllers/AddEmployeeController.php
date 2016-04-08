@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Enums\VlogaUporabnika;
 use DB;
 use Illuminate\Http\Request;
 use App\Models\Uporabnik;
@@ -79,7 +80,7 @@ class AddEmployeeController extends Controller
         if($isValid)
         {
             DB::table('uporabnik')->insert([
-                'ime' => $name, 'priimek' => $surname, 'email' => $email, 'password' => $password, 'username' => $username, 'vloga' => 'zaposleni'
+                'ime' => $name, 'priimek' => $surname, 'email' => $email, 'password' =>  bcrypt($password), 'username' => $username, 'vloga' => VlogaUporabnika::SKRBNIK_PROGRAMA
             ]);
 
             redirect('/');
