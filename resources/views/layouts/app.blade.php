@@ -60,6 +60,7 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{ url('/geslo') }}"><i class="fa fa-btn fa-sign-out"></i>Sprememba gesla</a></li>
                                 <li><a href="{{ url('/odjava') }}"><i class="fa fa-btn fa-sign-out"></i>Odjava</a></li>
                             </ul>
                         </li>

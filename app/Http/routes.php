@@ -32,12 +32,12 @@ Route::group(['middleware' => ['prijavljen']], function () {
 
     Route::get('prijava', 'Auth\AuthController@showLoginForm');
     Route::get('odjava', 'Auth\AuthController@logout');
-
-    Route::get('geslo/ponastavi/{zeton?}', 'Auth\PasswordController@showResetForm');
-    Route::post('geslo/email', 'Auth\PasswordController@sendResetLinkEmail');
-    Route::post('geslo/ponastavi', 'Auth\PasswordController@reset');
+    
 
     Route::get('/', 'HomeController@index');
+
+    Route::get('/geslo', 'ProfilController@index');
+    Route::post('/geslo/ponastavi', 'ProfilController@ponastaviGeslo');
 
 });
 

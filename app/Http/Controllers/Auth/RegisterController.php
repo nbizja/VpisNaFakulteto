@@ -69,18 +69,20 @@ class RegisterController extends Controller
         ], $messages);
 
 
-        if( $validator->passes() ) {
-            $this->registracija->createUser($request->request->all());
-            $user = $this->prijava->uporabnikByEmail($request->request->get('email'));
-            $user->vloga = VlogaUporabnika::KANDIDAT;
-            $user->save();
-            $this->sendActivationEmail($request->request->get('email'), $request->url());
-            return view('auth.register')
-                ->with(['success' => 'success']);
-        } else {
+        if(!$validator->passes()) {
             return view('auth.register')
                 ->with(['errors' => $validator->errors()->all()]);
+
         }
+
+        $this->registracija->createUser($request->request->all());
+        $user = $this->prijava->uporabnikByEmail($request->request->get('email'));
+        $user->vloga = VlogaUporabnika::KANDIDAT;
+        $user->save();
+        $this->sendActivationEmail($request->request->get('email'), $request->url());
+        
+        return view('auth.register')
+            ->with(['success' => 'success']);
 
     }
 
