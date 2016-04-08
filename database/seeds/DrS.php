@@ -50,9 +50,12 @@ class DrzavaSeeder extends CsvSeeder
     {
         DB::disableQueryLog();
         if (!is_null($this->data_file)) {
+			DB::statement('SET FOREIGN_KEY_CHECKS = 0;');
+			DB::table($this->table)->truncate();
             $this->table = self::FILE_NAME;
             $this->filename = $this->data_file;
             parent::run();
+			DB::statement('SET FOREIGN_KEY_CHECKS = 1;');
         } else {
             throw new Exception("$this->data_file ni veljavna datoteka.");
         }
