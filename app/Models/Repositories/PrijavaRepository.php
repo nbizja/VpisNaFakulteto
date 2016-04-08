@@ -9,6 +9,7 @@
 namespace App\Models\Repositories;
 
 
+use App\Models\Enums\VlogaUporabnika;
 use App\Models\Uporabnik;
 
 class PrijavaRepository
@@ -16,5 +17,15 @@ class PrijavaRepository
     public function uporabnikByUsername($username)
     {
         return Uporabnik::where('username', $username)->first();
+    }
+
+    public function uporabnikByEmail($email)
+    {
+        return Uporabnik::where('email', $email)->first();
+    }
+
+    public function uporabnikByZeton($zeton)
+    {
+        return Uporabnik::where('zeton', $zeton)->first();
     }
 }
