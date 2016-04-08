@@ -5,52 +5,42 @@ use Flynsarmy\CsvSeeder\CsvSeeder;
 
 
 /**
- * Seeds database with data from csv files.
+ * Calls seeders specified in list.
  *
  * Names of data files must exactly match the names of tables.
  * The leading line of each data file must be a header.
  * Names of colums in data file must exactly match colums in database
  * table.
  */
-class DatabaseSeeder extends CsvSeeder
+class DatabaseSeeder extends Seeder
 {
     /**
-     * Path to a directory containing data files.
-     */
-    const DATA_DIR = '/database/seeds/sifranti/';
-
-    /**
-     * Extension of datafiles in `DATA_DIR`, including the leading
-     * dot.'
-     */
-    const DATA_EXTENSION = '.csv';
-
-    /**
-     * Initialize the DatabaseSeeder object. Searches for all data
-     * files in `DATA_DIR` and saves their paths in `$file_list`.
+     * Initialize the DatabaseSeeder object.
+     * Creates class variable `seeder_list` with names of classes of seeders.
      *
      * @return void
      */
      public function __construct()
      {
-         $this->file_list = array_filter(
-             glob(base_path() . self::DATA_DIR . '*' . self::DATA_EXTENSION),
-             'is_file');
+         $this->seeder_list = array(DrzavljanstvoSeeder::class,
+             DrzavaSeeder::class, ElementSeeder::class, 
+             KoncanaSrednjaSolaSeeder::class, NacinStudijaSeeder::class,
+             ObcinaSeeder::class, PoklicSeeder::class, PostaSeeder::class,
+             SrednjaSolaSeeder::class, StudijskiProgramSeeder::class,
+             UniverzaSeeder::class, VisokosolskiZavodSeeder::class,
+             VrstaStudijaSeeder::class);
      }
 
     /**
-     * Seeds a table for each data file in `DATA_DIR`.
+     * Calls seeders in order specified in `seeder_list`.
      *
      * @return void
      */
     public function run()
     {
         DB::disableQueryLog();
-        foreach ($this->file_list as $path) {
-            $this->table = basename($path, self::DATA_EXTENSION);
-            $this->filename = $path;
-
-            parent::run();
+        foreach ($this->seeder_list as $seeder) {
+            $this->call($seeder);
         }
     }
 }
