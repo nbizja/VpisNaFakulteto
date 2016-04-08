@@ -41,16 +41,37 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label">Geslo</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="password" value="{{ old('password') }}">
+                                <input type="password" class="form-control" name="password1" value="{{ old('password1') }}">
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Ponovno vnestite geslo</label>
+                            <div class="col-md-6">
+                                <input type="password" class="form-control" name="password2" value="{{ old('password2') }}">
+                            </div>
+                        </div>
+
+                        @if (session('message0') != '')
+                            <div class="alert alert-success"> {{session('message0')}}</div>
+                        @endif
+                        @if (session('message1') != '')
+                            <div class="alert alert-danger"> {{session('message1')}}</div>
+                        @endif
+                        @if (session('message2') != '')
+                            <div class="alert alert-danger"> {{session('message2')}}</div>
+                        @endif
+                        @if (session('message3') != '')
+                            <div class="alert alert-danger"> {{session('message3')}}</div>
+                        @endif
+                        @if (session('message4') != '')
+                            <div class="alert alert-danger"> {{session('message4')}}</div>
+                        @endif
+                        @if (session('message5') != '')
+                            <div class="alert alert-danger"> {{session('message5')}}</div>
+                        @endif
+
                         <br/>
-
-                        {{ session('message1') }}
-                        {{ session('message2') }}
-                        {{ session('message3') }}
-
-                        <br/><br/>
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
