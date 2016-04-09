@@ -1,16 +1,19 @@
 <?php
 
+
+use database\seeds\KandidatSeeder;
+use database\seeds\SifrantiSeeder;
+use database\seeds\SkrbnikTableSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
-        // $this->call(UserTableSeeder::class);
+        $this->call(SkrbnikTableSeeder::class);
+        $this->call(KandidatSeeder::class);
+        //$this->call(SifrantiSeeder::class);
     }
+
+
 }

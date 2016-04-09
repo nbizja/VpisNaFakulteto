@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
-use Validator;
+use App\Models\Repositories\PrijavaRepository;
+use App\Models\Uporabnik;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -30,15 +36,76 @@ class AuthController extends Controller
      */
     protected $redirectTo = '/';
 
+    private $prijavaRepo;
+    
+
     /**
      * Create a new authentication controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(PrijavaRepository $prijavaRepository)
     {
-        $this->middleware('guest', ['except' => 'logout']);
+        $this->prijavaRepo = $prijavaRepository;
+        //$this->middleware('guest', ['except' => 'logout']);
     }
+
+    public function prijavniObrazec()
+    {
+        return view('auth.login');
+    }
+
+    /**
+     * Prijava uporabnika
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function login(Request $request)
+    {
+        if (Auth::attempt([
+            'username' => $request->request->get('username'),
+            'password' => $request->request->get('password'),
+            'zeton' => ''
+        ])) {
+            $authenticatedUser = Auth::user();
+            $authenticatedUser->zadnja_prijava = date('Y-m-d H:i:s');
+            $authenticatedUser->save();
+
+            return redirect()->intended('/');
+        }
+
+        $message = 'Napačna prijava';
+
+        if ($this->jeNepotrjenUporabnik($request->request->get('username'), $request->request->get('password'))) {
+            $message = 'Račun še ni potrjen. Povezava za potrditev je bila poslalana na vaš elektronski naslov.';
+        }
+
+        return redirect('prijava')
+                ->withInput()
+                ->with([
+                    'status' => 'danger',
+                    'message' => $message
+                ]);
+    }
+
+    /**
+     * Vrne true, če je je kombinacija uporabniškega imena in gesla pravilna, vendar uporabnik nima še potrjenega računa.
+     * 
+     * @param $username
+     * @param $password
+     * @return bool
+     */
+    private function jeNepotrjenUporabnik($username, $password)
+    {
+        $uporabnik = $this->prijavaRepo->uporabnikByUsername($username);
+        if (!empty($uporabnik)) {
+            return Hash::check($password, $uporabnik->password) && !empty($uporabnik->zeton);
+        }
+
+        return false;
+    }
+
 
     /**
      * Get a validator for an incoming registration request.
@@ -59,11 +126,11 @@ class AuthController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return User
+     * @return Uporabnik
      */
     protected function create(array $data)
     {
-        return User::create([
+        return Uporabnik::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
