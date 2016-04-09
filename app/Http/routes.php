@@ -11,12 +11,41 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
 Route::get('/helper', function () {
     return view('helper');
 });
+
+
+//Throttle middleware za 2 min zaklene sistem po 3 neuspešnih poizkusih
+Route::group(['middleware' => ['prijavljen', 'throttle:3,2']], function () {
+    Route::post('prijava', 'Auth\AuthController@login');
+});
+
+
+Route::get('registracija', 'Auth\RegisterController@showRegister');
+Route::post('registracija', 'Auth\RegisterController@register');
+
+Route::get('registracija/{zeton?}', 'Auth\RegisterController@showActivation');
+
+//Uporabnik mora biti prijavljen za dosto do teh strani
+Route::group(['middleware' => ['prijavljen']], function () {
+
+    Route::get('prijava', 'Auth\AuthController@showLoginForm');
+    Route::get('odjava', 'Auth\AuthController@logout');
+    
+
+    Route::get('/', 'HomeController@index');
+
+    Route::get('/geslo', 'ProfilController@index');
+    Route::post('/geslo/ponastavi', 'ProfilController@ponastaviGeslo');
+
+});
+
+
+
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +58,3 @@ Route::get('/helper', function () {
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
-    //
-});

@@ -1,5 +1,9 @@
 <?php
 
+
+use database\seeds\KandidatSeeder;
+use database\seeds\SifrantiSeeder;
+use database\seeds\SkrbnikTableSeeder;
 use Illuminate\Database\Seeder;
 use Flynsarmy\CsvSeeder\CsvSeeder;
 
@@ -43,6 +47,13 @@ class DatabaseSeeder extends CsvSeeder
         foreach ($this->seeder_list as $seeder) {
             $this->call($seeder);
         }
+        $this->call(SkrbnikTableSeeder::class);
+        $this->call(KandidatSeeder::class);
+        //$this->call(SifrantiSeeder::class);
 		DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        
     }
+}
+
+
 }
