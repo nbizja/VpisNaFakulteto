@@ -55,5 +55,3 @@ class DatabaseSeeder extends CsvSeeder
     }
 }
 
-
-}
