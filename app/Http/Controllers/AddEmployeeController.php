@@ -29,7 +29,6 @@ class AddEmployeeController extends Controller
         $password1 = $request->get('password1');
         $password2 = $request->get('password2');
 
-        $message0 = '';
         $message1 = '';
         $message2 = '';
         $message3 = '';
@@ -73,7 +72,7 @@ class AddEmployeeController extends Controller
                 'ime' => $name, 'priimek' => $surname, 'email' => $email, 'password' =>  bcrypt($password1), 'username' => $username, 'vloga' => VlogaUporabnika::SKRBNIK_PROGRAMA
             ]);
 
-            $message0 = 'Uporabniški račun '. $username .' je bil uspešno kreiran!';
+            $message0 = 'Uporabniški račun '. $username .' je bil uspešno ustvarjen!';
 
             return redirect('kreiranjeRacuna/zaposleni')
                 ->with([
