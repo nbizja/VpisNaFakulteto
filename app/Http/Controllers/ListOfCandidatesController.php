@@ -14,10 +14,9 @@ class ListOfCandidatesController extends Controller
 
     public function loadPage()
     {
-        $vz = VisokosolskiZavod::all();
         return view('list_candidates')
             ->with([
-                'vz' => $vz
+                'vz' => VisokosolskiZavod::orderBy('ime')->pluck('ime')
             ]);
     }
 }

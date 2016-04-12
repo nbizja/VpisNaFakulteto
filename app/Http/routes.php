@@ -44,6 +44,19 @@ Route::group(['middleware' => ['prijavljen']], function () {
 
     Route::get('seznamKandidatov', 'ListOfCandidatesController@loadPage');
 
+    Route::get('api/dropdown', function(){
+        $id = Input::get('option');
+        $zavod = \App\VisokosolskiZavod::find($id);
+        return $zavod->pluck('ime');
+    });
+
+});
+
+Route::get('/seznamKandidatov/{zavod_id?}', function($zavod_id){
+    $zavodi =  \App\VisokosolskiZavod::orderBy('ime')->pluck('id');
+    $zavod_id = $zavodi[$zavod_id];
+    $programi = \App\StudijskiProgram::where('id_zavoda', '=', $zavod_id)->orderBy('ime')->pluck('ime');
+    return Response::json($programi);
 });
 
 
