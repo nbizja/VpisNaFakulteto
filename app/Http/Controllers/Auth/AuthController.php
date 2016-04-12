@@ -82,11 +82,11 @@ class AuthController extends Controller
         }
 
         return redirect('prijava')
-                ->withInput()
-                ->with([
-                    'status' => 'danger',
-                    'message' => $message
-                ]);
+            ->withInput()
+            ->with([
+                'status' => 'danger',
+                'message' => $message
+            ]);
     }
 
     /**

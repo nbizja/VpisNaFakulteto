@@ -32,12 +32,15 @@ Route::group(['middleware' => ['prijavljen']], function () {
 
     Route::get('prijava', 'Auth\AuthController@showLoginForm');
     Route::get('odjava', 'Auth\AuthController@logout');
-    
+
 
     Route::get('/', 'HomeController@index');
 
     Route::get('/geslo', 'ProfilController@index');
     Route::post('/geslo/ponastavi', 'ProfilController@ponastaviGeslo');
+
+    Route::get('kreiranjeRacuna/zaposleni', 'AddEmployeeController@loadPage');
+    Route::post('kreiranjeRacuna/zaposleni', 'AddEmployeeController@validateInput');
 
 });
 
