@@ -13,7 +13,6 @@ class SkrbnikTableSeeder extends Seeder
     {
         DB::table('uporabnik')->insert(
             [
-                'id' => 1,
                 'ime' => 'Skrba',
                 'priimek' => 'Brba',
                 'username' => 'skrbnik',
@@ -22,7 +21,6 @@ class SkrbnikTableSeeder extends Seeder
                 'vloga' => VlogaUporabnika::SKRBNIK_PROGRAMA
             ],
             [
-                'id' => 2,
                 'ime' => 'Takozvani',
                 'priimek' => 'Gazda',
                 'username' => 'admin',
