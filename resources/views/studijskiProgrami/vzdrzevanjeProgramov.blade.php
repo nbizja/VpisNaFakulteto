@@ -14,6 +14,7 @@
                             <label class="col-md-4 control-label">Fakulteta: </label>
                             <div class="col-md-6">
                                 <select class="form-control" id="vzdrzevanjeProgramov_fakultete">
+                                    <option selected value="">Izberite visokošolski zavod.</option>
                                     @foreach($fakultete as $fakulteta)
                                         <option value="{{$fakulteta->id}}">{{$fakulteta->ime}}</option>
                                     @endforeach
@@ -25,10 +26,10 @@
                             <label class="col-md-4 control-label">Študijski program: </label>
                             <div class="col-md-6">
                                 <select name="program" class="form-control" id="vzdrzevanjeProgramov_programi">
-                                    <option selected value="" data-fakulteta="0">Izberi program izbranega visokošolskega zavoda.</option>
+                                    <option selected data-fakulteta="-1" value="">Izberite program izbranega visokošolskega zavoda.</option>
                                     @foreach($programi as $program)
                                         <option data-fakulteta="{{ $program->id_zavoda }}" data-mesta="{{ $program->stevilo_vpisnih_mest }}" data-mesta_omejitev="{{ $program->stevilo_mest_po_omejitvi }}"
-                                                data-nacin="{{$program->nacin_studija}}" data-vrsta="{{$program->vrsta}}" value="{{$program->id}}">{{$program->ime}}</option>
+                                                data-nacin="{{$program->nacin_studija}}" data-vrsta="{{$program->vrsta}}" value="{{$program->id}}" style="display:none">{{$program->ime}}</option>
                                     @endforeach
                                 </select>
                             </div>
