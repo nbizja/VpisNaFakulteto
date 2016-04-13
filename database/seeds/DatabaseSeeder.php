@@ -49,7 +49,6 @@ class DatabaseSeeder extends CsvSeeder
         }
         $this->call(SkrbnikTableSeeder::class);
         $this->call(KandidatSeeder::class);
-        //$this->call(SifrantiSeeder::class);
 		DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         
     }
