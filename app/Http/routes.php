@@ -15,32 +15,31 @@ Route::get('/helper', function () {
     return view('helper');
 });
 
-
 //Throttle middleware za 2 min zaklene sistem po 3 neuspešnih poizkusih
 Route::group(['middleware' => ['prijavljen', 'throttle:3,2']], function () {
     Route::post('prijava', 'Auth\AuthController@login');
 });
 
-
 Route::get('registracija', 'Auth\RegisterController@showRegister');
 Route::post('registracija', 'Auth\RegisterController@register');
-
 Route::get('registracija/{zeton?}', 'Auth\RegisterController@showActivation');
 
 //Uporabnik mora biti prijavljen za dosto do teh strani
 Route::group(['middleware' => ['prijavljen']], function () {
 
+    Route::get('studijskiProgrami/urejanje', 'StudijskiProgrami\StudijskiProgramiController@urediPrograme');
+    Route::post('studijskiProgrami/shrani', 'StudijskiProgrami\StudijskiProgramiController@shraniPrograme');
+    Route::get('studijskiProgrami/nov', 'StudijskiProgrami\StudijskiProgramiController@novProgram');
+    Route::post('studijskiProgrami/dodaj', 'StudijskiProgrami\StudijskiProgramiController@dodajProgram');
+    Route::get('studijskiProgrami/seznam', 'StudijskiProgrami\StudijskiProgramiController@seznamProgramov');
+
     Route::get('prijava', 'Auth\AuthController@showLoginForm');
     Route::get('odjava', 'Auth\AuthController@logout');
-
 
     Route::get('/', 'HomeController@index');
 
     Route::get('/geslo', 'ProfilController@index');
     Route::post('/geslo/ponastavi', 'ProfilController@ponastaviGeslo');
-
-    Route::get('kreiranjeRacuna/zaposleni', 'AddEmployeeController@loadPage');
-    Route::post('kreiranjeRacuna/zaposleni', 'AddEmployeeController@validateInput');
 
 });
 
