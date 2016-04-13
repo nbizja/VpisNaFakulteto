@@ -14,7 +14,7 @@ class MakeSkrbnikNullableInVisokosolskiZavod extends Migration
     {
 		DB::statement('SET FOREIGN_KEY_CHECKS = 0;');
         Schema::table('visokosolski_zavod', function (Blueprint $table) {
-            $table->integer('id_skrbnika')->nullable()->change();
+            $table->integer('id_skrbnika')->unsigned()->nullable()->change();
         });
 		DB::statement('SET FOREIGN_KEY_CHECKS = 1;');
     }
