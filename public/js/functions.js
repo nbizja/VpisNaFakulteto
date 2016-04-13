@@ -1,16 +1,14 @@
 $(document).ready(function() {
     $('#vzdrzevanjeProgramov_fakultete').change(function(){
         var id = $(this).val();
-        var i = 0;
+
         $('#vzdrzevanjeProgramov_programi').children().each(function() {
-            if ($(this).attr('data-fakulteta') == id) {
+            if ($(this).attr('data-fakulteta') == -1) {
                 $(this).show();
-                if (i == 0) {
-                    $(this).prop('selected', true);
-                } else {
-                    $(this).prop('selected', false);
-                }
-                i++;
+                $(this).prop('selected', true);
+            } else if ($(this).attr('data-fakulteta') == id) {
+                $(this).show();
+                $(this).prop('selected', false);
             } else {
                 $(this).prop('selected', false);
                 $(this).hide();
