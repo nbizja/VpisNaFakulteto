@@ -30,12 +30,21 @@ $(document).ready(function() {
         });
         $('#stevilo_vpisnih_mest').val(steviloMest);
         $('#stevilo_mest_omejitev').val(steviloMestOmejitev);
-        $('#vrsta_studija').val(vrsta);
-        $('#nacin_studija').val(nacin);
-        if (omejitev == 1) {
-            $('#omejitev').val("Da");
+
+        if (vrsta == 'Univerzitetni') {
+            $('#vrsta_studija').val('un');
         } else {
-            $('#omejitev').val("Ne");
+            $('#vrsta_studija').val('vs');
+        }
+        if (nacin == 'Izredni') {
+            $('#nacin_studija').val('izredni');
+        } else {
+            $('#nacin_studija').val('redni');
+        }
+        if (omejitev == 1) {
+            $('#omejitev').val("da");
+        } else {
+            $('#omejitev').val("ne");
         }
     });
 });

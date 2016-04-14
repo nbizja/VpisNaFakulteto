@@ -76,7 +76,7 @@
                 @if (Auth::user()->vloga == 'skrbnik')
                     <div class="navbar-collapse collapse sidebar-navbar-collapse">
                         <ul class="nav navbar-nav">
-                            <li class="active"><a href="#">Domov</a></li>
+                            <li class="active"><a href="{{ action('HomeController@index') }}">Domov</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Študijski programi<b class="caret"></b></a>
                                 <ul class="dropdown-menu">
