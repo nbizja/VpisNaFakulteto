@@ -68,13 +68,29 @@ class StudijskiProgramiController extends Controller
         if($request->request->has('shrani')) {
             $program->stevilo_vpisnih_mest = $request->request->get('stevilo_mest');
             $program->stevilo_mest_po_omejitvi = $request->request->get('stevilo_mest_omejitev');
-            $program->nacin_studija = $request->request->get('nacin_studija');
-            $program->vrsta = $request->request->get('vrsta_studija');
-            if ($request->request->get('omejitev') == "Da") {
-                $program->omejitev_vpisa = '1';
+
+
+            if ($request->request->get('vrsta_studija') == 'un') {
+                $vrsta = 'Univerzitetni';
             } else {
-                $program->omejitev_vpisa = '0';
+                $vrsta = 'Visokošolski strokovni';
             }
+
+            if ($request->request->get('nacin_studija') == 'izredni') {
+                $nacin = 'Izredni';
+            } else {
+                $nacin = 'Redni';
+            }
+
+            if ($request->request->get('omejitev') == 'da') {
+                $omejitev = '1';
+            } else {
+                $omejitev = '0';
+            }
+
+            $program->nacin_studija = $nacin;
+            $program->vrsta = $vrsta;
+            $program->omejitev_vpisa = $omejitev;
 
             $program->save();
         } else {
