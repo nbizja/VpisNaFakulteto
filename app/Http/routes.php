@@ -41,6 +41,12 @@ Route::group(['middleware' => ['prijavljen']], function () {
     Route::get('/geslo', 'ProfilController@index');
     Route::post('/geslo/ponastavi', 'ProfilController@ponastaviGeslo');
 
+    Route::get('kreiranjeRacuna/zaposleni', 'AddEmployeeController@loadPage');
+    Route::post('kreiranjeRacuna/zaposleni', 'AddEmployeeController@validateInput');
+
+    Route::get('/sifranti', 'SifrantiController@index');
+    Route::get('/sifranti/{ime_sifranta}', 'SifrantiController@prikazi');
+    Route::any('/sifranti/{ime_sifranta}/edit', 'SifrantiController@uredi');
 });
 
 
