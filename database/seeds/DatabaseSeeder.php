@@ -1,12 +1,12 @@
 <?php
 
 
-use database\seeds\KandidatSeeder;
+use database\seeds\UporabnikSeeder;
 use database\seeds\SifrantiSeeder;
-use database\seeds\SkrbnikTableSeeder;
 use Illuminate\Database\Seeder;
 use Flynsarmy\CsvSeeder\CsvSeeder;
 
+include 'UporabnikSeeder.php';
 
 /**
  * Calls seeders specified in list.
@@ -43,14 +43,12 @@ class DatabaseSeeder extends CsvSeeder
     {
         DB::disableQueryLog();
 		Eloquent::unguard();
-		DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        $this->call(UporabnikSeeder::class);
+
         foreach ($this->seeder_list as $seeder) {
             $this->call($seeder);
         }
-        $this->call(SkrbnikTableSeeder::class);
-        $this->call(KandidatSeeder::class);
-		DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-        
+
     }
 }
 
