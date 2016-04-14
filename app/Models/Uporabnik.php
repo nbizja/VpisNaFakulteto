@@ -17,7 +17,7 @@ class Uporabnik extends Model implements AuthenticatableContract, CanResetPasswo
     protected $fillable = ['ime', 'priimek', 'email', 'username','password', 'zeton', 'zadnja_prijava'];
     protected $guarded = ['remember_token'];
     protected $hidden = ['password', 'remember_token'];
-    public $timestamps = false;
+    public $timestamps = true;
 
     public function jeAdministrator()
     {
