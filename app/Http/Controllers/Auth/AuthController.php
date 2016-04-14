@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\LoginBan;
 use App\Models\Repositories\PrijavaRepository;
 use App\Models\Uporabnik;
 use Illuminate\Http\Request;
@@ -63,16 +64,42 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
+        $loginBan = LoginBan::where('username', $request->request->get('username'))
+            ->where('ip', $request->getClientIp())
+            ->first();
+
+        if (!empty($loginBan)) {
+            if ($loginBan->isBanned()) {
+                return redirect('prijava')
+                    ->with([
+                        'status' => 'danger',
+                        'message' => 'Presegli ste dovoljeno število napačnih prijav. Prijava je onemogočena!'
+                    ]);
+            }
+        } else {
+            $loginBan = LoginBan::create([
+                'username' => $request->request->get('username'),
+                'ip' => $request->getClientIp(),
+                'fail_count' => 0,
+            ]);
+        }
         if (Auth::attempt([
             'username' => $request->request->get('username'),
             'password' => $request->request->get('password'),
             'zeton' => ''
         ])) {
+            $loginBan->resetAttempts();
+            $loginBan->save();
+            
             $authenticatedUser = Auth::user();
             $authenticatedUser->zadnja_prijava = date('Y-m-d H:i:s');
             $authenticatedUser->save();
 
             return redirect()->intended('/');
+        }
+        if (!empty($loginBan)) {
+            $loginBan->incrementLoginAttempts();
+            $loginBan->save();
         }
 
         $message = 'Napačna prijava';
