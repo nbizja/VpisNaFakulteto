@@ -10,4 +10,5 @@ class Element extends Model
     protected $table = 'element';
     protected $fillable = ['ime'];
     protected $guarded = ['id'];
+    public $incrementing = false;
 }
