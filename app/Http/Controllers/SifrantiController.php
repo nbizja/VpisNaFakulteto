@@ -14,11 +14,33 @@ class SifrantiController extends Controller
 {
     public function index()
     {
-        return view('sifranti');
+        if (Auth::check()) {
+            if (Auth::user()->vloga != 'skrbnik') {
+                return redirect('prijava');
+            }
+        }
+
+        $seznam_sifrantov = array('drzava'=>'Država',
+		'drzavljanstvo'=>'Državljanstvo', 'element'=>'Element',
+		'koncana_srednja_sola'=>'Končana srednja šola','kriterij'=>'Kriterij',
+		'matura'=>'Matura', 'matura_predmet'=>'Maturitetni predmet',
+		'obcina'=>'Občina', 'poklic'=>'Poklic', 'posta'=>'Pošta',
+		'srednja_sola'=>'Srednja šola', 'studijski_program'=>'Študijski program',
+        'visokosolski_zavod'=>'Visokošolski zavod', 'vpisni_pogoj'=>'Vpisni pogoj');
+
+        $sifranti_url = url('/sifranti/');
+
+        return view('sifranti_seznam', compact('sifranti_url', 'seznam_sifrantov'));
     }
 
     public function uredi($ime_sifranta)
     {
+        if (Auth::check()) {
+            if (Auth::user()->vloga != 'skrbnik') {
+                return redirect('prijava');
+            }
+        }
+
         $model = NULL;
         switch ($ime_sifranta) {
         case 'drzava':
@@ -137,12 +159,20 @@ class SifrantiController extends Controller
         $grid->edit(url('/sifranti/'. $table_name .'/edit'), 'Uredi','modify|delete');
         $grid->paginate(20);
 
+        $add_url = url('/sifranti/'. $table_name .'/edit');
 
-        return view('sifranti', compact('filter', 'grid', 'title'));
+
+        return view('sifranti', compact('filter', 'grid', 'title', 'add_url'));
     }
 
     public function prikazi($ime_sifranta)
     {
+        if (Auth::check()) {
+            if (Auth::user()->vloga != 'skrbnik') {
+                return redirect('prijava');
+            }
+        }
+
         switch ($ime_sifranta) {
         case 'drzava':
             return $this->prikazi_sifrant('App\Models\Drzava', 'Države', $ime_sifranta);
