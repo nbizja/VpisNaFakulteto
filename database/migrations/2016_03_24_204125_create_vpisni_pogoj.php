@@ -18,7 +18,7 @@ class CreateVpisniPogoj extends Migration
             $table->integer('id_programa')->unsigned();
             $table->string('id_elementa');
             $table->string('tip');
-            $table->timestamps();
+            //$table->timestamps();
         });
     }
 
