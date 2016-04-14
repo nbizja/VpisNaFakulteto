@@ -46,6 +46,13 @@
                              </div>
 
                             <div class="form-group">
+                                <label class="col-md-4 control-label">Ponovi geslo: </label>
+                                <div class="col-md-6">
+                                    <input type="password" class="form-control" name="password_confirmation">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
                                     <button type="submit" class="btn btn-primary">
                                         <i class="fa fa-btn fa-sign-in"></i>Registracija
