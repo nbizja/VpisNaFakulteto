@@ -72,6 +72,25 @@
 
             </div>
 
+            @if (Auth::check())
+                @if (Auth::user()->vloga == 'skrbnik')
+                    <div class="navbar-collapse collapse sidebar-navbar-collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="#">Domov</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Študijski programi<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ action('StudijskiProgrami\StudijskiProgramiController@urediPrograme') }}">Uredi študijski program</a></li>
+                                    <li><a href="{{ action('StudijskiProgrami\StudijskiProgramiController@novProgram') }}">Dodaj nov študijski program</a></li>
+                                    <li><a href="{{ action('StudijskiProgrami\StudijskiProgramiController@seznamProgramov') }}">Seznam študijskih programov</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                @endif
+            @endif
+
+
         </div>
     </nav>
 
@@ -80,6 +99,6 @@
     <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+    <script src="{{ asset('js/functions.js') }}"></script>
 </body>
 </html>

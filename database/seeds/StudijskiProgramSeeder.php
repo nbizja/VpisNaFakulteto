@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Flynsarmy\CsvSeeder\CsvSeeder;
+use App\StudijskiProgram;
 
 
 /**
@@ -57,6 +58,9 @@ class StudijskiProgramSeeder extends CsvSeeder
         } else {
             throw new Exception("$this->data_file ni veljavna datoteka.");
         }
+
+        DB::table('studijski_program')->update(array('stevilo_vpisnih_mest' => 150));
+        DB::table('studijski_program')->update(array('stevilo_mest_po_omejitvi' => 153));
     }
 }
 
