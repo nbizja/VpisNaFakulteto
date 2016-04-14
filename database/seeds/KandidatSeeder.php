@@ -2,7 +2,9 @@
 
 namespace database\seeds;
 
+use App\Models\Enums\VlogaUporabnika;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class KandidatSeeder extends Seeder
 {
@@ -17,12 +19,10 @@ class KandidatSeeder extends Seeder
             'emso' => '1307991500075',
             'ime' => 'Nejc',
             'priimek' => 'Bizjak',
-            'uporabnisko_ime' => 'nb7232',
+            'username' => 'nb7232',
             'email' => 'nb7232@student.uni-lj.si',
-            'geslo' => bcrypt('nb7232'),
-            'obcina_rojstva' => '',
-            'id_drzave' => '',
-            'id_drzavljanstva' => ''
+            'password' => bcrypt('nb7232'),
+            'vloga' => VlogaUporabnika::KANDIDAT
         ]);
     }
 }

@@ -42,6 +42,7 @@
                 <a class="navbar-brand" href="{{ url('/') }}">
                     Vpis v visoko šolstvo
                 </a>
+
             </div>
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
@@ -59,12 +60,38 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{ url('/geslo') }}"><i class="fa fa-btn fa-sign-out"></i>Sprememba gesla</a></li>
                                 <li><a href="{{ url('/odjava') }}"><i class="fa fa-btn fa-sign-out"></i>Odjava</a></li>
                             </ul>
                         </li>
                     @endif
                 </ul>
+                @if (Auth::check())
+                    <p class="navbar-text navbar-right">Zadnja prijava: {{ date('d. m. Y H:i:s', strtotime(Auth::user()->zadnja_prijava)) }}</p>
+                @endif
+
             </div>
+
+            @if (Auth::check())
+                @if (Auth::user()->vloga == 'skrbnik')
+                    <div class="navbar-collapse collapse sidebar-navbar-collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="#">Domov</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Študijski programi<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ action('StudijskiProgrami\StudijskiProgramiController@urediPrograme') }}">Uredi študijski program</a></li>
+                                    <li><a href="{{ action('StudijskiProgrami\StudijskiProgramiController@novProgram') }}">Dodaj nov študijski program</a></li>
+                                    <li><a href="{{ action('StudijskiProgrami\StudijskiProgramiController@seznamProgramov') }}">Seznam študijskih programov</a></li>
+                                </ul>
+                            </li>
+                            <li class="active"><a href="{{ action('SifrantiController@index')}}">Vzdrževanje šifrantov</a></li>
+                        </ul>
+                    </div>
+                @endif
+            @endif
+
+
         </div>
     </nav>
 
@@ -73,6 +100,6 @@
     <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+    <script src="{{ asset('js/functions.js') }}"></script>
 </body>
 </html>
