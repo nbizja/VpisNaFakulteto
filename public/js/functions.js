@@ -25,11 +25,17 @@ $(document).ready(function() {
                 steviloMestOmejitev = $(this).attr('data-mesta_omejitev');
                 nacin = $(this).attr('data-nacin');
                 vrsta = $(this).attr('data-vrsta');
+                omejitev = $(this).attr('data-omejitev');
             }
         });
         $('#stevilo_vpisnih_mest').val(steviloMest);
         $('#stevilo_mest_omejitev').val(steviloMestOmejitev);
         $('#vrsta_studija').val(vrsta);
         $('#nacin_studija').val(nacin);
+        if (omejitev == 1) {
+            $('#omejitev').val("Da");
+        } else {
+            $('#omejitev').val("Ne");
+        }
     });
 });
