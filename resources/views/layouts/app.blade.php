@@ -85,6 +85,7 @@
                                     <li><a href="{{ action('StudijskiProgrami\StudijskiProgramiController@seznamProgramov') }}">Seznam študijskih programov</a></li>
                                 </ul>
                             </li>
+                            <li class="active"><a href="{{ action('SifrantiController@index')}}">Vzdrževanje šifrantov</a></li>
                         </ul>
                     </div>
                 @endif
