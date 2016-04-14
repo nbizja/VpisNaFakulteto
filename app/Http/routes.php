@@ -47,6 +47,8 @@ Route::group(['middleware' => ['prijavljen']], function () {
     Route::get('/sifranti', 'SifrantiController@index');
     Route::get('/sifranti/{ime_sifranta}', 'SifrantiController@prikazi');
     Route::any('/sifranti/{ime_sifranta}/edit', 'SifrantiController@uredi');
+    Route::any('/sifranti/{ime_sifranta}/razveljavi/{id_vnosa}', 'SifrantiController@razveljavi');
+    Route::any('/sifranti/{ime_sifranta}/povrni/{id_vnosa}', 'SifrantiController@povrni');
 });
 
 
