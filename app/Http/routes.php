@@ -15,8 +15,8 @@ Route::get('/helper', function () {
     return view('helper');
 });
 
-//Throttle middleware za 2 min zaklene sistem po 3 neuspešnih poizkusih
-Route::group(['middleware' => ['prijavljen', 'throttle:3,2']], function () {
+
+Route::group(['middleware' => ['prijavljen']], function () {
     Route::post('prijava', 'Auth\AuthController@login');
 });
 
