@@ -25,12 +25,12 @@ class SifrantiController extends Controller
             if (Auth::user()->vloga == 'skrbnik') {
 
                 $seznam_sifrantov = array('drzava'=>'Država',
-                   'drzavljanstvo'=>'Državljanstvo', 'element'=>'Element',
-                   'koncana_srednja_sola'=>'Končana srednja šola','kriterij'=>'Kriterij',
-                   'matura'=>'Matura', 'matura_predmet'=>'Maturitetni predmet',
-                   'obcina'=>'Občina', 'poklic'=>'Poklic', 'posta'=>'Pošta',
-                   'srednja_sola'=>'Srednja šola', 'studijski_program'=>'Študijski program',
-                   'visokosolski_zavod'=>'Visokošolski zavod', 'vpisni_pogoj'=>'Vpisni pogoj');
+                 'drzavljanstvo'=>'Državljanstvo', 'element'=>'Element',
+                 'koncana_srednja_sola'=>'Končana srednja šola','kriterij'=>'Kriterij',
+                 'matura'=>'Matura', 'matura_predmet'=>'Maturitetni predmet',
+                 'obcina'=>'Občina', 'poklic'=>'Poklic', 'posta'=>'Pošta',
+                 'srednja_sola'=>'Srednja šola', 'studijski_program'=>'Študijski program',
+                 'visokosolski_zavod'=>'Visokošolski zavod', 'vpisni_pogoj'=>'Vpisni pogoj');
 
                 $sifranti_url = url('/sifranti/');
                 return view('sifranti_seznam', compact('sifranti_url', 'seznam_sifrantov'));
@@ -163,13 +163,25 @@ class SifrantiController extends Controller
             $col_name = ucfirst(str_replace('_', ' ', $col));
             $grid->add($col, $col_name, true);
         }
-        $grid->edit(url('/sifranti/'. $table_name .'/edit'), 'Uredi','modify|delete');
+        
+        $grid->edit(url('/sifranti/'. $table_name . '/edit'), 'Uredi','modify');
+        $grid->link(url('/sifranti/' . $table_name . '/edit'), "Dodaj vnos", "TR");
         $grid->paginate(20);
 
-        $add_url = url('/sifranti/'. $table_name .'/edit');
+        $key_name = (new $model)->getKeyName();
+        $grid->row(function ($row) use ($key_name, $table_name) {
+            if ($row->cell('vnos_veljaven')->value == true) {
+                $row->cell('vnos_veljaven')->value =
+                '<a href="' . url('/sifranti/'. $table_name . '/razveljavi/' . $row->cell($key_name)->value)  . '">
+                <span class="glyphicon glyphicon-ok"></span></a>';
+            } else {
+                $row->cell('vnos_veljaven')->value =
+                '<a href="' . url('/sifranti/'. $table_name . '/povrni/' . $row->cell($key_name)->value) . '">
+                <span class="glyphicon glyphicon-remove"></span></a>';
+            }
+        });
 
-
-        return view('sifranti', compact('filter', 'grid', 'title', 'add_url'));
+        return view('sifranti', compact('filter', 'grid', 'title'));
     }
 
     public function prikazi($ime_sifranta)
@@ -214,5 +226,113 @@ class SifrantiController extends Controller
         }
 
         return redirect('prijava');
+    }
+
+    public function razveljavi($ime_sifranta, $id_vnosa)
+    {
+        $model = NULL;
+        switch ($ime_sifranta) {
+            case 'drzava':
+            $model = 'App\Models\Drzava'; 
+            break;
+            case 'drzavljanstvo':
+            $model = 'App\Models\Drzavljanstvo'; 
+            break;
+            case 'element':
+            $model = 'App\Models\Element'; 
+            break;
+            case 'koncana_srednja_sola':
+            $model = 'App\Models\KoncanaSrednjaSola'; 
+            break;
+            case 'kriterij':
+            $model = 'App\Models\Kriterij'; 
+            break;
+            case 'matura':
+            $model = 'App\Models\Matura'; 
+            break;
+            case 'matura_predmet':
+            $model = 'App\Models\MaturaPredmet'; 
+            break;
+            case 'obcina':
+            $model = 'App\Models\Obcina'; 
+            break;
+            case 'poklic':
+            $model = 'App\Models\Poklic';
+            break;
+            case 'posta':
+            $model = 'App\Models\Posta'; 
+            break;
+            case 'srednja_sola':
+            $model = 'App\Models\SrednjaSola';
+            break;
+            case 'studijski_program':
+            $model = 'App\Models\StudijskiProgram'; 
+            break;
+            case 'visokosolski_zavod':
+            $model = 'App\Models\VisokosolskiZavod';
+            break;
+            case 'vpisni_pogoj':
+            $model = 'App\Models\VpisniPogoj';
+            break;
+            default:
+            return redirect('prijava');
+        }
+        $key_name = (new $model)->getKeyName();
+        $model::where($key_name, $id_vnosa)->update(['vnos_veljaven' => false]);
+        return back()->with('message', 'Posodobitev uspešna!');
+    }
+
+    public function povrni($ime_sifranta, $id_vnosa)
+    {
+        $model = NULL;
+        switch ($ime_sifranta) {
+            case 'drzava':
+            $model = 'App\Models\Drzava'; 
+            break;
+            case 'drzavljanstvo':
+            $model = 'App\Models\Drzavljanstvo'; 
+            break;
+            case 'element':
+            $model = 'App\Models\Element'; 
+            break;
+            case 'koncana_srednja_sola':
+            $model = 'App\Models\KoncanaSrednjaSola'; 
+            break;
+            case 'kriterij':
+            $model = 'App\Models\Kriterij'; 
+            break;
+            case 'matura':
+            $model = 'App\Models\Matura'; 
+            break;
+            case 'matura_predmet':
+            $model = 'App\Models\MaturaPredmet'; 
+            break;
+            case 'obcina':
+            $model = 'App\Models\Obcina'; 
+            break;
+            case 'poklic':
+            $model = 'App\Models\Poklic';
+            break;
+            case 'posta':
+            $model = 'App\Models\Posta'; 
+            break;
+            case 'srednja_sola':
+            $model = 'App\Models\SrednjaSola';
+            break;
+            case 'studijski_program':
+            $model = 'App\Models\StudijskiProgram'; 
+            break;
+            case 'visokosolski_zavod':
+            $model = 'App\Models\VisokosolskiZavod';
+            break;
+            case 'vpisni_pogoj':
+            $model = 'App\Models\VpisniPogoj';
+            break;
+            default:
+            return redirect('prijava');
+        }
+        $key_name = (new $model)->getKeyName();
+        $model::where($key_name, $id_vnosa)->update(['vnos_veljaven' => true]);
+        return back()->with('message', 'Posodobitev uspešna!');
     }
 }
