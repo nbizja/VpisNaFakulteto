@@ -43,6 +43,7 @@ Route::group(['middleware' => ['prijavljen']], function () {
     Route::post('kreiranjeRacuna/zaposleni', 'AddEmployeeController@validateInput');
 
     Route::get('seznamKandidatov', 'ListOfCandidatesController@loadPage');
+    Route::post('seznamKandidatov', 'ListOfCandidatesController@getList');
 
     Route::get('api/dropdown', function(){
         $id = Input::get('option');
@@ -54,9 +55,13 @@ Route::group(['middleware' => ['prijavljen']], function () {
 
 Route::get('/seznamKandidatov/{zavod_id?}', function($zavod_id){
     $zavodi =  \App\VisokosolskiZavod::orderBy('ime')->pluck('id');
-    $zavod_id = $zavodi[$zavod_id];
-    $programi = \App\StudijskiProgram::where('id_zavoda', '=', $zavod_id)->orderBy('ime')->pluck('ime');
-    return Response::json($programi);
+    if($zavod_id > 0) {
+        $zavod_id = $zavodi[$zavod_id - 1];
+        $programi = \App\StudijskiProgram::where('id_zavoda', '=', $zavod_id)->orderBy('ime')->pluck('ime');
+        return Response::json($programi);
+    }
+    else return Response::json();
+
 });
 
 
