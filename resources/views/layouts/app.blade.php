@@ -89,6 +89,14 @@
                         </ul>
                     </div>
                 @endif
+                @if (Auth::user()->vloga == 'admin')
+                    <div class="navbar-collapse collapse sidebar-navbar-collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="#">Domov</a></li>
+                            <li class=""><a href="{{ action('AddEmployeeController@loadPage')}}">Ustvari račun za zaposlene</a></li>
+                        </ul>
+                    </div>
+                @endif
             @endif
 
 

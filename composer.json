@@ -7,8 +7,7 @@
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
-        "guzzlehttp/guzzle": "~5.3|~6.0",
-        "doctrine/dbal": "v2.5.4"
+        "guzzlehttp/guzzle": "~5.3|~6.0"
     },
 
     "require-dev": {
@@ -19,7 +18,7 @@
         "symfony/dom-crawler": "2.8.*|3.0.*",
         "laravel/homestead": "^3.0",
         "doctrine/dbal": "v2.5.4",
-	    "flynsarmy/csv-seeder": "1.0.*",
+        "flynsarmy/csv-seeder": "1.0.*",
         "zofe/rapyd": "2.2.*"
     },
     "autoload": {

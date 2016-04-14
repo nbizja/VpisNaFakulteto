@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Enums\VlogaUporabnika;
 use DB;
+use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
 use Illuminate\Http\Request;
 use App\Models\Uporabnik;
+use App\Models\VisokosolskiZavod;
 
 class AddEmployeeController extends Controller
 {
@@ -17,7 +19,10 @@ class AddEmployeeController extends Controller
 
     public function loadPage()
     {
-        return view('add_employee');
+        return view('add_employee')
+            ->with([
+                'vz' => VisokosolskiZavod::orderBy('ime')->pluck('ime')
+        ]);
     }
 
     public function validateInput(Request $request)
@@ -28,6 +33,15 @@ class AddEmployeeController extends Controller
         $surname = $request->get('surname');
         $password1 = $request->get('password1');
         $password2 = $request->get('password2');
+        $vloga= $request->get('vloga');
+
+        if($vloga == 'v1') $vloga1 = VlogaUporabnika::SKRBNIK_PROGRAMA;
+        else {
+            $vloga1 = VlogaUporabnika::FAKULTETA;
+            $faks = $request->get('zavod');
+            $faksi = VisokosolskiZavod::orderBy('ime')->pluck('id');
+            $id_faksa = $faksi[$faks];
+        }
 
         $message1 = '';
         $message2 = '';
@@ -69,8 +83,13 @@ class AddEmployeeController extends Controller
 
         if($isValid) {
             DB::table('uporabnik')->insert([
-                'ime' => $name, 'priimek' => $surname, 'email' => $email, 'password' =>  bcrypt($password1), 'username' => $username, 'vloga' => VlogaUporabnika::SKRBNIK_PROGRAMA
+                'ime' => $name, 'priimek' => $surname, 'email' => $email, 'password' =>  bcrypt($password1), 'username' => $username, 'vloga' => $vloga1
             ]);
+
+            if($vloga == 'v2') {
+                $uporabnik = Uporabnik::where('username', '=', $username)->first();
+                VisokosolskiZavod::where('id', '=', $id_faksa)->update(['id_skrbnika' => $uporabnik->id]);
+            }
 
             $message0 = 'Uporabniški račun '. $username .' je bil uspešno ustvarjen!';
 
