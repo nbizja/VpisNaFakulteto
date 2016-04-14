@@ -54,7 +54,7 @@ class RegisterController extends Controller
         $messages = [
             'required' => "Zahtevana je izpolnjenost vseh polj.",
             'email' => "Email naslov neveljaven.",
-            'password.regex' => "Geslo mora biti alfa-numerično.",
+            'password.regex' => "Geslo mora vsebovati vsaj eno števko.",
             'password.min' => "Geslo mora vsebovati vsaj :min znakov.",
             'email.unique' => "Email je že v uporabi.",
             'username.unique' => "Uporabniško ime je že v uporabi.",
@@ -64,7 +64,7 @@ class RegisterController extends Controller
             'ime' => 'required|max:30',
             'priimek' => 'required|max:30',
             'email' => 'required|email|max:30|unique:uporabnik,email',
-            'password' => 'required|min:8|regex:/^(?=.*[^a-zA-Z])/',
+            'password' => 'required|min:8|regex:/^(?=.*[^a-zA-Z])/|Confirmed',
             'username' => 'required|max:30|unique:uporabnik,username',
         ], $messages);
 
@@ -98,7 +98,7 @@ class RegisterController extends Controller
     {
         $user = $this->prijava->uporabnikByZeton($zeton);
         if (!empty($user)) {
-            if ($user->created_at < date('Y-m-d H:i:s', strtotime('- 1 min'))) {
+            if ($user->created_at < date('Y-m-d H:i:s', strtotime('- 5 min'))) {
                 $user->forceDelete();
                 return view('auth.register')
                     ->with(['comment' => 'timeout']);
