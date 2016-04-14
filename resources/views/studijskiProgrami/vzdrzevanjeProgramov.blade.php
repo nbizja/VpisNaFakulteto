@@ -29,7 +29,7 @@
                                     <option selected data-fakulteta="-1" value="">Izberite program izbranega visokošolskega zavoda.</option>
                                     @foreach($programi as $program)
                                         <option data-fakulteta="{{ $program->id_zavoda }}" data-mesta="{{ $program->stevilo_vpisnih_mest }}" data-mesta_omejitev="{{ $program->stevilo_mest_po_omejitvi }}"
-                                                data-nacin="{{$program->nacin_studija}}" data-vrsta="{{$program->vrsta}}" value="{{$program->id}}" style="display:none">{{$program->ime}}</option>
+                                                data-omejitev="{{$program->omejitev_vpisa}}" data-nacin="{{$program->nacin_studija}}" data-vrsta="{{$program->vrsta}}" value="{{$program->id}}" style="display:none">{{$program->ime}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -44,6 +44,13 @@
                             <label class="col-md-4 control-label">Število razpisanih vpisnih mest: </label>
                             <div class="col-md-6">
                                 <input type="text" id="stevilo_vpisnih_mest" class="form-control" name="stevilo_mest">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Omejitev vpisa: </label>
+                            <div class="col-md-6">
+                                <input type="text" id="omejitev" class="form-control" name="omejitev">
                             </div>
                         </div>
 

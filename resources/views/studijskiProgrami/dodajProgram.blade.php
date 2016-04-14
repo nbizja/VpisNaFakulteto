@@ -56,6 +56,16 @@
                         </div>
 
                         <div class="form-group">
+                            <label class="col-md-4 control-label">Omejitev_vpisa: </label>
+                            <div class="col-md-6">
+                                <select class="form-control" id="omejitev">
+                                    <option value="da">Da</option>
+                                    <option value="ne">Ne</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label class="col-md-4 control-label">Število mest po omejitvi vpisa: </label>
                             <div class="col-md-6">
                                 <input type="text" id="stevilo_mest_omejitev" class="form-control" name="stevilo_mest_omejitev">

@@ -70,6 +70,12 @@ class StudijskiProgramiController extends Controller
             $program->stevilo_mest_po_omejitvi = $request->request->get('stevilo_mest_omejitev');
             $program->nacin_studija = $request->request->get('nacin_studija');
             $program->vrsta = $request->request->get('vrsta_studija');
+            if ($request->request->get('omejitev') == "Da") {
+                $program->omejitev_vpisa = '1';
+            } else {
+                $program->omejitev_vpisa = '0';
+            }
+
             $program->save();
         } else {
             $program->forceDelete();
@@ -106,12 +112,19 @@ class StudijskiProgramiController extends Controller
             $nacin = 'Redni';
         }
 
+        if ($request->request->get('omejitev') == 'da') {
+            $omejitev = '1';
+        } else {
+            $omejitev = '0';
+        }
+
         StudijskiProgram::create([
             'id_zavoda' => $request->request->get('fakulteta'),
             'sifra' => $request->request->get('sifra'),
             'ime' => $request->request->get('naziv'),
             'nacin_studija' => $nacin,
             'vrsta' => $vrsta,
+            'omejitev_vpisa' => $omejitev,
             'stevilo_vpisnih_mest' => $request->request->get('stevilo_mest'),
             'stevilo_mest_po_omejitvi' => $request->request->get('stevilo_mest_omejitev'),
         ]);
