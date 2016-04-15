@@ -156,6 +156,11 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /*
+         * Zofe Rapyd Widgets Provider...
+         */
+        Zofe\Rapyd\RapydServiceProvider::class
+
     ],
 
     /*
