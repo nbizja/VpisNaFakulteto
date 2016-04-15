@@ -104,4 +104,35 @@ class ProfilController extends Controller
         return redirect('pozabljeno_geslo')->with('success', 'success');
     }
 
+    public function potrditevMenjave($zeton)
+    {
+        $pozabljenoGeslo = PozabljenoGeslo::where('zeton', $zeton)->first();
+
+        if (empty($pozabljenoGeslo)) {
+            return redirect('pozabljeno_geslo')->with('errors', [
+                'Neveljaven žeton!'
+            ]);
+        }
+
+        if ($pozabljenoGeslo->veljavnost < date('Y-m-d H:i:s')) {
+            return redirect('pozabljeno_geslo')->with('errors', [
+                'Veljavnost žetona je potekla!'
+            ]);
+        }
+
+        $uporabnik = Uporabnik::where('id', $pozabljenoGeslo->id_uporabnika)->first();
+
+        $uporabnik->password = $pozabljenoGeslo->novo_geslo;
+        $uporabnik->save();
+
+        $pozabljenoGeslo->novo_geslo = '';
+        $pozabljenoGeslo->zeton = '';
+        $pozabljenoGeslo->veljavnost = date('Y-m-d H:i:s');
+        $pozabljenoGeslo->save();
+
+        return redirect('prijava')
+            ->with('status', 'success')
+            ->with('message', 'Prijavite se lahko z novim geslom');
+    }
+
 }
