@@ -33,5 +33,13 @@ class Uporabnik extends Model implements AuthenticatableContract, CanResetPasswo
     {
         return $this->vloga = VlogaUporabnika::KANDIDAT;
     }
+    public function prikazVloge()
+    {
+        if ($this->vloga == VlogaUporabnika::SKRBNIK_PROGRAMA) {
+                return 'VPIS';
+        }
+
+        return ucfirst($this->vloga);
+    }
 
 }

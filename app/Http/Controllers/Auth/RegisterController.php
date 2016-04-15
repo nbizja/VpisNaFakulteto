@@ -78,16 +78,16 @@ class RegisterController extends Controller
         $user = $this->prijava->uporabnikByEmail($request->request->get('email'));
         $user->vloga = VlogaUporabnika::KANDIDAT;
         $user->save();
-        $this->sendActivationEmail($request->request->get('email'), $request->url());
+        $this->sendActivationEmail($request->request->get('email'), $request->url(), $user);
         
         return view('auth.register')
             ->with(['success' => 'success']);
 
     }
 
-    public function sendActivationEmail($email, $url)
+    public function sendActivationEmail($email, $url, $user)
     {
-        Mail::send('auth.emails.registration', ['user' => $this->prijava->uporabnikByEmail($email), 'url' => $url], function ($m) use($email){
+        Mail::send('auth.emails.registration', ['user' => $user, 'url' => $url], function ($m) use($email){
             $m->from('skrbnik@faks.me', 'Vpis v visoko šolstvo.');
             $m->to($email)->subject('Aktivacija računa');
         });
