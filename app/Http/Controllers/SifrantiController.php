@@ -124,10 +124,20 @@ class SifrantiController extends Controller
                 $edit = \DataEdit::source(new $model);
                 $edit->link('sifranti/' . $ime_sifranta, 'Nazaj', 'TR')->back();
                 $fields = \DB::getSchemaBuilder()->getColumnListing($table_name);
+                $m = new $model;
                 foreach($fields as $field)
                 {
+                    if (!in_array($field, $m->getFillable())) {
+                        continue;
+                    }
                     $field_name = ucfirst(str_replace('_', ' ', $field));
-                    $edit->add($field, $field_name, 'text');
+                    if ($field == 'vnos_veljaven') {
+                        $edit->add($field, $field_name, 'checkbox');
+                    } elseif ($field == 'ime') {
+                        $edit->add($field, $field_name, 'text')->rule('required');
+                    } else {
+                        $edit->add($field, $field_name, 'text');
+                    }
                 }
 
                 return $edit->view('sifrant_uredi', compact('edit', 'title'));
