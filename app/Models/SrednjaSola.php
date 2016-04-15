@@ -8,6 +8,6 @@ class SrednjaSola extends Model
 {
     public $timestamps = false;
     protected $table = 'srednja_sola';
-    protected $fillable = ['ime'];
+    protected $fillable = ['ime', 'vnos_veljaven'];
     protected $guarded = ['id'];
 }

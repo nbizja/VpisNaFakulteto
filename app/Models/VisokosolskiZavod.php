@@ -8,6 +8,6 @@ class VisokosolskiZavod extends Model
 {    
     public $timestamps = false;
     protected $table = 'visokosolski_zavod';
-    protected $fillable = ['ime', 'kratica', 'id_obcine', 'id_skrbnika'];
+    protected $fillable = ['ime', 'kratica', 'id_obcine', 'id_skrbnika', 'vnos_veljaven'];
     protected $guarded = ['id'];
 }

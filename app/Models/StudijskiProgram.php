@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class StudijskiProgram extends Model
 {
     protected $table = 'studijski_program';
-    protected $fillable = ['sifra', 'vrsta', 'id_zavoda', 'nacin_studija', 'ime', 'stevilo_vpisnih_mest', 'stevilo_mest_po_omejitvi', 'omejitev_vpisa'];
+    protected $fillable = ['sifra', 'vrsta', 'id_zavoda', 'nacin_studija', 'ime', 'stevilo_vpisnih_mest', 'stevilo_mest_po_omejitvi', 'omejitev_vpisa', 'vnos_veljaven'];
     protected $guarded = ['id'];
     public $timestamps = false;
 

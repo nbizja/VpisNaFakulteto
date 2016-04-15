@@ -8,6 +8,6 @@ class Posta extends Model
 {
     public $timestamps = false;
     protected $table = 'posta';
-    protected $fillable = ['ime', 'postna_stevilka'];
+    protected $fillable = ['ime', 'postna_stevilka', 'vnos_veljaven'];
     public $primaryKey = 'postna_stevilka';
 }

@@ -8,6 +8,6 @@ class Obcina extends Model
 {
     public $timestamps = false;
     protected $table = 'obcina';
-    protected $fillable = ['ime'];
+    protected $fillable = ['ime', 'vnos_veljaven'];
     protected $guarded = ['id'];
 }
