@@ -67,7 +67,7 @@
                                 </div>
                             @endif
 
-                            @if (isset($success))
+                            @if (!empty(session('success')))
                                 <div class="alert alert-success">
                                     Registracija je bila uspešna. Na vaš email naslov so bili poslani aktivacijski podatki.
                                 </div>
