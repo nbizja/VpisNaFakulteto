@@ -66,7 +66,7 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label">Omejitev vpisa: </label>
                             <div class="col-md-6">
-                                <select class="form-control" id="omejitev">
+                                <select class="form-control" id="omejitev" name="omejitev">
                                     <option value="da">Da</option>
                                     <option value="ne">Ne</option>
                                 </select>
@@ -88,7 +88,7 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label">Način študija: </label>
                             <div class="col-md-6">
-                                <select class="form-control" id="nacin_studija">
+                                <select class="form-control" id="nacin_studija"  name="nacin_studija">
                                         <option value="redni">Redni</option>
                                         <option value="izredni">Izredni</option>
                                 </select>
@@ -98,7 +98,7 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label">Vrsta študija: </label>
                             <div class="col-md-6">
-                                <select class="form-control" id="vrsta_studija">
+                                <select class="form-control" id="vrsta_studija" name="vrsta_studija">
                                     <option value="un">Univerzitetni</option>
                                     <option value="vs">Visokošolski strokovni</option>
                                 </select>
