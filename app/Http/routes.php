@@ -20,9 +20,13 @@ Route::group(['middleware' => ['prijavljen']], function () {
     Route::post('prijava', 'Auth\AuthController@login');
 });
 
-Route::get('registracija', 'Auth\RegisterController@showRegister');
-Route::post('registracija', 'Auth\RegisterController@register');
-Route::get('registracija/{zeton?}', 'Auth\RegisterController@showActivation');
+Route::group(['middleware' => ['web']], function () {
+    Route::get('registracija', 'Auth\RegisterController@showRegister');
+    Route::post('registracija', 'Auth\RegisterController@register');
+    Route::get('registracija/{zeton?}', 'Auth\RegisterController@showActivation');
+});
+
+
 
 //Uporabnik mora biti prijavljen za dosto do teh strani
 Route::group(['middleware' => ['prijavljen']], function () {

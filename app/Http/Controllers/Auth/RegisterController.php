@@ -70,8 +70,9 @@ class RegisterController extends Controller
 
 
         if(!$validator->passes()) {
-            return view('auth.register')
-                ->with(['errors' => $validator->errors()->all()]);
+            return redirect('registracija')
+                ->withInput()
+                ->with('errors', $validator->errors()->all());
 
         }
 
@@ -81,8 +82,8 @@ class RegisterController extends Controller
         $user->save();
         $this->sendActivationEmail($request->request->get('email'), $request->url(), $user);
         
-        return view('auth.register')
-            ->with(['success' => 'success']);
+        return redirect('registracija')
+            ->with('success', 'success');
 
     }
 
