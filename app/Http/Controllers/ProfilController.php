@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Logic\Validators;
 use App\Models\PozabljenoGeslo;
+use App\Models\Repositories\PrijavaRepository;
 use App\Models\Uporabnik;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -14,6 +15,16 @@ use Illuminate\Support\Facades\Validator;
 
 class ProfilController extends Controller
 {
+    /**
+     * @var PrijavaRepository
+     */
+    private $prijavaRepository;
+
+    public function __construct(PrijavaRepository $prijavaRepository)
+    {
+        $this->prijavaRepository = $prijavaRepository;
+    }
+
     public function index()
     {
         return view('profil');
@@ -71,11 +82,9 @@ class ProfilController extends Controller
         if (!$validator->passes()) {
             $errors = array_merge($errors, $validator->errors()->all());
         }
-        
-        $uporabnik = Uporabnik::where('email', $request->request->get('email'))
-            ->where('username', $request->request->get('username'))
-            ->first();
-        
+
+        $uporabnik = $this->prijavaRepository->uporabnikByEmailAndUsername($request->request->get('email'), $request->request->get('username'));
+
         if (empty($uporabnik)) {
             $errors[] = 'Uporabnik s tem emailom in uporabniškim geslom ne obstaja.';
         }
@@ -120,7 +129,7 @@ class ProfilController extends Controller
             ]);
         }
 
-        $uporabnik = Uporabnik::where('id', $pozabljenoGeslo->id_uporabnika)->first();
+        $uporabnik = Uporabnik::find($pozabljenoGeslo->id_uporabnika);
 
         $uporabnik->password = $pozabljenoGeslo->novo_geslo;
         $uporabnik->save();
