@@ -16,7 +16,7 @@ class Validators
     public static function passwordMessage($imePolja)
     {
         return [
-            $imePolja .'.regex' => "Geslo mora biti alfa-numerično.",
+            $imePolja .'.regex' => "Geslo mora biti vsebovati vsaj eno črko in števko.",
             $imePolja .'.min' => "Geslo mora vsebovati vsaj :min znakov.",
             'required' => "Zahtevana je izpolnjenost vseh polj.",
         ] ;
