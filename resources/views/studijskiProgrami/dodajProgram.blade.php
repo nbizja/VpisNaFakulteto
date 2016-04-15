@@ -15,6 +15,14 @@
             <div class="panel-group">
                 {!! csrf_field() !!}
 
+                @if (isset($failure))
+                    <div class="alert alert-danger">
+                        @foreach (array_unique($failure) as $e)
+                            {{ $e }}<br>
+                        @endforeach
+                    </div>
+                @endif
+
                 <div class="panel panel-default">
                     <div class="panel-heading">Študijski program</div>
                     <div class="panel-body">
