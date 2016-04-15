@@ -44,7 +44,7 @@
                                     <i class="fa fa-btn fa-sign-in"></i>Prijava
                                 </button>
 
-                                <a class="btn btn-link" href="{{ url('/pozabljeno-geslo') }}">Pozabljeno geslo?</a>
+                                <a class="btn btn-link" href="{{ url('pozabljeno_geslo') }}">Pozabljeno geslo?</a>
                             </div>
                         </div>
                         @include('flash_message')

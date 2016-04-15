@@ -40,9 +40,9 @@ Route::group(['middleware' => ['prijavljen']], function () {
 
     Route::get('/geslo', 'ProfilController@index');
     Route::post('/geslo/ponastavi', 'ProfilController@ponastaviGeslo');
-    Route::get('/pozabljeno-geslo', 'ProfilController@pozabljenoGeslo');
-    Route::post('/pozabljeno-geslo', 'ProfilController@posljiGeslo');
-    Route::get('/pozabljeno-geslo/{zeton}', 'ProfilController@potrditevMenjave');
+    Route::get('/pozabljeno_geslo', 'ProfilController@pozabljenoGeslo');
+    Route::post('/pozabljeno_geslo', 'ProfilController@posljiGeslo');
+    Route::get('/pozabljeno_geslo/{zeton}', 'ProfilController@potrditevMenjave');
 
     Route::get('kreiranjeRacuna/zaposleni', 'AddEmployeeController@loadPage');
     Route::post('kreiranjeRacuna/zaposleni', 'AddEmployeeController@validateInput');

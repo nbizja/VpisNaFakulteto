@@ -12,7 +12,9 @@ class CreateMenjavaGeslaTable extends Migration
      */
     public function up()
     {
-        Schema::table('menjava_gesla', function (Blueprint $table) {
+        Schema::create('pozabljeno_geslo', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+
             $table->increments('id');
             $table->integer('id_uporabnika');
             $table->string('novo_geslo');
@@ -29,6 +31,6 @@ class CreateMenjavaGeslaTable extends Migration
      */
     public function down()
     {
-        Schema::drop('menjava_gesla');
+        Schema::drop('pozabljeno_geslo');
     }
 }

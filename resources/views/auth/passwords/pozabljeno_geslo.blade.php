@@ -8,7 +8,7 @@
                     <div class="panel-heading">Pozabljeno geslo</div>
 
                     <div class="panel-body">
-                        <form class="form-horizontal" role="form" method="POST" action="{{ url('pozabljeno-geslo') }}">
+                        <form class="form-horizontal" role="form" method="POST" action="{{ url('pozabljeno_geslo') }}">
                             {!! csrf_field() !!}
 
                             <div class="form-group">
