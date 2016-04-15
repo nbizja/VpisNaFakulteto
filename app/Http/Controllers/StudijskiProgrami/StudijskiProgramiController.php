@@ -8,15 +8,15 @@
 
 namespace App\Http\Controllers\StudijskiProgrami;
 
-use App\Models\Enums\VrstaStudija;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Enums\NacinStudija;
 use App\Models\Repositories\StudijskiProgramiRepository;;
 use App\Models\StudijskiProgram;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 
 class StudijskiProgramiController extends Controller
 {
@@ -116,37 +116,58 @@ class StudijskiProgramiController extends Controller
 
     public function dodajProgram(Request $request)
     {
-        if ($request->request->get('vrsta_studija') == 'un') {
-            $vrsta = 'Univerzitetni';
+
+        $messages = [
+            'required' => "Zahtevana je izpolnjenost šifre in naziva.",
+            'numeric' => "Neveljaven vnos.",
+        ];
+
+        $validator = Validator::make($request->all(), [
+            'naziv' => 'required',
+            'sifra' => 'required',
+            'stevilo_mest' => 'numeric',
+            'stevilo_mest_omejitev' => 'numeric'
+        ], $messages);
+
+
+        if(!$validator->passes()) {
+            $fakultete = $this->studijskiProgrami->ZavodiAll();
+            return view('studijskiProgrami.dodajProgram', ['fakultete' => $fakultete])
+                ->with(['failure' => $validator->errors()->all()]);
+
         } else {
-            $vrsta = 'Visokošolski strokovni';
+            if ($request->request->get('vrsta_studija') == 'un') {
+                $vrsta = 'Univerzitetni';
+            } else {
+                $vrsta = 'Visokošolski strokovni';
+            }
+
+            if ($request->request->get('nacin_studija') == 'izredni') {
+                $nacin = 'Izredni';
+            } else {
+                $nacin = 'Redni';
+            }
+
+            if ($request->request->get('omejitev') == 'da') {
+                $omejitev = '1';
+            } else {
+                $omejitev = '0';
+            }
+
+            StudijskiProgram::create([
+                'id_zavoda' => $request->request->get('fakulteta'),
+                'sifra' => $request->request->get('sifra'),
+                'ime' => $request->request->get('naziv'),
+                'nacin_studija' => $nacin,
+                'vrsta' => $vrsta,
+                'omejitev_vpisa' => $omejitev,
+                'stevilo_vpisnih_mest' => $request->request->get('stevilo_mest'),
+                'stevilo_mest_po_omejitvi' => $request->request->get('stevilo_mest_omejitev'),
+            ]);
+
+            $programi = $this->studijskiProgrami->ProgramiAll()->sortBy('visokosolskiZavod.ime');
+            return redirect('studijskiProgrami/seznam')->with('programi',  $programi);
         }
-
-        if ($request->request->get('nacin_studija') == 'izredni') {
-            $nacin = 'Izredni';
-        } else {
-            $nacin = 'Redni';
-        }
-
-        if ($request->request->get('omejitev') == 'da') {
-            $omejitev = '1';
-        } else {
-            $omejitev = '0';
-        }
-
-        StudijskiProgram::create([
-            'id_zavoda' => $request->request->get('fakulteta'),
-            'sifra' => $request->request->get('sifra'),
-            'ime' => $request->request->get('naziv'),
-            'nacin_studija' => $nacin,
-            'vrsta' => $vrsta,
-            'omejitev_vpisa' => $omejitev,
-            'stevilo_vpisnih_mest' => $request->request->get('stevilo_mest'),
-            'stevilo_mest_po_omejitvi' => $request->request->get('stevilo_mest_omejitev'),
-        ]);
-
-        $programi = $this->studijskiProgrami->ProgramiAll()->sortBy('visokosolskiZavod.ime');
-        return redirect('studijskiProgrami/seznam')->with('programi',  $programi);
     }
 
 }

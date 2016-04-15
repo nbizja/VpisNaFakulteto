@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth;
 use App\Models\Enums\VlogaUporabnika;
 use App\Models\Logic\Registracija;
 use App\Models\Repositories\PrijavaRepository;
-use App\Models\Uporabnik;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
