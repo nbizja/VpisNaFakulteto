@@ -15,8 +15,8 @@ Route::get('/helper', function () {
     return view('helper');
 });
 
-//Throttle middleware za 2 min zaklene sistem po 3 neuspešnih poizkusih
-Route::group(['middleware' => ['prijavljen', 'throttle:3,2']], function () {
+
+Route::group(['middleware' => ['prijavljen']], function () {
     Route::post('prijava', 'Auth\AuthController@login');
 });
 
@@ -56,6 +56,9 @@ Route::group(['middleware' => ['prijavljen']], function () {
     Route::get('/sifranti', 'SifrantiController@index');
     Route::get('/sifranti/{ime_sifranta}', 'SifrantiController@prikazi');
     Route::any('/sifranti/{ime_sifranta}/edit', 'SifrantiController@uredi');
+
+    Route::any('/sifranti/{ime_sifranta}/razveljavi/{id_vnosa}', 'SifrantiController@razveljavi');
+    Route::any('/sifranti/{ime_sifranta}/povrni/{id_vnosa}', 'SifrantiController@povrni');
 
 });
 

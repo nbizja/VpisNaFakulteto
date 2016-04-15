@@ -22,7 +22,7 @@ class CreatePoklicnaMaturaPredmet extends Migration
             $table->integer('ocena_3_letnik');
             $table->integer('ocena_4_letnik');
             $table->string('tip_predmeta');
-            $table->timestamps();
+            //$table->timestamps();
         });
     }
 

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddTimestampsToStudijskiProgram extends Migration
+class AddVnosVeljavenDrzava extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,8 @@ class AddTimestampsToStudijskiProgram extends Migration
      */
     public function up()
     {
-        Schema::table('studijski_program', function(Blueprint $table){
-            $table->timestamps();
+        Schema::table('drzava', function (Blueprint $table) {
+            $table->boolean('vnos_veljaven')->default(true)->nullable();
         });
     }
 
@@ -24,8 +24,8 @@ class AddTimestampsToStudijskiProgram extends Migration
      */
     public function down()
     {
-        Schema::table('studijski_program', function (Blueprint $table) {
-            $table->dropTimestamps();
+        Schema::table('drzava', function (Blueprint $table) {
+            $table->dropColumn('vnos_veljaven');
         });
     }
 }

@@ -19,7 +19,7 @@ class CreateVisokosolskiZavod extends Migration
             $table->integer('id_skrbnika')->unsigned();
             $table->string('ime');
             $table->string('kratica');
-            $table->timestamps();
+            //$table->timestamps();
         });
     }
 

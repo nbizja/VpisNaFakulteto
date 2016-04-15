@@ -26,7 +26,7 @@ class CreateMatura extends Migration
             $table->integer('id_srednje_sole')->unsigned();
             $table->integer('id_poklica')->unsigned();
             $table->integer('maksimum');
-            $table->timestamps();
+            //$table->timestamps();
         });
     }
 

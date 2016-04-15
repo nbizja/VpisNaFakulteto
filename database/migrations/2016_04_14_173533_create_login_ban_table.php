@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVpisniPogoj extends Migration
+class CreateLoginBanTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,14 @@ class CreateVpisniPogoj extends Migration
      */
     public function up()
     {
-        Schema::create('vpisni_pogoj', function(BluePrint $table) { 
+        Schema::create('login_ban', function(BluePrint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->integer('id_programa')->unsigned();
-            $table->string('id_elementa');
-            $table->string('tip');
-            //$table->timestamps();
+            $table->ipAddress('ip');
+            $table->string('username');
+            $table->integer('fail_count')->unsigned();
+            $table->dateTime('ban_expire')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -29,7 +30,6 @@ class CreateVpisniPogoj extends Migration
      */
     public function down()
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS = 0;');
-        Schema::drop('vpisni_pogoj');
+        Schema::drop('login_ban');
     }
 }

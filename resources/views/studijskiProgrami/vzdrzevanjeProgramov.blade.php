@@ -50,7 +50,10 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label">Omejitev vpisa: </label>
                             <div class="col-md-6">
-                                <input type="text" id="omejitev" class="form-control" name="omejitev">
+                                <select class="form-control" id="omejitev" name="omejitev">
+                                    <option value="da">Da</option>
+                                    <option value="ne">Ne</option>
+                                </select>
                             </div>
                         </div>
 
@@ -69,14 +72,20 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label">Način študija: </label>
                             <div class="col-md-6">
-                                <input type="text" id="nacin_studija" class="form-control" name="nacin_studija">
+                                <select class="form-control" name="nacin_studija" id="nacin_studija">
+                                    <option value="redni">Redni</option>
+                                    <option value="izredni">Izredni</option>
+                                </select>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-md-4 control-label">Vrsta študija: </label>
                             <div class="col-md-6">
-                                <input type="text" id="vrsta_studija" class="form-control" name="vrsta_studija">
+                                <select class="form-control" name="vrsta_studija" id="vrsta_studija">
+                                    <option value="un">Univerzitetni</option>
+                                    <option value="vs">Visokošolski strokovni</option>
+                                </select>
                             </div>
                         </div>
                     </div>

@@ -36,7 +36,7 @@ class LoginTest extends TestCase
         $this->assertEquals($this->baseUrl, $response->headers->get('location'));
     }
 
-    public function test_prijava_nepotrjenega_uporabnika()
+    /*public function test_prijava_nepotrjenega_uporabnika()
     {
         Uporabnik::create([
             'username' => 'nepotrjeni',
@@ -45,7 +45,7 @@ class LoginTest extends TestCase
         ]);
         $response = $this->call('POST', 'prijava', ['username' => 'nepotrjeni', 'password' => 'geslo']);
         $this->assertEquals($this->baseUrl . '/prijava', $response->headers->get('location'));
-    }
+    }*/
 
     public function test_zaklepanje_prijave()
     {
