@@ -10,4 +10,9 @@ class Drzavljanstvo extends Model
     protected $table = 'drzavljanstvo';
     protected $fillable = ['ime', 'vnos_veljaven'];
     protected $guarded = ['id'];
+	protected $required = ['ime'];
+    public function getRequired()
+    {
+        return $this->required;
+    }
 }

@@ -10,4 +10,9 @@ class Drzava extends Model
     protected $table = 'drzava';
     protected $fillable = ['ime', 'eu', 'vnos_veljaven'];
     protected $guarded = ['id'];
+    protected $required = ['id', 'ime', 'eu'];
+    public function getRequired()
+    {
+        return $this->required;
+    }
 }

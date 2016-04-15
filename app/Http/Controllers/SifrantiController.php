@@ -133,7 +133,7 @@ class SifrantiController extends Controller
                     $field_name = ucfirst(str_replace('_', ' ', $field));
                     if ($field == 'vnos_veljaven') {
                         $edit->add($field, $field_name, 'checkbox');
-                    } elseif ($field == 'ime') {
+                    } elseif (in_array($field, $m->getRequired())) {
                         $edit->add($field, $field_name, 'text')->rule('required');
                     } else {
                         $edit->add($field, $field_name, 'text');
@@ -168,6 +168,7 @@ class SifrantiController extends Controller
 
 
         $grid = \DataGrid::source($filter);
+        $m = new $model;
         foreach($columns as $col)
         {
             $col_name = ucfirst(str_replace('_', ' ', $col));

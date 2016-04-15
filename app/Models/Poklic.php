@@ -10,4 +10,9 @@ class Poklic extends Model
     protected $table = 'poklic';
     protected $fillable = ['ime', 'vnos_veljaven'];
     protected $guarded = ['id'];
+	protected $required = ['ime'];
+    public function getRequired()
+    {
+        return $this->required;
+    }
 }

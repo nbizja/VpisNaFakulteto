@@ -10,4 +10,9 @@ class VisokosolskiZavod extends Model
     protected $table = 'visokosolski_zavod';
     protected $fillable = ['ime', 'kratica', 'id_obcine', 'id_skrbnika', 'vnos_veljaven'];
     protected $guarded = ['id'];
+	protected $required = ['ime', 'kratica', 'id_obcine'];
+    public function getRequired()
+    {
+        return $this->required;
+    }
 }
