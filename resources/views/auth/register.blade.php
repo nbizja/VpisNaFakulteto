@@ -13,28 +13,28 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Ime: </label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="ime">
+                                    <input type="text" class="form-control" name="ime" value="{{ $ime or old('ime') }}">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Priimek: </label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="priimek">
+                                    <input type="text" class="form-control" name="priimek" value="{{ $priimek or old('priimek') }}">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Email: </label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="email">
+                                    <input type="text" class="form-control" name="email" value="{{ $email or old('email') }}">
                                 </div>
                              </div>
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Uporabniško ime: </label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="username">
+                                    <input type="text" class="form-control" name="username" value="{{ $username or old('username') }}">
                                 </div>
                             </div>
 
@@ -59,9 +59,9 @@
                                     </button>
                                 </div>
                             </div>
-                            @if (isset($errors))
+                            @if (!empty(session('errors')))
                                 <div class="alert alert-danger">
-                                    @foreach (array_unique($errors) as $error)
+                                    @foreach (array_unique(session('errors')) as $error)
                                         {{ $error }}<br>
                                     @endforeach
                                 </div>
