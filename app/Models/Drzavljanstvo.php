@@ -8,6 +8,11 @@ class Drzavljanstvo extends Model
 {
     public $timestamps = false;
     protected $table = 'drzavljanstvo';
-    protected $fillable = ['ime'];
+    protected $fillable = ['ime', 'vnos_veljaven'];
     protected $guarded = ['id'];
+	protected $required = ['ime'];
+    public function getRequired()
+    {
+        return $this->required;
+    }
 }

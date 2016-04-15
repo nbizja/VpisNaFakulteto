@@ -11,6 +11,28 @@
                         {!! csrf_field() !!}
 
                         <div class="form-group">
+                            <label class="col-md-4 control-label">Vloga uporabnika</label>
+                            <div class="col-md-6">
+                                <select name="vloga" id="vloga" class="form-control input-sm">
+                                    <option value="v1">VPIS</option>
+                                    <option value="v2">FAKULTETA</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="vzavod" style="display:none">
+                            <label class="col-md-4 control-label">Visokošolski zavod</label>
+                            <div class="col-md-6">
+                                <select name="zavod" id="zavod" class="form-control input-sm">
+                                    @foreach($vz as $i=>$zavod)
+                                        <option value="{{ $i }}"> {{ $zavod }} </option>
+                                        {{++$i}}
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label class="col-md-4 control-label">Uporabniško ime</label>
                             <div class="col-md-6">
                                 <input type="text" class="form-control" name="username" value="{{ old('username') }}">
@@ -87,3 +109,16 @@
     </div>
 </div>
 @endsection
+
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+    $(document).ready(function(){
+
+        $('#vloga').on('change', function() {
+            if(this.value == 'v1') $('#vzavod').hide();
+            else $('#vzavod').show();
+        });
+
+    });
+
+</script>
