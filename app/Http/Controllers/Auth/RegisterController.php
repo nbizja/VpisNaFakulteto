@@ -57,6 +57,7 @@ class RegisterController extends Controller
             'password.min' => "Geslo mora vsebovati vsaj :min znakov.",
             'email.unique' => "Email je že v uporabi.",
             'username.unique' => "Uporabniško ime je že v uporabi.",
+            'confirmed' => "Vnešeni gesli se ne ujemata."
         ];
 
         $validator = Validator::make($request->all(), [
