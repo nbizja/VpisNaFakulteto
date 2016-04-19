@@ -67,8 +67,10 @@ Route::group(['middleware' => ['prijavljen']], function () {
     Route::any('/sifranti/{ime_sifranta}/razveljavi/{id_vnosa}', 'SifrantiController@razveljavi');
     Route::any('/sifranti/{ime_sifranta}/povrni/{id_vnosa}', 'SifrantiController@povrni');
 
+    Route::get('vpis', 'VpisController@prikazi');
 });
 
+//TODO Strašno grdo. Prestavi to v kontroler.
 Route::get('/seznamKandidatov/{zavod_id?}', function($zavod_id){
     $zavodi =  \App\VisokosolskiZavod::orderBy('ime')->pluck('id');
     if($zavod_id > 0) {
