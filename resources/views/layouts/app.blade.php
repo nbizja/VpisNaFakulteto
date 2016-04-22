@@ -56,7 +56,7 @@
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->ime . ' ' . Auth::user()->priimek . ' (' . Auth::user()->vloga . ')' }} <span class="caret"></span>
+                                {{ Auth::user()->ime . ' ' . Auth::user()->priimek . ' (' . Auth::user()->prikazVloge() . ')' }} <span class="caret"></span>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">

@@ -77,7 +77,7 @@ class AddEmployeeController extends Controller
 
             if(strcmp($password1, $password2) !== 0){
                 $isValid = false;
-                $message5 = "Vnešena gesla se ne ujemata!";
+                $message5 = "Vnešeni gesli se ne ujemata!";
             }
         }
 

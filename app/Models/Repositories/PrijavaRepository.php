@@ -28,4 +28,11 @@ class PrijavaRepository
     {
         return Uporabnik::where('zeton', $zeton)->first();
     }
+    
+    public function uporabnikByEmailAndUsername($email, $username)
+    {
+        return Uporabnik::where('email', $email)
+            ->where('username', $username)
+            ->first();
+    }
 }

@@ -10,6 +10,11 @@
                             <div class="rapyd-edit">
                             {!! $edit !!}
                             </div>
+                            @if(!empty(session('error')))
+                                <div class="alert alert-danger" role="alert">
+                                    {{ session('error') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
