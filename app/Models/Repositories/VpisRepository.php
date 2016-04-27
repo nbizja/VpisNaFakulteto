@@ -5,24 +5,44 @@ namespace App\Models\Repositories;
 
 use App\Models\Drzava;
 use App\Models\Drzavljanstvo;
+use App\Models\Enums\NacinKoncanjaSrednjeSole;
 use App\Models\Obcina;
+use App\Models\Posta;
+use App\Models\SrednjaSola;
+use ReflectionClass;
 
 class VpisRepository
 {
-    public function podatkiPrviKorak()
+    public function drzave()
     {
-        return [
-            'drzave' => Drzava::all(),
-            'obcine' => Obcina::all(),
-            'drzavljanstva' => Drzavljanstvo::all()
-        ];
+        return Drzava::all();
+    }
+
+    public function obcine()
+    {
+        return Obcina::all();
+    }
+
+    public function poste()
+    {
+        return Posta::all();
     }
     
-    public function podatkiDrugiKorak()
+    public function naciniZakljuckaSrednjeSole()
     {
-        return [
-            
-        ];
+        $oClass = new ReflectionClass(NacinKoncanjaSrednjeSole::class);
+
+        return $oClass->getConstants();
+    }
+
+    public function srednjeSole()
+    {
+        return SrednjaSola::all();
+    }
+
+    public function prijavaZaVpis()
+    {
+        
     }
     
 }

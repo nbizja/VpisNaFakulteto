@@ -11,6 +11,7 @@ class Posta extends Model
     protected $fillable = ['ime', 'postna_stevilka', 'vnos_veljaven'];
     public $primaryKey = 'postna_stevilka';
 	protected $required = ['ime', 'postna_stevilka'];
+    
     public function getRequired()
     {
         return $this->required;
