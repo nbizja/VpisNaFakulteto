@@ -63,14 +63,13 @@ Route::group(['middleware' => ['prijavljen']], function () {
 });
 
 Route::get('/seznamKandidatov/{zavod_id?}', function($zavod_id){
-    $zavodi =  \App\VisokosolskiZavod::orderBy('ime')->pluck('id');
+    $zavodi =  \App\Models\VisokosolskiZavod::orderBy('ime')->pluck('id');
     if($zavod_id > 0) {
         $zavod_id = $zavodi[$zavod_id - 1];
-        $programi = \App\StudijskiProgram::where('id_zavoda', '=', $zavod_id)->orderBy('ime')->pluck('ime');
+        $programi = \App\Models\StudijskiProgram::where('id_zavoda', '=', $zavod_id)->orderBy('ime')->pluck('ime');
         return Response::json($programi);
     }
     else return Response::json();
-
 });
 
 
