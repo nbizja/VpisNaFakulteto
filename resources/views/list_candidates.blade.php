@@ -43,8 +43,8 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Način zaključa srednje šole</label>
+                        <div class="form-group" >
+                            <label class="col-md-4 control-label">Način zaključa srednje šole </label>
                             <div class="col-md-6">
                                 <select name="izob" id="izob" class="form-control input-sm">
                                     <option value="-1">VSI</option>
@@ -119,7 +119,7 @@
 <script>
     $(document).ready(function(){
 
-        //display modal form for task editing
+        //display modal form for task editingv3r3
         $('#zavod').change(function(){
             var zavod_id = $('#zavod option:selected').index();
 
