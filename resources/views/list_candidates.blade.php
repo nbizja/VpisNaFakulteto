@@ -81,7 +81,7 @@
 @if(!empty($kandidati))
 <table class="table table-hover">
     <tr>
-        <th> </th>
+        <th>  </th>
         <th>Priimek in ime</th>
         <th>Način zaključka srednje šole</th>
         <th>Visokošolski zavod</th>
