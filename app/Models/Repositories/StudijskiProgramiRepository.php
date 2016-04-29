@@ -10,6 +10,7 @@ namespace App\Models\Repositories;
 
 
 use App\Models\Enums\VlogaUporabnika;
+use App\Models\Enums\NacinStudija;
 use App\Models\Uporabnik;
 use App\Models\StudijskiProgram;
 use App\Models\VisokosolskiZavod;
@@ -39,6 +40,30 @@ class StudijskiProgramiRepository
 
     public function ZavodiAll() {
         return VisokosolskiZavod::where('id_obcine', 61)->orderBy('ime', 'asc')->get();
+    }
+
+    public function ProgramiRedni() {
+        return StudijskiProgram::where('nacin_studija', 'Redni')->orderBy('ime', 'asc')->get();
+    }
+
+    public function ProgramiIzredni() {
+        return StudijskiProgram::where('nacin_studija', 'Izredni')->orderBy('ime', 'asc')->get();
+    }
+
+    public function ProgramiVs() {
+        return StudijskiProgram::where('vrsta', 'Visokošolski strokovni')->orderBy('ime', 'asc')->get();
+    }
+
+    public function ProgramiUn() {
+        return StudijskiProgram::where('vrsta', 'Univerzitetni')->orderBy('ime', 'asc')->get();
+    }
+
+    public function ProgramiOmejitev() {
+        return StudijskiProgram::where('omejitev_vpisa', '1')->orderBy('ime', 'asc')->get();
+    }
+
+    public function ProgramiBrezOmejitve() {
+        return StudijskiProgram::where('omejitev_vpisa', '0')->orderBy('ime', 'asc')->get();
     }
 
 }
