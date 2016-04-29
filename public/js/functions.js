@@ -47,4 +47,56 @@ $(document).ready(function() {
             $('#omejitev').val("ne");
         }
     });
+
+    $('#izpisProgramov_fakultete').change(function(){
+        var id = $(this).val();
+
+        $('#izpisProgramov_programi').children().each(function() {
+            if ($(this).attr('data-fakulteta') == -1) {
+                $(this).show();
+                $(this).prop('selected', true);
+            } else if ($(this).attr('data-fakulteta') == id) {
+                $(this).show();
+                $(this).prop('selected', false);
+            } else {
+                $(this).prop('selected', false);
+                $(this).hide();
+            }
+        });
+
+        $('#izpisProgramov_programi').trigger("change");
+    });
+
+    $('#izpisProgramov_programi').change(function() {
+        var id = $(this).val();
+        var steviloMest;
+        $('#izpisProgramov_programi').children().each(function() {
+            if ($(this).val() == "") {
+                steviloMest = "";
+                steviloMestOmejitev = "";
+                nacin = "";
+                vrsta = "";
+                omejitev = -1;
+            } else if ($(this).val() == id) {
+                steviloMest = $(this).attr('data-mesta');
+                steviloMestOmejitev = $(this).attr('data-mesta_omejitev');
+                nacin = $(this).attr('data-nacin');
+                vrsta = $(this).attr('data-vrsta');
+                omejitev = $(this).attr('data-omejitev');
+            }
+        });
+        $('#stevilo_vpisnih_mest').text(steviloMest);
+        $('#stevilo_mest_omejitev').text(steviloMestOmejitev);
+
+        $('#vrsta_studija').text(vrsta);
+        $('#nacin_studija').text(nacin);
+        if (omejitev == 1) {
+            $('#omejitev').text("Da");
+        } else if (omejitev == 0) {
+            $('#omejitev').text("Ne");
+        } else {
+            $('#omejitev').text("");
+        }
+    });
+
 });
