@@ -82,7 +82,8 @@
                                 <ul class="dropdown-menu">
                                     <li><a href="{{ action('StudijskiProgrami\StudijskiProgramiController@urediPrograme') }}">Uredi študijski program</a></li>
                                     <li><a href="{{ action('StudijskiProgrami\StudijskiProgramiController@novProgram') }}">Dodaj nov študijski program</a></li>
-                                    <li><a href="{{ action('StudijskiProgrami\SeznamController@seznamProgramov') }}">Seznam študijskih programov</a></li>
+                                    <li><a href="{{ action('StudijskiProgrami\StudijskiProgramiController@seznamProgramov') }}">Seznam študijskih programov</a></li>
+                                    <li><a href="{{ action('StudijskiProgrami\StudijskiProgramiController@izpisPodatkov') }}">Podatki o študijskih programih</a></li>
                                 </ul>
                             </li>
                             <li class="active"><a href="{{ action('SifrantiController@index')}}">Vzdrževanje šifrantov</a></li>
