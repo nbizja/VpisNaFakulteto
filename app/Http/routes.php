@@ -36,6 +36,7 @@ Route::group(['middleware' => ['prijavljen']], function () {
     Route::get('studijskiProgrami/nov', 'StudijskiProgrami\StudijskiProgramiController@novProgram');
     Route::post('studijskiProgrami/dodaj', 'StudijskiProgrami\StudijskiProgramiController@dodajProgram');
     Route::get('studijskiProgrami/seznam', 'StudijskiProgrami\SeznamController@seznamProgramov');
+    Route::post('studijskiProgrami/seznam/izvoz', 'StudijskiProgrami\SeznamController@izvozi');
 
     Route::get('prijava', 'Auth\AuthController@showLoginForm');
     Route::get('odjava', 'Auth\AuthController@logout');

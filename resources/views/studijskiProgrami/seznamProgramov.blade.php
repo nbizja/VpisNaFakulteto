@@ -22,8 +22,6 @@
             <div class="col-md-3">
                 <select class="form-control" name="izbira" id="izbira">
                     <option selected value="">--Izberi--</option>
-                    <option value="redni">Redni</option>
-                    <option value="izredni">Izredni</option>
                 </select>
             </div>
             <br><br><br>
@@ -32,8 +30,8 @@
                 <input type="text" class="form-control" id="search">
             </div>
 
-            <br><br>
-            <hr>
+            <br><br><br><br>
+
             <p>Izberi elemente za prikaz: </p>
             <label class="checkbox-inline"><input type="checkbox" value="" id="sifraC" checked>Šifra</label>
             <label class="checkbox-inline"><input type="checkbox" value="" id="zavodC" checked>Fakulteta</label>
@@ -42,6 +40,14 @@
             <label class="checkbox-inline"><input type="checkbox" value="" id="steviloC" checked>Število vpisnih mest</label>
             <label class="checkbox-inline"><input type="checkbox" value="" id="omejitevC" checked>Omejitev</label>
 
+
+            <div class="text-right">
+                <form action="{{ action('StudijskiProgrami\SeznamController@izvozi') }}" method="post">
+                    {!! csrf_field() !!}
+                    <input class="btn" type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                    <input class="btn btn-primary pull-right" type="submit" name="pdf" id="izvoz" value="Izvoz v PDF">
+                </form>
+            </div>
         </div>
         <div class="table-responsive">
                 <table class="table table-bordered table-hover table-striped" id="tblData">
