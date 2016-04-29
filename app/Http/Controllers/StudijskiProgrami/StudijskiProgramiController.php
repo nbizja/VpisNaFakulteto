@@ -170,4 +170,16 @@ class StudijskiProgramiController extends Controller
         }
     }
 
+    public function izpisPodatkov()
+    {
+        if (Auth::check()) {
+            if (Auth::user()->vloga == 'skrbnik') {
+                $fakultete = $this->studijskiProgrami->ZavodiAll();
+                $programi = $this->studijskiProgrami->ProgramiAll();
+                return view('studijskiProgrami.izpisPodatkov', ['fakultete' => $fakultete, 'programi' => $programi]);
+            }
+        }
+
+        return redirect('prijava');
+    }
 }
