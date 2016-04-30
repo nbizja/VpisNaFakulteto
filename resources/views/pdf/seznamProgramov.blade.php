@@ -22,7 +22,56 @@
 <div class="panel panel-default">
     <div class="panel-heading"><h3 style="color: #005580">Seznam študijskih programov</h3></div>
     <div class="panel-body">
-
+        <table class="CSSTableGenerator" id="tblData">
+            <thead>
+            <tr style="background-color: #cccccc">
+                @if ($sifra)
+                    <th style="width:50px" class="sifra">Šifra</th>
+                @endif
+                @if ($zavod)
+                    <th style="width:150px"  class="zavod">Fakulteta</th>
+                @endif
+                <th>Naziv</th>
+                @if($nacin)
+                    <th class="nacin">Način študija</th>
+                @endif
+                @if($vrsta)
+                    <th class="vrsta">Vrsta vpisa</th>
+                @endif
+                @if($stevilo)
+                    <th class="stevilo" style="width: 100px">Število vpisnih mest</th>
+                @endif
+                @if($omejitev)
+                    <th class="omejitev">Omejitev vpisa</th>
+                @endif
+            </tr>
+            </thead>
+            <tbody>
+            @foreach($programi as $program)
+                <tr>
+                    @if ($sifra)
+                        <td class="sifra">{{$program->sifra}}</td>
+                    @endif
+                    @if ($zavod)
+                        <td class="zavod">{{$program->visokosolskiZavod->ime}}</td>
+                    @endif
+                        <td>{{$program->ime}}</td>
+                    @if($nacin)
+                        <td class="nacin">{{$program->nacin_studija}}</td>
+                    @endif
+                    @if($vrsta)
+                        <td class="vrsta">{{$program->vrsta}}</td>
+                    @endif
+                    @if($stevilo)
+                        <td class="stevilo">{{$program->stevilo_vpisnih_mest}}</td>
+                    @endif
+                    @if($omejitev)
+                        <td class="omejitev">{{$program->omejitev_vpisa == 1 ? 'Da':'Ne'}}</td>
+                    @endif
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
     </div>
 </div>
 

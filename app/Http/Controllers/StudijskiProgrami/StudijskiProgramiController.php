@@ -36,17 +36,6 @@ class StudijskiProgramiController extends Controller
      */
     protected $redirectTo = '/';
 
-    public function seznamProgramov()
-    {
-        if (Auth::check()) {
-            if (Auth::user()->vloga == 'skrbnik') {
-                $programi = $this->studijskiProgrami->ProgramiAll()->sortBy('visokosolskiZavod.ime');
-                return view('studijskiProgrami.seznamProgramov', ['programi' => $programi]);
-            }
-        }
-
-        return redirect('prijava');
-    }
 
     public function urediPrograme()
     {
