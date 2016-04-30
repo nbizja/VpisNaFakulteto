@@ -24,30 +24,35 @@
                     <option selected value="">--Izberi--</option>
                 </select>
             </div>
-            <br><br><br>
-            <div class="form-group col-xs-7">
-                <label for="zavod">Iskanje po ključni besedi (visokošolski zavod, program,...): </label>
-                <input type="text" class="form-control" id="search">
-            </div>
 
-            <br><br><br><br>
+            <form action="{{ action('StudijskiProgrami\SeznamController@izvozi') }}" method="post">
+                {!! csrf_field() !!}
 
-            <p>Izberi elemente za prikaz: </p>
-            <label class="checkbox-inline"><input type="checkbox" value="" id="sifraC" checked>Šifra</label>
-            <label class="checkbox-inline"><input type="checkbox" value="" id="zavodC" checked>Fakulteta</label>
-            <label class="checkbox-inline"><input type="checkbox" value="" id="nacinC" checked>Način študija</label>
-            <label class="checkbox-inline"><input type="checkbox" value="" id="vrstaC" checked>Vrsta vpisa</label>
-            <label class="checkbox-inline"><input type="checkbox" value="" id="steviloC" checked>Število vpisnih mest</label>
-            <label class="checkbox-inline"><input type="checkbox" value="" id="omejitevC" checked>Omejitev</label>
+                <br><br><br>
+                <div class="form-group col-xs-7">
+                    <label for="zavod">Iskanje po ključni besedi (visokošolski zavod, program,...): </label>
+                    <input type="text" class="form-control" name="search" id="search">
+                </div>
+
+                <br><br><br><br>
+                
+                <p>Izberi elemente za prikaz: </p>
+                <label class="checkbox-inline"><input type="checkbox" value="1" name="sifraC" id="sifraC" checked>Šifra</label>
+                <label class="checkbox-inline"><input type="checkbox" value="1" name="zavodC" id="zavodC" checked>Fakulteta</label>
+                <label class="checkbox-inline"><input type="checkbox" value="1" name="nacinC" id="nacinC" checked>Način študija</label>
+                <label class="checkbox-inline"><input type="checkbox" value="1" name="vrstaC" id="vrstaC" checked>Vrsta vpisa</label>
+                <label class="checkbox-inline"><input type="checkbox" value="1" name="steviloC" id="steviloC" checked>Število vpisnih mest</label>
+                <label class="checkbox-inline"><input type="checkbox" value="1" name="omejitevC" id="omejitevC" checked>Omejitev</label>
 
 
-            <div class="text-right">
-                <form action="{{ action('StudijskiProgrami\SeznamController@izvozi') }}" method="post">
-                    {!! csrf_field() !!}
-                    <input class="btn" type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                <div class="text-right">
+                    @foreach($query as $key => $value)
+                        <input class="btn" type="hidden" name="{{ $key }}" value="{{ $value }}">
+                    @endforeach
                     <input class="btn btn-primary pull-right" type="submit" name="pdf" id="izvoz" value="Izvoz v PDF">
-                </form>
-            </div>
+                </div>
+            </form>
+
         </div>
         <div class="table-responsive">
                 <table class="table table-bordered table-hover table-striped" id="tblData">

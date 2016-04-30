@@ -25,25 +25,49 @@
         <table class="CSSTableGenerator" id="tblData">
             <thead>
             <tr style="background-color: #cccccc">
-                <th style="width:50px" class="sifra">Šifra</th>
-                <th style="width:100px"  class="zavod">Fakulteta</th>
+                @if ($sifra)
+                    <th style="width:50px" class="sifra">Šifra</th>
+                @endif
+                @if ($zavod)
+                    <th style="width:150px"  class="zavod">Fakulteta</th>
+                @endif
                 <th>Naziv</th>
-                <th class="nacin">Način študija</th>
-                <th class="vrsta">Vrsta vpisa</th>
-                <th class="stevilo" style="width: 100px">Število vpisnih mest</th>
-                <th class="omejitev">Omejitev vpisa</th>
+                @if($nacin)
+                    <th class="nacin">Način študija</th>
+                @endif
+                @if($vrsta)
+                    <th class="vrsta">Vrsta vpisa</th>
+                @endif
+                @if($stevilo)
+                    <th class="stevilo" style="width: 100px">Število vpisnih mest</th>
+                @endif
+                @if($omejitev)
+                    <th class="omejitev">Omejitev vpisa</th>
+                @endif
             </tr>
             </thead>
             <tbody>
             @foreach($programi as $program)
                 <tr>
-                    <td class="sifra">{{$program->sifra}}</td>
-                    <td class="zavod">{{$program->visokosolskiZavod->ime}}</td>
-                    <td>{{$program->ime}}</td>
-                    <td class="nacin">{{$program->nacin_studija}}</td>
-                    <td class="vrsta">{{$program->vrsta}}</td>
-                    <td class="stevilo">{{$program->stevilo_vpisnih_mest}}</td>
-                    <td class="omejitev">{{$program->omejitev_vpisa == 1 ? 'Da':'Ne'}}</td>
+                    @if ($sifra)
+                        <td class="sifra">{{$program->sifra}}</td>
+                    @endif
+                    @if ($zavod)
+                        <td class="zavod">{{$program->visokosolskiZavod->ime}}</td>
+                    @endif
+                        <td>{{$program->ime}}</td>
+                    @if($nacin)
+                        <td class="nacin">{{$program->nacin_studija}}</td>
+                    @endif
+                    @if($vrsta)
+                        <td class="vrsta">{{$program->vrsta}}</td>
+                    @endif
+                    @if($stevilo)
+                        <td class="stevilo">{{$program->stevilo_vpisnih_mest}}</td>
+                    @endif
+                    @if($omejitev)
+                        <td class="omejitev">{{$program->omejitev_vpisa == 1 ? 'Da':'Ne'}}</td>
+                    @endif
                 </tr>
             @endforeach
             </tbody>
