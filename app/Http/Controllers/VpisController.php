@@ -14,6 +14,11 @@ class VpisController extends Controller
         $this->vpisRepository = $vpisRepository;
     }
 
+    public function prikazi()
+    {
+        $user = Auth::user();
+    }
+    
     public function osebniPodatkiPrikaz()
     {
         return view('vpis.osebni_podatki')->with('drzave', $this->vpisRepository->drzave());

@@ -60,7 +60,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Kontaktni telefon: </label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="emso" value="{{ $telefon or old('telefon') }}">
+                                    <input type="text" class="form-control" name="kontaktni_telefon" value="{{ $telefon or old('kontaktni_telefon') }}">
                                 </div>
                             </div>
 
