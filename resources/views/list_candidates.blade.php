@@ -59,6 +59,8 @@
                             <div class="col-md-6">
                                 <select name="talent" id="talent" class="form-control input-sm">
                                     <option value="-1">VSI</option>
+                                    <option value="0">DA</option>
+                                    <option value="1">NE</option>
                                 </select>
                             </div>
                         </div>
