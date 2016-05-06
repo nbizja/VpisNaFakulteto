@@ -8,9 +8,9 @@ class VpisniPogoj extends Model
 {
     public $timestamps = false;
     protected $table = 'vpisni_pogoj';
-    protected $fillable = ['id_programa', 'id_elementa', 'tip', 'vnos_veljaven'];
+    protected $fillable = ['id_programa', 'id_elementa', 'tip', 'splosna_matura', 'poklicna_matura', 'vnos_veljaven'];
     protected $guarded = ['id'];
-	protected $required = ['id_programa', 'id_elementa', 'tip'];
+    protected $required = ['id_programa'];
     public function getRequired()
     {
         return $this->required;

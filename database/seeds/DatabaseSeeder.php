@@ -31,6 +31,7 @@ class DatabaseSeeder extends CsvSeeder
              KoncanaSrednjaSolaSeeder::class, 
              ObcinaSeeder::class, PoklicSeeder::class, PostaSeeder::class,
              SrednjaSolaSeeder::class, StudijskiProgramSeeder::class,
+             VpisniPogojSeeder::class,
              VisokosolskiZavodSeeder::class);
      }
 
