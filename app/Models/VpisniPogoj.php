@@ -8,6 +8,11 @@ class VpisniPogoj extends Model
 {
     public $timestamps = false;
     protected $table = 'vpisni_pogoj';
-    protected $fillable = ['id_programa', 'id_elementa', 'tip'];
+    protected $fillable = ['id_programa', 'id_elementa', 'tip', 'vnos_veljaven'];
     protected $guarded = ['id'];
+	protected $required = ['id_programa', 'id_elementa', 'tip'];
+    public function getRequired()
+    {
+        return $this->required;
+    }
 }
