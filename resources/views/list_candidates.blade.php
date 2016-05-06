@@ -95,7 +95,7 @@
         <td> {{$kandidat->srednja}}  </td>
         <td> {{$kandidat->zavod}} </td>
         <td> {{$kandidat->program}} </td>
-        <td> NE </td>
+        <td> {{$kandidat->talent}} </td>
         <td> {{$kandidat->nacin}} </td>
     </tr>
     @endforeach

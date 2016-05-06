@@ -116,6 +116,7 @@ class ListOfCandidatesController extends Controller
             if($poklicnaMatura > 0) $kandidat->srednja = "Poklicna matura ";
             if($splosnaMatura > 0) $kandidat->srednja = $kandidat->srednja . "Splošna matura ";
             if($kandidat->srednja == "") $kandidat->srednja = "Ni podatka";
+            $kandidat->talent = "Ne";
         }
 
         $kandidati = $kandidati->sort(function($a, $b) {
