@@ -21,10 +21,20 @@ class StudijskiProgramiRepository
 
         return VisokosolskiZavod::where('id', $id)->first();
     }
+	
+	public function ZavodNameByID($id) {
 
+        return VisokosolskiZavod::where('id', $id)->first()->ime;
+    }
+	
     public function ProgramByID($id) {
 
         return StudijskiProgram::where('id', $id)->first();
+    }
+	
+	public function ProgramNameByID($id) {
+
+        return StudijskiProgram::where('id', $id)->first()->ime;
     }
 
     public function ProgramiAll($embed = '') {
