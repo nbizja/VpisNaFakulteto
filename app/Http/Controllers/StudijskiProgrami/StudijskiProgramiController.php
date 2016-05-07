@@ -159,13 +159,54 @@ class StudijskiProgramiController extends Controller
         }
     }
 
+	/* Prikaže podatke o študijskem programu. */
     public function izpisPodatkov()
     {
         if (Auth::check()) {
             if (Auth::user()->vloga == 'skrbnik') {
                 $fakultete = $this->studijskiProgrami->ZavodiAll();
                 $programi = $this->studijskiProgrami->ProgramiAll();
-                return view('studijskiProgrami.izpisPodatkov', ['fakultete' => $fakultete, 'programi' => $programi]);
+                return view('studijskiProgrami.izpisPodatkov',
+							['fakultete' => $fakultete, 'programi' => $programi]);
+            }
+        }
+
+        return redirect('prijava');
+    }
+	
+	/* Pripravi pdf dokument s podatki o študijskem programu. */
+	public function izvozPodatkov(Request $request)
+    {
+        if (Auth::check()) {
+            if (Auth::user()->vloga == 'skrbnik') {
+				
+				$fakulteta_id = $request->input('fakulteta', -1);
+				$program_id = $request->input('program', -1);
+				
+				// Todo: Poskrbi za to na pravilen način.
+				if ($fakulteta_id == -1 || $program_id == -1) {
+					return -1;
+				}
+				
+				$fakulteta = $this->studijskiProgrami->ZavodNameByID($fakulteta_id);
+				$program = $this->studijskiProgrami->ProgramNameByID($program_id);
+				
+				$st_mest_razpis = $request->input('st_mest_razpis', '');
+				$omejitev = $request->input('omejitev', '');
+				$st_mest_omejitev = $request->input('st_mest_omejitev', '');
+				$nacin = $request->input('nacin', '');
+				$vrsta = $request->input('vrsta', '');
+				
+				$pdf = \App::make('dompdf.wrapper');
+                ini_set('max_execution_time', 300);
+                $pdf->loadHTML(\View::make('pdf/podatkiOProgramu',
+											['fakulteta' => $fakulteta, 'program' => $program,
+											 'st_mest_razpis' => $st_mest_razpis, 'omejitev' => $omejitev,
+											 'st_mest_omejitev' => $st_mest_omejitev, 'nacin' => $nacin,
+											 'vrsta' => $vrsta]));
+				
+                return $pdf->download('studijskiProgrami.pdf');
+							
             }
         }
 
