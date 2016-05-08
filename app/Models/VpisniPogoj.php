@@ -11,8 +11,14 @@ class VpisniPogoj extends Model
     protected $fillable = ['id_programa', 'id_elementa', 'tip', 'splosna_matura', 'poklicna_matura', 'vnos_veljaven'];
     protected $guarded = ['id'];
     protected $required = ['id_programa'];
+
     public function getRequired()
     {
         return $this->required;
+    }
+
+    public function Element()
+    {
+        return $this->belongsTo('App\Models\Element', 'id_elementa','id');
     }
 }

@@ -7,13 +7,16 @@ $(document).ready(function() {
         var id = $(this).val();
 
         $('#vzdrzevanjeProgramov_programi').children().each(function() {
+
             if ($(this).attr('data-fakulteta') == -1) {
                 $(this).show();
                 $(this).prop('selected', true);
             } else if ($(this).attr('data-fakulteta') == id) {
+
                 $(this).show();
                 $(this).prop('selected', false);
             } else {
+
                 $(this).prop('selected', false);
                 $(this).hide();
             }
@@ -65,6 +68,67 @@ $(document).ready(function() {
             $('#omejitev').val("da");
         } else {
             $('#omejitev').val("ne");
+        }
+    });
+
+    $('#filtri').change(function() {
+        var id = $(this).val();
+        if (id == "nacin") {
+            var option = $('<option></option>').text("--Izberi--");
+            $("#izbira").empty().append(option);
+            var option = $('<option></option>').attr("value", "redni").text("Redni");
+            $("#izbira").append(option);
+            option = $('<option></option>').attr("value", "izredni").text("Izredni");
+            $("#izbira").append(option);
+        }
+
+        if (id == "vrsta") {
+            var option = $('<option></option>').text("--Izberi--");
+            $("#izbira").empty().append(option);
+            var option = $('<option></option>').attr("value", "vs").text("Visokošolski strokovni");
+            $("#izbira").append(option);
+            option = $('<option></option>').attr("value", "un").text("Univerzitetni");
+            $("#izbira").append(option);
+        }
+
+        if (id == "omejitev") {
+            var option = $('<option></option>').text("--Izberi--");
+            $("#izbira").empty().append(option);
+            var option = $('<option></option>').attr("value", "da").text("Da.");
+            $("#izbira").append(option);
+            option = $('<option></option>').attr("value", "ne").text("Ne.");
+            $("#izbira").append(option);
+        }
+    });
+
+    $('#vzdrzevanjePogojev_fakultete').change(function(){
+        var id = $(this).val();
+        $('.vpisni_pogoji').hide();
+        $('#vzdrzevanjePogojev_programi').children().each(function() {
+
+            if ($(this).attr('data-fakulteta') == -1) {
+                $(this).show();
+                $(this).prop('selected', true);
+            } else if ($(this).attr('data-fakulteta') == id) {
+
+                $(this).show();
+                $(this).prop('selected', false);
+            } else {
+
+                $(this).prop('selected', false);
+                $(this).hide();
+            }
+        });
+
+        $('#vzdrzevanjePogojev_programi').trigger("change");
+    });
+
+    $('#vzdrzevanjePogojev_programi').change(function() {
+        var id = $(this).val();
+        if (id > 0) {
+            $('.vpisni_pogoji').show();
+            $('.vpisni_pogoj').hide();
+            $('.program_'+id).show();
         }
     });
 
@@ -151,9 +215,6 @@ $(document).ready(function() {
             $('.omejitev').hide();
     });
 
-    $('#izvoz').click(function() {
-
-    });
 
     $('#izpisProgramov_fakultete').change(function(){
         var id = $(this).val();

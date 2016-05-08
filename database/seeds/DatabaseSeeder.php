@@ -2,6 +2,8 @@
 
 
 use database\seeds\UporabnikSeeder;
+use database\seeds\VpisniPogojSeeder;
+use database\seeds\KriterijSeeder;
 use database\seeds\SifrantiSeeder;
 use Illuminate\Database\Seeder;
 use Flynsarmy\CsvSeeder\CsvSeeder;
@@ -31,7 +33,7 @@ class DatabaseSeeder extends CsvSeeder
              KoncanaSrednjaSolaSeeder::class, 
              ObcinaSeeder::class, PoklicSeeder::class, PostaSeeder::class,
              SrednjaSolaSeeder::class, StudijskiProgramSeeder::class,
-             VpisniPogojSeeder::class,
+             VpisniPogojSeeder::class, KriterijSeeder::class,
              VisokosolskiZavodSeeder::class);
      }
 

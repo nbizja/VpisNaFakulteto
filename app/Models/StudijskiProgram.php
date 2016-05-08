@@ -16,6 +16,11 @@ class StudijskiProgram extends Model
     {
         return $this->belongsTo('App\Models\VisokosolskiZavod', 'id_zavoda','id');
     }
+
+    public function VpisniPogoji()
+    {
+        return $this->hasMany('App\Models\VpisniPogoj', 'id_programa','id');
+    }
 	
     public function getRequired()
     {

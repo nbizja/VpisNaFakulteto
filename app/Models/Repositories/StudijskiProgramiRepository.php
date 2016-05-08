@@ -30,7 +30,7 @@ class StudijskiProgramiRepository
 
     public function ProgramiAll($embed = '') {
 
-        return StudijskiProgram::with('visokosolskiZavod')->orderBy('ime', 'asc')->groupBy('ime')->get();
+        return StudijskiProgram::with('visokosolskiZavod')->with('vpisniPogoji')->orderBy('ime', 'asc')->groupBy('ime')->get();
     }
 
     public function ProgramiZavod($idZavoda)
