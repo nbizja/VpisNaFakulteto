@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <h4>Urejanje vpisnih pogojev</h4>
-        <form class="form-horizontal" role="form" method="POST" action="{{ url('/studijskiProgrami/shrani') }}">
+        <form class="form-horizontal" role="form" method="POST" action="{{ url('/vpisniPogoji/shrani') }}">
             <div class="panel-group">
                 {!! csrf_field() !!}
 
@@ -62,15 +62,15 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-6 col-md-offset-4">
-                                            <button type="submit" name="shrani" class="btn btn-primary pull-right">
-                                                <i class="fa fa-btn fa-sign-in"></i>Shrani
+                                            <button type="submit" name="uredi{{$pogoj->id}}" class="btn btn-primary pull-right">
+                                                <i class="fa fa-btn fa-sign-in"></i>Uredi
                                             </button>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <div class="col-md-6 col-md-offset-4">
-                                            <button type="submit" name="brisi" class="btn btn-primary pull-right">
+                                            <button type="submit" name="brisi{{$pogoj->id}}" class="btn btn-primary pull-right">
                                                 <i class="fa fa-btn fa-sign-in"></i>Izbriši ta pogoj
                                             </button>
                                         </div>
@@ -79,6 +79,14 @@
                             </div>
                         @endforeach
                     @endforeach
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-6 col-md-offset-4">
+                    <button type="submit" name="dodajPogoj" class="btn btn-primary pull-right">
+                        <i class="fa fa-btn fa-sign-in"></i>Dodaj pogoj
+                    </button>
                 </div>
             </div>
 

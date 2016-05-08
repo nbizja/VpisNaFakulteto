@@ -51,6 +51,18 @@ class VpisniPogojiController extends Controller
 
     public function shraniPogoje(Request $request)
     {
+        if (Auth::check()) {
+            if (Auth::user()->vloga == 'skrbnik') {
 
+                foreach ($request->request->all() as $name => $value) {
+                    if (stripos($name,'uredi') !== false) {
+                        $program = $this->studijskiProgrami->ProgramByID($request->request->get('program'));
+                        return view('studijskiProgrami.urediPogoj', ['program' => $program,'id_pogoja'=> substr($name, 5, strlen($name)-5)]);
+                    }
+                }
+            }
+        }
+
+        //return redirect('prijava');
     }
 }

@@ -42,6 +42,7 @@ Route::group(['middleware' => ['prijavljen']], function () {
     Route::get('studijskiProgrami/izpis', 'StudijskiProgrami\StudijskiProgramiController@izpisPodatkov');
 
     Route::get('vpisniPogoji/urejanje', 'StudijskiProgrami\VpisniPogojiController@urediPogoje');
+    Route::get('vpisniPogoji/urediPogoj', 'StudijskiProgrami\VpisniPogojiController@urediPogoj');
     Route::post('vpisniPogoji/shrani', 'StudijskiProgrami\VpisniPogojiController@shraniPogoje');
 
     Route::get('prijava', 'Auth\AuthController@showLoginForm');
