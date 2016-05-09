@@ -103,13 +103,15 @@ class SeznamController extends Controller
                     $programi = $this->studijskiProgrami->ProgramiAll()->sortBy('visokosolskiZavod.ime');
                 }
 
-                if ($request->request->has('search')) {
-                    $programi = $programi->filter(function($p) use ($request) {
-                        return (stripos($p->ime, $request->request->get('search')) !== false) ||
-                        (stripos($p->sifra, $request->request->get('search')) !== false) ||
-                        (stripos($p->nacin_studija, $request->request->get('search')) !== false) ||
-                        (stripos($p->vrsta, $request->request->get('search')) !== false) ||
-                        (stripos($p->visokosolskiZavod->ime, $request->request->get('search')) !== false);
+                $search = mb_convert_case($request->request->get('search', ''), MB_CASE_UPPER, "UTF-8");
+                if (!empty($search)) {
+                    $prog = $programi->filter(function($p) use ($search) {
+
+                        return (stripos($p->ime, $search) !== false) ||
+                        (stripos($p->sifra, $search) !== false) ||
+                        (stripos($p->nacin_studija, $search) !== false) ||
+                        (stripos($p->vrsta, $search) !== false) ||
+                        (stripos($p->visokosolskiZavod->ime, $search) !== false);
                     });
                 }
 
@@ -142,7 +144,7 @@ class SeznamController extends Controller
                 $pdf = \App::make('dompdf.wrapper');
                 ini_set('max_execution_time', 300);
 
-                $pdf->loadHTML(\View::make('pdf/seznamProgramov')->with('programi', $programi)
+                $pdf->loadHTML(\View::make('pdf/seznamProgramov')->with('programi', $prog)
                 ->with('sifra', $sifra)->with('zavod', $zavod)->with('nacin', $nacin)->with('vrsta',$vrsta)
                 ->with('stevilo', $stevilo)->with('omejitev', $omejitev));
 
