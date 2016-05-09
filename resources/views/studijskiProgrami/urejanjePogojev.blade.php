@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <h4>Urejanje vpisnih pogojev</h4>
-        <form class="form-horizontal" role="form" method="POST" action="{{ url('/vpisniPogoji/shrani') }}">
+        <form class="form-horizontal" role="form" method="POST" action="{{ url('/vpisniPogoji/urediPogoj') }}">
             <div class="panel-group">
                 {!! csrf_field() !!}
 
