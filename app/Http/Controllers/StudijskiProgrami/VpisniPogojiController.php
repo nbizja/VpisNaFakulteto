@@ -95,6 +95,10 @@ class VpisniPogojiController extends Controller
                     $pogoj->id_elementa = $request->request->get('element2');
                 }
 
+                if($request->request->has('element3')) {
+                    $pogoj->id_elementa2 = $request->request->get('element3');
+                }
+
                 $pogoj->save();
 
                 return $this->urediPogoje();
@@ -133,9 +137,15 @@ class VpisniPogojiController extends Controller
                     $element = $request->request->get('element2');
                 }
 
+                $element2 = '';
+                if($request->request->get('element3') != 'prazno') {
+                    $element2 = $request->request->get('element3');
+                }
+
                 VpisniPogoj::create([
                     'id_programa' => $request->request->get('program'),
                     'id_elementa' => $element,
+                    'id_elementa2' => $element2,
                     'vnos_veljaven' => 1,
                     'splosna_matura' => $splosna_matura,
                     'poklicna_matura' => $poklicna_matura

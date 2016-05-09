@@ -58,6 +58,9 @@
                                             @if ($pogoj->id_elementa != null)
                                                 <li>{{ ucfirst(strtolower($pogoj->Element->ime)) }}</li>
                                             @endif
+                                            @if ($pogoj->id_elementa2 != null)
+                                                <li>{{ ucfirst(strtolower($pogoj->Element2->ime)) }}</li>
+                                            @endif
                                         </ul>
                                     </div>
                                     <div class="form-group">

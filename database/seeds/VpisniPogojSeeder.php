@@ -33,5 +33,22 @@ class VpisniPogojSeeder extends Seeder
             'id_elementa' => 'L411'
         ]);
 
+        DB::table('vpisni_pogoj')->insert([
+            'id_programa' => '822',
+            'vnos_veljaven' => '1',
+            'splosna_matura' => '1',
+            'poklicna_matura' => '0',
+            'id_elementa' => 'S442'
+        ]);
+
+        DB::table('vpisni_pogoj')->insert([
+            'id_programa' => '822',
+            'vnos_veljaven' => '1',
+            'splosna_matura' => '0',
+            'poklicna_matura' => '1',
+            'id_elementa' => 'S442',
+            'id_elementa2' => 'LUZG'
+        ]);
+
     }
 }

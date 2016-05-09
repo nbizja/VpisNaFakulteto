@@ -28,6 +28,14 @@
                                     @endforeach
                                     <option selected value="prazno"></option>
                                 </select>
+
+                                <select name="element3"  class="form-control" id="izberiPogoj2">
+                                    <option value="">--Izberite element ali prazno polje--</option>
+                                    @foreach($elementi as $element)
+                                        <option value="{{$element->id}}">{{$element->ime}}</option>
+                                    @endforeach
+                                    <option selected value="prazno"></option>
+                                </select>
                             </div>
                         </div>
 
