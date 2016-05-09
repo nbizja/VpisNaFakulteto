@@ -850,3 +850,7 @@ id,nacin_studija,id_zavoda,sifra,ime,vrsta
 849,Redni,85,SF00,KRAJINSKA ARHITEKTURA UN,Univerzitetni
 850,Redni,110,Z200,UPRAVNA INFORMATIKA UN,Univerzitetni
 851,Redni,115,ML00,MULTIMEDIJA UN,Univerzitetni
+852,Redni,63,VU00,RAČUNALNIŠTVO IN INFORMATIKA VS,Visokošolski strokovni
+853,Izredni,63,VT00,RAČUNALNIŠTVO IN INFORMATIKA UN,Univerzitetni
+854,Izredni,115,ML00,MULTIMEDIJA UN,Univerzitetni
+855,Izredni,74,VV00,RAČUNALNIŠTVO IN MATEMATIKA UN,Univerzitetni

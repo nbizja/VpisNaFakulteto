@@ -28,6 +28,7 @@
                                     @endforeach
                                     <option selected value="prazno"></option>
                                 </select>
+                                <br>
 
                                 <select name="element3"  class="form-control" id="izberiPogoj2">
                                     <option value="">--Izberite element ali prazno polje--</option>

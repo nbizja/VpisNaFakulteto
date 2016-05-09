@@ -29,7 +29,7 @@
                                     <option selected data-fakulteta="-1" value="">Izberite program izbranega visokošolskega zavoda.</option>
                                     @foreach($programi as $program)
                                         <option data-fakulteta="{{ $program->id_zavoda }}" data-mesta="{{ $program->stevilo_vpisnih_mest }}" data-mesta_omejitev="{{ $program->stevilo_mest_po_omejitvi }}"
-                                                data-omejitev="{{$program->omejitev_vpisa}}" data-nacin="{{$program->nacin_studija}}" data-vrsta="{{$program->vrsta}}" value="{{$program->id}}" style="display:none">{{$program->ime}}</option>
+                                                data-omejitev="{{$program->omejitev_vpisa}}" data-nacin="{{$program->nacin_studija}}" data-vrsta="{{$program->vrsta}}" value="{{$program->id}}" style="display:none">{{$program->ime}}, {{$program->nacin_studija}}</option>
                                     @endforeach
                                 </select>
                             </div>

@@ -93,10 +93,14 @@ class VpisniPogojiController extends Controller
 
                 if($request->request->get('element2') != 'prazno') {
                     $pogoj->id_elementa = $request->request->get('element2');
+                } else {
+                    $pogoj->id_elementa = '';
                 }
 
-                if($request->request->has('element3')) {
+                if($request->request->get('element3') != 'prazno') {
                     $pogoj->id_elementa2 = $request->request->get('element3');
+                } else {
+                    $pogoj->id_elementa2 = '';
                 }
 
                 $pogoj->save();

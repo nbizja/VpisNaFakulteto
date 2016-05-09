@@ -39,8 +39,9 @@
                 </div>
 
                 <div class="vpisni_pogoji" style="display: none">
-                <?php $i = 0; ?>
+
                 @foreach($programi as $program)
+                    <?php $i = 0; ?>
                     @foreach($program->VpisniPogoji as $pogoj)
                         <?php $i++; ?>
                         <div class="panel panel-default vpisni_pogoj program_{{ $program->id }}" style="display: none;">
