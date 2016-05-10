@@ -11,11 +11,9 @@
                             {!! csrf_field() !!}
 
                             <div class="form-group">
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label">Emšo: </label>
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control" name="emso" value="{{ $emso or old('emso') }}">
-                                    </div>
+                                <label class="col-md-4 control-label">Emšo: </label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="emso" value="{{ $emso or old('emso') }}">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -23,6 +21,8 @@
                                 <div class="col-md-6">
                                     <input type="text" class="form-control" name="ime" value="{{ Auth::user()->ime or old('ime') }}">
                                 </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-md-4 control-label">Priimek: </label>
                                 <div class="col-md-6">
                                     <input type="text" class="form-control" name="priimek" value="{{ Auth::user()->priimek or old('priimek') }}">
@@ -37,9 +37,9 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Država rojstva: </label>
                                 <div class="col-md-6">
-                                    <select name="drzava_rojstva">
+                                    <select name="drzava_rojstva" class="form-control col-md-6">
                                         @foreach($drzave as $drzava)
-                                            <option value="{{ $drzava->id }}">{{ $drzava->ime }}</option>
+                                            <option value="{{ $drzava->id }}" @if($drzava->ime == 'SLOVENIJA') {{ 'selected' }} @endif>{{ $drzava->ime }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -53,7 +53,11 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Državljanstvo: </label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="drzavljanstvo" value="{{ $drzavljanstvo or old('drzavljanstvo') }}">
+                                    <select name="drzava_rojstva" class="form-control col-md-6">
+                                        @foreach($drzavljanstva as $drzavljanstvo)
+                                            <option value="{{ $drzavljanstvo->id }}" @if($drzavljanstvo->id == 2) {{ 'selected' }} @endif>{{ $drzavljanstvo->ime }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
 
@@ -61,6 +65,12 @@
                                 <label class="col-md-4 control-label">Kontaktni telefon: </label>
                                 <div class="col-md-6">
                                     <input type="text" class="form-control" name="kontaktni_telefon" value="{{ $telefon or old('kontaktni_telefon') }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <input type="submit" class="form-control btn-primary" value="Nadaljuj">
                                 </div>
                             </div>
 

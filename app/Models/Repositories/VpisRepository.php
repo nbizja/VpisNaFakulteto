@@ -18,6 +18,11 @@ class VpisRepository
         return Drzava::all();
     }
 
+    public function drzavljanstva()
+    {
+        return Drzavljanstvo::all();
+    }
+
     public function obcine()
     {
         return Obcina::all();

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Repositories\VpisRepository;
+use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Request;
 
 class VpisController extends Controller
 {
@@ -17,11 +19,16 @@ class VpisController extends Controller
     public function prikazi()
     {
         $user = Auth::user();
+
+        return $this->osebniPodatki();
     }
     
-    public function osebniPodatkiPrikaz()
+    public function osebniPodatki()
     {
-        return view('vpis.osebni_podatki')->with('drzave', $this->vpisRepository->drzave());
+        return view('vpis.osebni_podatki')->with([
+            'drzave' => $this->vpisRepository->drzave(),
+            'drzavljanstva' => $this->vpisRepository->drzavljanstva()
+        ]);
     }
 
     public function stalnoPrebivalisce()
@@ -50,5 +57,19 @@ class VpisController extends Controller
     {
         return view('vpis.prijava_za_studij')->with($this->vpisRepository->prijavaZaStudij());
     }
-    
+
+    public function shraniOsebnePodatke(Request $request)
+    {
+
+    }
+
+    public function shraniStalnoPrebivalisce(Request $request)
+    {
+
+    }
+
+    public function shraniSrednjesolskoIzobrazbo(Request $request)
+    {
+
+    }
 }
