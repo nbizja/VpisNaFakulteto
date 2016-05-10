@@ -2,7 +2,7 @@
 
 @section('content')
         <div class="container">
-                <h4>Urejanje vpisnih pogojev za študijski program {{$program->ime}}</h4>
+                <h4>Urejanje vpisnih pogojev za študijski program {{$program->ime}} ({{$program->nacin_studija}})</h4>
                 <form class="form-horizontal" role="form" method="POST" action="{{ url('/vpisniPogoji/shraniPogoj') }}">
                 <div class="panel-group">
                         {!! csrf_field() !!}
@@ -29,6 +29,14 @@
                                                                         <option value="splosna_matura">Splošna matura</option>
                                                                         <option value="poklicna_matura" selected>Poklicna matura</option>
                                                                 @endif
+                                                                @foreach($poklici as $poklic)
+                                                                        @if ($pogoj->id_poklica != null)
+                                                                                @if($poklic->id == $pogoj->id_poklica)
+                                                                                        <option value="{{$poklic->id}}" selected>{{$poklic->ime}}</option>
+                                                                                @endif
+                                                                        @endif
+                                                                        <option value="{{$poklic->id}}">{{$poklic->ime}}</option>
+                                                                @endforeach
                                                         </select>
                                                         <br>
 

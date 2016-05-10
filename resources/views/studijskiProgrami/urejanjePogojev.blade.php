@@ -29,7 +29,7 @@
                                     <option selected data-fakulteta="-1" value="">Izberite program izbranega visokošolskega zavoda.</option>
                                     @foreach($programi as $program)
                                         <option data-vpisniPogoji="{{ $program->vpisniPogoji }}" data-fakulteta="{{ $program->id_zavoda }}"
-                                                value="{{$program->id}}" style="display:none">{{$program->ime}}</option>
+                                                value="{{$program->id}}" style="display:none">{{$program->ime}}, {{$program->nacin_studija}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -55,6 +55,8 @@
                                                 <li>Splošna matura</li>
                                             @elseif($pogoj->poklicna_matura == 1)
                                                 <li>Poklicna matura</li>
+                                            @elseif($pogoj->id_poklica != null)
+                                                <li>Poklic: {{$pogoj->Poklic->ime}}</li>
                                             @endif
                                             @if ($pogoj->id_elementa != null)
                                                 <li>{{ ucfirst(strtolower($pogoj->Element->ime)) }}</li>

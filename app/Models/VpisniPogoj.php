@@ -22,6 +22,11 @@ class VpisniPogoj extends Model
         return $this->belongsTo('App\Models\Element', 'id_elementa','id');
     }
 
+    public function Poklic()
+    {
+        return $this->belongsTo('App\Models\Poklic', 'id_poklica','id');
+    }
+
     public function Element2()
     {
         return $this->belongsTo('App\Models\Element', 'id_elementa2','id');

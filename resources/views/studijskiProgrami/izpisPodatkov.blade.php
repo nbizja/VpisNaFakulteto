@@ -38,7 +38,7 @@
                                             data-mesta_omejitev_tujci="{{ $program->stevilo_mest_po_omejitvi_tujci }}"
                                             data-omejitev_tujci="{{$program->omejitev_vpisa_tujci}}"
                                             data-stevilo_sprejetih_tujci="{{$program->stevilo_sprejetih_tujci}}"
-                                            value="{{$program->id}}" style="display:none">{{$program->ime}}
+                                            value="{{$program->id}}" style="display:none">{{$program->ime}}, {{$program->nacin_studija}}
                                     </option>
                                     @endforeach
                                 </select>

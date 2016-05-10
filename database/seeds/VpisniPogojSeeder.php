@@ -42,13 +42,6 @@ class VpisniPogojSeeder extends Seeder
             'id_elementa' => 'L401'
         ]);
 
-        DB::table('vpisni_pogoj')->insert([
-            'id_programa' => '838',
-            'vnos_veljaven' => '1',
-            'splosna_matura' => '0',
-            'poklicna_matura' => '1',
-            'id_elementa' => 'L901'
-        ]);
 
         //Ri-UN, izredni
         DB::table('vpisni_pogoj')->insert([
@@ -74,13 +67,6 @@ class VpisniPogojSeeder extends Seeder
             'id_elementa' => 'L401'
         ]);
 
-        DB::table('vpisni_pogoj')->insert([
-            'id_programa' => '853',
-            'vnos_veljaven' => '1',
-            'splosna_matura' => '0',
-            'poklicna_matura' => '1',
-            'id_elementa' => 'L901'
-        ]);
 
         //RI-vs, redni
         DB::table('vpisni_pogoj')->insert([
@@ -237,13 +223,6 @@ class VpisniPogojSeeder extends Seeder
             'id_elementa' => 'M401'   //matematika(splošna m., osn.) + poklicna matura
         ]);
 
-        DB::table('vpisni_pogoj')->insert([
-            'id_programa' => '828',
-            'vnos_veljaven' => '1',
-            'splosna_matura' => '0',
-            'poklicna_matura' => '1',
-            'id_elementa' => 'M402'   //matematika(splošna m., vis.) + poklicna matura
-        ]);
 
         //Matematika UN, izredni
         DB::table('vpisni_pogoj')->insert([
@@ -269,13 +248,6 @@ class VpisniPogojSeeder extends Seeder
             'id_elementa' => 'M401'   //matematika(splošna m., osn.) + poklicna matura
         ]);
 
-        DB::table('vpisni_pogoj')->insert([
-            'id_programa' => '857',
-            'vnos_veljaven' => '1',
-            'splosna_matura' => '0',
-            'poklicna_matura' => '1',
-            'id_elementa' => 'M402'   //matematika(splošna m., vis.) + poklicna matura
-        ]);
 
         /**************************************/
 
@@ -362,7 +334,7 @@ class VpisniPogojSeeder extends Seeder
             'splosna_matura' => '0',
             'poklicna_matura' => '1',
             'id_elementa' => 'S442',
-            'id_elementa2' => 'LUZG'
+            'id_elementa2' => 'M561'
         ]);
 
     }
