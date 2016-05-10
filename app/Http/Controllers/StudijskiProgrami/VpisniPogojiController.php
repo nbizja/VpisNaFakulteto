@@ -61,8 +61,9 @@ class VpisniPogojiController extends Controller
                 foreach ($request->request->all() as $name => $value) {
                     if (stripos($name,'uredi') !== false) {
                         $elementi = $this->vpisniPogoji->ElementiAll();
+                        $poklici = $this->vpisniPogoji->PokliciAll();
                         $pogoj = $this->vpisniPogoji->VpisniPogojByID(substr($name, 5, strlen($name)-5));
-                        return view('studijskiProgrami.urediPogoj', ['elementi' => $elementi, 'program' => $program,'pogoj'=> $pogoj]);
+                        return view('studijskiProgrami.urediPogoj', ['poklici' => $poklici, 'elementi' => $elementi, 'program' => $program,'pogoj'=> $pogoj]);
                     } else if (stripos($name,'brisi') !== false) {
                         $pogoj = $this->vpisniPogoji->VpisniPogojByID(substr($name, 5, strlen($name)-5));
                         $pogoj->forceDelete();
@@ -89,14 +90,22 @@ class VpisniPogojiController extends Controller
                 } else if ($request->request->get('element1') == 'splosna_matura') {
                     $pogoj->splosna_matura = 1;
                     $pogoj->poklicna_matura = 0;
+                } else if ($request>$request->get('element1') != '') {
+                    $pogoj->splosna_matura = 0;
+                    $pogoj->poklicna_matura = 0;
+                    $pogoj->id_poklica = $request>$request->get('element1');
                 }
 
                 if($request->request->get('element2') != 'prazno') {
                     $pogoj->id_elementa = $request->request->get('element2');
+                } else {
+                    $pogoj->id_elementa = '';
                 }
 
-                if($request->request->has('element3')) {
+                if($request->request->get('element3') != 'prazno') {
                     $pogoj->id_elementa2 = $request->request->get('element3');
+                } else {
+                    $pogoj->id_elementa2 = '';
                 }
 
                 $pogoj->save();
@@ -114,7 +123,8 @@ class VpisniPogojiController extends Controller
             if (Auth::user()->vloga == 'skrbnik') {
                 $elementi = $this->vpisniPogoji->ElementiAll();
                 $program = $this->studijskiProgrami->ProgramByID($id);
-                return view('studijskiProgrami.dodajPogoj', ['program' => $program, 'elementi' => $elementi]);
+                $poklici = $this->vpisniPogoji->PokliciAll();
+                return view('studijskiProgrami.dodajPogoj', ['poklici' => $poklici, 'program' => $program, 'elementi' => $elementi]);
             }
         }
 
@@ -126,10 +136,13 @@ class VpisniPogojiController extends Controller
             if (Auth::user()->vloga == 'skrbnik') {
                 $poklicna_matura = 0;
                 $splosna_matura = 0;
+                $poklic = '';
                 if ($request->request->get('element1') == 'poklicna_matura') {
                     $poklicna_matura = 1;
                 } else if ($request->request->get('element1') == 'splosna_matura') {
                     $splosna_matura = 1;
+                } else if ($request>$request->get('element1') != '') {
+                    $poklic = $request->request->get('element1');
                 }
 
                 $element = '';
@@ -148,7 +161,8 @@ class VpisniPogojiController extends Controller
                     'id_elementa2' => $element2,
                     'vnos_veljaven' => 1,
                     'splosna_matura' => $splosna_matura,
-                    'poklicna_matura' => $poklicna_matura
+                    'poklicna_matura' => $poklicna_matura,
+                    'id_poklica' => $poklic
                 ]);
 
                 return $this->urediPogoje();

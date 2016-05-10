@@ -2,7 +2,7 @@
 
 @section('content')
         <div class="container">
-                <h4>Urejanje vpisnih pogojev za študijski program {{$program->ime}}</h4>
+                <h4>Urejanje vpisnih pogojev za študijski program {{$program->ime}} ({{$program->nacin_studija}})</h4>
                 <form class="form-horizontal" role="form" method="POST" action="{{ url('/vpisniPogoji/shraniPogoj') }}">
                 <div class="panel-group">
                         {!! csrf_field() !!}
@@ -29,6 +29,14 @@
                                                                         <option value="splosna_matura">Splošna matura</option>
                                                                         <option value="poklicna_matura" selected>Poklicna matura</option>
                                                                 @endif
+                                                                @foreach($poklici as $poklic)
+                                                                        @if ($pogoj->id_poklica != null)
+                                                                                @if($poklic->id == $pogoj->id_poklica)
+                                                                                        <option value="{{$poklic->id}}" selected>{{$poklic->ime}}</option>
+                                                                                @endif
+                                                                        @endif
+                                                                        <option value="{{$poklic->id}}">{{$poklic->ime}}</option>
+                                                                @endforeach
                                                         </select>
                                                         <br>
 
@@ -43,21 +51,29 @@
                                                                 @endforeach
                                                                 @if(empty($pogoj->id_elementa))
                                                                         <option selected value="prazno"></option>
+                                                                @else
+                                                                        <option value="prazno"></option>
                                                                 @endif
                                                         </select>
 
-                                                        @if (!empty($pogoj->id_elementa2))
-                                                                <select name="element3"  class="form-control" id="izberiPogoj2">
-                                                                        <option value="">--Izberite element--</option>
-                                                                        @foreach($elementi as $element)
-                                                                                @if($element->id == $pogoj->id_elementa2)
-                                                                                        <option value="{{$element->id}}" selected>{{$element->ime}}</option>
-                                                                                @else
-                                                                                        <option value="{{$element->id}}">{{$element->ime}}</option>
-                                                                                @endif
-                                                                        @endforeach
-                                                                </select>
-                                                        @endif
+
+                                                        <br>
+                                                        <select name="element3"  class="form-control" id="izberiPogoj2">
+                                                                <option value="">--Izberite element--</option>
+                                                                @foreach($elementi as $element)
+                                                                        @if($element->id == $pogoj->id_elementa2)
+                                                                                <option value="{{$element->id}}" selected>{{$element->ime}}</option>
+                                                                        @else
+                                                                                <option value="{{$element->id}}">{{$element->ime}}</option>
+                                                                        @endif
+                                                                @endforeach
+                                                                @if(empty($pogoj->id_elementa2))
+                                                                        <option selected value="prazno"></option>
+                                                                @else
+                                                                        <option value="prazno"></option>
+                                                                @endif
+                                                        </select>
+
                                                 </div>
                                         </div>
 

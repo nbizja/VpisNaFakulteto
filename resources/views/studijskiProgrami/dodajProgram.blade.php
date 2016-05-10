@@ -56,15 +56,24 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Informacije o vpisu</div>
                     <div class="panel-body">
+                        <p>* : podatki za Slovence in pripadnike EU</p>
+                        <p>** : podatki za tujce in Slovence brez slovenskega državljanstva</p>
+
                         <div class="form-group">
-                            <label class="col-md-4 control-label">Število razpisanih vpisnih mest: </label>
+                            <label class="col-md-4 control-label">Število razpisanih vpisnih mest*: </label>
                             <div class="col-md-6">
                                 <input type="text" id="stevilo_vpisnih_mest" class="form-control" name="stevilo_mest">
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Število razpisanih vpisnih mest**: </label>
+                            <div class="col-md-6">
+                                <input type="text" id="stevilo_vpisnih_mest_tujci" class="form-control" name="stevilo_mest_tujci">
+                            </div>
+                        </div>
 
                         <div class="form-group">
-                            <label class="col-md-4 control-label">Omejitev vpisa: </label>
+                            <label class="col-md-4 control-label">Omejitev vpisa*: </label>
                             <div class="col-md-6">
                                 <select class="form-control" id="omejitev" name="omejitev">
                                     <option value="da">Da</option>
@@ -72,13 +81,43 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Omejitev vpisa**: </label>
+                            <div class="col-md-6">
+                                <select class="form-control" id="omejitev_tujci" name="omejitev_tujci">
+                                    <option value="da">Da</option>
+                                    <option value="ne">Ne</option>
+                                </select>
+                            </div>
+                        </div>
 
                         <div class="form-group">
-                            <label class="col-md-4 control-label">Število mest po omejitvi vpisa: </label>
+                            <label class="col-md-4 control-label">Število mest po omejitvi vpisa*: </label>
                             <div class="col-md-6">
                                 <input type="text" id="stevilo_mest_omejitev" class="form-control" name="stevilo_mest_omejitev">
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Število mest po omejitvi vpisa**: </label>
+                            <div class="col-md-6">
+                                <input type="text" id="stevilo_mest_omejitev_tujci" class="form-control" name="stevilo_mest_omejitev_tujci">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Število sprejetih kandidatov*: </label>
+                            <div class="col-md-6">
+                                <input type="text" id="stevilo_sprejetih" class="form-control" name="stevilo_sprejetih">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Število sprejetih kandidatov**: </label>
+                            <div class="col-md-6">
+                                <input type="text" id="stevilo_sprejetih_tujci" class="form-control" name="stevilo_sprejetih_tujci">
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
