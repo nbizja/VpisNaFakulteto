@@ -113,6 +113,7 @@ class SeznamController extends Controller
                         (stripos($p->vrsta, $search) !== false) ||
                         (stripos($p->visokosolskiZavod->ime, $search) !== false);
                     });
+                    $prog->sortBy('visokosolskiZavod.ime');
                 }
 
                 $sifra=false;
@@ -120,7 +121,14 @@ class SeznamController extends Controller
                 $nacin=false;
                 $vrsta=false;
                 $stevilo=false;
+                $steviloO=false;
+                $steviloS=false;
                 $omejitev=false;
+                $steviloT=false;
+                $steviloOT=false;
+                $steviloST=false;
+                $omejitevT=false;
+
                 if ($request->request->has('sifraC')) {
                     $sifra=true;
                 };
@@ -136,8 +144,26 @@ class SeznamController extends Controller
                 if ($request->request->has('steviloC')) {
                     $stevilo=true;
                 };
+                if ($request->request->has('steviloCO')) {
+                    $steviloO=true;
+                };
+                if ($request->request->has('steviloCS')) {
+                    $steviloS=true;
+                };
                 if ($request->request->has('omejitevC')) {
                     $omejitev=true;
+                };
+                if ($request->request->has('steviloCT')) {
+                    $steviloT=true;
+                };
+                if ($request->request->has('steviloCOT')) {
+                    $steviloOT=true;
+                };
+                if ($request->request->has('steviloCST')) {
+                    $steviloST=true;
+                };
+                if ($request->request->has('omejitevCT')) {
+                    $omejitevT=true;
                 };
 
 
@@ -146,7 +172,8 @@ class SeznamController extends Controller
 
                 $pdf->loadHTML(\View::make('pdf/seznamProgramov')->with('programi', $prog)
                 ->with('sifra', $sifra)->with('zavod', $zavod)->with('nacin', $nacin)->with('vrsta',$vrsta)
-                ->with('stevilo', $stevilo)->with('omejitev', $omejitev));
+                ->with('steviloT', $steviloT)->with('steviloOT', $steviloOT)->with('steviloST', $steviloST)->with('omejitevT', $omejitevT)
+                ->with('stevilo', $stevilo)->with('steviloO', $steviloO)->with('steviloS', $steviloS)->with('omejitev', $omejitev));
 
                 return $pdf->download('studijskiProgrami.pdf');
 

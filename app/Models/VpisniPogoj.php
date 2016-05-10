@@ -8,7 +8,7 @@ class VpisniPogoj extends Model
 {
     public $timestamps = false;
     protected $table = 'vpisni_pogoj';
-    protected $fillable = ['id_programa', 'id_elementa', 'id_elementa2', 'tip', 'splosna_matura', 'poklicna_matura', 'vnos_veljaven'];
+    protected $fillable = ['id_programa', 'id_elementa', 'id_elementa2', 'id_poklica', 'tip', 'splosna_matura', 'poklicna_matura', 'vnos_veljaven'];
     protected $guarded = ['id'];
     protected $required = ['id_programa'];
 

@@ -57,7 +57,10 @@ class StudijskiProgramiController extends Controller
         if($request->request->has('shrani')) {
             $program->stevilo_vpisnih_mest = $request->request->get('stevilo_mest');
             $program->stevilo_mest_po_omejitvi = $request->request->get('stevilo_mest_omejitev');
-
+            $program->stevilo_sprejetih = $request->request->get('stevilo_sprejetih');
+            $program->stevilo_mest_po_omejitvi_tujci = $request->request->get('stevilo_mest_omejitev_tujci');
+            $program->stevilo_vpisnih_mest_tujci = $request->request->get('stevilo_mest_tujci');
+            $program->stevilo_sprejetih_tujci = $request->request->get('stevilo_sprejetih_tujci');
 
             if ($request->request->get('vrsta_studija') == 'un') {
                 $vrsta = 'Univerzitetni';
@@ -77,9 +80,16 @@ class StudijskiProgramiController extends Controller
                 $omejitev = '0';
             }
 
+            if ($request->request->get('omejitev_tujci') == 'da') {
+                $omejitevT = '1';
+            } else {
+                $omejitevT = '0';
+            }
+
             $program->nacin_studija = $nacin;
             $program->vrsta = $vrsta;
             $program->omejitev_vpisa = $omejitev;
+            $program->omejitev_vpisa_tujci = $omejitevT;
 
             $program->save();
         } else {
@@ -115,7 +125,11 @@ class StudijskiProgramiController extends Controller
             'naziv' => 'required',
             'sifra' => 'required',
             'stevilo_mest' => 'numeric',
-            'stevilo_mest_omejitev' => 'numeric'
+            'stevilo_mest_tujci' => 'numeric',
+            'stevilo_mest_omejitev' => 'numeric',
+            'stevilo_mest_omejitev_tujci' => 'numeric',
+            'stevilo_sprejetih' => 'numeric',
+            'stevilo_sprejetih_tujci' => 'numeric'
         ], $messages);
 
 
@@ -143,6 +157,13 @@ class StudijskiProgramiController extends Controller
                 $omejitev = '0';
             }
 
+            if ($request->request->get('omejitev_tujci') == 'da') {
+                $omejitevT = '1';
+            } else {
+                $omejitevT = '0';
+            }
+
+
             StudijskiProgram::create([
                 'id_zavoda' => $request->request->get('fakulteta'),
                 'sifra' => $request->request->get('sifra'),
@@ -152,6 +173,11 @@ class StudijskiProgramiController extends Controller
                 'omejitev_vpisa' => $omejitev,
                 'stevilo_vpisnih_mest' => $request->request->get('stevilo_mest'),
                 'stevilo_mest_po_omejitvi' => $request->request->get('stevilo_mest_omejitev'),
+                'stevilo_sprejetih' => $request->request->get('stevilo_sprejetih'),
+                'omejitev_vpisa_tujci' => $omejitevT,
+                'stevilo_vpisnih_mest_tujci' => $request->request->get('stevilo_mest_tujci'),
+                'stevilo_mest_po_omejitvi_tujci' => $request->request->get('stevilo_mest_omejitev_tujci'),
+                'stevilo_sprejetih_tujci' => $request->request->get('stevilo_sprejetih_tujci')
             ]);
 
             $programi = $this->studijskiProgrami->ProgramiAll()->sortBy('visokosolskiZavod.ime');

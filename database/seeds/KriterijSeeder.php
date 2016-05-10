@@ -43,14 +43,14 @@ class KriterijSeeder extends Seeder
             'id_pogoja' => '2',
             'vnos_veljaven' => '1',
             'maturitetni_uspeh' => '1',
-            'utez' => '0.5'
+            'utez' => '0.4'
         ]);
 
         DB::table('kriterij')->insert([
             'id_pogoja' => '2',
             'vnos_veljaven' => '1',
             'id_elementa' => 'L411',
-            'utez' => '0.1'
+            'utez' => '0.2'
         ]);
     }
 }

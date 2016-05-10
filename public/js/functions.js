@@ -32,19 +32,33 @@ $(document).ready(function() {
             if ($(this).val() == '') {
                 steviloMest = '';
                 steviloMestOmejitev = '';
+                steviloSprejetih= '';
+                steviloMestTujci = '';
+                steviloMestOmejitevTujci = '';
+                steviloSprejetihTujci = '';
                 nacin = '';
                 vrsta = '';
                 omejitev = '';
+                omejitevTujci = '';
             } else if ($(this).val() == id) {
                 steviloMest = $(this).attr('data-mesta');
                 steviloMestOmejitev = $(this).attr('data-mesta_omejitev');
+                steviloSprejetih = $(this).attr('data-stevilo_sprejetih');
+                steviloMestTujci = $(this).attr('data-mesta_tujci');
+                steviloMestOmejitevTujci = $(this).attr('data-mesta_omejitev_tujci');
+                steviloSprejetihTujci = $(this).attr('data-stevilo_sprejetih_tujci');
                 nacin = $(this).attr('data-nacin');
                 vrsta = $(this).attr('data-vrsta');
                 omejitev = $(this).attr('data-omejitev');
+                omejitevTujci = $(this).attr('data-omejitev_tujci');
             }
         });
         $('#stevilo_vpisnih_mest').val(steviloMest);
         $('#stevilo_mest_omejitev').val(steviloMestOmejitev);
+        $('#stevilo_sprejetih').val(steviloSprejetih);
+        $('#stevilo_vpisnih_mest_tujci').val(steviloMestTujci);
+        $('#stevilo_mest_omejitev_tujci').val(steviloMestOmejitevTujci);
+        $('#stevilo_sprejetih_tujci').val(steviloSprejetihTujci);
 
         if (vrsta == '') {
             $('#vrsta_studija').val([]);
@@ -69,37 +83,17 @@ $(document).ready(function() {
         } else {
             $('#omejitev').val("ne");
         }
-    });
 
-    $('#filtri').change(function() {
-        var id = $(this).val();
-        if (id == "nacin") {
-            var option = $('<option></option>').text("--Izberi--");
-            $("#izbira").empty().append(option);
-            var option = $('<option></option>').attr("value", "redni").text("Redni");
-            $("#izbira").append(option);
-            option = $('<option></option>').attr("value", "izredni").text("Izredni");
-            $("#izbira").append(option);
-        }
-
-        if (id == "vrsta") {
-            var option = $('<option></option>').text("--Izberi--");
-            $("#izbira").empty().append(option);
-            var option = $('<option></option>').attr("value", "vs").text("Visokošolski strokovni");
-            $("#izbira").append(option);
-            option = $('<option></option>').attr("value", "un").text("Univerzitetni");
-            $("#izbira").append(option);
-        }
-
-        if (id == "omejitev") {
-            var option = $('<option></option>').text("--Izberi--");
-            $("#izbira").empty().append(option);
-            var option = $('<option></option>').attr("value", "da").text("Da.");
-            $("#izbira").append(option);
-            option = $('<option></option>').attr("value", "ne").text("Ne.");
-            $("#izbira").append(option);
+        if (omejitevTujci == '') {
+            $('#omejitev_tujci').val([]);
+        }else if (omejitevTujci == 1) {
+            $('#omejitev_tujci').val("da");
+        } else {
+            $('#omejitev_tujci').val("ne");
         }
     });
+
+//****************POGOJI
 
     $('#vzdrzevanjePogojev_fakultete').change(function(){
         var id = $(this).val();
@@ -131,6 +125,8 @@ $(document).ready(function() {
             $('.program_'+id).show();
         }
     });
+
+    //***********seznam studijskih programov**************
 
     $('#filtri').change(function() {
         var id = $(this).val();
@@ -208,11 +204,53 @@ $(document).ready(function() {
             $('.stevilo').hide();
     });
 
+    $('#steviloCO').change(function() {
+        if ($('#steviloCO').is(":checked"))
+            $('.stevilo_omejitev').show();
+        else
+            $('.stevilo_omejitev').hide();
+    });
+
+    $('#steviloCS').change(function() {
+        if ($('#steviloCS').is(":checked"))
+            $('.stevilo_sprejetih').show();
+        else
+            $('.stevilo_sprejetih').hide();
+    });
+
     $('#omejitevC').change(function() {
         if ($('#omejitevC').is(":checked"))
             $('.omejitev').show();
         else
             $('.omejitev').hide();
+    });
+
+    $('#steviloCT').change(function() {
+        if ($('#steviloCT').is(":checked"))
+            $('.steviloT').show();
+        else
+            $('.steviloT').hide();
+    });
+
+    $('#steviloCOT').change(function() {
+        if ($('#steviloCOT').is(":checked"))
+            $('.stevilo_omejitevT').show();
+        else
+            $('.stevilo_omejitevT').hide();
+    });
+
+    $('#steviloCST').change(function() {
+        if ($('#steviloCST').is(":checked"))
+            $('.stevilo_sprejetihT').show();
+        else
+            $('.stevilo_sprejetihT').hide();
+    });
+
+    $('#omejitevCT').change(function() {
+        if ($('#omejitevCT').is(":checked"))
+            $('.omejitevT').show();
+        else
+            $('.omejitevT').hide();
     });
 
 
@@ -242,21 +280,35 @@ $(document).ready(function() {
             if ($(this).val() == '') {
                 steviloMest = '';
                 steviloMestOmejitev = '';
+                steviloSprejetih = '';
+                steviloMestTujci = '';
+                steviloMestOmejitevTujci = '';
+                steviloSprejetihTujci = '';
                 nacin = '';
                 vrsta = '';
                 omejitev = -1;
+                omejitevTujci = -1;
                 $('#gumbIzvozi').attr("disabled", true);
             } else if ($(this).val() == id) {
                 steviloMest = $(this).attr('data-mesta');
                 steviloMestOmejitev = $(this).attr('data-mesta_omejitev');
+                steviloMestTujci = $(this).attr('data-mesta_tujci');
+                steviloMestOmejitevTujci = $(this).attr('data-mesta_omejitev_tujci');
+                steviloSprejetih = $(this).attr('data-stevilo_sprejetih');
+                steviloSprejetihTujci = $(this).attr('data-stevilo_sprejetih_tujci');
                 nacin = $(this).attr('data-nacin');
                 vrsta = $(this).attr('data-vrsta');
                 omejitev = $(this).attr('data-omejitev');
+                omejitevTujci = $(this).attr('data-omejitev_tujci');
                 $('#gumbIzvozi').attr("disabled", false);
             }
         });
         $('#stevilo_vpisnih_mest').val(steviloMest);
         $('#stevilo_mest_omejitev').val(steviloMestOmejitev);
+        $('#stevilo_spr').val(steviloSprejetih);
+        $('#stevilo_vpisnih_mest_tujci').val(steviloMestTujci);
+        $('#stevilo_mest_omejitev_tujci').val(steviloMestOmejitevTujci);
+        $('#stevilo_spr_tujci').val(steviloSprejetihTujci);
 
         $('#vrsta_studija').val(vrsta);
         $('#nacin_studija').val(nacin);
@@ -266,6 +318,13 @@ $(document).ready(function() {
             $('#omejitev').val("Ne");
         } else {
             $('#omejitev').val("");
+        }
+        if (omejitevTujci == 1) {
+            $('#omejitev_tujci').val("Da");
+        } else if (omejitevTujci == 0) {
+            $('#omejitev_tujci').val("Ne");
+        } else {
+            $('#omejitev_tujci').val("");
         }
     });
 
