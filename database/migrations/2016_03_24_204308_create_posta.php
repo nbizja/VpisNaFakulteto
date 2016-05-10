@@ -14,7 +14,7 @@ class CreatePosta extends Migration
     {
         Schema::create('posta', function(BluePrint $table) { 
             $table->engine = 'InnoDB';
-            $table->integer('postna_stevilka',50);
+            $table->integer('postna_stevilka');
             $table->string('ime');
 
             $table->primary('postna_stevilka');
