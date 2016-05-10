@@ -20,7 +20,7 @@ class CreateUporabnik extends Migration
             $table->string('emso')->index()->nullable();
             $table->string('ime');
             $table->string('priimek');
-            $table->string('username')->unique();
+            $table->string('username',50)->unique();
             $table->string('email');
             $table->string('password');
             $table->string('zeton');
