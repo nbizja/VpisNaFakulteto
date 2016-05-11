@@ -84,6 +84,8 @@ Route::get('/seznamKandidatov/{zavod_id?}', function($zavod_id){
     else return Response::json();
 });
 
+Route::get('seznamKandidatov/pdf', 'ListOfCandidatesController@exportPdf');
+
 
 
 
