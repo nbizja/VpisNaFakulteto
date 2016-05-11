@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth;
 use App\Models\Enums\VlogaUporabnika;
 use App\Models\Logic\Registracija;
 use App\Models\Repositories\PrijavaRepository;
-use App\Models\Uporabnik;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -58,6 +57,7 @@ class RegisterController extends Controller
             'password.min' => "Geslo mora vsebovati vsaj :min znakov.",
             'email.unique' => "Email je že v uporabi.",
             'username.unique' => "Uporabniško ime je že v uporabi.",
+            'confirmed' => "Vnešeni gesli se ne ujemata."
         ];
 
         $validator = Validator::make($request->all(), [
@@ -70,8 +70,9 @@ class RegisterController extends Controller
 
 
         if(!$validator->passes()) {
-            return view('auth.register')
-                ->with(['errors' => $validator->errors()->all()]);
+            return redirect('registracija')
+                ->withInput()
+                ->with('errors', $validator->errors()->all());
 
         }
 
@@ -79,16 +80,16 @@ class RegisterController extends Controller
         $user = $this->prijava->uporabnikByEmail($request->request->get('email'));
         $user->vloga = VlogaUporabnika::KANDIDAT;
         $user->save();
-        $this->sendActivationEmail($request->request->get('email'), $request->url());
+        $this->sendActivationEmail($request->request->get('email'), $request->url(), $user);
         
-        return view('auth.register')
-            ->with(['success' => 'success']);
+        return redirect('registracija')
+            ->with('success', 'success');
 
     }
 
-    public function sendActivationEmail($email, $url)
+    public function sendActivationEmail($email, $url, $user)
     {
-        Mail::send('auth.emails.registration', ['user' => $this->prijava->uporabnikByEmail($email), 'url' => $url], function ($m) use($email){
+        Mail::send('auth.emails.registration', ['user' => $user, 'url' => $url], function ($m) use($email){
             $m->from('skrbnik@faks.me', 'Vpis v visoko šolstvo.');
             $m->to($email)->subject('Aktivacija računa');
         });

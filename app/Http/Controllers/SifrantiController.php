@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Logic\Validators;
 use App\Models\Poklic;
+use Doctrine\DBAL\Query\QueryException;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -40,8 +42,9 @@ class SifrantiController extends Controller
         return redirect('prijava');
     }
 
-    public function uredi($ime_sifranta)
+    public function uredi(Request $request, $ime_sifranta)
     {
+        //dd($request->request->get('ime'));
         if (Auth::check()) {
             if (Auth::user()->vloga == 'skrbnik') {
 
@@ -121,16 +124,36 @@ class SifrantiController extends Controller
                     return redirect('prijava');
                 }
 
-                $edit = \DataEdit::source(new $model);
+                $m = new $model;
+                $key_name = $m->getKeyName();
+                if ($request->request->has($key_name)) {
+
+                }
+                $edit = \DataEdit::source($m);
                 $edit->link('sifranti/' . $ime_sifranta, 'Nazaj', 'TR')->back();
                 $fields = \DB::getSchemaBuilder()->getColumnListing($table_name);
                 foreach($fields as $field)
                 {
-                    $field_name = ucfirst(str_replace('_', ' ', $field));
-                    $edit->add($field, $field_name, 'text');
-                }
+                    if (!in_array($field, $m->getFillable())) {
+                        continue;
+                    }
 
-                return $edit->view('sifrant_uredi', compact('edit', 'title'));
+                    $field_name = ucfirst(str_replace('_', ' ', $field));
+                        if ($field == 'vnos_veljaven') {
+                            $edit->add($field, $field_name, 'checkbox');
+                        } elseif (in_array($field, $m->getRequired())) {
+                            $edit->add($field, $field_name, 'text')->rule('required');
+                        } else {
+                            $edit->add($field, $field_name, 'text');
+                        }
+
+                }
+                try {
+                    $view = $edit->view('sifrant_uredi', compact('edit', 'title'));
+                    return $view;
+                } catch (Exception $e) {
+                    return back()->with('error', 'Ključ je že zaseden!');
+                }
             }
         }
 
@@ -158,6 +181,7 @@ class SifrantiController extends Controller
 
 
         $grid = \DataGrid::source($filter);
+        $m = new $model;
         foreach($columns as $col)
         {
             $col_name = ucfirst(str_replace('_', ' ', $col));

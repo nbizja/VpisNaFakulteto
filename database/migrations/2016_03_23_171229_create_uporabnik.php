@@ -17,10 +17,10 @@ class CreateUporabnik extends Migration
         Schema::create('uporabnik', function(Blueprint $table)
         {
             $table->increments('id');
-            $table->string('emso')->index()->nullable();
+            $table->string('emso',50)->index()->nullable();
             $table->string('ime');
             $table->string('priimek');
-            $table->string('username')->unique();
+            $table->string('username',50)->unique();
             $table->string('email');
             $table->string('password');
             $table->string('zeton');
