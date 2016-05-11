@@ -216,7 +216,7 @@ class StudijskiProgramiController extends Controller
 				
 				$fakulteta = $this->studijskiProgrami->ZavodNameByID($fakulteta_id);
 				$program = $this->studijskiProgrami->ProgramNameByID($program_id);
-				
+				$p = $this->studijskiProgrami->ProgramByID($program_id);
 				$st_mest_razpis = $request->input('st_mest_razpis', '');
 				$omejitev = $request->input('omejitev', '');
 				$st_mest_omejitev = $request->input('st_mest_omejitev', '');
@@ -229,7 +229,7 @@ class StudijskiProgramiController extends Controller
 											['fakulteta' => $fakulteta, 'program' => $program,
 											 'st_mest_razpis' => $st_mest_razpis, 'omejitev' => $omejitev,
 											 'st_mest_omejitev' => $st_mest_omejitev, 'nacin' => $nacin,
-											 'vrsta' => $vrsta]));
+											 'vrsta' => $vrsta, 'p' => $p]));
 				
                 return $pdf->download('studijskiProgrami.pdf');
 							

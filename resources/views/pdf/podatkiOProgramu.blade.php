@@ -43,6 +43,23 @@
 		
 		<dt>Število mest po omejitvi vpisa:</dt>
 		<dd><?php echo $st_mest_omejitev ?></dd>
+
+		<dt>Število sprejetih kandidatov:</dt>
+		<dd>{{$p->stevilo_sprejetih}}</dd>
+	</dl>
+	<h4 style="color: #005580">Informacije o vpisu za tujce in Slovence brez slovenskega državljanstva</h4>
+	<dl class="dl-horizontal">
+		<dt>Število razpisanih vpisnih mest:</dt>
+		<dd>{{$p->stevilo_vpisnih_mest_tujci}}</dd>
+
+		<dt>Omejitev vpisa:</dt>
+		<dd>{{$p->omejitev_vpisa_tujci == 1 ? 'Da' : 'Ne'}}</dd>
+
+		<dt>Število mest po omejitvi vpisa:</dt>
+		<dd>{{$p->stevilo_mest_po_omejitvi_tujci}}</dd>
+
+		<dt>Število sprejetih kandidatov:</dt>
+		<dd>{{$p->stevilo_sprejetih_tujci}}</dd>
 	</dl>
 	
 	<h4 style="color: #005580">Splošne informacije</h4>
