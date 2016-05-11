@@ -8,6 +8,7 @@ use App\Models\Uporabnik;
 use App\Models\VisokosolskiZavod;
 use Illuminate\Http\Request;
 use App\Models\Enums\VlogaUporabnika;
+use Illuminate\Support\Facades\Auth;
 
 class ListOfCandidatesController extends Controller
 {
@@ -19,16 +20,35 @@ class ListOfCandidatesController extends Controller
 
     public function loadPage()
     {
-        return view('list_candidates')
-            ->with([
-                'vz' => VisokosolskiZavod::orderBy('ime')->pluck('ime'),
-                'zavod_id' => -1,
-                'program_id' => -1,
-                'nacin' => -1,
-                'srednja' => -1,
-                'talent' => -1,
-                'koncana_srednja' => KoncanaSrednjaSola::pluck('ime')
-            ]);
+        if (Auth::check()) {
+            if (Auth::user()->vloga == 'skrbnik') {
+                return view('list_candidates')
+                    ->with([
+                        'vz' => VisokosolskiZavod::orderBy('ime')->pluck('ime'),
+                        'zavod_id' => -1,
+                        'program_id' => -1,
+                        'nacin' => -1,
+                        'srednja' => -1,
+                        'talent' => -1,
+                        'koncana_srednja' => KoncanaSrednjaSola::pluck('ime')
+                    ]);
+            }
+
+            else if (Auth::user()->vloga == 'fakulteta') {
+                $id = Auth::user() -> id;
+                return view('list_candidates')
+                    ->with([
+                        'vz' => VisokosolskiZavod::where('id_skrbnika', '=', $id)->orderBy('ime')->pluck('ime'),
+                        'zavod_id' => -1,
+                        'program_id' => -1,
+                        'nacin' => -1,
+                        'srednja' => -1,
+                        'talent' => -1,
+                        'koncana_srednja' => KoncanaSrednjaSola::pluck('ime')
+                    ]);
+            }
+        }
+        return redirect('prijava');
     }
 
     public function getList(Request $request)
@@ -181,7 +201,7 @@ class ListOfCandidatesController extends Controller
             $pdf->loadHTML(\View::make('pdf/seznamKandidatov')->with([
                 'kandidati' => $kandidati
             ]));
-            return $pdf->download('studijskiProgrami.pdf');
+            return $pdf->download('seznamKandidatov.pdf');
         }
     }
 }
