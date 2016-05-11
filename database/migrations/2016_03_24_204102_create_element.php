@@ -14,7 +14,7 @@ class CreateElement extends Migration
     {
         Schema::create('element', function(BluePrint $table) { 
             $table->engine = 'InnoDB';
-            $table->string('id');
+            $table->string('id', 50);
             $table->string('ime');
 
             $table->primary('id');

@@ -103,14 +103,17 @@ class SeznamController extends Controller
                     $programi = $this->studijskiProgrami->ProgramiAll()->sortBy('visokosolskiZavod.ime');
                 }
 
-                if ($request->request->has('search')) {
-                    $programi = $programi->filter(function($p) use ($request) {
-                        return (stripos($p->ime, $request->request->get('search')) !== false) ||
-                        (stripos($p->sifra, $request->request->get('search')) !== false) ||
-                        (stripos($p->nacin_studija, $request->request->get('search')) !== false) ||
-                        (stripos($p->vrsta, $request->request->get('search')) !== false) ||
-                        (stripos($p->visokosolskiZavod->ime, $request->request->get('search')) !== false);
+                $search = mb_convert_case($request->request->get('search', ''), MB_CASE_UPPER, "UTF-8");
+                if (!empty($search)) {
+                    $prog = $programi->filter(function($p) use ($search) {
+
+                        return (stripos($p->ime, $search) !== false) ||
+                        (stripos($p->sifra, $search) !== false) ||
+                        (stripos($p->nacin_studija, $search) !== false) ||
+                        (stripos($p->vrsta, $search) !== false) ||
+                        (stripos($p->visokosolskiZavod->ime, $search) !== false);
                     });
+                    $prog->sortBy('visokosolskiZavod.ime');
                 }
 
                 $sifra=false;
@@ -118,7 +121,14 @@ class SeznamController extends Controller
                 $nacin=false;
                 $vrsta=false;
                 $stevilo=false;
+                $steviloO=false;
+                $steviloS=false;
                 $omejitev=false;
+                $steviloT=false;
+                $steviloOT=false;
+                $steviloST=false;
+                $omejitevT=false;
+
                 if ($request->request->has('sifraC')) {
                     $sifra=true;
                 };
@@ -134,17 +144,36 @@ class SeznamController extends Controller
                 if ($request->request->has('steviloC')) {
                     $stevilo=true;
                 };
+                if ($request->request->has('steviloCO')) {
+                    $steviloO=true;
+                };
+                if ($request->request->has('steviloCS')) {
+                    $steviloS=true;
+                };
                 if ($request->request->has('omejitevC')) {
                     $omejitev=true;
+                };
+                if ($request->request->has('steviloCT')) {
+                    $steviloT=true;
+                };
+                if ($request->request->has('steviloCOT')) {
+                    $steviloOT=true;
+                };
+                if ($request->request->has('steviloCST')) {
+                    $steviloST=true;
+                };
+                if ($request->request->has('omejitevCT')) {
+                    $omejitevT=true;
                 };
 
 
                 $pdf = \App::make('dompdf.wrapper');
                 ini_set('max_execution_time', 300);
 
-                $pdf->loadHTML(\View::make('pdf/seznamProgramov')->with('programi', $programi)
+                $pdf->loadHTML(\View::make('pdf/seznamProgramov')->with('programi', $prog)
                 ->with('sifra', $sifra)->with('zavod', $zavod)->with('nacin', $nacin)->with('vrsta',$vrsta)
-                ->with('stevilo', $stevilo)->with('omejitev', $omejitev));
+                ->with('steviloT', $steviloT)->with('steviloOT', $steviloOT)->with('steviloST', $steviloST)->with('omejitevT', $omejitevT)
+                ->with('stevilo', $stevilo)->with('steviloO', $steviloO)->with('steviloS', $steviloS)->with('omejitev', $omejitev));
 
                 return $pdf->download('studijskiProgrami.pdf');
 
