@@ -14,9 +14,9 @@
                             <label class="col-md-4 control-label">Visokošolski zavod</label>
                             <div class="col-md-6">
                                 <select name="zavod" id="zavod" class="form-control input-sm">
-                                    <option value="-1"> VSI </option>
+                                    <option value="-1" @if ($zavod_id == -1) selected="selected" @endif> VSI </option>
                                     @foreach($vz as $i=>$zavod)
-                                        <option value="{{ $i }}"> {{ $zavod }} </option>
+                                        <option value="{{ $i }}" @if ($zavod_id == $i) selected="selected" @endif> {{ $zavod }} </option>
                                         {{++$i}}
                                     @endforeach
                                 </select>
@@ -36,9 +36,9 @@
                             <label class="col-md-4 control-label">Način študija</label>
                             <div class="col-md-6">
                                 <select name="nacin" id="nacin" class="form-control input-sm">
-                                    <option value="-1">VSI</option>
-                                    <option value="0">REDNI</option>
-                                    <option value="1">IZREDNI</option>
+                                    <option value="-1" @if ($nacin == -1) selected="selected" @endif>VSI</option>
+                                    <option value="0" @if ($nacin == 0) selected="selected" @endif>REDNI</option>
+                                    <option value="1" @if ($nacin == 1) selected="selected" @endif>IZREDNI</option>
                                 </select>
                             </div>
                         </div>
@@ -47,9 +47,9 @@
                             <label class="col-md-4 control-label">Način zaključa srednje šole </label>
                             <div class="col-md-6">
                                 <select name="izob" id="izob" class="form-control input-sm">
-                                    <option value="-1">VSI</option>
-                                    <option value="0">SPLOŠNA MATURA</option>
-                                    <option value="1">POKLICNA MATURA</option>
+                                    <option value="-1" @if ($srednja == -1) selected="selected" @endif>VSI</option>
+                                    <option value="0" @if ($srednja == 0) selected="selected" @endif>SPLOŠNA MATURA</option>
+                                    <option value="1" @if ($srednja == 1) selected="selected" @endif>POKLICNA MATURA</option>
                                 </select>
                             </div>
                         </div>
@@ -58,7 +58,9 @@
                             <label class="col-md-4 control-label">Izredni talent</label>
                             <div class="col-md-6">
                                 <select name="talent" id="talent" class="form-control input-sm">
-                                    <option value="-1">VSI</option>
+                                    <option value="-1" @if ($talent == -1) selected="selected" @endif>VSI</option>
+                                    <option value="0" @if ($talent == 0) selected="selected" @endif>DA</option>
+                                    <option value="1" @if ($talent == 1) selected="selected" @endif>NE</option>
                                 </select>
                             </div>
                         </div>
@@ -66,9 +68,14 @@
                         <br/>
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" name="izpisi" value="izpisi" class="btn btn-primary">
                                     Išči
                                 </button>
+                                @if(!empty($kandidati) && count($kandidati) > 0)
+                                <button type="submit" name="pdf" value="pdf" class="btn btn-primary">
+                                    Izvozi pdf
+                                </button>
+                                @endif
                             </div>
                         </div>
                     </form>
@@ -78,7 +85,7 @@
     </div>
 </div>
 <div style="padding: 5%">
-@if(!empty($kandidati))
+@if(!empty($kandidati) && count($kandidati) > 0)
 <table class="table table-hover">
     <tr>
         <th>  </th>
@@ -95,7 +102,7 @@
         <td> {{$kandidat->srednja}}  </td>
         <td> {{$kandidat->zavod}} </td>
         <td> {{$kandidat->program}} </td>
-        <td> NE </td>
+        <td> {{$kandidat->talent}} </td>
         <td> {{$kandidat->nacin}} </td>
     </tr>
     @endforeach
@@ -118,6 +125,21 @@
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script>
     $(document).ready(function(){
+
+
+        var zavod_id = $('#zavod option:selected').index();
+        $.get('/seznamKandidatov/' + zavod_id, function (data) {
+            var option = '';
+            $('#program').empty();
+            var id = {{ $program_id }};
+            console.log(id);
+            $('#program').append('<option value="-1">VSI</option>');
+            $.each(data, function(i, val) {
+                if(id == i) option += '<option value="'+i+'" selected="selected">' + val + '</option>';
+                else option += '<option value="'+i+'">' + val + '</option>';
+            });
+            $('#program').append(option);
+        });
 
         //display modal form for task editingv3r3
         $('#zavod').change(function(){
