@@ -22,6 +22,7 @@ class KriterijSeeder extends Seeder
             'id_pogoja' => '1',
             'vnos_veljaven' => '1',
             'ocene_34_letnika' => '1',
+            'maturitetni_uspeh' => '0',
             'utez' => '0.4'
         ]);
 
@@ -29,6 +30,7 @@ class KriterijSeeder extends Seeder
             'id_pogoja' => '1',
             'vnos_veljaven' => '1',
             'maturitetni_uspeh' => '1',
+            'ocene_34_letnika' => '0',
             'utez' => '0.6'
         ]);
 
@@ -36,12 +38,14 @@ class KriterijSeeder extends Seeder
             'id_pogoja' => '2',
             'vnos_veljaven' => '1',
             'ocene_34_letnika' => '1',
+            'maturitetni_uspeh' => '0',
             'utez' => '0.4'
         ]);
 
         DB::table('kriterij')->insert([
             'id_pogoja' => '2',
             'vnos_veljaven' => '1',
+            'ocene_34_letnika' => '0',
             'maturitetni_uspeh' => '1',
             'utez' => '0.4'
         ]);
@@ -50,6 +54,8 @@ class KriterijSeeder extends Seeder
             'id_pogoja' => '2',
             'vnos_veljaven' => '1',
             'id_elementa' => 'L411',
+            'ocene_34_letnika' => '0',
+            'maturitetni_uspeh' => '0',
             'utez' => '0.2'
         ]);
     }

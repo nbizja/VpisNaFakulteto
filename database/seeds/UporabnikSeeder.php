@@ -98,5 +98,15 @@ class UporabnikSeeder extends Seeder
             'password' => bcrypt('nb7232'),
             'vloga' => VlogaUporabnika::KANDIDAT
         ]);
+
+        DB::table('uporabnik')->insert([
+            'emso' => '1307991500080',
+            'ime' => 'Miha',
+            'priimek' => 'Balon',
+            'username' => 'nb7236',
+            'email' => '4d@student.uni-lj.si',
+            'password' => bcrypt('nb7232'),
+            'vloga' => VlogaUporabnika::KANDIDAT
+        ]);
     }
 }

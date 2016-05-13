@@ -9,6 +9,8 @@ use Illuminate\Database\Seeder;
 use Flynsarmy\CsvSeeder\CsvSeeder;
 
 include 'UporabnikSeeder.php';
+include 'PrijavaSeeder.php';
+include 'MaturaSeeder.php';
 
 /**
  * Calls seeders specified in list.
@@ -34,7 +36,7 @@ class DatabaseSeeder extends CsvSeeder
              ObcinaSeeder::class, PoklicSeeder::class, PostaSeeder::class,
              SrednjaSolaSeeder::class, StudijskiProgramSeeder::class,
              VpisniPogojSeeder::class, KriterijSeeder::class,
-             VisokosolskiZavodSeeder::class);
+             VisokosolskiZavodSeeder::class, PrijavaSeeder::class, MaturaSeeder::class);
      }
 
     /**

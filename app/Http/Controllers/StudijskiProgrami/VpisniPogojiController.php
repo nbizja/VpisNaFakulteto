@@ -53,6 +53,7 @@ class VpisniPogojiController extends Controller
         return redirect('prijava');
     }
 
+    // pritisk na izbrisi, dodaj ali uredi
     public function urediPogoj(Request $request)
     {
         if (Auth::check()) {
@@ -64,7 +65,12 @@ class VpisniPogojiController extends Controller
                         $poklici = $this->vpisniPogoji->PokliciAll();
                         $pogoj = $this->vpisniPogoji->VpisniPogojByID(substr($name, 5, strlen($name)-5));
                         return view('studijskiProgrami.urediPogoj', ['poklici' => $poklici, 'elementi' => $elementi, 'program' => $program,'pogoj'=> $pogoj]);
-                    } else if (stripos($name,'brisi') !== false) {
+                    }if (stripos($name,'delez') !== false) {
+                        $elementi = $this->vpisniPogoji->ElementiAll();
+                        $poklici = $this->vpisniPogoji->PokliciAll();
+                        $pogoj = $this->vpisniPogoji->VpisniPogojByID(substr($name, 5, strlen($name)-5));
+                        return view('studijskiProgrami.urediDeleze', ['poklici' => $poklici, 'elementi' => $elementi, 'program' => $program,'pogoj'=> $pogoj]);
+                    }else if (stripos($name,'brisi') !== false) {
                         $pogoj = $this->vpisniPogoji->VpisniPogojByID(substr($name, 5, strlen($name)-5));
                         $pogoj->forceDelete();
                         return $this->urediPogoje();
@@ -112,6 +118,15 @@ class VpisniPogojiController extends Controller
 
                 return $this->urediPogoje();
             }
+        }
+
+        return redirect('prijava');
+    }
+
+    public function shraniDeleze(Request $request)
+    {
+        if (Auth::check()) {
+
         }
 
         return redirect('prijava');
