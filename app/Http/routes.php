@@ -35,7 +35,18 @@ Route::group(['middleware' => ['prijavljen']], function () {
     Route::post('studijskiProgrami/shrani', 'StudijskiProgrami\StudijskiProgramiController@shraniPrograme');
     Route::get('studijskiProgrami/nov', 'StudijskiProgrami\StudijskiProgramiController@novProgram');
     Route::post('studijskiProgrami/dodaj', 'StudijskiProgrami\StudijskiProgramiController@dodajProgram');
-    Route::get('studijskiProgrami/seznam', 'StudijskiProgrami\StudijskiProgramiController@seznamProgramov');
+
+    Route::get('studijskiProgrami/seznam', 'StudijskiProgrami\SeznamController@seznamProgramov');
+    Route::post('studijskiProgrami/seznam/izvoz', 'StudijskiProgrami\SeznamController@izvozi');
+
+    Route::get('studijskiProgrami/izpis', 'StudijskiProgrami\StudijskiProgramiController@izpisPodatkov');
+    Route::post('studijskiProgrami/izpis/izvoz', 'StudijskiProgrami\StudijskiProgramiController@izvozPodatkov');
+
+    Route::get('vpisniPogoji/urejanje', 'StudijskiProgrami\VpisniPogojiController@urediPogoje');
+    Route::post('vpisniPogoji/urediPogoj', 'StudijskiProgrami\VpisniPogojiController@urediPogoj');
+    Route::post('vpisniPogoji/shraniPogoj', 'StudijskiProgrami\VpisniPogojiController@shraniPogoj');
+    Route::get('vpisniPogoji/dodajPogoj', 'StudijskiProgrami\VpisniPogojiController@dodajPogoj');
+    Route::post('vpisniPogoji/novPogoj', 'StudijskiProgrami\VpisniPogojiController@novPogoj');
 
     Route::get('prijava', 'Auth\AuthController@showLoginForm');
     Route::get('odjava', 'Auth\AuthController@logout');
@@ -77,15 +88,16 @@ Route::group(['middleware' => ['prijavljen']], function () {
 
 //TODO Strašno grdo. Prestavi to v kontroler.
 Route::get('/seznamKandidatov/{zavod_id?}', function($zavod_id){
-    $zavodi =  \App\VisokosolskiZavod::orderBy('ime')->pluck('id');
+    $zavodi =  \App\Models\VisokosolskiZavod::orderBy('ime')->pluck('id');
     if($zavod_id > 0) {
         $zavod_id = $zavodi[$zavod_id - 1];
-        $programi = \App\StudijskiProgram::where('id_zavoda', '=', $zavod_id)->orderBy('ime')->pluck('ime');
+        $programi = \App\Models\StudijskiProgram::where('id_zavoda', '=', $zavod_id)->orderBy('ime')->pluck('ime');
         return Response::json($programi);
     }
     else return Response::json();
-
 });
+
+Route::get('seznamKandidatov/pdf', 'ListOfCandidatesController@exportPdf');
 
 
 

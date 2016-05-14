@@ -39,6 +39,16 @@ class UporabnikSeeder extends Seeder
 
         DB::table('uporabnik')->insert(
             [
+                'ime' => 'Neža',
+                'priimek' => 'Belej',
+                'username' => 'nezabelej',
+                'email' => 'nezabelej@gmail.com',
+                'password' => bcrypt('nezabelej812'),
+                'vloga' => VlogaUporabnika::SKRBNIK_PROGRAMA
+            ]);
+
+        DB::table('uporabnik')->insert(
+            [
                 'ime' => 'Kralj',
                 'priimek' => 'Matjaž',
                 'username' => 'admin',
@@ -47,5 +57,46 @@ class UporabnikSeeder extends Seeder
                 'vloga' => VlogaUporabnika::ADMIN
             ]
         );
+
+
+        DB::table('uporabnik')->insert([
+            'emso' => '1307991500076',
+            'ime' => 'Špela',
+            'priimek' => 'Bordon',
+            'username' => 'nb7231',
+            'email' => 'nb72332@student.uni-lj.si',
+            'password' => bcrypt('nb7232'),
+            'vloga' => VlogaUporabnika::KANDIDAT
+        ]);
+
+        DB::table('uporabnik')->insert([
+            'emso' => '1307991500077',
+            'ime' => 'Neža',
+            'priimek' => 'Belej',
+            'username' => 'nb7233',
+            'email' => 'n2b7232@student.uni-lj.si',
+            'password' => bcrypt('nb7232'),
+            'vloga' => VlogaUporabnika::KANDIDAT
+        ]);
+
+        DB::table('uporabnik')->insert([
+            'emso' => '1307991500078',
+            'ime' => 'Ana',
+            'priimek' => 'Novak',
+            'username' => 'nb7234',
+            'email' => 'nb72332@student.uni-lj.si',
+            'password' => bcrypt('nb7232'),
+            'vloga' => VlogaUporabnika::KANDIDAT
+        ]);
+
+        DB::table('uporabnik')->insert([
+            'emso' => '1307991500079',
+            'ime' => 'Veronika',
+            'priimek' => 'Blažič',
+            'username' => 'nb7235',
+            'email' => '4@student.uni-lj.si',
+            'password' => bcrypt('nb7232'),
+            'vloga' => VlogaUporabnika::KANDIDAT
+        ]);
     }
 }
