@@ -13,31 +13,31 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Emšo: </label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="emso" value="{{ $emso or old('emso') }}">
+                                    <input type="text" class="form-control" name="emso" placeholder="0101998500123" value="{{ $osebniPodatki->emso ?? '' }}" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Ime: </label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="ime" value="{{ Auth::user()->ime or old('ime') }}">
+                                    <input type="text" class="form-control" name="ime" value="{{  $osebniPodatki->ime ?? Auth::user()->ime }}" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Priimek: </label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="priimek" value="{{ Auth::user()->priimek or old('priimek') }}">
+                                    <input type="text" class="form-control" name="priimek" value="{{ $osebniPodatki->priimek ?? Auth::user()->priimek }}" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Datum rojstva: </label>
                                 <div class="col-md-6">
-                                    <input type="date" class="form-control" name="datum_rojstva" value="{{ $datumRojstva or old('datum_rojstva') }}">
+                                    <input type="date" class="form-control" name="datum_rojstva" value="{{ $osebniPodatki->datum_rojstva ?? '' }}" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Država rojstva: </label>
                                 <div class="col-md-6">
-                                    <select name="drzava_rojstva" class="form-control col-md-6">
+                                    <select name="drzava_rojstva" class="form-control col-md-6" required>
                                         @foreach($drzave as $drzava)
                                             <option value="{{ $drzava->id }}" @if($drzava->ime == 'SLOVENIJA') {{ 'selected' }} @endif>{{ $drzava->ime }}</option>
                                         @endforeach
@@ -47,7 +47,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Kraj rojstva: </label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="kraj_rojstva" value="{{ $krajRojstva or old('kraj_rojstva') }}">
+                                    <input type="text" class="form-control" name="kraj_rojstva" value="{{ $krajRojstva or old('kraj_rojstva') }}" required>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -55,7 +55,11 @@
                                 <div class="col-md-6">
                                     <select name="drzava_rojstva" class="form-control col-md-6">
                                         @foreach($drzavljanstva as $drzavljanstvo)
-                                            <option value="{{ $drzavljanstvo->id }}" @if($drzavljanstvo->id == 2) {{ 'selected' }} @endif>{{ $drzavljanstvo->ime }}</option>
+                                            <option value="{{ $drzavljanstvo->id }}"
+                                                @if(!empty($osebniPodatki) && $osebniPodatki->id_drzavljanstva == $drzavljanstvo->id
+                                                    || $drzavljanstvo->id == 2) {{ 'selected' }} @endif>
+                                                {{ $drzavljanstvo->ime }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -64,13 +68,13 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Kontaktni telefon: </label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="kontaktni_telefon" value="{{ $telefon or old('kontaktni_telefon') }}">
+                                    <input type="text" class="form-control" name="kontaktni_telefon" placeholder="030123456" value="{{ $osebniPodatki->kontaktni_telefon ?? '' }}" required>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="col-md-2">
-                                    <input type="submit" class="form-control btn-primary" value="Nadaljuj">
+                                    <input type="submit" class="form-control btn-primary" value="Shrani in nadaljuj">
                                 </div>
                             </div>
 

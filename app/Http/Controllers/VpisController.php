@@ -27,9 +27,11 @@ class VpisController extends Controller
     {
         return view('vpis.osebni_podatki')->with([
             'drzave' => $this->vpisRepository->drzave(),
-            'drzavljanstva' => $this->vpisRepository->drzavljanstva()
+            'drzavljanstva' => $this->vpisRepository->drzavljanstva(),
+            'osebniPodatki' => Auth::user()->osebniPodatki()->first()
         ]);
     }
+
 
     public function stalnoPrebivalisce()
     {

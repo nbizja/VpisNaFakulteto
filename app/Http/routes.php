@@ -16,8 +16,10 @@ Route::get('/helper', function () {
 });
 
 
-Route::group(['middleware' => ['prijavljen']], function () {
+Route::group(['middleware' => ['web']], function () {
     Route::post('prijava', 'Auth\AuthController@login');
+    Route::get('prijava', 'Auth\AuthController@showLoginForm');
+
 });
 
 Route::group(['middleware' => ['web']], function () {
@@ -48,7 +50,6 @@ Route::group(['middleware' => ['prijavljen']], function () {
     Route::get('vpisniPogoji/dodajPogoj', 'StudijskiProgrami\VpisniPogojiController@dodajPogoj');
     Route::post('vpisniPogoji/novPogoj', 'StudijskiProgrami\VpisniPogojiController@novPogoj');
 
-    Route::get('prijava', 'Auth\AuthController@showLoginForm');
     Route::get('odjava', 'Auth\AuthController@logout');
 
     Route::get('/', 'HomeController@index');

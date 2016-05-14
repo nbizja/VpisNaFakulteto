@@ -42,9 +42,9 @@ class Uporabnik extends Model implements AuthenticatableContract, CanResetPasswo
         return ucfirst($this->vloga);
     }
 
-    public function prijavaOsebniPodatki()
+    public function osebniPodatki()
     {
-        return $this->hasOne('App/Model/PrijavaOsebniPodatki', 'id_uporabnika', 'id');
+        return $this->hasOne('App\Models\PrijavaOsebniPodatki', 'id_uporabnika', 'id');
     }
 
 }
