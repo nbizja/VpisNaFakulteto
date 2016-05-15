@@ -64,6 +64,7 @@
                                             @if ($pogoj->id_elementa2 != null)
                                                 <li>{{ ucfirst(strtolower($pogoj->Element2->ime)) }}</li>
                                             @endif
+                                            <li> {{$pogoj->test}}</li>
                                         </ul>
                                     </div>
                                     <br/><br/><br/><br/>
