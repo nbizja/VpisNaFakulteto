@@ -5,11 +5,11 @@ namespace App\Models\Repositories;
 
 use App\Models\Drzava;
 use App\Models\Drzavljanstvo;
-use App\Models\Enums\NacinKoncanjaSrednjeSole;
+use App\Models\Element;
+use App\Models\KoncanaSrednjaSola;
 use App\Models\Obcina;
 use App\Models\Posta;
 use App\Models\SrednjaSola;
-use ReflectionClass;
 
 class VpisRepository
 {
@@ -35,9 +35,7 @@ class VpisRepository
     
     public function naciniZakljuckaSrednjeSole()
     {
-        $oClass = new ReflectionClass(NacinKoncanjaSrednjeSole::class);
-
-        return $oClass->getConstants();
+        return KoncanaSrednjaSola::all();
     }
 
     public function srednjeSole()
@@ -45,9 +43,9 @@ class VpisRepository
         return SrednjaSola::all();
     }
 
-    public function prijavaZaVpis()
+    public function predmetiSplosneMature()
     {
-        
+        return Element::where('id', 'like', 'M%')->get();
     }
     
 }

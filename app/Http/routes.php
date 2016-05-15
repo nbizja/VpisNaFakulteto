@@ -84,8 +84,8 @@ Route::group(['middleware' => ['prijavljen']], function () {
     Route::post('vpis/osebni_podatki', 'VpisController@shraniOsebnePodatke');
     Route::get('vpis/stalno_prebivalisce', 'VpisController@stalnoPrebivalisce');
     Route::post('vpis/stalno_prebivalisce', 'VpisController@shraniStalnoPrebivalisce');
-    Route::get('vpis/naslov_za_obvestila', 'VpisController@naslovZaObvestila');
     Route::get('vpis/srednjesolska_izobrazba', 'VpisController@srednjeSolskaIzobrazbaPrikaz');
+    Route::post('vpis/srednjesolska_izobrazba', 'VpisController@shraniSrednjeSolskoIzobrazbo');
     Route::get('vpis/prijava_za_studij', 'VpisController@prijavaZaStudijPrikaz');
 });
 

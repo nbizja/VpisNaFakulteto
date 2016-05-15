@@ -7,6 +7,7 @@ use App\Models\Logic\PrijavaValidator;
 use App\Models\PrijavaNaslovZaPosiljanje;
 use App\Models\PrijavaOsebniPodatki;
 use App\Models\PrijavaPrebivalisce;
+use App\Models\PrijavaSrednjesolskaIzobrazba;
 use App\Models\Repositories\VpisRepository;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Request;
@@ -57,8 +58,10 @@ class VpisController extends Controller
     public function srednjeSolskaIzobrazbaPrikaz()
     {
         return view('vpis.srednjesolska_izobrazba')->with([
-            'naciniZakljuckaSrednjeSole' => $this->vpisRepository->naciniZakljuckaSrednjeSole(),
-            'srednjeSole' => $this->vpisRepository->srednjeSole()
+            'naciniZakljucka' => $this->vpisRepository->naciniZakljuckaSrednjeSole(),
+            'srednjeSole' => $this->vpisRepository->srednjeSole()->sortBy('ime'),
+            'splosniPredmeti' => $this->vpisRepository->predmetiSplosneMature(),
+            'drzave' => $this->vpisRepository->drzave(),
         ]);
     }
     
@@ -154,6 +157,20 @@ class VpisController extends Controller
 
     public function shraniSrednjesolskoIzobrazbo(Request $request)
     {
+        $srednjeSolskaIzobrazba = new PrijavaSrednjesolskaIzobrazba([
+            'id_kandidata' => Auth::user()->id,
+            'id_nacina_zakljucka' => $request->request->get('nacin_zakljucka'),
+            'id_drzave' => $request->request->get('drzava_srednje_sole'),
+            'id_srednje_sole' => $request->request->get('srednja_sola'),
+            'sifra_maturitetnega_predmeta' => $request->request->get('maturitetni_predmet'),
+            'ime_srednje_sole' => $request->request->get('srednja_sola_tujina'),
+            'datum_izdaje_spricevala' => $request->request->get('datum_izdaje_spricevala')]
+        );
         
+        //TODO validacija
+        
+        $srednjeSolskaIzobrazba->save();
+        
+        return redirect('vpis/prijava_za_studij');
     }
 }

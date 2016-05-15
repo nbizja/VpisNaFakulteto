@@ -12,13 +12,18 @@ class CreatePrijavaSrednjesolskaIzobrazba extends Migration
      */
     public function up()
     {
-        Schema::create('prijava_srednjesolska_izobraza', function (Blueprint $table) {
+        Schema::create('prijava_srednjesolska_izobrazba', function (Blueprint $table) {
             $table->engine = 'InnoDB';
 
             $table->increments('id');
-            $table->integer('id_uporabnika');
-            $table->integer('id_nacina_koncanja');
+            $table->integer('id_kandidata');
+            $table->integer('id_nacina_zakljucka');
             $table->integer('id_srednje_sole');
+            $table->integer('id_drzave');
+            $table->integer('sifra_maturitetnega_predmeta');
+
+            $table->string('ime_srednje_sole', 255);
+            $table->date('datum_izdaje_spricevala');
             $table->timestamps();
         });
     }
@@ -30,6 +35,6 @@ class CreatePrijavaSrednjesolskaIzobrazba extends Migration
      */
     public function down()
     {
-        Schema::drop('prijava_srednjesolska_izobraza');
+        Schema::drop('prijava_srednjesolska_izobrazba');
     }
 }

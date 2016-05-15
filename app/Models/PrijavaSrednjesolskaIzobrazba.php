@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 class PrijavaSrednjesolskaIzobrazba extends Model
 {
     protected $table = 'prijava_srednjesolska_izobrazba';
-    protected $fillable = ['id_kandidata', 'id_nacina_koncanja', 'id_srednje_sole'];
+    protected $fillable = ['id_kandidata', 'id_nacina_zakljucka', 'id_drzave', 'id_srednje_sole', 'id_maturitetnega_predmeta', 'ime_srednje_sole', 'datum_izdaje_spricevala'];
     protected $guarded = ['id'];
     public $timestamps = true;
 
