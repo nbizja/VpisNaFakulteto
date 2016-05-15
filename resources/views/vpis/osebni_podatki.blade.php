@@ -39,7 +39,10 @@
                                 <div class="col-md-6">
                                     <select name="drzava_rojstva" class="form-control col-md-6" required>
                                         @foreach($drzave as $drzava)
-                                            <option value="{{ $drzava->id }}" @if($drzava->ime == 'SLOVENIJA') {{ 'selected' }} @endif>{{ $drzava->ime }}</option>
+                                            <option value="{{ $drzava->id }}" @if(($drzava->ime == 'SLOVENIJA' && empty($osebniPodatki)) ||
+                                                ($osebniPodatki->id_drazve_rojstva == $drzava->id)) {{ 'selected' }} @endif>
+                                                {{ $drzava->ime }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>

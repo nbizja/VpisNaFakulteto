@@ -10,6 +10,9 @@ namespace App\Models\Logic;
 
 
 
+use App\Models\Drzava;
+use App\Models\Obcina;
+use App\Models\Posta;
 use Illuminate\Support\Facades\Validator;
 
 class PrijavaValidator
@@ -65,5 +68,41 @@ class PrijavaValidator
 
         return true;
     }
+
+    public function prebivalisce($input)
+    {
+        return Validator::make($input, [
+            'naslov'          => 'required|string|min:4',
+        ], [
+            'naslov.required' => 'Naslov je obvezen.',
+        ]);
+    }
+
+    /**
+     * Preveri pravilnost kombinacije pošte, občine in države (vse v sloveniji ali vse tujina)
+     * 
+     * @param int $postnaStevilka
+     * @param int $idObcine
+     * @param int $idDrzave
+     * @return bool
+     */
+    public function preveriKombinacijoPosteObcineDrzave($postnaStevilka, $idObcine, $idDrzave)
+    {
+        $drzava = Drzava::find($idDrzave);
+
+        if ($drzava->ime != 'SLOVENIJA') {
+            return $idObcine == 1 && $postnaStevilka == 0;
+        }
+
+        $obcina = Obcina::find($idObcine);
+        $posta = Posta::find($postnaStevilka);
+
+        if (empty($obcina) || empty($posta)) {
+            return false;
+        }
+
+        return $obcina->id > 1 && $posta->postna_stevilka > 0;
+    }
+    
 
 }

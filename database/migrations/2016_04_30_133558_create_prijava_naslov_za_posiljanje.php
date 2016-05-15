@@ -12,11 +12,11 @@ class CreatePrijavaNaslovZaPosiljanje extends Migration
      */
     public function up()
     {
-        Schema::create('prijava_nasov_za_posiljanje', function (Blueprint $table) {
+        Schema::create('prijava_naslov_za_posiljanje', function (Blueprint $table) {
             $table->engine = 'InnoDB';
 
             $table->increments('id');
-            $table->integer('id_uporabnika');
+            $table->integer('id_kandidata');
             $table->integer('id_drzave');
             $table->string('naslov');
             $table->integer('id_obcine');
@@ -32,6 +32,6 @@ class CreatePrijavaNaslovZaPosiljanje extends Migration
      */
     public function down()
     {
-        Schema::drop('prijava_nasov_za_posiljanje');
+        Schema::drop('prijava_naslov_za_posiljanje');
     }
 }

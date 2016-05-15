@@ -16,7 +16,7 @@ class CreatePrijavaStalnoPrebivalisce extends Migration
             $table->engine = 'InnoDB';
 
             $table->increments('id');
-            $table->integer('id_uporabnika');
+            $table->integer('id_kandidata');
             $table->integer('id_drzave');
             $table->string('naslov');
             $table->integer('id_obcine');

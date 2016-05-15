@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PrijavaNaslovZaPosiljanje extends Model
 {
-    protected $table = 'prijava_osebni_podatki';
+    protected $table = 'prijava_naslov_za_posiljanje';
     protected $fillable = ['id_kandidata', 'naslov', 'id_drzave', 'id_obcine', 'postna_stevilka', 'veljavno'];
     protected $guarded = ['id'];
     public $timestamps = true;
