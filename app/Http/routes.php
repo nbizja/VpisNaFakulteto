@@ -81,6 +81,7 @@ Route::group(['middleware' => ['prijavljen']], function () {
 
     Route::get('vpis', 'VpisController@prikazi');
     Route::get('vpis/osebni_podatki', 'VpisController@osebniPodatkiPrikaz');
+    Route::post('vpis/osebni_podatki', 'VpisController@shraniOsebnePodatke');
     Route::get('vpis/stalno_prebivalisce', 'VpisController@stalnoPrebivalisce');
     Route::get('vpis/naslov_za_obvestila', 'VpisController@naslovZaObvestila');
     Route::get('vpis/srednjesolska_izobrazba', 'VpisController@srednjeSolskaIzobrazbaPrikaz');

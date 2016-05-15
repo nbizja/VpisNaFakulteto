@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Logic\PrijavaValidator;
+use App\Models\PrijavaOsebniPodatki;
 use App\Models\Repositories\VpisRepository;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -32,6 +35,40 @@ class VpisController extends Controller
         ]);
     }
 
+    public function shraniOsebnePodatke(Request $request)
+    {
+        $errors = [];
+        $prijavaValidator = new PrijavaValidator();
+
+        $opInput = [
+            'emso'              => $request->request->get('emso'),
+            'ime'               => $request->request->get('ime'),
+            'priimek'           => $request->request->get('priimek'),
+            'datum_rojstva'     => $request->request->get('datum_rojstva'),
+            'id_drzave_rojstva' => $request->request->get('drzava_rojstva'),
+            'kraj_rojstva'      => $request->request->get('kraj_rojstva'),
+            'id_drzavljanstva'  => $request->request->get('drzavljanstvo'),
+            'kontaktni_telefon' => $request->request->get('kontaktni_telefon')
+        ];
+        $validator = $prijavaValidator->osebniPodatki($opInput);
+
+        if (!$validator->passes()) {
+            $errors = $validator->errors()->toArray();
+        }
+
+        if (!$prijavaValidator->veljavenEmso($opInput['emso'], $opInput['datum_rojstva'])) {
+            $errors['emso'] = ['Neveljaven emso.'];
+        }
+        
+        if (!empty($errors)) {
+            return back()->with('errors', $validator->errors());
+        }
+
+        $osebniPodatki = PrijavaOsebniPodatki::create($opInput);
+
+        return redirect('vpis/stalno_prebivalisce');
+    }
+
 
     public function stalnoPrebivalisce()
     {
@@ -58,11 +95,6 @@ class VpisController extends Controller
     public function prijavaZaStudijPrikaz()
     {
         return view('vpis.prijava_za_studij')->with($this->vpisRepository->prijavaZaStudij());
-    }
-
-    public function shraniOsebnePodatke(Request $request)
-    {
-
     }
 
     public function shraniStalnoPrebivalisce(Request $request)
