@@ -73,17 +73,12 @@ class VpisController extends Controller
     
     public function srednjeSolskaIzobrazbaPrikaz()
     {
-        return view('vpis.srednjesolska_izobrazba')->with([
-            'naciniZakljucka' => $this->vpisRepository->naciniZakljuckaSrednjeSole(),
-            'srednjeSole' => $this->vpisRepository->srednjeSole()->sortBy('ime'),
-            'splosniPredmeti' => $this->vpisRepository->predmetiSplosneMature(),
-            'drzave' => $this->vpisRepository->drzave(),
-        ]);
+        return view('vpis.srednjesolska_izobrazba')->with($this->vpisRepository->srednjesolskaIzobrazba(Auth::user()));
     }
     
     public function prijavaZaStudijPrikaz()
     {
-        return view('vpis.prijava_za_studij')->with($this->vpisRepository->prijavaZaStudij());
+        return view('vpis.prijava_za_studij')->with($this->vpisRepository->prijavaZaStudij(Auth::user()));
     }
     
     public function pregled()
