@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class StanjePrijave extends Migration
+class AddDatumOddajePrijave extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class StanjePrijave extends Migration
     public function up()
     {
         Schema::table('uporabnik', function(Blueprint $table) {
-            $table->date('datum_oddaje_prijave');
+            $table->date('datum_oddaje_prijave')->nullable();
         });
     }
 
