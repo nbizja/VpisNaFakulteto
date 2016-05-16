@@ -19,11 +19,6 @@ class PrijavaSrednjesolskaIzobrazba extends Model
     public $timestamps = true;
 
 
-    public function nacinKoncanjaSrednjeSole()
-    {
-        return $this->belongsTo('App\Models\KoncanaSrednjaSola', 'id_nacina_koncanja', 'id');
-    }
-
     public function srednjaSola()
     {
         return $this->belongsTo('App\Models\SrednjaSola', 'id_srednje_sole', 'id');
@@ -37,5 +32,15 @@ class PrijavaSrednjesolskaIzobrazba extends Model
     public function maturitetniPredmet()
     {
         return $this->belongsTo('App\Models\Element', 'id_maturitetnega_predmeta', 'id');
+    }
+    
+    public function srednjesolskaIzobrazba()
+    {
+        return $this->belongsTo('App\Models\PrijavaSrednjesolskaIzobrazba', 'id_srednje_sole', 'id');
+    }
+
+    public function drzava()
+    {
+        return $this->belongsTo('App\Models\Drzava', 'id_drzave', 'id');
     }
 }

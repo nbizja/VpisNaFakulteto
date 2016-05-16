@@ -19,17 +19,17 @@ class PrijavaOsebniPodatki extends Model
     
     public function kandidat()
     {
-        return $this->belongsTo('App/Models/Uporabnik', 'id_kandidata');
+        return $this->belongsTo('App\Models\Uporabnik', 'id_kandidata');
     }
 
     public function drzavaRojstva()
     {
-        return $this->belongsTo('App/Models/Drzava', 'id_drzava_rojstva');
+        return $this->belongsTo('App\Models\Drzava', 'id_drzava_rojstva');
     }
 
     public function drzavljanstvo()
     {
-        return $this->belongsTo('App/Models/Drzavljanstvo', 'id_drzavljanstva');
+        return $this->belongsTo('App\Models\Drzavljanstvo', 'id_drzavljanstva');
     }
 
 }

@@ -27,6 +27,7 @@ class CreatePrijavaOsebniPodatki extends Migration
             $table->string('kontaktni_telefon');
             $table->boolean('veljavno');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -26,6 +26,8 @@ class CreatePrijavaSrednjesolskaIzobrazba extends Migration
             $table->string('ime_srednje_sole', 255);
             $table->date('datum_izdaje_spricevala');
             $table->timestamps();
+            $table->softDeletes();
+
         });
     }
 

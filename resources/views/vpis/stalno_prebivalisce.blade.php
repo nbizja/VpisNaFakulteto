@@ -67,7 +67,7 @@
                             <div class="panel-body">
                                 <div class="form-group">
                                     <div class="col-md-6">
-                                        <input type="radio" name="isti_naslov_za_posiljanje" value="1">Isti kot stalno prebivališče
+                                        <input type="radio" name="isti_naslov_za_posiljanje" checked value="1">Isti kot stalno prebivališče
                                         <input type="radio" name="isti_naslov_za_posiljanje" value="0">Drugo
                                     </div>
                                 </div>

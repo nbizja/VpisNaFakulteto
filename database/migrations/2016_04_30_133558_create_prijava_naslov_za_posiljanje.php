@@ -22,6 +22,7 @@ class CreatePrijavaNaslovZaPosiljanje extends Migration
             $table->integer('id_obcine');
             $table->integer('postna_stevilka');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

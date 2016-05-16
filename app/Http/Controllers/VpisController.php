@@ -10,6 +10,7 @@ use App\Models\PrijavaOsebniPodatki;
 use App\Models\PrijavaPrebivalisce;
 use App\Models\PrijavaSrednjesolskaIzobrazba;
 use App\Models\Repositories\VpisRepository;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Request;
@@ -95,6 +96,7 @@ class VpisController extends Controller
         $errors = [];
 
         $opInput = [
+            'id_kandidata'      => Auth::user()->id,
             'emso'              => $request->request->get('emso'),
             'ime'               => $request->request->get('ime'),
             'priimek'           => $request->request->get('priimek'),
@@ -184,8 +186,8 @@ class VpisController extends Controller
             'id_srednje_sole' => $request->request->get('srednja_sola'),
             'sifra_maturitetnega_predmeta' => $request->request->get('maturitetni_predmet'),
             'ime_srednje_sole' => $request->request->get('srednja_sola_tujina'),
-            'datum_izdaje_spricevala' => $request->request->get('datum_izdaje_spricevala')]
-        );
+            'datum_izdaje_spricevala' => date('Y-m-d', strtotime($request->request->get('datum_izdaje_spricevala')))
+        ]);
         
         //TODO validacija
         
@@ -207,7 +209,7 @@ class VpisController extends Controller
         $izbraniProgrami = [$prvaZelja->id_studijskega_programa];
 
         if (!$this->prijavaValidator->validirajStudijskiProgram($prvaZelja)) {
-            return back()->with('errors', ['status' => 'danger',
+            return back()->with(['status' => 'danger',
                 'message' => '1. želja: Neveljaven studijski program'
             ]);
         }
@@ -222,12 +224,12 @@ class VpisController extends Controller
             ]);
 
             if (!$this->prijavaValidator->validirajStudijskiProgram($drugaZelja)) {
-                return back()->with('errors', ['status' => 'danger',
+                return back()->with(['status' => 'danger',
                     'message' => '2. želja: Neveljaven studijski program'
                 ]);
             }
-            if (!in_array($drugaZelja->id_studijskega_programa, $izbraniProgrami)) {
-                return back()->with('errors', ['status' => 'danger',
+            if (in_array($drugaZelja->id_studijskega_programa, $izbraniProgrami)) {
+                return back()->with(['status' => 'danger',
                     'message' => '2. želja: Podvojena izbira programa!'
                 ]);
             }
@@ -244,12 +246,12 @@ class VpisController extends Controller
                 'izredni_talent' => 0
             ]);
             if (!$this->prijavaValidator->validirajStudijskiProgram($tretjaZelja)) {
-                return back()->with('errors', ['status' => 'danger',
+                return back()->with(['status' => 'danger',
                     'message' => '3. želja: Neveljaven studijski program'
                 ]);
             }
-            if (!in_array($tretjaZelja->id_studijskega_programa, $izbraniProgrami)) {
-                return back()->with('errors', ['status' => 'danger',
+            if (in_array($tretjaZelja->id_studijskega_programa, $izbraniProgrami)) {
+                return back()->with(['status' => 'danger',
                     'message' => '3. želja: Podvojena izbira programa!'
                 ]);
             }

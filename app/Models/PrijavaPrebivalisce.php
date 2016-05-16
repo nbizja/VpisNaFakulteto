@@ -14,16 +14,16 @@ class PrijavaPrebivalisce extends Model
 
     public function drzava()
     {
-        return $this->belongsTo('App/Models/Drzava', 'id_drzave');
+        return $this->belongsTo('App\Models\Drzava', 'id_drzave');
     }
 
     public function obcina()
     {
-        return $this->belongsTo('App/Models/Obcina', 'id_obcine');
+        return $this->belongsTo('App\Models\Obcina', 'id_obcine');
     }
 
     public function posta()
     {
-        return $this->belongsTo('App/Models/Posta', 'postna_stevilka');
+        return $this->belongsTo('App\Models\Posta', 'postna_stevilka');
     }
 }

@@ -68,8 +68,8 @@ class VpisRepository
             'osebniPodatki' => $uporabnik->osebniPodatki()->first(),
             'stalnoPrebivalisce' => $uporabnik->prebivalisce()->with('obcina', 'posta', 'drzava')->first(),
             'naslovZaPosiljanje' => $uporabnik->naslovZaPosiljanje()->with('obcina', 'posta', 'drzava')->first(),
-            'srednjesolskaIzobrazba' => $uporabnik->srednjesolskaIzobrazba()->with('nacinKoncanjaSrednjeSole', 'srednjaSola', 'nacinZakljucka')->first(),
-            'prijava' => $uporabnik->prijava()->first()
+            'srednjesolskaIzobrazba' => $uporabnik->srednjesolskaIzobrazba()->with('nacinZakljucka', 'srednjaSola', 'drzava')->first(),
+            'prijave' => $uporabnik->prijave()->with('studijskiProgram', 'studijskiProgram.visokosolskiZavod')->get()->sortBy('zelja')
         ];
     }
 }
