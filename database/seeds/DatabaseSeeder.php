@@ -1,14 +1,12 @@
 <?php
 
 
-use database\seeds\UporabnikSeeder;
-use database\seeds\VpisniPogojSeeder;
 use database\seeds\KriterijSeeder;
-use database\seeds\SifrantiSeeder;
-use Illuminate\Database\Seeder;
+use database\seeds\VpisniPogojSeeder;
 use Flynsarmy\CsvSeeder\CsvSeeder;
 
 include 'UporabnikSeeder.php';
+include 'PrijavniRokSeeder.php';
 
 /**
  * Calls seeders specified in list.
@@ -47,6 +45,7 @@ class DatabaseSeeder extends CsvSeeder
         DB::disableQueryLog();
 		Eloquent::unguard();
         $this->call(UporabnikSeeder::class);
+        $this->call(PrijavniRokSeeder::class);
 
         foreach ($this->seeder_list as $seeder) {
             $this->call($seeder);

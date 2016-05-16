@@ -12,6 +12,7 @@
 
                     <br>
                     <h3>Rok za oddajo prijave: {{ $prijavniRok->konec }}</h3>
+
                     <a class="btn btn-primary" href="{{ url('vpis') }}">Vpis</a>
                 </div>
             </div>
