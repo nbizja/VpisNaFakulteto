@@ -13,6 +13,7 @@ namespace App\Models\Logic;
 use App\Models\Drzava;
 use App\Models\Obcina;
 use App\Models\Posta;
+use App\Models\Prijava;
 use Illuminate\Support\Facades\Validator;
 
 class PrijavaValidator
@@ -104,5 +105,12 @@ class PrijavaValidator
         return $obcina->id > 1 && $posta->postna_stevilka > 0;
     }
     
-
+    public function validirajStudijskiProgram(Prijava $prijava)
+    {
+        if ((int)$prijava->id_studijskega_programa < 1) {
+            return false;
+        }
+        
+        return !empty($prijava->studijskiProgram());
+    }
 }

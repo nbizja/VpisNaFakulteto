@@ -87,6 +87,7 @@ Route::group(['middleware' => ['prijavljen']], function () {
     Route::get('vpis/srednjesolska_izobrazba', 'VpisController@srednjeSolskaIzobrazbaPrikaz');
     Route::post('vpis/srednjesolska_izobrazba', 'VpisController@shraniSrednjeSolskoIzobrazbo');
     Route::get('vpis/prijava_za_studij', 'VpisController@prijavaZaStudijPrikaz');
+    Route::post('vpis/prijava_za_studij', 'VpisController@shraniPrijavoZaStudij');
 });
 
 //TODO Strašno grdo. Prestavi to v kontroler.

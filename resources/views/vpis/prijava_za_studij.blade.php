@@ -4,36 +4,108 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">V skladu z razpisom za vpis se prijavljam za študij</div>
-                    <div class="panel-body">
-                        <form class="form-horizontal" role="form" method="POST" action="{{ url('vpis/vpis_za_studij') }}">
-                            {!! csrf_field() !!}
+                <div class="page-header">V skladu z razpisom za vpis se prijavljam za študij</div>
 
+                <form class="form-horizontal" role="form" method="POST" action="{{ url('vpis/prijava_za_studij') }}">
+                    {!! csrf_field() !!}
+                    <div id="zelja_1" class="panel panel-default zelja">
+                        <div class="panel-heading">1. želja</div>
+                        <div class="panel-body">
                             <div class="form-group">
-                                <h2>Študij</h2>
                                 <label class="col-md-4 control-label">Visokošolski zavod: </label>
-                                <div class="col-md-6">
-                                    <select name="visokosolski_zavod_1">
+                                <div class="col-md-8">
+                                    <select id="visokosolski_zavod_1" name="visokosolski_zavod_1" class="form-control">
+                                        <option value="0">Izberi visokošolski zavod...</option>
                                         @foreach($visokosolskiZavodi as $zavod)
-                                            <option value="{{ $zavod->id }}">{{ $zavod->ime }}</option>
+                                            <option value="{{ $zavod->id }}" class="zavod">{{ $zavod->ime }}</option>
                                         @endforeach
                                     </select>
                                 </div>
-
-                                <label class="col-md-4 control-label">Študijski program: </label>
-                                <div class="col-md-6">
-                                    <select name="studijski_program_1">
-                                        @foreach($studijskiProgrami as $program)
-                                            <option value="{{ $program->id }}">{{ $program->ime }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
                             </div>
-                        </form>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Študijski program: </label>
+                                <div class="col-md-8">
+                                    <select id="studijski_program_1" name="studijski_program_1" class="form-control">
+                                        <option value="0">Izberi študijski program...</option>
+                                        @foreach($studijskiProgrami as $program)
+                                            <option value="{{ $program->id }}" class="program zavod_{{ $program->id_zavoda }}" style="display:none;">
+                                                {{ $program->ime . ' (' . strtolower($program->nacin_studija) . ')'}}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                     </div>
-                </div>
+                    <div id="zelja_2" class="panel panel-default" style="display:none;">
+                        <div class="panel-heading">2. želja</div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Visokošolski zavod: </label>
+                                <div class="col-md-8">
+                                    <select id="visokosolski_zavod_2" name="visokosolski_zavod_2" class="form-control">
+                                        <option value="0">Izberi visokošolski zavod...</option>
+                                    @foreach($visokosolskiZavodi as $zavod)
+                                            <option value="{{ $zavod->id }}" class="zavod">
+                                                {{ $zavod->ime }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Študijski program: </label>
+                                <div class="col-md-8">
+                                    <select id="studijski_program_2" name="studijski_program_2" class="form-control">
+                                        <option value="0">Izberi študijski program...</option>
+                                        @foreach($studijskiProgrami as $program)
+                                            <option value="{{ $program->id }}" class="program zavod_{{ $program->id_zavoda }}" style="display:none;" >
+                                                {{ $program->ime . ' (' . strtolower($program->nacin_studija) . ')'}}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="zelja_3" class="panel panel-default" style="display:none;">
+                        <div class="panel-heading">3. želja</div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Visokošolski zavod: </label>
+                                <div class="col-md-8">
+                                    <select id="visokosolski_zavod_3" name="visokosolski_zavod_3" class="form-control">
+                                        <option value="0">Izberi visokošolski zavod...</option>
+                                        @foreach($visokosolskiZavodi as $zavod)
+                                            <option value="{{ $zavod->id }}" class="zavod">{{ $zavod->ime }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Študijski program: </label>
+                                <div class="col-md-8">
+                                    <select id="studijski_program_3" name="studijski_program_3" class="form-control">
+                                        <option value="0">Izberi študijski program...</option>
+                                        @foreach($studijskiProgrami as $program)
+                                            <option value="{{ $program->id }}" class="program zavod_{{ $program->id_zavoda }}" style="display:none;">
+                                                {{ $program->ime . ' (' . strtolower($program->nacin_studija) . ')'}}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6 col-md-offset-5">
+                            <button type="submit" name="shraniPogoj" class="btn btn-primary pull-right">
+                                <i class="fa fa-btn fa-sign-in"></i>Naslednji korak
+                            </button>
+                        </div>
+                    </div>
+                    @include('flash_message')
+                </form>
             </div>
         </div>
     </div>

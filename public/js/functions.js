@@ -328,6 +328,47 @@ $(document).ready(function() {
         }
     });
 
+    $('#visokosolski_zavod_1').change(function(){
+        var id_zavoda = $(this).val();
+        var zelja = $('#studijski_program_1');
+        if (id_zavoda > 0) {
+            zelja.children('.program').hide();
+            zelja.children('.zavod_' + id_zavoda).show();
+        }
+    });
+
+    $('#visokosolski_zavod_2').change(function(){
+        var id_zavoda = $(this).val();
+        var zelja = $('#studijski_program_2');
+        if (id_zavoda > 0) {
+            zelja.children('.program').hide();
+            zelja.children('.zavod_' + id_zavoda).show();
+        }
+    });
+
+    $('#visokosolski_zavod_3').change(function(){
+        var id_zavoda = $(this).val();
+        var zelja = $('#studijski_program_3');
+        if (id_zavoda > 0) {
+            zelja.children('.program').hide();
+            zelja.children('.zavod_' + id_zavoda).show();
+        }
+    });
+    
+    $('#studijski_program_1').change(function () {
+       var id_programa = $(this).val();
+        if (id_programa > 0) {
+            $('#zelja_2').show();
+        }
+    });
+
+    $('#studijski_program_2').change(function () {
+        var id_programa = $(this).val();
+        if (id_programa > 0) {
+            $('#zelja_3').show();
+        }
+    });
+
 });
 
 function searchTable(inputVal)

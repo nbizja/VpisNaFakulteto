@@ -13,4 +13,9 @@ class Prijava extends Model
     protected $guarded = ['id'];
     protected $dates = ['created_at', 'updated_at', 'delete_at'];
     public $timestamps = false;
+
+    public function studijskiProgram()
+    {
+        return $this->belongsTo('App\Models\StudijskiProgram', 'id_studijskega_programa');
+    }
 }

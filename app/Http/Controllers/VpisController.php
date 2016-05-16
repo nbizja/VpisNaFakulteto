@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Logic\PrijavaValidator;
+use App\Models\Prijava;
 use App\Models\PrijavaNaslovZaPosiljanje;
 use App\Models\PrijavaOsebniPodatki;
 use App\Models\PrijavaPrebivalisce;
 use App\Models\PrijavaSrednjesolskaIzobrazba;
 use App\Models\Repositories\VpisRepository;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Request;
 
 class VpisController extends Controller
@@ -172,5 +174,86 @@ class VpisController extends Controller
         $srednjeSolskaIzobrazba->save();
         
         return redirect('vpis/prijava_za_studij');
+    }
+    
+    public function shraniPrijavoZaStudij(Request $request)
+    {
+        $prvaZelja = new Prijava([
+            'id_kandidata' => Auth::user()->id,
+            'id_studijskega_programa' => $request->request->get('studijski_program_1'),
+            'zelja' => 1,
+            'datum_prijave' => date('Y-m-d'),
+            'tocke' => 0,
+            'izredni_talent' => 0
+        ]);
+        $izbraniProgrami = [$prvaZelja->id_studijskega_programa];
+
+        if (!$this->prijavaValidator->validirajStudijskiProgram($prvaZelja)) {
+            return back()->with('errors', ['status' => 'danger',
+                'message' => '1. želja: Neveljaven studijski program'
+            ]);
+        }
+        if ($request->request->get('studijski_program_2') > 0) {
+            $drugaZelja = new Prijava([
+                'id_kandidata' => Auth::user()->id,
+                'id_studijskega_programa' => $request->request->get('studijski_program_2'),
+                'zelja' => 2,
+                'datum_prijave' => date('Y-m-d'),
+                'tocke' => 0,
+                'izredni_talent' => 0
+            ]);
+
+            if (!$this->prijavaValidator->validirajStudijskiProgram($drugaZelja)) {
+                return back()->with('errors', ['status' => 'danger',
+                    'message' => '2. želja: Neveljaven studijski program'
+                ]);
+            }
+            if (!in_array($drugaZelja->id_studijskega_programa, $izbraniProgrami)) {
+                return back()->with('errors', ['status' => 'danger',
+                    'message' => '2. želja: Podvojena izbira programa!'
+                ]);
+            }
+            $izbraniProgrami[] = $drugaZelja->id_studijskega_programa;
+        }
+
+        if ($request->request->get('studijski_program_3') > 0) {
+            $tretjaZelja = new Prijava([
+                'id_kandidata' => Auth::user()->id,
+                'id_studijskega_programa' => $request->request->get('studijski_program_3'),
+                'zelja' => 3,
+                'datum_prijave' => date('Y-m-d'),
+                'tocke' => 0,
+                'izredni_talent' => 0
+            ]);
+            if (!$this->prijavaValidator->validirajStudijskiProgram($tretjaZelja)) {
+                return back()->with('errors', ['status' => 'danger',
+                    'message' => '3. želja: Neveljaven studijski program'
+                ]);
+            }
+            if (!in_array($tretjaZelja->id_studijskega_programa, $izbraniProgrami)) {
+                return back()->with('errors', ['status' => 'danger',
+                    'message' => '3. želja: Podvojena izbira programa!'
+                ]);
+            }
+        }
+        DB::beginTransaction();
+        try {
+            $prvaZelja->save();
+            if (isset($drugaZelja)) {
+                $drugaZelja->save();
+            }
+            if (isset($tretjaZelja)) {
+                $tretjaZelja->save();
+            }
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+
+            return back()->with('errors', ['status' => 'danger',
+                'message' => 'Napaka pri shranjevanju.'
+            ]);
+        }
+
+        return redirect('vpis/pregled');
     }
 }

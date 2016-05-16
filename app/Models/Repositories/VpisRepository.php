@@ -53,7 +53,7 @@ class VpisRepository
     public function prijavaZaStudij()
     {
         return [
-            'visokosolskiZavodi' => VisokosolskiZavod::with('obcina'),
+            'visokosolskiZavodi' => VisokosolskiZavod::with('obcina')->get()->sortBy('ime'),
             'studijskiProgrami' => StudijskiProgram::all(),
 
         ];
