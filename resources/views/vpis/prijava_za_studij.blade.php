@@ -14,7 +14,7 @@
                                 <h2>Študij</h2>
                                 <label class="col-md-4 control-label">Visokošolski zavod: </label>
                                 <div class="col-md-6">
-                                    <select name="visokosolski_zavod">
+                                    <select name="visokosolski_zavod_1">
                                         @foreach($visokosolskiZavodi as $zavod)
                                             <option value="{{ $zavod->id }}">{{ $zavod->ime }}</option>
                                         @endforeach
@@ -23,33 +23,13 @@
 
                                 <label class="col-md-4 control-label">Študijski program: </label>
                                 <div class="col-md-6">
-                                    <select name="visokosolski_zavod">
+                                    <select name="studijski_program_1">
                                         @foreach($studijskiProgrami as $program)
                                             <option value="{{ $program->id }}">{{ $program->ime }}</option>
                                         @endforeach
                                     </select>
                                 </div>
 
-                                <label class="col-md-4 control-label">Smer/modul: </label>
-                                <div class="col-md-6">
-                                    <select name="visokosolski_zavod">
-                                        @foreach($studijskiProgrami as $program)
-                                            <option value="{{ $program->id }}">{{ $program->ime }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">Način študija: </label>
-                                <div class="col-md-6">
-                                    <select name="nacin_studija">
-                                        @foreach($naciniStudija as $nacin)
-                                            <option value="{{ $nacin->id }}">{{ $nacin->ime }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
                             </div>
                         </form>
                     </div>
