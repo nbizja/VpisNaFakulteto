@@ -107,7 +107,11 @@ class VpisController extends Controller
     
     public function pregled()
     {
-        return view('vpis.pregled')->with($this->vpisRepository->pregledPrijave(Auth::user()));
+        $uporabnik = Auth::user();
+        if ($uporabnik->prijave()->get()->isEmpty()) {
+            return redirect('/');
+        }
+        return view('vpis.pregled')->with($this->vpisRepository->pregledPrijave($uporabnik));
     }
 
     public function shraniOsebnePodatke(Request $request)
@@ -143,7 +147,7 @@ class VpisController extends Controller
             return back()->with('errors', $errors);
         }
 
-        $osebniPodatki = PrijavaOsebniPodatki::create($opInput);
+        PrijavaOsebniPodatki::create($opInput);
 
         return redirect('vpis/stalno_prebivalisce');
     }
