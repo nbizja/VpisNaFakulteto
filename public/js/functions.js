@@ -334,6 +334,13 @@ $(document).ready(function() {
         if (id_zavoda > 0) {
             zelja.children('.program').hide();
             zelja.children('.zavod_' + id_zavoda).show();
+        } else {
+            $('#visokosolski_zavod_2').val(0);
+            $('#studijski_program_2').val(0);
+            $('#visokosolski_zavod_3').val(0);
+            $('#studijski_program_3').val(0);
+            $('#zelja_2').hide();
+            $('#zelja_3').hide();
         }
     });
 
@@ -343,6 +350,10 @@ $(document).ready(function() {
         if (id_zavoda > 0) {
             zelja.children('.program').hide();
             zelja.children('.zavod_' + id_zavoda).show();
+        } else {
+            $('#visokosolski_zavod_3').val(0);
+            $('#studijski_program_3').val(0);
+            $('#zelja_3').hide();
         }
     });
 
@@ -359,6 +370,13 @@ $(document).ready(function() {
        var id_programa = $(this).val();
         if (id_programa > 0) {
             $('#zelja_2').show();
+        } else {
+            $('#visokosolski_zavod_2').val(0);
+            $('#studijski_program_2').val(0);
+            $('#visokosolski_zavod_3').val(0);
+            $('#studijski_program_3').val(0);
+            $('#zelja_2').hide();
+            $('#zelja_3').hide();
         }
     });
 
@@ -366,6 +384,19 @@ $(document).ready(function() {
         var id_programa = $(this).val();
         if (id_programa > 0) {
             $('#zelja_3').show();
+        } else {
+            $('#visokosolski_zavod_3').val(0);
+            $('#studijski_program_3').val(0);
+            $('#zelja_3').hide();
+        }
+    });
+
+    $('#nacin_zakljucka').change(function() {
+       var id_nacina_zakljucka = $(this).val();
+        if (id_nacina_zakljucka == 3) {
+            $('#maturitetni_predmet').show();
+        } else {
+            $('#maturitetni_predmet').hide();
         }
     });
 

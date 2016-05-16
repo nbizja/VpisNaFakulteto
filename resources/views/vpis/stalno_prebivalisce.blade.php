@@ -14,7 +14,7 @@
                                 <div class="form-group">
                                     <label class="col-md-4 control-label">Država: </label>
                                     <div class="col-md-6">
-                                        <select name="drzava">
+                                        <select class="form-control" name="drzava">
                                             @foreach($drzave as $drzava)
                                                 <option value="{{ $drzava->id }}"
                                                 @if((!isset($stalnoPrebivalisce->id_drzave) && $drzava->ime == 'SLOVENIJA') ||
@@ -31,13 +31,13 @@
                                 <div class="form-group">
                                     <label class="col-md-4 control-label">Naslov: </label>
                                     <div class="col-md-8">
-                                        <input type="text" name="naslov" value="{{ $stalnoPrebivalisce->naslov ?? old('naslov') }}" />
+                                        <input type="text" class="form-control" name="naslov" value="{{ $stalnoPrebivalisce->naslov ?? old('naslov') }}" />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-4 control-label">Občina: </label>
                                     <div class="col-md-6">
-                                        <select name="obcina">
+                                        <select class="form-control" name="obcina">
                                             @foreach($obcine as $obcina)
                                                 <option value="{{ $obcina->id }}"
                                                     @if(isset($stalnoPrebivalisce->id_obcine) && $stalnoPrebivalisce->id_obcine == $obcina->id) {{ 'selected' }}@endif
@@ -51,7 +51,7 @@
                                 <div class="form-group">
                                     <label class="col-md-4 control-label">Pošta: </label>
                                     <div class="col-md-6">
-                                        <select name="posta">
+                                        <select class="form-control" name="posta">
                                             @foreach($poste as $posta)
                                                 <option value="{{ $posta->postna_stevilka }}"
                                                     @if(isset($stalnoPrebivalisce->postna_stevilka) && $stalnoPrebivalisce->postna_stevilka == $posta->postna_stevilka) {{ 'selected' }}@endif
@@ -65,17 +65,17 @@
                             </div>
                             <div class="panel-heading">Naslov za pošiljanje:</div>
                             <div class="panel-body">
-                                <div class="form-group">
-                                    <div class="col-md-6">
-                                        <input type="radio" name="isti_naslov_za_posiljanje" checked value="1">Isti kot stalno prebivališče
-                                        <input type="radio" name="isti_naslov_za_posiljanje" value="0">Drugo
+                                <div class="form-group form-inline">
+                                    <div class="col-md-6 col-md-offset-5">
+                                        <input class="radio" type="radio" name="isti_naslov_za_posiljanje" checked value="1" >  Isti kot stalno prebivališče
+                                        <input class="radio" type="radio" name="isti_naslov_za_posiljanje" value="0" style="margin-left: 20px;">  Drugi
                                     </div>
                                 </div>
                                 <div class="obrazec">
                                     <div class="form-group">
                                         <label class="col-md-4 control-label">Država: </label>
                                         <div class="col-md-6">
-                                            <select name="posiljanje_drzava">
+                                            <select class="form-control" name="posiljanje_drzava">
                                                 @foreach($drzave as $drzava)
                                                     <option value="{{ $drzava->id }}">{{ $drzava->ime }}</option>
                                                 @endforeach
@@ -85,13 +85,13 @@
                                     <div class="form-group">
                                         <label class="col-md-4 control-label">Naslov: </label>
                                         <div class="col-md-6">
-                                            <input type="text" name="posiljanje_naslov" value="{{ $naslov or old('naslov') }}" />
+                                            <input type="text" class="form-control" name="posiljanje_naslov" value="{{ $naslov or old('naslov') }}" />
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-4 control-label">Občina: </label>
                                         <div class="col-md-6">
-                                            <select name="posiljanje_obcina">
+                                            <select class="form-control" name="posiljanje_obcina">
                                                 @foreach($obcine as $obcina)
                                                     <option value="{{ $obcina->id }}">{{ $obcina->ime }}</option>
                                                 @endforeach
@@ -101,7 +101,7 @@
                                     <div class="form-group">
                                         <label class="col-md-4 control-label">Pošta: </label>
                                         <div class="col-md-6">
-                                            <select name="posiljanje_posta">
+                                            <select class="form-control" name="posiljanje_posta">
                                                 @foreach($poste as $posta)
                                                     <option value="{{ $posta->postna_stevilka }}">{{ $posta->postna_stevilka . ' '. $posta->ime }}</option>
                                                 @endforeach

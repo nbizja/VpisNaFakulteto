@@ -82,7 +82,7 @@
                                         <i class="fa fa-btn fa-sign-in"></i>Nazaj
                                     </a>
                                     <button type="submit" name="shraniPogoj" class="btn btn-primary pull-right">
-                                        <i class="fa fa-btn fa-sign-in"></i>Potrdi prijavo
+                                        <i class="fa fa-btn fa-sign-in"></i>Nadaljuj
                                     </button>
                                 </div>
                             </div>

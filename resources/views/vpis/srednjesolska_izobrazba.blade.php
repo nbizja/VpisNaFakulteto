@@ -12,16 +12,16 @@
 
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Spričevalo o končani srednji šoli že imam: </label>
-                                <div class="input-group col-md-9">
-                                    <input type="radio" name="kandidat_ima_spricevalo" @if(!($srednjesolskaIzobrazba->ima_spricevalo ?? false)){{ 'checked' }}@endif value="0"/>Ne
+                                <div class="input-group col-md-9 col-md-offset-3">
+                                    <input type="radio" name="kandidat_ima_spricevalo" @if(!($srednjesolskaIzobrazba->ima_spricevalo ?? false)){{ 'checked' }}@endif value="0"/> Ne
 
-                                    <input type="radio" name="kandidat_ima_spricevalo" @if($srednjesolskaIzobrazba->ima_spricevalo ?? false){{ 'checked' }}@endif value="1"/>Da
+                                    <input type="radio" name="kandidat_ima_spricevalo" @if($srednjesolskaIzobrazba->ima_spricevalo ?? false){{ 'checked' }}@endif value="1" style="margin-left: 20px;;"/> Da
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Način zakljuka srednje šole: </label>
                                 <div class="col-md-9">
-                                    <select name="nacin_zakljucka" class="form-control">
+                                    <select id="nacin_zakljucka" name="nacin_zakljucka" class="form-control">
                                         @foreach($naciniZakljucka as $nacinZakljucka)
                                             <option value="{{ $nacinZakljucka->id }}" @if(($srednjesolskaIzobrazba->id_nacina_zakljucka ?? -1) == $nacinZakljucka->id){{ 'selected' }}@endif>
                                                 {{ $nacinZakljucka->ime }}
@@ -71,7 +71,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group" id="maturitetni_predmet" @if(($srednjesolskaIzobrazba->nacinZakljucka->ime ?? '') == 'POKLICNA MATURA'){{ 'style="display: none;"' }}@endif>
+                            <div class="form-group" id="maturitetni_predmet" @if(($srednjesolskaIzobrazba->nacinZakljucka->ime ?? '') != 'POKLICNA MATURA'){!! 'style="display: none;"' !!}@endif>
                                 <label class="col-md-3 control-label">Maturitetni predmet: </label>
                                 <div class="col-md-9">
                                     <select class="form-control" name="maturitetni_predmet">

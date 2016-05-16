@@ -89,6 +89,8 @@ Route::group(['middleware' => ['prijavljen']], function () {
     Route::get('vpis/prijava_za_studij', 'VpisController@prijavaZaStudijPrikaz');
     Route::post('vpis/prijava_za_studij', 'VpisController@shraniPrijavoZaStudij');
     Route::get('vpis/pregled', 'VpisController@pregled');
+    Route::post('vpis/potrditev_prijave', 'VpisController@oddajaPrijave');
+    Route::post('vpis/oddaja_prijave', 'VpisController@izbrisPrijave');
 });
 
 //TODO Strašno grdo. Prestavi to v kontroler.

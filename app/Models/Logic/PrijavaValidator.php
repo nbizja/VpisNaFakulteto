@@ -1,14 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Nejc
- * Date: 14.5.2016
- * Time: 18:01
- */
 
 namespace App\Models\Logic;
-
-
 
 use App\Models\Drzava;
 use App\Models\Obcina;
@@ -37,6 +29,19 @@ class PrijavaValidator
             'kraj_rojstva'      => 'Kraj rojstva mora vsebovati vsaj dve črki.',
             'kontaktni_telefon' => 'Kontaktni telefon mora biti v obliki 030123456'
         ]);
+    }
+
+    public function srednjesolskaIzobrazba($input)
+    {
+        return Validator::make($input, [
+            'datum_izdaje_spricevala' => 'required|date',
+            'id_nacina_zakljucka' => 'required|int|min:1',
+            'id_drzave' => 'required|int|min:0',
+            'id_srednje_sole' => 'required|int|min:1',
+            'sifra_maturitetnega_predmeta' => 'alpha_num',
+        ], ['datum_izdaje_spricevala.required' => 'Manjka datum izdaje spričevala.',
+            'datum_izdaje_spricevala.date' => 'Datum izdaje spričevala je v napačnem formatu (pravilen primer 15.06.2016)']
+        );
     }
 
     /**

@@ -79,7 +79,8 @@ class VpisRepository
             'stalnoPrebivalisce' => $uporabnik->prebivalisce()->with('obcina', 'posta', 'drzava')->first(),
             'naslovZaPosiljanje' => $uporabnik->naslovZaPosiljanje()->with('obcina', 'posta', 'drzava')->first(),
             'srednjesolskaIzobrazba' => $uporabnik->srednjesolskaIzobrazba()->with('nacinZakljucka', 'srednjaSola', 'drzava')->first(),
-            'prijave' => $uporabnik->prijave()->with('studijskiProgram', 'studijskiProgram.visokosolskiZavod')->get()->sortBy('zelja')
+            'prijave' => $uporabnik->prijave()->with('studijskiProgram', 'studijskiProgram.visokosolskiZavod')->get()->sortBy('zelja'),
+            'datum_oddaje_prijave' => $uporabnik->datum_oddaje_prijave
         ];
     }
 }
