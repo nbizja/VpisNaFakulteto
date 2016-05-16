@@ -49,6 +49,16 @@ class UporabnikSeeder extends Seeder
 
         DB::table('uporabnik')->insert(
             [
+                'ime' => 'Metka',
+                'priimek' => 'Runovc',
+                'username' => 'metkarunovc',
+                'email' => 'metkarunovc1234@gmail.com',
+                'password' => bcrypt('metkarunovc'),
+                'vloga' => VlogaUporabnika::FAKULTETA
+            ]);
+
+        DB::table('uporabnik')->insert(
+            [
                 'ime' => 'Kralj',
                 'priimek' => 'Matjaž',
                 'username' => 'admin',
