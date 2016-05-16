@@ -44,17 +44,29 @@ class Uporabnik extends Model implements AuthenticatableContract, CanResetPasswo
 
     public function osebniPodatki()
     {
-        return $this->hasOne('App\Models\PrijavaOsebniPodatki', 'id_uporabnika', 'id');
+        return $this->hasOne('App\Models\PrijavaOsebniPodatki', 'id_kandidata', 'id');
     }
 
     public function prebivalisce()
     {
-        return $this->hasOne('App\Models\PrijavaPrebivalisce', 'id_uporabnika', 'id');
+        return $this->hasOne('App\Models\PrijavaPrebivalisce', 'id_kandidata', 'id');
     }
 
     public function naslovZaPosiljanje()
     {
-        return $this->hasOne('App\Models\PrijavaNaslovZaPosiljanje', 'id_uporabnika', 'id');
+        return $this->hasOne('App\Models\PrijavaNaslovZaPosiljanje', 'id_kandidata', 'id');
     }
+    
+    public function srednjesolskaIzobrazba()
+    {
+        return $this->hasOne('App\Models\PrijavaSrednjesolskaIzobrazba', 'id_kandidata', 'id');
+    }
+
+    public function prijava()
+    {
+        return $this->hasMany('App\Models\Prijava', 'id_kandidata', 'id');
+    }
+
+
 
 }

@@ -17,6 +17,7 @@ class CreatePrijavaSrednjesolskaIzobrazba extends Migration
 
             $table->increments('id');
             $table->integer('id_kandidata');
+            $table->boolean('ima_spricevalo')->default(0);
             $table->integer('id_nacina_zakljucka');
             $table->integer('id_srednje_sole');
             $table->integer('id_drzave');

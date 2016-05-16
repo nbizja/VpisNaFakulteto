@@ -40,7 +40,7 @@
                                     <select name="drzava_rojstva" class="form-control col-md-6" required>
                                         @foreach($drzave as $drzava)
                                             <option value="{{ $drzava->id }}" @if(($drzava->ime == 'SLOVENIJA' && empty($osebniPodatki)) ||
-                                                ($osebniPodatki->id_drazve_rojstva == $drzava->id)) {{ 'selected' }} @endif>
+                                                (($osebniPodatki->id_drzave_rojstva ?? -1) == $drzava->id)) {{ 'selected' }} @endif>
                                                 {{ $drzava->ime }}
                                             </option>
                                         @endforeach

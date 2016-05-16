@@ -29,7 +29,20 @@ class VpisController extends Controller
     {
         $user = Auth::user();
 
-        return $this->osebniPodatki();
+        if (empty($user->osebniPodatki()->first())) {
+            return redirect('vpis/osebni_podatki');
+        }
+        if (empty($user->prebivalisce()->first())) {
+            return redirect('vpis/stalno_prebivalisce');
+        }
+        if (empty($user->srednjesolskaIzobrazba()->first())) {
+            return redirect('vpis/srednjesolska_izobraba');
+        }
+        if (empty($user->prijava()->first())) {
+            return redirect('vpis/prijava_za_studij');
+        }
+
+        return redirect('vpis/pregled');
     }
     
     public function osebniPodatki()
@@ -70,6 +83,11 @@ class VpisController extends Controller
     public function prijavaZaStudijPrikaz()
     {
         return view('vpis.prijava_za_studij')->with($this->vpisRepository->prijavaZaStudij());
+    }
+    
+    public function pregled()
+    {
+        return view('vpis.pregled')->with($this->vpisRepository->pregledPrijave(Auth::user()));
     }
 
     public function shraniOsebnePodatke(Request $request)

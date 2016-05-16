@@ -80,7 +80,7 @@ Route::group(['middleware' => ['prijavljen']], function () {
     Route::any('/sifranti/{ime_sifranta}/povrni/{id_vnosa}', 'SifrantiController@povrni');
 
     Route::get('vpis', 'VpisController@prikazi');
-    Route::get('vpis/osebni_podatki', 'VpisController@osebniPodatkiPrikaz');
+    Route::get('vpis/osebni_podatki', 'VpisController@osebniPodatki');
     Route::post('vpis/osebni_podatki', 'VpisController@shraniOsebnePodatke');
     Route::get('vpis/stalno_prebivalisce', 'VpisController@stalnoPrebivalisce');
     Route::post('vpis/stalno_prebivalisce', 'VpisController@shraniStalnoPrebivalisce');
@@ -88,6 +88,7 @@ Route::group(['middleware' => ['prijavljen']], function () {
     Route::post('vpis/srednjesolska_izobrazba', 'VpisController@shraniSrednjeSolskoIzobrazbo');
     Route::get('vpis/prijava_za_studij', 'VpisController@prijavaZaStudijPrikaz');
     Route::post('vpis/prijava_za_studij', 'VpisController@shraniPrijavoZaStudij');
+    Route::get('vpis/pregled', 'VpisController@pregled');
 });
 
 //TODO Strašno grdo. Prestavi to v kontroler.

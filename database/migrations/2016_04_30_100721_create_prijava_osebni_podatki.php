@@ -16,7 +16,7 @@ class CreatePrijavaOsebniPodatki extends Migration
             $table->engine = 'InnoDB';
 
             $table->increments('id');
-            $table->integer('id_uporabnika');
+            $table->integer('id_kandidata');
             $table->string('emso');
             $table->string('ime');
             $table->string('priimek');
