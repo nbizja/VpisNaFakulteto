@@ -64,30 +64,29 @@
                                             @if ($pogoj->id_elementa2 != null)
                                                 <li>{{ ucfirst(strtolower($pogoj->Element2->ime)) }}</li>
                                             @endif
-                                            <li> {{$pogoj->test}}</li>
                                         </ul>
                                     </div>
                                     <br/><br/><br/><br/>
                                     <div style="width: 100%">
+                                        @if(count($pogoj->Kriterij) > 0)
                                         <div class="well" style="display: inline-block; width: 50%; height: 100%">
                                             <label>Kriterij za izračun točk:</label>
                                             <br>
                                             <ul>
-                                                @if ($pogoj->splosna_matura == 1)
-                                                    <li>Splošna matura</li>
-                                                @elseif($pogoj->poklicna_matura == 1)
-                                                    <li>Poklicna matura</li>
-                                                @elseif($pogoj->id_poklica != null)
-                                                    <li>Poklic: {{$pogoj->Poklic->ime}}</li>
-                                                @endif
-                                                @if ($pogoj->id_elementa != null)
-                                                    <li>{{ ucfirst(strtolower($pogoj->Element->ime)) }}</li>
-                                                @endif
-                                                @if ($pogoj->id_elementa2 != null)
-                                                    <li>{{ ucfirst(strtolower($pogoj->Element2->ime)) }}</li>
-                                                @endif
+                                                @foreach($pogoj->Kriterij as $kriterij)
+                                                    @if($kriterij->id_elementa == null)
+                                                        @if($kriterij->maturitetni_uspeh == 1)
+                                                            <li>Uspeh na maturi: {{$kriterij->utez}}</li>
+                                                        @elseif($kriterij->ocene_34_letnika == 1)
+                                                            <li>Uspeh v 3. in 4. letniku: {{$kriterij->utez}}</li>
+                                                        @endif
+                                                    @else
+                                                        <li>Ocena {{$kriterij->id_elementa}} na maturi: {{$kriterij->utez}}</li>
+                                                    @endif
+                                                @endforeach
                                             </ul>
                                         </div>
+                                        @endif
                                         <div style="display: inline-block; float: right">
                                             <div class="form-group">
                                                 <div class="col-md-6 col-md-offset-6">

@@ -31,4 +31,9 @@ class VpisniPogoj extends Model
     {
         return $this->belongsTo('App\Models\Element', 'id_elementa2','id');
     }
+
+    public function Kriterij()
+    {
+        return $this->hasMany('App\Models\Kriterij', 'id_pogoja');
+    }
 }
