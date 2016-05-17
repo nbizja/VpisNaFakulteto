@@ -149,10 +149,10 @@
                                             <li>Poklic: {{$pogoj->Poklic->ime}}</li>
                                         @endif
                                         @if ($pogoj->id_elementa != null)
-                                            <li>{{ ucfirst(strtolower($pogoj->Element->ime)) }}</li>
+                                            <li>{{ ucfirst(mb_strtolower($pogoj->Element->ime)) }}</li>
                                         @endif
                                         @if ($pogoj->id_elementa2 != null)
-                                            <li>{{ ucfirst(strtolower($pogoj->Element2->ime)) }}</li>
+                                            <li>{{ ucfirst(mb_strtolower($pogoj->Element2->ime)) }}</li>
                                         @endif
                                     </ul>
                                 </div>
@@ -171,7 +171,7 @@
                                                             <li>{{$kriterij->utez}}<span class="col-md-6">Uspeh v 3. in 4. letniku:</span></li>
                                                         @endif
                                                     @else
-                                                        <li>{{$kriterij->utez}} <span class="col-md-6">{{ucfirst(strtolower($kriterij->Element->ime))}}:</span></li>
+                                                        <li>{{$kriterij->utez}} <span class="col-md-6">{{ucfirst(mb_strtolower($kriterij->Element->ime))}}:</span></li>
                                                     @endif
                                                 @endforeach
                                             </ul>
