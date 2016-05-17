@@ -113,16 +113,6 @@
                     <div class="panel-heading">Splošne informacije</div>
                     <div class="panel-body">
                         <div class="form-group">
-                            <label class="col-md-4 control-label">Način študija: </label>
-                            <div class="col-md-6">
-                                <select class="form-control" name="nacin_studija" id="nacin_studija">
-                                    <option value="redni">Redni</option>
-                                    <option value="izredni">Izredni</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
                             <label class="col-md-4 control-label">Vrsta študija: </label>
                             <div class="col-md-6">
                                 <select class="form-control" name="vrsta_studija" id="vrsta_studija">

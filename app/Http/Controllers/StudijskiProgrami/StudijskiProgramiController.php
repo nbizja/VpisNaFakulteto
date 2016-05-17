@@ -68,11 +68,6 @@ class StudijskiProgramiController extends Controller
                 $vrsta = 'Visokošolski strokovni';
             }
 
-            if ($request->request->get('nacin_studija') == 'izredni') {
-                $nacin = 'Izredni';
-            } else {
-                $nacin = 'Redni';
-            }
 
             if ($request->request->get('omejitev') == 'da') {
                 $omejitev = '1';
@@ -86,7 +81,6 @@ class StudijskiProgramiController extends Controller
                 $omejitevT = '0';
             }
 
-            $program->nacin_studija = $nacin;
             $program->vrsta = $vrsta;
             $program->omejitev_vpisa = $omejitev;
             $program->omejitev_vpisa_tujci = $omejitevT;
