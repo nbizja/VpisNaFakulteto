@@ -81,7 +81,7 @@
                                                             <li>Uspeh v 3. in 4. letniku: {{$kriterij->utez}}</li>
                                                         @endif
                                                     @else
-                                                        <li>Ocena {{$kriterij->id_elementa}} na maturi: {{$kriterij->utez}}</li>
+                                                        <li>{{ucfirst(strtolower($kriterij->Element->ime))}}: {{$kriterij->utez}}</li>
                                                     @endif
                                                 @endforeach
                                             </ul>

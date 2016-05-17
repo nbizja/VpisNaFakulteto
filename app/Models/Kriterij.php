@@ -15,4 +15,9 @@ class Kriterij extends Model
     {
         return $this->required;
     }
+
+    public function Element()
+    {
+        return $this->belongsTo('App\Models\Element', 'id_elementa','id');
+    }
 }
