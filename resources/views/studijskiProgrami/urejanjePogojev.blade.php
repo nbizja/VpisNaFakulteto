@@ -59,10 +59,10 @@
                                                 <li>Poklic: {{$pogoj->Poklic->ime}}</li>
                                             @endif
                                             @if ($pogoj->id_elementa != null)
-                                                <li>{{ ucfirst(strtolower($pogoj->Element->ime)) }}</li>
+                                                <li>{{ ucfirst(mb_strtolower($pogoj->Element->ime)) }}</li>
                                             @endif
                                             @if ($pogoj->id_elementa2 != null)
-                                                <li>{{ ucfirst(strtolower($pogoj->Element2->ime)) }}</li>
+                                                <li>{{ ucfirst(mb_strtolower($pogoj->Element2->ime)) }}</li>
                                             @endif
                                         </ul>
                                     </div>

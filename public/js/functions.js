@@ -326,6 +326,14 @@ $(document).ready(function() {
         } else {
             $('#omejitev_tujci').val("");
         }
+
+
+        if (id > 0) {
+            $('.vpisni_pogoji').show();
+            $('.vpisni_pogoj').hide();
+            $('.program_'+id).show();
+        }
+
     });
 
 });
