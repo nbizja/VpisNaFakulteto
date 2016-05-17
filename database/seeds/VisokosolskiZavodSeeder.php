@@ -57,6 +57,8 @@ class VisokosolskiZavodSeeder extends CsvSeeder
         } else {
             throw new Exception("$this->data_file ni veljavna datoteka.");
         }
+
+        DB::table('visokosolski_zavod')->where('id','63')->update(array('id_skrbnika' => 4));
     }
 }
 
