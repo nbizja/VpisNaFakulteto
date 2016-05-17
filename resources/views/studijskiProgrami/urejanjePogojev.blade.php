@@ -76,12 +76,12 @@
                                                 @foreach($pogoj->Kriterij as $kriterij)
                                                     @if($kriterij->id_elementa == null)
                                                         @if($kriterij->maturitetni_uspeh == 1)
-                                                            <li>Uspeh na maturi: {{$kriterij->utez}}</li>
+                                                            <li>{{$kriterij->utez}}<span class="col-md-6">Uspeh na maturi: </span></li>
                                                         @elseif($kriterij->ocene_34_letnika == 1 && $kriterij->utez > 0)
-                                                            <li>Uspeh v 3. in 4. letniku: {{$kriterij->utez}}</li>
+                                                            <li>{{$kriterij->utez}}<span class="col-md-6">Uspeh v 3. in 4. letniku:</span></li>
                                                         @endif
                                                     @else
-                                                        <li>{{ucfirst(strtolower($kriterij->Element->ime))}}: {{$kriterij->utez}}</li>
+                                                        <li>{{$kriterij->utez}} <span class="col-md-6">{{ucfirst(strtolower($kriterij->Element->ime))}}:</span></li>
                                                     @endif
                                                 @endforeach
                                             </ul>
