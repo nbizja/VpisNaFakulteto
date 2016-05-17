@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers\StudijskiProgrami;
 
+use App\Models\Kriterij;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Repositories\StudijskiProgramiRepository;
 use App\Models\Repositories\VpisniPogojiRepository;;
@@ -125,11 +126,50 @@ class VpisniPogojiController extends Controller
 
     public function shraniDeleze(Request $request)
     {
+        $id_pogoja = -1;
         if (Auth::check()) {
+            $all = $request->all();
+            foreach ($all as $key => $i) {
+                if(stripos($key,'pogoj') !== false) {
+                    $id_pogoja = substr($key, 5, strlen($key)-5);
+                }
+            }
+            Kriterij::where('id_pogoja', '=', $id_pogoja)->delete();
+
+            foreach ($all as $key => $i) {
+                if($key == 'uspeh'){
+                    $kriterij = new Kriterij();
+                    $kriterij->utez = $i;
+                    $kriterij->vnos_veljaven = 1;
+                    $kriterij->ocene_34_letnika = 1;
+                    $kriterij->maturitetni_uspeh = 0;
+                    $kriterij->id_pogoja = $id_pogoja;
+                    $kriterij->save();
+                }
+                else if ($key == "matura"){
+                    $kriterij = new Kriterij();
+                    $kriterij->utez = $i;
+                    $kriterij->vnos_veljaven = 1;
+                    $kriterij->ocene_34_letnika = 0;
+                    $kriterij->maturitetni_uspeh = 1;
+                    $kriterij->id_pogoja = $id_pogoja;
+                    $kriterij->save();
+                }
+                else if(stripos($key,'name') !== false){
+                    $kriterij = new Kriterij();
+                    $kriterij->utez = $i;
+                    $kriterij->id_elementa = substr($key, 4, strlen($key)-4);
+                    $kriterij->vnos_veljaven = 1;
+                    $kriterij->ocene_34_letnika = 0;
+                    $kriterij->maturitetni_uspeh = 0;
+                    $kriterij->id_pogoja = $id_pogoja;
+                    $kriterij->save();
+                }
+            }
 
         }
 
-        return redirect('prijava');
+        return redirect('vpisniPogoji/urejanje');
     }
 
     public function dodajPogoj($id)

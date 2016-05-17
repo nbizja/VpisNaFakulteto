@@ -77,7 +77,7 @@
                                                     @if($kriterij->id_elementa == null)
                                                         @if($kriterij->maturitetni_uspeh == 1)
                                                             <li>Uspeh na maturi: {{$kriterij->utez}}</li>
-                                                        @elseif($kriterij->ocene_34_letnika == 1)
+                                                        @elseif($kriterij->ocene_34_letnika == 1 && $kriterij->utez > 0)
                                                             <li>Uspeh v 3. in 4. letniku: {{$kriterij->utez}}</li>
                                                         @endif
                                                     @else

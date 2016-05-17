@@ -48,6 +48,9 @@ Route::group(['middleware' => ['prijavljen']], function () {
     Route::post('vpisniPogoji/shraniPogoj', 'StudijskiProgrami\VpisniPogojiController@shraniPogoj');
     Route::get('vpisniPogoji/dodajPogoj', 'StudijskiProgrami\VpisniPogojiController@dodajPogoj');
     Route::post('vpisniPogoji/novPogoj', 'StudijskiProgrami\VpisniPogojiController@novPogoj');
+    Route::post('/vpisniPogoji/shraniDeleze', 'StudijskiProgrami\VpisniPogojiController@shraniDeleze');
+    Route::get('/vpisniPogoji/shraniDeleze', 'StudijskiProgrami\VpisniPogojiController@shraniDeleze');
+
 
     Route::get('prijava', 'Auth\AuthController@showLoginForm');
     Route::get('odjava', 'Auth\AuthController@logout');

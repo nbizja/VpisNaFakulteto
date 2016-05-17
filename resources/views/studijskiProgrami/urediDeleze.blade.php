@@ -3,7 +3,7 @@
 @section('content')
         <div class="container">
                 <h4>Urejanje deležev za izračun točk za študijski program {{$program->ime}} ({{$program->nacin_studija}})</h4>
-                <form class="form-horizontal" role="form" method="POST" action="{{ url('/vpisniPogoji/shraniDeleze') }}">
+                <form class="form-horizontal" name="forma" role="form" method="POST" action="{{ url('/vpisniPogoji/shraniDeleze') }}">
                 <div class="panel-group">
                         {!! csrf_field() !!}
 
@@ -13,35 +13,45 @@
                                                 <br>
                                                 <div id="seznam_elementov">
                                                         <div class="form-group">
+                                                                <?php $exists = 0 ?>
                                                                 <label class="col-md-5 control-label">Uspeh v 3. in 4. letniku</label>
                                                                 @foreach ($pogoj->Kriterij as $kriterij)
                                                                         @if($kriterij->ocene_34_letnika == 1)
+                                                                                <?php $exists = 1 ?>
                                                                                 <div class="col-md-1">
                                                                                         <input type="text" class="form-control" name="uspeh" value="{{$kriterij->utez}}">
                                                                                 </div>
                                                                         @endif
                                                                 @endforeach
+                                                                @if($exists == 0)
+                                                                        <div class="col-md-1">
+                                                                                <input type="text" class="form-control" name="uspeh" value="0.00">
+                                                                        </div>
+                                                                @endif
                                                         </div>
                                                         <div class="form-group">
+                                                                <?php $exists = 0 ?>
+                                                                <label class="col-md-5 control-label">Uspeh na maturi</label>
                                                                 @foreach ($pogoj->Kriterij as $kriterij)
                                                                         @if($kriterij->maturitetni_uspeh == 1)
-                                                                                @if($pogoj->splosna_matura == 1)
-                                                                                        <label class="col-md-5 control-label">Splošna matura</label>
-                                                                                @elseif ($pogoj->poklicna_matura == 1)
-                                                                                        <label class="col-md-5 control-label">Poklicna matura</label>
-                                                                                @endif
+                                                                                <?php $exists = 1 ?>
                                                                                 <div class="col-md-1">
                                                                                         <input type="text" class="form-control" name="matura" value="{{$kriterij->utez}}">
                                                                                 </div>
                                                                         @endif
                                                                 @endforeach
+                                                                @if($exists == 0)
+                                                                        <div class="col-md-1">
+                                                                                <input type="text" class="form-control" name="matura" value="0.00">
+                                                                        </div>
+                                                                @endif
                                                         </div>
                                                         @foreach ($pogoj->Kriterij as $kriterij)
                                                                 @if($kriterij->id_elementa != '')
                                                                         <div class="form-group" id="div{{$kriterij->id}}">
                                                                                 <label class="col-md-5 control-label">{{ucfirst(strtolower($kriterij->Element->ime))}}</label>
                                                                                 <div class="col-md-1">
-                                                                                        <input type="text" class="form-control" name="elem" value="{{$kriterij->utez}}">
+                                                                                        <input type="text" class="form-control" name="name{{$kriterij->Element->id}}" value="{{$kriterij->utez}}">
                                                                                 </div>
                                                                                 <a class="btn btn-default izbrisi">
                                                                                         <i class="glyphicon glyphicon-remove"></i>
@@ -70,9 +80,12 @@
                                                 </div>
                                         </div>
 
+                                        <div id="error_message" style="display: none; width: 82%; margin: auto; margin-top: 0%" class="alert alert-success"> </div>
+                                        <br>
+
                                         <div class="form-group">
                                                 <div class="col-md-7 col-md-offset-4">
-                                                        <button type="submit" name="shraniDeleze" class="btn btn-primary pull-right">
+                                                        <button type="submit" name="pogoj{{$pogoj->id}}" class="btn btn-primary pull-right">
                                                                 <i class="fa fa-btn fa-sign-in"></i>Shrani
                                                         </button>
                                                 </div>
@@ -99,7 +112,7 @@
                                                 '<div class="form-group" id="div' + id + '"> ' +
                                                 '<label class="col-md-5 control-label">'+ name +'</label>' +
                                                 '<div class="col-md-1">' +
-                                                '<input type="text" class="form-control" id="' + id +'" value="0.00">' +
+                                                '<input type="text" class="form-control" name="name' + id +'" value="0.00">' +
                                                 '</div>' +
                                                 '<a class="btn btn-default izbrisi">' +
                                                 '<i class="glyphicon glyphicon-remove"></i>' +
@@ -112,6 +125,35 @@
                         $(document).delegate('.izbrisi', 'click', function() {
                                 $(this).parent().remove();
                         });
+
+                        $('form[name=forma]').submit(function(e) {
+                                if (!validateInput()) {
+                                        return false;
+                                }
+                        });
+
+                        function validateInput(){
+                                var isValid = true;
+                                var sum = 0;
+                                $("input[type=text]").each(function() {
+                                        if(this.value > 1) {
+                                                isValid = false;
+                                                $(this).css("background-color", "#ff4d4d");
+                                        }
+                                        else {
+                                                $(this).css("background-color", "#ffffff");
+                                        }
+                                        sum += parseFloat($(this).val());
+                                });
+
+                                if (sum == 1 && isValid) return true;
+                                else {
+                                        $("#error_message").css('display', 'block');
+                                        if(sum != 1) $("#error_message").html("Vsota deležev mora biti 1!");
+                                        else $("#error_message").text("Vnešene vrednosti ne ustrezajo formatu!");
+                                        return false;
+                                }
+                        }
                 });
         </script>
 @endsection
