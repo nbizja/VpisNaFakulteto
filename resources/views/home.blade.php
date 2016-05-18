@@ -13,6 +13,7 @@
                     <br>
                     <h3>Rok za oddajo prijave: {{ date('d.m.Y', strtotime($prijavniRok->konec)) }}</h3>
 
+                    @if(Auth::user()->jeKandidat())
                         @if(date('Y-m-d') <= $prijavniRok->konec)
                             @if(!is_null(Auth::user()->datum_oddaje_prijave))
                                 <p>Prijavo ste oddali dne: {{ Auth::user()->datum_oddaje_prijave }}</p>
@@ -32,6 +33,7 @@
                                 </a>
                             @endif
                         @endif
+                    @endif
 
                 </div>
             </div>
