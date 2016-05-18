@@ -55,18 +55,6 @@
                                 </select>
                             </div>
                         </div>
-
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Izredni talent</label>
-                            <div class="col-md-6">
-                                <select name="talent" id="talent" class="form-control input-sm">
-                                    <option value="-1" @if ($talent == -1) selected="selected" @endif>VSI</option>
-                                    <option value="0" @if ($talent == 0) selected="selected" @endif>DA</option>
-                                    <option value="1" @if ($talent == 1) selected="selected" @endif>NE</option>
-                                </select>
-                            </div>
-                        </div>
-
                         <br/>
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
@@ -95,7 +83,6 @@
         <th>Način zaključka srednje šole</th>
         <th>Visokošolski zavod</th>
         <th>Študijski program</th>
-        <th>Izredni talent</th>
         <th>Način študija</th>
     </tr>
     @foreach($kandidati as $kandidat)
@@ -104,7 +91,6 @@
         <td> {{$kandidat->srednja}}  </td>
         <td> {{$kandidat->zavod}} </td>
         <td> {{$kandidat->program}} </td>
-        <td> {{$kandidat->talent}} </td>
         <td> {{$kandidat->nacin}} </td>
     </tr>
     @endforeach

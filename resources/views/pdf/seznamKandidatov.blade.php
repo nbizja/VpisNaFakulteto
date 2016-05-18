@@ -29,17 +29,15 @@
                 <th  style="font-size: 12px; float: left; text-align: left; border: 0.01em solid #dddddd;">Zaključek</th>
                 <th  style="font-size: 12px; float: left; text-align: left; border: 0.01em solid #dddddd;">Zavod</th>
                 <th  style="font-size: 12px; float: left; text-align: left; border: 0.01em solid #dddddd;">Program</th>
-                <th  style="font-size: 12px; float: left; text-align: left; border: 0.01em solid #dddddd;">Talent</th>
                 <th  style="font-size: 12px; float: left; text-align: left; border: 0.01em solid #dddddd;">Način</th>
             </tr>
             @foreach($kandidati as $kandidat)
                 <tr>
-                    <td  style="font-size: 12px; float: left; text-align: left; border: 0.01em solid #dddddd;"> {{$kandidat->id}} </td>
+                    <td  style="font-size: 12px; float: left; text-align: left; border: 0.01em solid #dddddd;"> {{$kandidat->st}} </td>
                     <td  style="font-size: 12px; float: left; text-align: left; border: 0.01em solid #dddddd;"> {{$kandidat->priimek}} {{$kandidat->ime}}</td>
                     <td  style="font-size: 12px; float: left; text-align: left; border: 0.01em solid #dddddd;"> {{$kandidat->srednja}}  </td>
                     <td  style="font-size: 12px; float: left; text-align: left; border: 0.01em solid #dddddd;"> {{$kandidat->zavod}} </td>
                     <td  style="font-size: 12px; float: left; text-align: left; border: 0.01em solid #dddddd;"> {{$kandidat->program}} </td>
-                    <td  style="font-size: 12px; float: left; text-align: left; border: 0.01em solid #dddddd;"> {{$kandidat->talent}} </td>
                     <td  style="font-size: 12px; float: left; text-align: left; border: 0.01em solid #dddddd;"> {{$kandidat->nacin}} </td>
                 </tr>
             @endforeach
