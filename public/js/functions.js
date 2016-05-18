@@ -400,6 +400,24 @@ $(document).ready(function() {
         }
     });
 
+    $('.isti_naslov_za_posiljanje').change(function() {
+        if ($(this).val() == 1) {
+            $('.obrazec').hide();
+        } else {
+            $('.obrazec').show();
+        }
+    });
+
+    $('#drzava_srednje_sole').change(function() {
+        if ($(this).val() != 705) {
+            $('#srednja_sola_slo').hide();
+            $('#srednja_sola_tujina').show();
+        } else {
+            $('#srednja_sola_slo').hide();
+            $('#srednja_sola_tujina').show();
+        }
+    });
+
 });
 
 function searchTable(inputVal)

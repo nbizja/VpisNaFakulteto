@@ -91,6 +91,7 @@ Route::group(['middleware' => ['prijavljen']], function () {
     Route::get('vpis/pregled', 'VpisController@pregled');
     Route::post('vpis/potrditev_prijave', 'VpisController@oddajaPrijave');
     Route::post('vpis/oddaja_prijave', 'VpisController@izbrisPrijave');
+    Route::get('vpis/tisk_prijave', 'VpisController@tiskPrijave');
 });
 
 //TODO Strašno grdo. Prestavi to v kontroler.

@@ -67,17 +67,28 @@
                             <div class="panel-body">
                                 <div class="form-group form-inline">
                                     <div class="col-md-6 col-md-offset-5">
-                                        <input class="radio" type="radio" name="isti_naslov_za_posiljanje" checked value="1" >  Isti kot stalno prebivališče
-                                        <input class="radio" type="radio" name="isti_naslov_za_posiljanje" value="0" style="margin-left: 20px;">  Drugi
+                                        <input class="radio isti_naslov_za_posiljanje" type="radio" name="isti_naslov_za_posiljanje"
+                                               @if(!(isset($stalnoPrebivalisce) && isset($naslovZaPosiljanje) && $stalnoPrebivalisce->naslov == $naslovZaPosiljanje->naslov)) {{ 'checked' }} @endif
+                                               value="1" >  Isti kot stalno prebivališče
+                                        <input class="radio isti_naslov_za_posiljanje" type="radio" name="isti_naslov_za_posiljanje"
+                                               @if(isset($stalnoPrebivalisce) && isset($naslovZaPosiljanje) && $stalnoPrebivalisce->naslov != $naslovZaPosiljanje->naslov) {{ 'checked'}} @endif
+                                               value="0" style="margin-left: 20px;">  Drugi
                                     </div>
                                 </div>
-                                <div class="obrazec">
+                                <div class="obrazec" @if(!(isset($stalnoPrebivalisce) && isset($naslovZaPosiljanje) && $stalnoPrebivalisce->naslov != $naslovZaPosiljanje->naslov)) {!! 'style="display:none;"' !!} @endif>
                                     <div class="form-group">
                                         <label class="col-md-4 control-label">Država: </label>
                                         <div class="col-md-6">
                                             <select class="form-control" name="posiljanje_drzava">
                                                 @foreach($drzave as $drzava)
-                                                    <option value="{{ $drzava->id }}">{{ $drzava->ime }}</option>
+                                                    <option value="{{ $drzava->id }}"
+                                                    @if((!isset($naslovZaPosiljanje->id_drzave) && $drzava->ime == 'SLOVENIJA') ||
+                                                         (isset($naslovZaPosiljanje->id_drzave) && $naslovZaPosiljanje->id_drzave == $drzava->id ))
+                                                        {{ 'selected' }}
+                                                            @endif
+                                                    >
+                                                        {{ $drzava->ime }}
+                                                    </option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -85,7 +96,7 @@
                                     <div class="form-group">
                                         <label class="col-md-4 control-label">Naslov: </label>
                                         <div class="col-md-6">
-                                            <input type="text" class="form-control" name="posiljanje_naslov" value="{{ $naslov or old('naslov') }}" />
+                                            <input type="text" class="form-control" name="posiljanje_naslov" value="{{ $naslovZaPosiljanje->naslov ?? old('naslov') }}" />
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -93,7 +104,11 @@
                                         <div class="col-md-6">
                                             <select class="form-control" name="posiljanje_obcina">
                                                 @foreach($obcine as $obcina)
-                                                    <option value="{{ $obcina->id }}">{{ $obcina->ime }}</option>
+                                                    <option value="{{ $obcina->id }}"
+                                                    @if(isset($naslovZaPosiljanje->id_obcine) && $naslovZaPosiljanje->id_obcine == $obcina->id) {{ 'selected' }}@endif
+                                                    >
+                                                        {{ $obcina->ime }}
+                                                    </option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -103,7 +118,11 @@
                                         <div class="col-md-6">
                                             <select class="form-control" name="posiljanje_posta">
                                                 @foreach($poste as $posta)
-                                                    <option value="{{ $posta->postna_stevilka }}">{{ $posta->postna_stevilka . ' '. $posta->ime }}</option>
+                                                    <option value="{{ $posta->postna_stevilka }}"
+                                                    @if(isset($naslovZaPosiljanje->postna_stevilka) && $naslovZaPosiljanje->postna_stevilka == $posta->postna_stevilka) {{ 'selected' }}@endif
+                                                    >
+                                                        {{ $posta->postna_stevilka . ' '. $posta->ime }}
+                                                    </option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -115,6 +134,16 @@
                                     <input type="submit" class="form-control btn-primary" value="Naslednji korak">
                                 </div>
                             </div>
+                            @if (isset($errors)))
+                                <div class="alert alert-danger">
+                                    @foreach ($errors as $error => $message)
+                                        {{ $message }}<br>
+                                    @endforeach
+                                </div>
+                            @endif
+
+                            @include('flash_message')
+                        </form>
                 </div>
             </div>
         </div>

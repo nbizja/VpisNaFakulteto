@@ -34,7 +34,7 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Država srednje šole: </label>
                                 <div class="col-md-9">
-                                    <select name="drzava_srednje_sole" class="form-control">
+                                    <select name="drzava_srednje_sole" id="drzava_srednje_sole" class="form-control">
                                         @foreach($drzave as $drzava)
                                             <option value="{{ $drzava->id }}" @if(($srednjesolskaIzobrazba->id_drzave ?? 705) == $drzava->id){{ 'selected' }}@endif>
                                                 {{ $drzava->ime }}
@@ -44,13 +44,13 @@
                                 </div>
                             </div>
 
-                            <div class="form-group" id="srednja_sola_slo" style="display: none;">
+                            <div class="form-group" id="srednja_sola_tujina" @if(($srednjesolskaIzobrazba->id_drzave ?? 0) == 705) {!! 'style="display: none;"' !!} @endif>
                                 <label class="col-md-3 control-label">Ime srednje šole: </label>
                                 <div class="col-md-9">
-                                    <input type="text" name="srednja_sola_tujina" />
+                                    <input type="text" class="form-control" name="srednja_sola_tujina" placeholder="Ime srednje šole v tujini" value="{{ $srednjesolskaIzobrazba->ime_srednje_sole ?? '' }}" />
                                 </div>
                             </div>
-                            <div class="form-group" id="srednja_sola_slo">
+                            <div class="form-group" id="srednja_sola_slo" @if(($srednjesolskaIzobrazba->id_drzave ?? 705) != 705) {!! 'style="display: none;"' !!} @endif>
                                 <label class="col-md-3 control-label">Srednja šola: </label>
                                 <div class="col-md-9">
                                     <select name="srednja_sola" class="form-control">
@@ -75,7 +75,7 @@
                                 <label class="col-md-3 control-label">Maturitetni predmet: </label>
                                 <div class="col-md-9">
                                     <select class="form-control" name="maturitetni_predmet">
-                                        <option value="0">Brez maturitetnega predmeta</option>
+                                        <option value="0" @if(!isset($srednjesolskaIzobrazba)){{ 'selected' }}@endif>Brez maturitetnega predmeta</option>
 
                                         @foreach($splosniPredmeti as $splosniPredmet)
                                             <option value="{{ $splosniPredmet->id }}" <?php if($srednjesolskaIzobrazba->id_maturitetnega_predmeta ?? 0 == $splosniPredmet->id) echo 'selected';?>>
@@ -96,6 +96,16 @@
                                     </button>
                                 </div>
                             </div>
+
+                            @if (!empty(session('errors')))
+                                <div class="alert alert-danger">
+                                    @foreach (array_unique(session('errors')) as $error)
+                                        {{ $error }}<br>
+                                    @endforeach
+                                </div>
+                            @endif
+
+                            @include('flash_message')
                         </form>
                     </div>
                 </div>

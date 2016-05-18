@@ -111,7 +111,9 @@ class VpisController extends Controller
         if ($uporabnik->prijave()->get()->isEmpty()) {
             return redirect('/');
         }
-        return view('vpis.pregled')->with($this->vpisRepository->pregledPrijave($uporabnik));
+        return view('vpis.pregled')
+            ->with($this->vpisRepository->pregledPrijave($uporabnik))
+            ->with('pdf', false);
     }
 
     public function shraniOsebnePodatke(Request $request)
@@ -215,28 +217,32 @@ class VpisController extends Controller
             return redirect('vpis/pregled');
         }
 
-        $srednjeSolskaIzobrazba = new PrijavaSrednjesolskaIzobrazba([
+        $input = [
             'id_kandidata' => $uporabnik->id,
             'id_nacina_zakljucka' => $request->request->get('nacin_zakljucka'),
             'id_drzave' => $request->request->get('drzava_srednje_sole'),
             'id_srednje_sole' => $request->request->get('srednja_sola'),
             'sifra_maturitetnega_predmeta' => $request->request->get('maturitetni_predmet'),
             'ime_srednje_sole' => $request->request->get('srednja_sola_tujina'),
-            'datum_izdaje_spricevala' => date('Y-m-d', strtotime($request->request->get('datum_izdaje_spricevala')))
-        ]);
-        
-        $validator = $this->prijavaValidator->srednjesolskaIzobrazba($srednjeSolskaIzobrazba->toArray());
+            'datum_izdaje_spricevala' => $request->request->get('datum_izdaje_spricevala')
+        ];
+        $validator = $this->prijavaValidator->srednjesolskaIzobrazba($input);
         if (!$validator->passes()) {
-            return back()->with('errors', $validator->errors());
+            return back()->with('errors', $validator->errors()->all());
         }
-        if ($srednjeSolskaIzobrazba->id_srednje_sole == 0 && empty($srednjeSolskaIzobrazba->ime_srednje_sole)) {
+        $input['datum_izdaje_spricevala'] = date('Y-m-d', strtotime($input['datum_izdaje_spricevala']));
+        $srednjesolskaIzobrazba = new PrijavaSrednjesolskaIzobrazba($input);
+        if ($srednjesolskaIzobrazba->id_srednje_sole == 0 && empty($srednjesolskaIzobrazba->ime_srednje_sole)) {
             return back()->with([
                 'status' => 'danger',
                 'message' => 'Manjkajoče ime srednje šole.'
             ]);
         }
-        $uporabnik->srednjesolskaIzobrazba()->first()->delete();
-        $srednjeSolskaIzobrazba->save();
+        $trenutniPodatki = $uporabnik->srednjesolskaIzobrazba()->first();
+        if (!empty($trenutniPodatki)) {
+            $trenutniPodatki->delete();
+        }
+        $srednjesolskaIzobrazba->save();
         
         return redirect('vpis/prijava_za_studij');
     }
@@ -356,6 +362,24 @@ class VpisController extends Controller
         $uporabnik->osebniPodatki->first()->delete();
 
         return redirect('/');
+    }
+
+    public function tiskPrijave()
+    {
+        $uporabnik = Auth::user();
+        if (!$this->jePrijavaOddana($uporabnik)) {
+            return redirect('vpis');
+        }
+
+        $pdf = \App::make('dompdf.wrapper');
+        ini_set('max_execution_time', 300);
+
+        $pdf->loadHTML(view('vpis.pregled')
+            ->with($this->vpisRepository->pregledPrijave($uporabnik))
+            ->with('pdf', true)
+        );
+
+        return $pdf->download('prijava.pdf');
     }
 
     private function jePrijavaOddana(Uporabnik $uporabnik)

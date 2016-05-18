@@ -70,7 +70,7 @@
                         </div>
                     </div>
 
-                    <div id="zelja_3" class="panel panel-default" @if($izbraniProgrami[2] == 0){!! 'style="display:none;"'  !!}@endif>
+                    <div id="zelja_3" class="panel panel-default" @if($izbraniProgrami[1] == 0){!! 'style="display:none;"'  !!}@endif>
                         <div class="panel-heading">3. želja</div>
                         <div class="panel-body">
                             <div class="form-group">
