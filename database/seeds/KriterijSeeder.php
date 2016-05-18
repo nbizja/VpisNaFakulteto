@@ -54,7 +54,7 @@ class KriterijSeeder extends Seeder
         DB::table('kriterij')->insert([
             'id_pogoja' => '2',
             'vnos_veljaven' => '1',
-            'id_elementa' => 'L411',
+            'id_elementa' => 'M411',
             'ocene_34_letnika' => '0',
             'maturitetni_uspeh' => '0',
             'utez' => '0.2'
@@ -79,7 +79,7 @@ class KriterijSeeder extends Seeder
         DB::table('kriterij')->insert([
             'id_pogoja' => '3',
             'vnos_veljaven' => '1',
-            'id_elementa' => 'L401',
+            'id_elementa' => 'M401',
             'ocene_34_letnika' => '0',
             'maturitetni_uspeh' => '0',
             'utez' => '0.2'
@@ -104,7 +104,7 @@ class KriterijSeeder extends Seeder
         DB::table('kriterij')->insert([
             'id_pogoja' => '4',
             'vnos_veljaven' => '1',
-            'id_elementa' => 'L781',
+            'id_elementa' => 'M781',
             'ocene_34_letnika' => '0',
             'maturitetni_uspeh' => '0',
             'utez' => '0.2'
@@ -147,7 +147,7 @@ class KriterijSeeder extends Seeder
         DB::table('kriterij')->insert([
             'id_pogoja' => '6',
             'vnos_veljaven' => '1',
-            'id_elementa' => 'L411',
+            'id_elementa' => 'M411',
             'ocene_34_letnika' => '0',
             'maturitetni_uspeh' => '0',
             'utez' => '0.2'
@@ -172,7 +172,7 @@ class KriterijSeeder extends Seeder
         DB::table('kriterij')->insert([
             'id_pogoja' => '7',
             'vnos_veljaven' => '1',
-            'id_elementa' => 'L401',
+            'id_elementa' => 'M401',
             'ocene_34_letnika' => '0',
             'maturitetni_uspeh' => '0',
             'utez' => '0.2'
@@ -197,7 +197,7 @@ class KriterijSeeder extends Seeder
         DB::table('kriterij')->insert([
             'id_pogoja' => '8',
             'vnos_veljaven' => '1',
-            'id_elementa' => 'L781',
+            'id_elementa' => 'M781',
             'ocene_34_letnika' => '0',
             'maturitetni_uspeh' => '0',
             'utez' => '0.2'

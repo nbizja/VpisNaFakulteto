@@ -47,7 +47,7 @@ class VpisniPogojSeeder extends Seeder
             'vnos_veljaven' => '1',
             'splosna_matura' => '0',
             'poklicna_matura' => '1',
-            'id_elementa' => 'L781' //poklicna matura + racunalnistvo na poklicni maturi
+            'id_elementa' => 'M781' //poklicna matura + racunalnistvo na poklicni maturi
         ]);
 
 
@@ -80,7 +80,7 @@ class VpisniPogojSeeder extends Seeder
             'vnos_veljaven' => '1',
             'splosna_matura' => '0',
             'poklicna_matura' => '1',
-            'id_elementa' => 'L781' //poklicna matura + racunalnistvo na poklicni maturi
+            'id_elementa' => 'M781' //poklicna matura + racunalnistvo na poklicni maturi
         ]);
 
         //RI-vs, redni
