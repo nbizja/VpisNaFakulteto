@@ -100,7 +100,7 @@
     </tr>
     @foreach($kandidati as $kandidat)
     <tr>
-        <td> {{$kandidat->priimek}} {{$kandidat->ime}}</td>
+        <td> <a href="{{ url('vpis/'.$kandidat->id.'/pregled') }}">{{$kandidat->priimek}} {{$kandidat->ime}}</a></td>
         <td> {{$kandidat->srednja}}  </td>
         <td> {{$kandidat->zavod}} </td>
         <td> {{$kandidat->program}} </td>

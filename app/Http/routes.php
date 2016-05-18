@@ -16,8 +16,10 @@ Route::get('/helper', function () {
 });
 
 
-Route::group(['middleware' => ['prijavljen']], function () {
+Route::group(['middleware' => ['web']], function () {
     Route::post('prijava', 'Auth\AuthController@login');
+    Route::get('prijava', 'Auth\AuthController@showLoginForm');
+
 });
 
 Route::group(['middleware' => ['web']], function () {
@@ -52,7 +54,6 @@ Route::group(['middleware' => ['prijavljen']], function () {
     Route::get('/vpisniPogoji/shraniDeleze', 'StudijskiProgrami\VpisniPogojiController@shraniDeleze');
 
 
-    Route::get('prijava', 'Auth\AuthController@showLoginForm');
     Route::get('odjava', 'Auth\AuthController@logout');
 
     Route::get('/', 'HomeController@index');
@@ -82,8 +83,24 @@ Route::group(['middleware' => ['prijavljen']], function () {
     Route::any('/sifranti/{ime_sifranta}/razveljavi/{id_vnosa}', 'SifrantiController@razveljavi');
     Route::any('/sifranti/{ime_sifranta}/povrni/{id_vnosa}', 'SifrantiController@povrni');
 
+    Route::get('vpis/{id}/osebni_podatki',           'VpisController@osebniPodatki');
+    Route::post('vpis/{id}/osebni_podatki',          'VpisController@shraniOsebnePodatke');
+    Route::get('vpis/{id}/stalno_prebivalisce',      'VpisController@stalnoPrebivalisce');
+    Route::post('vpis/{id}/stalno_prebivalisce',     'VpisController@shraniStalnoPrebivalisce');
+    Route::get('vpis/{id}/srednjesolska_izobrazba',  'VpisController@srednjeSolskaIzobrazbaPrikaz');
+    Route::post('vpis/{id}/srednjesolska_izobrazba', 'VpisController@shraniSrednjeSolskoIzobrazbo');
+    Route::get('vpis/{id}/prijava_za_studij',        'VpisController@prijavaZaStudijPrikaz');
+    Route::post('vpis/{id}/prijava_za_studij',       'VpisController@shraniPrijavoZaStudij');
+    Route::get('vpis/{id}/pregled',                  'VpisController@pregled');
+    Route::post('vpis/{id}/izbris_prijave',          'VpisController@izbrisPrijave');
+    Route::post('vpis/{id}/oddaja_prijave',          'VpisController@oddajaPrijave');
+    Route::get('vpis/{id}/tisk_prijave',             'VpisController@tiskPrijave');
 });
 
+
+
+
+//TODO Strašno grdo. Prestavi to v kontroler.
 Route::get('/seznamKandidatov/{zavod_id?}', function($zavod_id){
     $zavodi =  \App\Models\VisokosolskiZavod::orderBy('ime')->pluck('id');
     if($zavod_id > 0) {
