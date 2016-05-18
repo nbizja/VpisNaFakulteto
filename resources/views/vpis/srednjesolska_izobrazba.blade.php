@@ -44,13 +44,13 @@
                                 </div>
                             </div>
 
-                            <div class="form-group" id="srednja_sola_tujina" @if(($srednjesolskaIzobrazba->id_drzave ?? 0) == 705) {!! 'style="display: none;"' !!} @endif>
+                            <div class="form-group" id="srednja_sola_tujina" @if((isset($srednjesolskaIzobrazba) && $srednjesolskaIzobrazba->id_drzave == 705) || !isset($srednjesolskaIzobrazba)) {!! 'style="display: none;"' !!} @endif>
                                 <label class="col-md-3 control-label">Ime srednje šole: </label>
                                 <div class="col-md-9">
                                     <input type="text" class="form-control" name="srednja_sola_tujina" placeholder="Ime srednje šole v tujini" value="{{ $srednjesolskaIzobrazba->ime_srednje_sole ?? '' }}" />
                                 </div>
                             </div>
-                            <div class="form-group" id="srednja_sola_slo" @if(($srednjesolskaIzobrazba->id_drzave ?? 705) != 705) {!! 'style="display: none;"' !!} @endif>
+                            <div class="form-group" id="srednja_sola_slo" @if((isset($srednjesolskaIzobrazba->id_drzave) && $srednjesolskaIzobrazba->id_drzave != 705)) {!! 'style="display: none;"' !!} @endif>
                                 <label class="col-md-3 control-label">Srednja šola: </label>
                                 <div class="col-md-9">
                                     <select name="srednja_sola" class="form-control">
@@ -96,14 +96,6 @@
                                     </button>
                                 </div>
                             </div>
-
-                            @if (!empty(session('errors')))
-                                <div class="alert alert-danger">
-                                    @foreach (array_unique(session('errors')) as $error)
-                                        {{ $error }}<br>
-                                    @endforeach
-                                </div>
-                            @endif
 
                             @include('flash_message')
                         </form>

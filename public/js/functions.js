@@ -413,10 +413,23 @@ $(document).ready(function() {
             $('#srednja_sola_slo').hide();
             $('#srednja_sola_tujina').show();
         } else {
-            $('#srednja_sola_slo').hide();
-            $('#srednja_sola_tujina').show();
+            $('#srednja_sola_slo').show();
+            $('#srednja_sola_tujina').hide();
         }
     });
+    
+    $('#drzavljanstvo').change(function() {
+        var emso = $('#emso');
+        if ($(this).val() == 2) {
+            emso.val(emso.data('emso'));
+            emso.attr('disabled', false);
+        } else {
+            emso.val('Emšo bo samodejno ustvarjen');
+            emso.attr('disabled', true);
+        }
+    });
+    
+    
 
 });
 

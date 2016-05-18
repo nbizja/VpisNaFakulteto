@@ -14,7 +14,7 @@
                                 <div class="form-group">
                                     <label class="col-md-4 control-label">Država: </label>
                                     <div class="col-md-6">
-                                        <select class="form-control" name="drzava">
+                                        <select class="form-control" name="drzava" id="stalno_prebivalisce_drzava">
                                             @foreach($drzave as $drzava)
                                                 <option value="{{ $drzava->id }}"
                                                 @if((!isset($stalnoPrebivalisce->id_drzave) && $drzava->ime == 'SLOVENIJA') ||
@@ -37,7 +37,7 @@
                                 <div class="form-group">
                                     <label class="col-md-4 control-label">Občina: </label>
                                     <div class="col-md-6">
-                                        <select class="form-control" name="obcina">
+                                        <select class="form-control" name="obcina" id="stalno_prebivalisce_obcina">
                                             @foreach($obcine as $obcina)
                                                 <option value="{{ $obcina->id }}"
                                                     @if(isset($stalnoPrebivalisce->id_obcine) && $stalnoPrebivalisce->id_obcine == $obcina->id) {{ 'selected' }}@endif
@@ -51,7 +51,7 @@
                                 <div class="form-group">
                                     <label class="col-md-4 control-label">Pošta: </label>
                                     <div class="col-md-6">
-                                        <select class="form-control" name="posta">
+                                        <select class="form-control" name="posta" id="stalno_prebivalisce_posta">
                                             @foreach($poste as $posta)
                                                 <option value="{{ $posta->postna_stevilka }}"
                                                     @if(isset($stalnoPrebivalisce->postna_stevilka) && $stalnoPrebivalisce->postna_stevilka == $posta->postna_stevilka) {{ 'selected' }}@endif
@@ -68,7 +68,7 @@
                                 <div class="form-group form-inline">
                                     <div class="col-md-6 col-md-offset-5">
                                         <input class="radio isti_naslov_za_posiljanje" type="radio" name="isti_naslov_za_posiljanje"
-                                               @if(!(isset($stalnoPrebivalisce) && isset($naslovZaPosiljanje) && $stalnoPrebivalisce->naslov == $naslovZaPosiljanje->naslov)) {{ 'checked' }} @endif
+                                               @if(!(isset($stalnoPrebivalisce) && isset($naslovZaPosiljanje) && $stalnoPrebivalisce->naslov != $naslovZaPosiljanje->naslov)) {{ 'checked' }} @endif
                                                value="1" >  Isti kot stalno prebivališče
                                         <input class="radio isti_naslov_za_posiljanje" type="radio" name="isti_naslov_za_posiljanje"
                                                @if(isset($stalnoPrebivalisce) && isset($naslovZaPosiljanje) && $stalnoPrebivalisce->naslov != $naslovZaPosiljanje->naslov) {{ 'checked'}} @endif
@@ -130,17 +130,15 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div class="col-md-3">
-                                    <input type="submit" class="form-control btn-primary" value="Naslednji korak">
+                                <div class="col-md-6 col-md-offset-5">
+                                    <a href="{{ url('vpis/srednjesolska_izobrazba') }}" class="btn btn-danger pull-left">
+                                        <i class="fa fa-btn fa-sign-in"></i>Nazaj
+                                    </a>
+                                    <button type="submit" name="shraniPogoj" class="btn btn-primary pull-right">
+                                        <i class="fa fa-btn fa-sign-in"></i>Naslednji korak
+                                    </button>
                                 </div>
                             </div>
-                            @if (isset($errors)))
-                                <div class="alert alert-danger">
-                                    @foreach ($errors as $error => $message)
-                                        {{ $message }}<br>
-                                    @endforeach
-                                </div>
-                            @endif
 
                             @include('flash_message')
                         </form>

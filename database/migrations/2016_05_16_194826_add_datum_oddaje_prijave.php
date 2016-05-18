@@ -13,7 +13,7 @@ class AddDatumOddajePrijave extends Migration
     public function up()
     {
         Schema::table('uporabnik', function(Blueprint $table) {
-            $table->date('datum_oddaje_prijave')->nullable();
+            $table->date('datum_oddaje_prijave')->nullable()->default(null);
         });
     }
 

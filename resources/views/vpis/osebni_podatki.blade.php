@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-10">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Prijava za vpis</div>
+                    <div class="panel-heading">Osebni podatki</div>
                     <div class="panel-body">
                         <form class="form-horizontal pull-left" role="form" method="post" action="{{ url('vpis/osebni_podatki') }}">
                             {!! csrf_field() !!}
@@ -13,7 +13,9 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Emšo: </label>
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" name="emso" placeholder="0101998500123" value="{{ $osebniPodatki->emso ?? old('emso') }}" required>
+                                    <input type="text" class="form-control" id="emso" name="emso" data-emso="{{ $osebniPodatki->emso ?? '' }}" placeholder="0101998500123" value="{{ $osebniPodatki->emso ?? old('emso') }}" required
+                                    @if($osebniPodatki->id_drzavljanstva ?? 4 != 4){{ 'disabled' }}@endif
+                                    >
                                 </div>
                             </div>
                             <div class="form-group">
@@ -57,7 +59,7 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Državljanstvo: </label>
                                 <div class="col-md-9">
-                                    <select name="drzavljanstvo" class="form-control col-md-9">
+                                    <select id="drzavljanstvo" name="drzavljanstvo" class="form-control col-md-9">
                                         @foreach($drzavljanstva as $drzavljanstvo)
                                             <option value="{{ $drzavljanstvo->id }}"
                                                 @if(!empty($osebniPodatki) && $osebniPodatki->id_drzavljanstva == $drzavljanstvo->id

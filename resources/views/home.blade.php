@@ -14,7 +14,7 @@
                     <h3>Rok za oddajo prijave: {{ date('d.m.Y', strtotime($prijavniRok->konec)) }}</h3>
 
                     @if(date('Y-m-d') <= $prijavniRok->konec)
-                        @if(!empty(Auth::user()->datum_oddaje_prijave))
+                        @if(!is_null(Auth::user()->datum_oddaje_prijave))
                             <p>Prijavo ste oddali dne: {{ Auth::user()->datum_oddaje_prijave }}</p>
                             <a class="btn btn-primary" href="{{ url('vpis/pregled') }}">
                                 Ogled oddane prijave

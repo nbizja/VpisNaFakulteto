@@ -19,17 +19,17 @@ class VpisRepository
 {
     public function drzave()
     {
-        return Drzava::all();
+        return Drzava::all()->sortBy('ime');
     }
 
     public function drzavljanstva()
     {
-        return Drzavljanstvo::all();
+        return Drzavljanstvo::all()->sortBy('ime');
     }
 
     public function obcine()
     {
-        return Obcina::all();
+        return Obcina::all()->sortBy('ime');
     }
 
     public function poste()
@@ -39,16 +39,16 @@ class VpisRepository
 
     public function predmetiSplosneMature()
     {
-        return Element::where('id', 'like', 'M%')->get();
+        return Element::where('id', 'like', 'M%')->get()->sortBy('ime');
     }
 
     public function srednjesolskaIzobrazba(Uporabnik $uporabnik)
     {
         return [
-            'naciniZakljucka' => KoncanaSrednjaSola::all(),
+            'naciniZakljucka' => KoncanaSrednjaSola::all()->sortBy('ime'),
             'srednjeSole' => SrednjaSola::all()->sortBy('ime'),
             'splosniPredmeti' => $this->predmetiSplosneMature(),
-            'drzave' => Drzava::all(),
+            'drzave' => Drzava::all()->sortBy('ime'),
             'srednjesolskaIzobrazba' => $uporabnik->srednjesolskaIzobrazba()->with('nacinZakljucka')->first()
         ];
     }

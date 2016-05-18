@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+
 @section('content')
     <div class="container">
         <div class="row">
@@ -17,6 +18,15 @@
                         </p>
                         <p class="col-md-12">
                             <span class="pregled">Priimek:</span> {{ $osebniPodatki->priimek }}
+                        </p>
+                        <p>
+                            <span class="pregled">Država rojstva: </span>{{ $osebniPodatki->drzavaRojstva->ime }}
+                        </p>
+                        <p>
+                            <span class="pregled">Kraj rojstva: </span>{{ $osebniPodatki->kraj_rojstva }}
+                        </p>
+                        <p>
+                            <span  class="pregled">Državljanstvo: </span>{{ $osebniPodatki->drzavljanstvo->ime }}
                         </p>
                     </div>
                 </div>
@@ -100,9 +110,8 @@
                     </div>
                 </div>
 
-                @if (!$pdf)
                     @if(empty($datum_oddaje_prijave))
-                        <form method="post" action="{{ url('vpis/oddaja_prijave') }}">
+                        <form method="post" class="form-horizontal" action="{{ url('vpis/oddaja_prijave') }}">
                             {{ csrf_field() }}
 
                             <div class="form-group">
@@ -117,7 +126,7 @@
                             </div>
                         </form>
                     @else
-                        <form method="post" action="{{ url('vpis/izbris_prijave') }}">
+                        <form method="post" class="form-horizontal" action="{{ url('vpis/izbris_prijave') }}">
                             {{ csrf_field() }}
 
                             <div class="form-group">
@@ -137,7 +146,6 @@
                             </div>
                         </form>
                     @endif
-                @endif
             </div>
         </div>
     </div>

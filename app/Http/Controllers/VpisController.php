@@ -111,21 +111,22 @@ class VpisController extends Controller
         if ($uporabnik->prijave()->get()->isEmpty()) {
             return redirect('/');
         }
+
         return view('vpis.pregled')
-            ->with($this->vpisRepository->pregledPrijave($uporabnik))
-            ->with('pdf', false);
+            ->with($this->vpisRepository->pregledPrijave($uporabnik));
     }
 
     public function shraniOsebnePodatke(Request $request)
     {
-        if ($this->jePrijavaOddana(Auth::user())) {
+        $uporabnik = Auth::user();
+        if ($this->jePrijavaOddana($uporabnik)) {
             return redirect('vpis/pregled');
         }
 
         $errors = [];
 
         $opInput = [
-            'id_kandidata'      => Auth::user()->id,
+            'id_kandidata'      => $uporabnik->id,
             'emso'              => $request->request->get('emso'),
             'ime'               => $request->request->get('ime'),
             'priimek'           => $request->request->get('priimek'),
@@ -140,15 +141,21 @@ class VpisController extends Controller
         if (!$validator->passes()) {
             $errors = $validator->errors()->toArray();
         }
+        $opInput['datum_rojstva'] = date('Y-m-d', strtotime($opInput['datum_rojstva']));
 
-        if (!$this->prijavaValidator->veljavenEmso($opInput['emso'], $opInput['datum_rojstva'])) {
+        if ($opInput['id_drzavljanstva'] != 2) {
+            $datumRojstva = strtotime($opInput['datum_rojstva']);
+            $opInput['emso'] = date('d', $datumRojstva) . date('m', $datumRojstva) . substr(date('Y', $datumRojstva), 1) . '0' . str_pad($uporabnik->id, 5, '0', STR_PAD_LEFT);
+        } elseif (!$this->prijavaValidator->veljavenEmso($opInput['emso'], $opInput['datum_rojstva'])) {
             $errors['emso'] = ['Neveljaven emso.'];
         }
 
         if (!empty($errors)) {
             return back()->with('errors', $errors);
         }
-
+        $uporabnik->osebniPodatki()->get()->each(function($op) {
+           $op->delete();
+        });
         PrijavaOsebniPodatki::create($opInput);
 
         return redirect('vpis/stalno_prebivalisce');
@@ -156,13 +163,14 @@ class VpisController extends Controller
 
     public function shraniStalnoPrebivalisce(Request $request)
     {
-        if ($this->jePrijavaOddana(Auth::user())) {
+        $uporabnik = Auth::user();
+        if ($this->jePrijavaOddana($uporabnik)) {
             return redirect('vpis/pregled');
         }
 
         $errors = [];
         $spInput = [
-            'id_kandidata'    => Auth::user()->id,
+            'id_kandidata'    => $uporabnik->id,
             'id_drzave'       => $request->request->get('drzava'),
             'naslov'          => $request->request->get('naslov'),
             'id_obcine'       => $request->request->get('obcina'),
@@ -187,7 +195,7 @@ class VpisController extends Controller
         $posiljanjeInput = $spInput;
         if (!$request->request->get('isti_naslov_za_posiljanje')) {
             $posiljanjeInput = [
-                'id_kandidata'    => Auth::user()->id,
+                'id_kandidata'    => $uporabnik->id,
                 'id_drzave'       => $request->request->get('posiljanje_drzava'),
                 'naslov'          => $request->request->get('posiljanje_naslov'),
                 'id_obcine'       => $request->request->get('posiljanje_obcina'),
@@ -203,7 +211,14 @@ class VpisController extends Controller
             return back()->with('errors', $errors);
         }
 
+        $uporabnik->prebivalisce()->get()->each(function($naslov) {
+            $naslov->delete();
+        });
+        $uporabnik->naslovZaPosiljanje()->get()->each(function($naslov) {
+            $naslov->delete();
+        });
         $prebivalisce = PrijavaPrebivalisce::create($spInput);
+
         $naslovZaPosiljanje = PrijavaNaslovZaPosiljanje::create($posiljanjeInput);
 
         
@@ -356,9 +371,9 @@ class VpisController extends Controller
            $prijava->delete();
         });
 
-        $uporabnik->srednjesolskaIzobrazba->first()->delete();
-        $uporabnik->naslovZaPosiljanje->first()->delete();
-        $uporabnik->prebivalisce->first()->delete();
+        $uporabnik->srednjesolskaIzobrazba()->first()->delete();
+        $uporabnik->naslovZaPosiljanje()->first()->delete();
+        $uporabnik->prebivalisce()->first()->delete();
         $uporabnik->osebniPodatki->first()->delete();
 
         return redirect('/');
@@ -374,12 +389,13 @@ class VpisController extends Controller
         $pdf = \App::make('dompdf.wrapper');
         ini_set('max_execution_time', 300);
 
-        $pdf->loadHTML(view('vpis.pregled')
+        $pdf->loadHTML(view('pdf.prijava')
             ->with($this->vpisRepository->pregledPrijave($uporabnik))
-            ->with('pdf', true)
+            ->with('uporabnik', $uporabnik)
         );
 
-        return $pdf->download('prijava.pdf');
+        return $pdf->stream();
+        //return $pdf->download('prijava.pdf');
     }
 
     private function jePrijavaOddana(Uporabnik $uporabnik)

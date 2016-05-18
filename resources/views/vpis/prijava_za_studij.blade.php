@@ -111,6 +111,7 @@
                             </button>
                         </div>
                     </div>
+
                     @include('flash_message')
                 </form>
             </div>

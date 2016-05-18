@@ -24,7 +24,7 @@ class PrijavaOsebniPodatki extends Model
 
     public function drzavaRojstva()
     {
-        return $this->belongsTo('App\Models\Drzava', 'id_drzava_rojstva');
+        return $this->belongsTo('App\Models\Drzava', 'id_drzave_rojstva');
     }
 
     public function drzavljanstvo()

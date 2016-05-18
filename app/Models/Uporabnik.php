@@ -15,7 +15,7 @@ class Uporabnik extends Model implements AuthenticatableContract, CanResetPasswo
 
     protected $table = 'uporabnik';
     protected $fillable = ['ime', 'priimek', 'email', 'username','password', 'zeton', 'zadnja_prijava', 'datum_oddaje_prijave'];
-    protected $guarded = ['remember_token'];
+    protected $guarded = ['id', 'remember_token'];
     protected $hidden = ['password', 'remember_token'];
     public $timestamps = true;
 
@@ -65,6 +65,7 @@ class Uporabnik extends Model implements AuthenticatableContract, CanResetPasswo
     public function prijave()
     {
         return $this->hasMany('App\Models\Prijava', 'id_kandidata', 'id');
+
     }
 
 
