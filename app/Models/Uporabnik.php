@@ -31,7 +31,7 @@ class Uporabnik extends Model implements AuthenticatableContract, CanResetPasswo
 
     public function jeKandidat()
     {
-        return $this->vloga = VlogaUporabnika::KANDIDAT;
+        return $this->vloga == VlogaUporabnika::KANDIDAT;
     }
     public function prikazVloge()
     {
