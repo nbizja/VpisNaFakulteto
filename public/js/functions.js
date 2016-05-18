@@ -437,7 +437,26 @@ $(document).ready(function() {
         }
     });
     
-    
+    $('#stalno_prebivalisce_drzava').change(function() {
+        if ($(this).val() != 705) {
+            $('#stalno_prebivalisce_obcina').children().each(function() {
+                if ($(this).val() == 1) {
+                    $(this).attr('selected', true);
+                } else {
+                    $(this).attr('selected', false);
+                }
+            });
+
+            $('#stalno_prebivalisce_posta').children().each(function() {
+                if ($(this).val() == 0) {
+                    $(this).attr('selected', true);
+                } else {
+                    $(this).attr('selected', false);
+                }
+            });
+        }
+
+    });
 
 });
 
