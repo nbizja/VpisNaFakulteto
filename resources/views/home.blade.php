@@ -20,7 +20,7 @@
                                 Ogled oddane prijave
                             </a>
                         @else
-                            <a class="btn btn-primary" href="{{ url('vpis') }}">
+                            <a class="btn btn-primary" href="{{ url('vpis/'. $Auth::user()->id.'/pregled') }}">
                                 Začni prijavni postopek
                             </a>
                         @endif
