@@ -19,7 +19,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-3 control-label">Način zakljuka srednje šole: </label>
+                                <label class="col-md-3 control-label">Način zaključka srednje šole: </label>
                                 <div class="col-md-9">
                                     <select id="nacin_zakljucka" name="nacin_zakljucka" class="form-control">
                                         @foreach($naciniZakljucka as $nacinZakljucka)

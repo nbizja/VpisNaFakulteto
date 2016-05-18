@@ -62,19 +62,20 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Naslov za pošiljanje: </label>
+                                    <input class="isti_naslov_za_posiljanje" type="radio" name="isti_naslov_za_posiljanje"
+                                           @if(!(isset($stalnoPrebivalisce) && isset($naslovZaPosiljanje) && $stalnoPrebivalisce->naslov != $naslovZaPosiljanje->naslov)) {{ 'checked' }} @endif
+                                           value="1" >  Isti kot stalno prebivališče
+                                    <input class="isti_naslov_za_posiljanje" type="radio" name="isti_naslov_za_posiljanje"
+                                           @if(isset($stalnoPrebivalisce) && isset($naslovZaPosiljanje) && $stalnoPrebivalisce->naslov != $naslovZaPosiljanje->naslov) {{ 'checked'}} @endif
+                                           value="0" style="margin-left: 20px;">  Drugi
+                                </div>
                             </div>
+
+
                             <div class="panel-heading">Naslov za pošiljanje:</div>
                             <div class="panel-body">
-                                <div class="form-group form-inline">
-                                    <div class="col-md-6 col-md-offset-5">
-                                        <input class="radio isti_naslov_za_posiljanje" type="radio" name="isti_naslov_za_posiljanje"
-                                               @if(!(isset($stalnoPrebivalisce) && isset($naslovZaPosiljanje) && $stalnoPrebivalisce->naslov != $naslovZaPosiljanje->naslov)) {{ 'checked' }} @endif
-                                               value="1" >  Isti kot stalno prebivališče
-                                        <input class="radio isti_naslov_za_posiljanje" type="radio" name="isti_naslov_za_posiljanje"
-                                               @if(isset($stalnoPrebivalisce) && isset($naslovZaPosiljanje) && $stalnoPrebivalisce->naslov != $naslovZaPosiljanje->naslov) {{ 'checked'}} @endif
-                                               value="0" style="margin-left: 20px;">  Drugi
-                                    </div>
-                                </div>
                                 <div class="obrazec" @if(!(isset($stalnoPrebivalisce) && isset($naslovZaPosiljanje) && $stalnoPrebivalisce->naslov != $naslovZaPosiljanje->naslov)) {!! 'style="display:none;"' !!} @endif>
                                     <div class="form-group">
                                         <label class="col-md-4 control-label">Država: </label>

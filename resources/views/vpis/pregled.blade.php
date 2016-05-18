@@ -22,13 +22,13 @@
                         <p class="col-md-12">
                             <span class="pregled">spol:</span> {{ $osebniPodatki->spol == 5 ? 'Ženski' : 'Moški' }}
                         </p>
-                        <p>
+                        <p class="col-md-12">
                             <span class="pregled">Država rojstva: </span>{{ $osebniPodatki->drzavaRojstva->ime }}
                         </p>
-                        <p>
+                        <p class="col-md-12">
                             <span class="pregled">Kraj rojstva: </span>{{ $osebniPodatki->kraj_rojstva }}
                         </p>
-                        <p>
+                        <p class="col-md-12">
                             <span  class="pregled">Državljanstvo: </span>{{ $osebniPodatki->drzavljanstvo->ime }}
                         </p>
                     </div>
@@ -47,7 +47,7 @@
                             <span class="pregled">Pošta:</span> {{ $stalnoPrebivalisce->posta->postna_stevilka . ' - ' . $stalnoPrebivalisce->posta->ime }}
                         </p>
                         <p class="col-md-12">
-                            <span class="pregled">Obcina:</span> {{ $stalnoPrebivalisce->obcina->ime }}
+                            <span class="pregled">Občina:</span> {{ $stalnoPrebivalisce->obcina->ime }}
                         </p>
                     </div>
                 </div>
@@ -77,7 +77,7 @@
                             <span class="pregled">Spričevalo o končani srednji šoli že imam:</span> {{ $srednjesolskaIzobrazba->ima_spricevalo ? 'Da' : 'Ne' }}
                         </p>
                         <p class="col-md-12">
-                            <span class="pregled">Način zakljuka srednje šole:</span> {{ $srednjesolskaIzobrazba->nacinZakljucka->ime }}
+                            <span class="pregled">Način zaključka srednje šole:</span> {{ $srednjesolskaIzobrazba->nacinZakljucka->ime }}
                         </p>
                         <p class="col-md-12">
                             <span class="pregled">Država srednje šole:</span> {{ $srednjesolskaIzobrazba->drzava->ime }}

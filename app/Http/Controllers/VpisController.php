@@ -159,7 +159,7 @@ class VpisController extends Controller
         $validator = $this->prijavaValidator->osebniPodatki($opInput);
 
         if (!$validator->passes()) {
-            $errors = $validator->errors()->toArray();
+            $errors = array_map('end', $validator->errors()->toArray());
         }
         $opInput['datum_rojstva'] = date('Y-m-d', strtotime($opInput['datum_rojstva']));
 
@@ -200,7 +200,7 @@ class VpisController extends Controller
 
         $validator = $this->prijavaValidator->prebivalisce($spInput);
         if (!$validator->passes()) {
-            $errors = $validator->errors()->toArray();
+            $errors = array_map('end', $validator->errors()->toArray());
         }
 
         if (!$this->prijavaValidator->preveriKombinacijoPosteObcineDrzave(
@@ -224,7 +224,7 @@ class VpisController extends Controller
             ];
             $posiljanjeValidator = $this->prijavaValidator->prebivalisce($posiljanjeInput);
             if (!$posiljanjeValidator->passes()) {
-                $errors = array_merge($errors, $posiljanjeValidator->errors()->toArray());
+                $errors = array_merge($errors, array_map('end', $validator->errors()->toArray()));
             }
         }
 
