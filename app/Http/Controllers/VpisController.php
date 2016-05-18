@@ -432,12 +432,17 @@ class VpisController extends Controller
     {
         $uporabnik = Auth::user();
         if ($idUporabnika < 1) {
-            return $uporabnik;
+
         }
         if ($uporabnik->jeAdministrator() || $uporabnik->jeSkrbnik()) {
             return Uporabnik::findOrFail($idUporabnika);
         }
 
-        return abort(404);
+        $up = Uporabnik::find($idUporabnika);
+        if ($uporabnik->id != $up->id) {
+            return abort(404);
+
+        }
+        return $up;
     }
 }
