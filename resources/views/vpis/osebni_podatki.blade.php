@@ -33,8 +33,8 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Spol: </label>
                                 <div class="input-group col-md-9">
-                                    <input type="radio" name="spol" value="5" style="margin-left: 20px;;" @if($osebniPodatki->spol ?? 5 == 5) {{ 'checked' }}@endif> Ženski
-                                    <input type="radio" name="spol" value="0" style="margin-left: 20px;;" @if($osebniPodatki->spol ?? 5 == 0) {{ 'checked' }}@endif> Moški
+                                    <input type="radio" name="spol" value="5" style="margin-left: 20px;;" @if(($osebniPodatki->spol ?? 5) == 5) {{ 'checked' }}@endif> Ženski
+                                    <input type="radio" name="spol" value="0" style="margin-left: 20px;;" @if(($osebniPodatki->spol ?? 5) == 0) {{ 'checked' }}@endif> Moški
                                 </div>
                             </div>
                             <div class="form-group">
