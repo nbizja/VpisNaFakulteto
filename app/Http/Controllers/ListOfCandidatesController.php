@@ -115,10 +115,13 @@ class ListOfCandidatesController extends Controller
                 $srednjasola = KoncanaSrednjaSola::where('id', '=', $zakljucek[0]->id_nacina_zakljucka)->get();
                 $kandidat->srednja = $srednjasola[0]->ime;
                 if ($srednja == 0) {
-                    if ($zakljucek->id_nacina_zakljucka != 2) unset($kandidati[$key]);
+                    if ($zakljucek[0]->id_nacina_zakljucka != 2) unset($kandidati[$key]);
                 }
                 if ($srednja == 1) {
-                    if ($zakljucek->id_nacina_zakljucka != 3) unset($kandidati[$key]);
+                    if ($zakljucek[0]->id_nacina_zakljucka != 3) unset($kandidati[$key]);
+                }
+                if ($srednja == 2) {
+                    if ($zakljucek[0]->id_nacina_zakljucka != 4) unset($kandidati[$key]);
                 }
             }
             if($zavod_id != -1){

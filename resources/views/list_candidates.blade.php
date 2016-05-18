@@ -52,6 +52,7 @@
                                     <option value="-1" @if ($srednja == -1) selected="selected" @endif>VSI</option>
                                     <option value="0" @if ($srednja == 0) selected="selected" @endif>SPLOŠNA MATURA</option>
                                     <option value="1" @if ($srednja == 1) selected="selected" @endif>POKLICNA MATURA</option>
+                                    <option value="2" @if ($srednja == 2) selected="selected" @endif>MEDNARODNA MATURA</option>
                                 </select>
                             </div>
                         </div>
