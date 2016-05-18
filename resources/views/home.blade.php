@@ -16,7 +16,7 @@
                     @if(date('Y-m-d') <= $prijavniRok->konec)
                         @if(!is_null(Auth::user()->datum_oddaje_prijave))
                             <p>Prijavo ste oddali dne: {{ Auth::user()->datum_oddaje_prijave }}</p>
-                            <a class="btn btn-primary" href="{{ url('vpis/pregled') }}">
+                            <a class="btn btn-primary" href="{{ url('vpis/'. $Auth::user()->id.'/pregled') }}">
                                 Ogled oddane prijave
                             </a>
                         @else
@@ -27,7 +27,7 @@
                     @else
                         <h2>Rok za oddajo prijave je potekel</h2>
                         @if(!empty(Auth::user()->datum_oddaje_prijave))
-                            <a class="btn btn-primary" href="{{ url('vpi/pregled') }}">
+                            <a class="btn btn-primary" href="{{ url('vpis/'. $Auth::user()->id.'/pregled') }}">
                                 Ogled oddane prijave
                             </a>
                         @endif
