@@ -11,6 +11,7 @@ class KoncanaSrednjaSola extends Model
     protected $fillable = ['ime', 'vnos_veljaven'];
     protected $guarded = ['id'];
 	protected $required = ['ime'];
+    
     public function getRequired()
     {
         return $this->required;

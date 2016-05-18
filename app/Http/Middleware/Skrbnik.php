@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Skrbnik
 {
-    public function handle($request, Closure $next, $guard = 'uporabnik')
+    public function handle($request, Closure $next, $guard = 'prijavljen')
     {
         $user = Auth::guard('prijavljen')->user();
         if (!($user instanceof Uporabnik)) {

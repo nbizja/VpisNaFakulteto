@@ -336,6 +336,109 @@ $(document).ready(function() {
 
     });
 
+    $('#visokosolski_zavod_1').change(function(){
+        var id_zavoda = $(this).val();
+        var zelja = $('#studijski_program_1');
+        if (id_zavoda > 0) {
+            zelja.children('.program').hide();
+            zelja.children('.zavod_' + id_zavoda).show();
+        } else {
+            $('#visokosolski_zavod_2').val(0);
+            $('#studijski_program_2').val(0);
+            $('#visokosolski_zavod_3').val(0);
+            $('#studijski_program_3').val(0);
+            $('#zelja_2').hide();
+            $('#zelja_3').hide();
+        }
+    });
+
+    $('#visokosolski_zavod_2').change(function(){
+        var id_zavoda = $(this).val();
+        var zelja = $('#studijski_program_2');
+        if (id_zavoda > 0) {
+            zelja.children('.program').hide();
+            zelja.children('.zavod_' + id_zavoda).show();
+        } else {
+            $('#visokosolski_zavod_3').val(0);
+            $('#studijski_program_3').val(0);
+            $('#zelja_3').hide();
+        }
+    });
+
+    $('#visokosolski_zavod_3').change(function(){
+        var id_zavoda = $(this).val();
+        var zelja = $('#studijski_program_3');
+        if (id_zavoda > 0) {
+            zelja.children('.program').hide();
+            zelja.children('.zavod_' + id_zavoda).show();
+        }
+    });
+    
+    $('#studijski_program_1').change(function () {
+       var id_programa = $(this).val();
+        if (id_programa > 0) {
+            $('#zelja_2').show();
+        } else {
+            $('#visokosolski_zavod_2').val(0);
+            $('#studijski_program_2').val(0);
+            $('#visokosolski_zavod_3').val(0);
+            $('#studijski_program_3').val(0);
+            $('#zelja_2').hide();
+            $('#zelja_3').hide();
+        }
+    });
+
+    $('#studijski_program_2').change(function () {
+        var id_programa = $(this).val();
+        if (id_programa > 0) {
+            $('#zelja_3').show();
+        } else {
+            $('#visokosolski_zavod_3').val(0);
+            $('#studijski_program_3').val(0);
+            $('#zelja_3').hide();
+        }
+    });
+
+    $('#nacin_zakljucka').change(function() {
+       var id_nacina_zakljucka = $(this).val();
+        if (id_nacina_zakljucka == 3) {
+            $('#maturitetni_predmet').show();
+        } else {
+            $('#maturitetni_predmet').hide();
+        }
+    });
+
+    $('.isti_naslov_za_posiljanje').change(function() {
+        if ($(this).val() == 1) {
+            $('.obrazec').hide();
+        } else {
+            $('.obrazec').show();
+        }
+    });
+
+    $('#drzava_srednje_sole').change(function() {
+        if ($(this).val() != 705) {
+            $('#srednja_sola_slo').hide();
+            $('#srednja_sola_tujina').show();
+        } else {
+            $('#srednja_sola_slo').show();
+            $('#srednja_sola_tujina').hide();
+        }
+    });
+    
+    $('#drzavljanstvo').change(function() {
+        var emso = $('#emso');
+        if ($(this).val() == 2) {
+            emso.val(emso.data('emso'));
+            emso.attr('disabled', false);
+        } else {
+            emso.val('Emšo bo samodejno ustvarjen');
+            emso.attr('disabled', true);
+        }
+    });
+    
+    
+
 });
 
 function searchTable(inputVal)

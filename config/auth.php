@@ -69,6 +69,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Uporabnik::class,
         ],
+        'vpis' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Uporabnik::class,
+        ]
 
         // 'users' => [
         //     'driver' => 'database',
