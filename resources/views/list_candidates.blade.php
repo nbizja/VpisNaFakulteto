@@ -14,7 +14,9 @@
                             <label class="col-md-4 control-label">Visokošolski zavod</label>
                             <div class="col-md-6">
                                 <select name="zavod" id="zavod" class="form-control input-sm">
-                                    <option value="-1" @if ($zavod_id == -1) selected="selected" @endif> VSI </option>
+                                    @if(Auth::user()->vloga != 'fakulteta')
+                                        <option value="-1" @if ($zavod_id == -1) selected="selected" @endif> VSI </option>
+                                    @endif
                                     @foreach($vz as $i=>$zavod)
                                         <option value="{{ $i }}" @if ($zavod_id == $i) selected="selected" @endif> {{ $zavod }} </option>
                                         {{++$i}}
@@ -126,8 +128,12 @@
 <script>
     $(document).ready(function(){
 
-
         var zavod_id = $('#zavod option:selected').index();
+        var tr = {{Auth::user()->vloga == 'fakulteta'}} + 0;
+        if(tr) {
+            zavod_id = {{$idz}} + 1;
+        }
+        console.log(zavod_id);
         $.get('/seznamKandidatov/' + zavod_id, function (data) {
             var option = '';
             $('#program').empty();

@@ -22,7 +22,7 @@
 <div class="panel panel-default">
     <div class="panel-heading"><h4 style="color: #444444">Seznam prijavljenih kandidatov</h4></div>
     <div class="panel-body">
-        <table class="table table-hover" style="font-size: 12px; float: left; text-align: left; border: 0.01em solid #dddddd; border-collapse: collapse; color: #444444">
+        <table class="table table-hover" style="width:100%; font-size: 12px; float: left; text-align: left; border: 0.01em solid #dddddd; border-collapse: collapse; color: #444444">
             <tr style="font-size: 12px; float: left; text-align: left; border: 0.01em solid #aaaaaa;  background-color: #dddddd;">
                 <th  style="font-size: 12px; float: left; text-align: left; border: 0.01em solid #dddddd; background-color: #dddddd;">  </th>
                 <th  style="font-size: 12px; float: left; text-align: left; border: 0.01em solid #dddddd;">Ime</th>

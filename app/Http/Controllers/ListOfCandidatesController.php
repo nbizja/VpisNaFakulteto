@@ -18,6 +18,16 @@ class ListOfCandidatesController extends Controller
         // $this->middleware('auth');
     }
 
+    public function getNumberZavod($id)
+    {
+        $zavodi = VisokosolskiZavod::orderBy('ime')->pluck('id');
+        foreach ($zavodi as $i => $zavod){
+            if($zavod == $id) return $i;
+        }
+
+        return -1;
+    }
+
     public function loadPage()
     {
         if (Auth::check()) {
@@ -30,16 +40,20 @@ class ListOfCandidatesController extends Controller
                         'nacin' => -1,
                         'srednja' => -1,
                         'talent' => -1,
-                        'koncana_srednja' => KoncanaSrednjaSola::pluck('ime')
+                        'koncana_srednja' => KoncanaSrednjaSola::pluck('ime'),
+                        'idz' => -1
                     ]);
             }
 
             else if (Auth::user()->vloga == 'fakulteta') {
                 $id = Auth::user() -> id;
+                $idp = VisokosolskiZavod::where('id_skrbnika', '=', $id)->orderBy('ime')->pluck('id')->first();
+                $id_prog = $this->getNumberZavod($idp);
                 return view('list_candidates')
                     ->with([
                         'vz' => VisokosolskiZavod::where('id_skrbnika', '=', $id)->orderBy('ime')->pluck('ime'),
                         'zavod_id' => -1,
+                        'idz' => $id_prog,
                         'program_id' => -1,
                         'nacin' => -1,
                         'srednja' => -1,
@@ -65,9 +79,16 @@ class ListOfCandidatesController extends Controller
         $srednja1 = $request->get('izob');
         $talent1 = $request->get('talent');
 
+        $id = Auth::user() -> id;
+
+        if(Auth::user()->vloga == 'fakulteta'){
+            $zavod_id = VisokosolskiZavod::where('id_skrbnika', '=', $id)->orderBy('ime')->pluck('id')->first();
+            $zavod_id1 =  $zavod_id;
+        }
+
         if ($zavod_id != -1) {
             $zavodi = VisokosolskiZavod::orderBy('ime')->pluck('id');
-            $zavod_id = $zavodi[$zavod_id];
+            if(Auth::user()->vloga != 'fakulteta') $zavod_id = $zavodi[$zavod_id];
 
             if ($program_id != -1) {
                 $programi = StudijskiProgram::where('id_zavoda', '=', $zavod_id)->orderBy('ime')->pluck('id');
@@ -183,16 +204,20 @@ class ListOfCandidatesController extends Controller
             $count += 1;
         }
 
+        $zavodi = VisokosolskiZavod::where('id_skrbnika', '=', $id)->orderBy('ime')->pluck('ime');
+        if(Auth::user()->vloga != 'fakulteta') $zavodi = VisokosolskiZavod::orderBy('ime')->pluck('ime');
+
         if ($request->get('izpisi')){
             return view('list_candidates')
                 ->with([
-                    'vz' => VisokosolskiZavod::orderBy('ime')->pluck('ime'),
+                    'vz' => $zavodi,
                     'zavod_id' => $zavod_id1,
                     'program_id' => $program_id1,
                     'nacin' => $nacin1,
                     'srednja' => $srednja1,
                     'talent' => $talent1,
-                    'kandidati' => $kandidati
+                    'kandidati' => $kandidati,
+                    'idz' => $this-> getNumberZavod(VisokosolskiZavod::where('id_skrbnika', '=', $id)->orderBy('ime')->pluck('id')->first())
                 ]);
         }
         else {

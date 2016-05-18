@@ -46,9 +46,13 @@ Route::group(['middleware' => ['prijavljen']], function () {
 
     Route::get('vpisniPogoji/urejanje', 'StudijskiProgrami\VpisniPogojiController@urediPogoje');
     Route::post('vpisniPogoji/urediPogoj', 'StudijskiProgrami\VpisniPogojiController@urediPogoj');
+    Route::post('vpisniPogoji/urediDelez', 'StudijskiProgrami\VpisniPogojiController@urediPogoj');
     Route::post('vpisniPogoji/shraniPogoj', 'StudijskiProgrami\VpisniPogojiController@shraniPogoj');
     Route::get('vpisniPogoji/dodajPogoj', 'StudijskiProgrami\VpisniPogojiController@dodajPogoj');
     Route::post('vpisniPogoji/novPogoj', 'StudijskiProgrami\VpisniPogojiController@novPogoj');
+    Route::post('/vpisniPogoji/shraniDeleze', 'StudijskiProgrami\VpisniPogojiController@shraniDeleze');
+    Route::get('/vpisniPogoji/shraniDeleze', 'StudijskiProgrami\VpisniPogojiController@shraniDeleze');
+
 
     Route::get('odjava', 'Auth\AuthController@logout');
 
@@ -100,6 +104,10 @@ Route::get('/seznamKandidatov/{zavod_id?}', function($zavod_id){
     if($zavod_id > 0) {
         $zavod_id = $zavodi[$zavod_id - 1];
         $programi = \App\Models\StudijskiProgram::where('id_zavoda', '=', $zavod_id)->orderBy('ime')->pluck('ime');
+        $programi_nacin = \App\Models\StudijskiProgram::where('id_zavoda', '=', $zavod_id)->orderBy('ime')->pluck('nacin_studija');
+        for ($i = 0; $i < count($programi); $i++) {
+            $programi[$i] = $programi[$i] .  ", " . strtoupper($programi_nacin[$i]);
+        }
         return Response::json($programi);
     }
     else return Response::json();

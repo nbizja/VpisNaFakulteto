@@ -31,7 +31,7 @@ class VpisniPogojSeeder extends Seeder
             'vnos_veljaven' => '1',
             'splosna_matura' => '0',
             'poklicna_matura' => '1',
-            'id_elementa' => 'L411'
+            'id_elementa' => 'M411'
         ]);
 
         DB::table('vpisni_pogoj')->insert([
@@ -39,7 +39,15 @@ class VpisniPogojSeeder extends Seeder
             'vnos_veljaven' => '1',
             'splosna_matura' => '0',
             'poklicna_matura' => '1',
-            'id_elementa' => 'L401'
+            'id_elementa' => 'M401'
+        ]);
+
+        DB::table('vpisni_pogoj')->insert([
+            'id_programa' => '838',
+            'vnos_veljaven' => '1',
+            'splosna_matura' => '0',
+            'poklicna_matura' => '1',
+            'id_elementa' => 'L781' //poklicna matura + racunalnistvo na poklicni maturi
         ]);
 
 
@@ -56,7 +64,7 @@ class VpisniPogojSeeder extends Seeder
             'vnos_veljaven' => '1',
             'splosna_matura' => '0',
             'poklicna_matura' => '1',
-            'id_elementa' => 'L411'
+            'id_elementa' => 'M411'
         ]);
 
         DB::table('vpisni_pogoj')->insert([
@@ -64,9 +72,16 @@ class VpisniPogojSeeder extends Seeder
             'vnos_veljaven' => '1',
             'splosna_matura' => '0',
             'poklicna_matura' => '1',
-            'id_elementa' => 'L401'
+            'id_elementa' => 'M401'
         ]);
 
+        DB::table('vpisni_pogoj')->insert([
+            'id_programa' => '853',
+            'vnos_veljaven' => '1',
+            'splosna_matura' => '0',
+            'poklicna_matura' => '1',
+            'id_elementa' => 'L781' //poklicna matura + racunalnistvo na poklicni maturi
+        ]);
 
         //RI-vs, redni
         DB::table('vpisni_pogoj')->insert([
@@ -212,7 +227,8 @@ class VpisniPogojSeeder extends Seeder
             'vnos_veljaven' => '1',
             'splosna_matura' => '0',
             'poklicna_matura' => '1',
-            'id_elementa' => 'L401'   //matematika + poklicna matura
+            'id_elementa' => 'L401',   //matematika + poklicna matura
+            'id_elementa2' => 'SM'
         ]);
 
         DB::table('vpisni_pogoj')->insert([
@@ -237,7 +253,8 @@ class VpisniPogojSeeder extends Seeder
             'vnos_veljaven' => '1',
             'splosna_matura' => '0',
             'poklicna_matura' => '1',
-            'id_elementa' => 'L401'   //matematika + poklicna matura
+            'id_elementa' => 'L401',   //matematika + poklicna matura
+            'id_elementa2' => 'SM'
         ]);
 
         DB::table('vpisni_pogoj')->insert([
@@ -297,7 +314,17 @@ class VpisniPogojSeeder extends Seeder
             'splosna_matura' => '0',
             'poklicna_matura' => '0',
             'id_poklica' => '51001',
-            'id_elementa' => 'L421'    //gozdarski tehnik + biologija na maturi
+            'id_elementa' => 'M421'    //gozdarski tehnik + biologija na maturi
+        ]);
+
+        DB::table('vpisni_pogoj')->insert([
+            'id_programa' => '776',
+            'vnos_veljaven' => '1',
+            'splosna_matura' => '0',
+            'poklicna_matura' => '0',
+            'id_poklica' => '51001',
+            'id_elementa' => 'L421',    //gozdarski tehnik + biologija na poklicni maturi + mat.predmet
+            'id_elementa2' => 'SM'
         ]);
 
         //Gozdarstvo, izredni
@@ -314,7 +341,17 @@ class VpisniPogojSeeder extends Seeder
             'splosna_matura' => '0',
             'poklicna_matura' => '0',
             'id_poklica' => '51001',
-            'id_elementa' => 'L421'
+            'id_elementa' => 'L421',
+            'id_elementa2' => 'SM'
+        ]);
+
+        DB::table('vpisni_pogoj')->insert([
+            'id_programa' => '859',
+            'vnos_veljaven' => '1',
+            'splosna_matura' => '0',
+            'poklicna_matura' => '0',
+            'id_poklica' => '51001',
+            'id_elementa' => 'M421',
         ]);
 
         /**************************************/
@@ -336,6 +373,5 @@ class VpisniPogojSeeder extends Seeder
             'id_elementa' => 'S442',
             'id_elementa2' => 'M561'
         ]);
-
     }
 }
