@@ -110,7 +110,7 @@ class ListOfCandidatesController extends Controller
                 $join->on('prijava.id_studijskega_programa', '=', 'studijski_program.id');
             })->join('visokosolski_zavod', function ($join) {
                 $join->on('studijski_program.id_zavoda', '=', 'visokosolski_zavod.id');
-            })->get(array('uporabnik.emso as id', 'uporabnik.ime as ime', 'uporabnik.priimek as priimek', 'visokosolski_zavod.ime as zavod', 'studijski_program.ime as program', 'studijski_program.nacin_studija as nacin', 'prijava.izredni_talent as talent'));
+            })->get(array('uporabnik.id' ,'uporabnik.emso as emso', 'uporabnik.ime as ime', 'uporabnik.priimek as priimek', 'visokosolski_zavod.ime as zavod', 'studijski_program.ime as program', 'studijski_program.nacin_studija as nacin', 'prijava.izredni_talent as talent'));
 
         if ($nacin != -1) {
             $kandidati_nacin = Uporabnik::where('vloga', '=', VlogaUporabnika::KANDIDAT)
@@ -121,7 +121,7 @@ class ListOfCandidatesController extends Controller
                         ->where('studijski_program.nacin_studija', '=', $nacin);
                 })->join('visokosolski_zavod', function ($join) {
                     $join->on('studijski_program.id_zavoda', '=', 'visokosolski_zavod.id');
-                })->get(array('uporabnik.emso as id', 'uporabnik.ime as ime', 'uporabnik.priimek as priimek', 'visokosolski_zavod.ime as zavod', 'studijski_program.ime as program', 'studijski_program.nacin_studija as nacin', 'prijava.izredni_talent as talent'));
+                })->get(array('uporabnik.id' ,'uporabnik.emso as emso', 'uporabnik.ime as ime', 'uporabnik.priimek as priimek', 'visokosolski_zavod.ime as zavod', 'studijski_program.ime as program', 'studijski_program.nacin_studija as nacin', 'prijava.izredni_talent as talent'));
 
             $kandidati = $kandidati->intersect($kandidati_nacin);
         }
@@ -135,7 +135,7 @@ class ListOfCandidatesController extends Controller
                     $join->on('prijava.id_studijskega_programa', '=', 'studijski_program.id');
                 })->join('visokosolski_zavod', function ($join) {
                     $join->on('studijski_program.id_zavoda', '=', 'visokosolski_zavod.id');
-                })->get(array('uporabnik.emso as id', 'uporabnik.ime as ime', 'uporabnik.priimek as priimek', 'visokosolski_zavod.ime as zavod', 'studijski_program.ime as program', 'studijski_program.nacin_studija as nacin', 'prijava.izredni_talent as talent'));
+                })->get(array('uporabnik.id' ,'uporabnik.emso as emso', 'uporabnik.ime as ime', 'uporabnik.priimek as priimek', 'visokosolski_zavod.ime as zavod', 'studijski_program.ime as program', 'studijski_program.nacin_studija as nacin', 'prijava.izredni_talent as talent'));
 
             $kandidati = $kandidati->intersect($kandidati_nacin);
         }
@@ -149,7 +149,7 @@ class ListOfCandidatesController extends Controller
                         ->where('studijski_program.id', '=', $program_id);
                 })->join('visokosolski_zavod', function ($join) {
                     $join->on('studijski_program.id_zavoda', '=', 'visokosolski_zavod.id');
-                })->get(array('uporabnik.emso as id', 'uporabnik.ime as ime', 'uporabnik.priimek as priimek', 'visokosolski_zavod.ime as zavod', 'studijski_program.ime as program', 'studijski_program.nacin_studija as nacin', 'prijava.izredni_talent as talent'));
+                })->get(array('uporabnik.id' ,'uporabnik.emso as emso', 'uporabnik.ime as ime', 'uporabnik.priimek as priimek', 'visokosolski_zavod.ime as zavod', 'studijski_program.ime as program', 'studijski_program.nacin_studija as nacin', 'prijava.izredni_talent as talent'));
 
             $kandidati = $kandidati->intersect($kandidati_nacin);
         }
@@ -163,15 +163,16 @@ class ListOfCandidatesController extends Controller
                 })->join('visokosolski_zavod', function ($join) use ($zavod_id) {
                     $join->on('studijski_program.id_zavoda', '=', 'visokosolski_zavod.id')
                         ->where('visokosolski_zavod.id', '=', $zavod_id);
-                })->get(array('uporabnik.emso as id', 'uporabnik.ime as ime', 'uporabnik.priimek as priimek', 'visokosolski_zavod.ime as zavod', 'studijski_program.ime as program', 'studijski_program.nacin_studija as nacin', 'prijava.izredni_talent as talent'));
+                })->get(array('uporabnik.id' ,'uporabnik.emso as emso', 'uporabnik.ime as ime', 'uporabnik.priimek as priimek', 'visokosolski_zavod.ime as zavod', 'studijski_program.ime as program', 'studijski_program.nacin_studija as nacin', 'prijava.izredni_talent as talent'));
 
             $kandidati = $kandidati->intersect($kandidati_nacin);
         }
 
         foreach ($kandidati as $key => $kandidat) {
+
             $kandidat->srednja = "";
-            $poklicnaMatura = Uporabnik::join('poklicna_matura', 'poklicna_matura.emso', '=', 'uporabnik.emso')->where('uporabnik.emso', $kandidat->id)->count();
-            $splosnaMatura = Uporabnik::join('matura', 'matura.emso', '=', 'uporabnik.emso')->where('uporabnik.emso', $kandidat->id)->count();
+            $poklicnaMatura = Uporabnik::join('poklicna_matura', 'poklicna_matura.emso', '=', 'uporabnik.emso')->where('uporabnik.emso', $kandidat->emso)->count();
+            $splosnaMatura = Uporabnik::join('matura', 'matura.emso', '=', 'uporabnik.emso')->where('uporabnik.emso', $kandidat->emso)->count();
 
             if ($poklicnaMatura > 0) $kandidat->srednja = "Poklicna matura ";
             if ($splosnaMatura > 0) $kandidat->srednja = $kandidat->srednja . "Splošna matura ";
@@ -200,7 +201,7 @@ class ListOfCandidatesController extends Controller
 
         $count = 1;
         foreach ($kandidati as $kandidat) {
-            $kandidat->id = $count;
+            //$kandidat->id = $count;
             $count += 1;
         }
 

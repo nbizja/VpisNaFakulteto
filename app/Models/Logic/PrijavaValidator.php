@@ -17,6 +17,7 @@ class PrijavaValidator
         return Validator::make($input, [
             'ime'               => 'required|string|min:2',
             'priimek'           => 'required|string|min:2',
+            'spol'              => 'required|in:0,5',
             'datum_rojstva'     => 'required|date',
             'id_drzave_rojstva' => 'required|int|min:1',
             'kraj_rojstva'      => 'required|string|min:2',
@@ -27,7 +28,8 @@ class PrijavaValidator
             'priimek'           => 'Priimek mora vsebovati vsaj dve črki.',
             'id_drzave_rojstva' => 'Polje je obvezno',
             'kraj_rojstva'      => 'Kraj rojstva mora vsebovati vsaj dve črki.',
-            'kontaktni_telefon' => 'Kontaktni telefon mora biti v obliki 030123456'
+            'kontaktni_telefon' => 'Kontaktni telefon mora biti v obliki 030123456',
+            'spol'              => 'Spol mora biti označen.'
         ]);
     }
 
@@ -49,9 +51,10 @@ class PrijavaValidator
      *
      * @param string $emso
      * @param string $datumrojstva (mora biti primeren za strtotime funkcijo)
+     * @param int $spol
      * @return bool True. če je veljaven
      */
-    public function veljavenEmso($emso, $datumrojstva)
+    public function veljavenEmso($emso, $datumrojstva, $spol)
     {
         if (strlen($emso) != 13) {
             return false;
@@ -64,7 +67,7 @@ class PrijavaValidator
             return false;
         }
 
-        if (!in_array(substr($emso, 7, 3), ['500', '505'])) {
+        if (substr($emso, 7, 3) != ('50' . $spol)) {
             return false;
         }
 

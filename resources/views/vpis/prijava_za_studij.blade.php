@@ -6,7 +6,7 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="page-header">V skladu z razpisom za vpis se prijavljam za študij</div>
 
-                <form class="form-horizontal" role="form" method="POST" action="{{ url('vpis/prijava_za_studij') }}">
+                <form class="form-horizontal" role="form" method="POST" action="{{ url('vpis/'. $id .'/prijava_za_studij') }}">
                     {!! csrf_field() !!}
                     <div id="zelja_1" class="panel panel-default zelja">
                         <div class="panel-heading">1. želja</div>
@@ -103,7 +103,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-6 col-md-offset-5">
-                            <a href="{{ url('vpis/srednjesolska_izobrazba') }}" class="btn btn-danger pull-left">
+                            <a href="{{ url('vpis/'. $id .'/srednjesolska_izobrazba') }}" class="btn btn-danger pull-left">
                                 <i class="fa fa-btn fa-sign-in"></i>Nazaj
                             </a>
                             <button type="submit" name="shraniPogoj" class="btn btn-primary pull-right">

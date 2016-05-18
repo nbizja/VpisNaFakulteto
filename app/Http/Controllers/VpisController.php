@@ -47,80 +47,99 @@ class VpisController extends Controller
             return redirect('vpis/prijava_za_studij');
         }
 
-        return redirect('vpis/pregled');
+        return redirect('vpis/'. $id .'/pregled');
     }
     
-    public function osebniPodatki()
+    public function osebniPodatki($id = 0)
     {
-        if ($this->jePrijavaOddana(Auth::user())) {
-            return redirect('vpis/pregled');
+        $uporabnik = $this->pridobiUporabnika($id);
+        if ($this->jePrijavaOddana($uporabnik)) {
+            return redirect('vpis/'. $id .'/pregled');
         }
 
-        return view('vpis.osebni_podatki')->with([
-            'drzave' => $this->vpisRepository->drzave(),
-            'drzavljanstva' => $this->vpisRepository->drzavljanstva(),
-            'osebniPodatki' => Auth::user()->osebniPodatki()->first()
-        ]);
+        return view('vpis.osebni_podatki')
+            ->with([
+                'drzave' => $this->vpisRepository->drzave(),
+                'drzavljanstva' => $this->vpisRepository->drzavljanstva(),
+                'osebniPodatki' => $uporabnik->osebniPodatki()->first()
+            ])
+            ->with([
+                'id' => $uporabnik->id,
+                'admin' => Auth::user()->jeAdministrator() || Auth::user()->jeSkrbnik()
+            ]);
+
     }
 
-    public function stalnoPrebivalisce()
+    public function stalnoPrebivalisce($id = 0)
     {
-        if ($this->jePrijavaOddana(Auth::user())) {
-            return redirect('vpis/pregled');
+        $uporabnik = $this->pridobiUporabnika($id);
+
+        if ($this->jePrijavaOddana($uporabnik)) {
+            return redirect('vpis/'. $id .'/pregled');
         }
 
-        return view('vpis.stalno_prebivalisce')->with([
-            'stalnoPrebivalisce' => Auth::user()->prebivalisce()->first(),
-            'naslovZaPosiljanje' => Auth::user()->naslovZaPosiljanje()->first(),
-            'drzave' => $this->vpisRepository->drzave(),
-            'obcine' => $this->vpisRepository->obcine(),
-            'poste' => $this->vpisRepository->poste()
-        ]);
+        return view('vpis.stalno_prebivalisce')
+            ->with($this->vpisRepository->stalnoPrebivalisce($uporabnik))
+            ->with([
+                'id' => $uporabnik->id,
+                'admin' => Auth::user()->jeAdministrator() || Auth::user()->jeSkrbnik()
+            ]);
     }
 
-    public function naslovZaObvestila()
+    public function srednjeSolskaIzobrazbaPrikaz($id = 0)
     {
-        if ($this->jePrijavaOddana(Auth::user())) {
-            return redirect('vpis/pregled');
+        $uporabnik = $this->pridobiUporabnika($id);
+
+        if ($this->jePrijavaOddana($uporabnik)) {
+            return redirect('vpis/'. $id .'/pregled');
         }
 
-        return view('vpis.naslov_za_obvestila');
-    }
-    
-    public function srednjeSolskaIzobrazbaPrikaz()
-    {
-        if ($this->jePrijavaOddana(Auth::user())) {
-            return redirect('vpis/pregled');
-        }
-
-        return view('vpis.srednjesolska_izobrazba')->with($this->vpisRepository->srednjesolskaIzobrazba(Auth::user()));
-    }
-    
-    public function prijavaZaStudijPrikaz()
-    {
-        if ($this->jePrijavaOddana(Auth::user())) {
-            return redirect('vpis/pregled');
-        }
-
-        return view('vpis.prijava_za_studij')->with($this->vpisRepository->prijavaZaStudij(Auth::user()));
+        return view('vpis.srednjesolska_izobrazba')
+            ->with($this->vpisRepository->srednjesolskaIzobrazba($uporabnik))
+            ->with([
+                'id' => $uporabnik->id,
+                'admin' => Auth::user()->jeAdministrator() || Auth::user()->jeSkrbnik()
+            ]);
     }
     
-    public function pregled()
+    public function prijavaZaStudijPrikaz($id = 0)
     {
-        $uporabnik = Auth::user();
+        $uporabnik = $this->pridobiUporabnika($id);
+
+        if ($this->jePrijavaOddana($uporabnik)) {
+            return redirect('vpis/'. $id .'/pregled');
+        }
+
+        return view('vpis.prijava_za_studij')
+            ->with($this->vpisRepository->prijavaZaStudij($uporabnik))
+            ->with([
+                'id' => $uporabnik->id,
+                'admin' => Auth::user()->jeAdministrator() || Auth::user()->jeSkrbnik()
+            ]);
+    }
+    
+    public function pregled($id = 0)
+    {
+        $uporabnik = $this->pridobiUporabnika($id);
+
         if ($uporabnik->prijave()->get()->isEmpty()) {
             return redirect('/');
         }
 
         return view('vpis.pregled')
-            ->with($this->vpisRepository->pregledPrijave($uporabnik));
+            ->with($this->vpisRepository->pregledPrijave($uporabnik))
+            ->with([
+                'id' => $uporabnik->id,
+                'admin' => Auth::user()->jeAdministrator() || Auth::user()->jeSkrbnik()
+            ]);
     }
 
-    public function shraniOsebnePodatke(Request $request)
+    public function shraniOsebnePodatke(Request $request, $id = 0)
     {
-        $uporabnik = Auth::user();
+        $uporabnik = $this->pridobiUporabnika($id);
+
         if ($this->jePrijavaOddana($uporabnik)) {
-            return redirect('vpis/pregled');
+            return redirect('vpis/'. $id .'/pregled');
         }
 
         $errors = [];
@@ -130,6 +149,7 @@ class VpisController extends Controller
             'emso'              => $request->request->get('emso'),
             'ime'               => $request->request->get('ime'),
             'priimek'           => $request->request->get('priimek'),
+            'spol'              => $request->request->get('spol'),
             'datum_rojstva'     => $request->request->get('datum_rojstva'),
             'id_drzave_rojstva' => $request->request->get('drzava_rojstva'),
             'kraj_rojstva'      => $request->request->get('kraj_rojstva'),
@@ -145,9 +165,9 @@ class VpisController extends Controller
 
         if ($opInput['id_drzavljanstva'] != 2) {
             $datumRojstva = strtotime($opInput['datum_rojstva']);
-            $opInput['emso'] = date('d', $datumRojstva) . date('m', $datumRojstva) . substr(date('Y', $datumRojstva), 1) . '0' . str_pad($uporabnik->id, 5, '0', STR_PAD_LEFT);
-        } elseif (!$this->prijavaValidator->veljavenEmso($opInput['emso'], $opInput['datum_rojstva'])) {
-            $errors['emso'] = ['Neveljaven emso.'];
+            $opInput['emso'] = date('d', $datumRojstva) . date('m', $datumRojstva) . substr(date('Y', $datumRojstva), 1) . '00' . $opInput['spol'] . str_pad($uporabnik->id, 3, '0', STR_PAD_LEFT);
+        } elseif (!$this->prijavaValidator->veljavenEmso($opInput['emso'], $opInput['datum_rojstva'], $opInput['spol'])) {
+            $errors['emso'] = 'Emšo se ne ujema z datum rojstva in spolom.';
         }
 
         if (!empty($errors)) {
@@ -158,14 +178,15 @@ class VpisController extends Controller
         });
         PrijavaOsebniPodatki::create($opInput);
 
-        return redirect('vpis/stalno_prebivalisce');
+        return redirect('vpis/'. $id .'/stalno_prebivalisce');
     }
 
-    public function shraniStalnoPrebivalisce(Request $request)
+    public function shraniStalnoPrebivalisce(Request $request, $id = 0)
     {
-        $uporabnik = Auth::user();
+        $uporabnik = $this->pridobiUporabnika($id);
+
         if ($this->jePrijavaOddana($uporabnik)) {
-            return redirect('vpis/pregled');
+            return redirect('vpis/'. $id .'/pregled');
         }
 
         $errors = [];
@@ -222,12 +243,13 @@ class VpisController extends Controller
         $naslovZaPosiljanje = PrijavaNaslovZaPosiljanje::create($posiljanjeInput);
 
         
-        return redirect('vpis/srednjesolska_izobrazba');
+        return redirect('vpis/'. $id .'/srednjesolska_izobrazba');
     }
 
-    public function shraniSrednjesolskoIzobrazbo(Request $request)
+    public function shraniSrednjesolskoIzobrazbo(Request $request, $id = 0)
     {
-        $uporabnik = Auth::user();
+        $uporabnik = $this->pridobiUporabnika($id);
+
         if ($this->jePrijavaOddana($uporabnik)) {
             return redirect('vpis/pregled');
         }
@@ -259,14 +281,15 @@ class VpisController extends Controller
         }
         $srednjesolskaIzobrazba->save();
         
-        return redirect('vpis/prijava_za_studij');
+        return redirect('vpis/'. $id .'/prijava_za_studij');
     }
     
-    public function shraniPrijavoZaStudij(Request $request)
+    public function shraniPrijavoZaStudij(Request $request, $id = 0)
     {
-        $uporabnik = Auth::user();
+        $uporabnik = $this->pridobiUporabnika($id);
+
         if ($this->jePrijavaOddana($uporabnik)) {
-            return redirect('vpis/pregled');
+            return redirect('vpis/'. $id .'/pregled');
         }
 
         $prvaZelja = new Prijava([
@@ -349,22 +372,24 @@ class VpisController extends Controller
             ]);
         }
 
-        return redirect('vpis/pregled');
+        return redirect('vpis/'. $id .'/pregled');
     }
 
-    public function oddajaPrijave()
+    public function oddajaPrijave($id = 0)
     {
-        $uporabnik = Auth::user();
+        $uporabnik = $this->pridobiUporabnika($id);
+
         $uporabnik->datum_oddaje_prijave = date('Y-m-d');
         $uporabnik->save();
 
-        return redirect('vpis/pregled');
+        return redirect('vpis/'. $id .'/pregled');
     }
 
-    public function izbrisPrijave()
+    public function izbrisPrijave($id = 0)
     {
-        $uporabnik = Auth::user();
-        $uporabnik->datum_oddaje_prijave = '';
+        $uporabnik = $this->pridobiUporabnika($id);
+
+        $uporabnik->datum_oddaje_prijave = null;
         $uporabnik->save();
 
         $uporabnik->prijave()->get()->each(function($prijava) {
@@ -379,9 +404,10 @@ class VpisController extends Controller
         return redirect('/');
     }
 
-    public function tiskPrijave()
+    public function tiskPrijave($id = 0)
     {
-        $uporabnik = Auth::user();
+        $uporabnik = $this->pridobiUporabnika($id);
+
         if (!$this->jePrijavaOddana($uporabnik)) {
             return redirect('vpis');
         }
@@ -395,11 +421,23 @@ class VpisController extends Controller
         );
 
         return $pdf->stream();
-        //return $pdf->download('prijava.pdf');
     }
 
     private function jePrijavaOddana(Uporabnik $uporabnik)
     {
-        return !empty($uporabnik->datum_oddaje_prijave);
+        return !empty($uporabnik->datum_oddaje_prijave) && !(Auth::user()->jeAdministrator() || Auth::user()->jeSkrbnik());
+    }
+
+    private function pridobiUporabnika($idUporabnika)
+    {
+        $uporabnik = Auth::user();
+        if ($idUporabnika < 1) {
+            return $uporabnik;
+        }
+        if ($uporabnik->jeAdministrator() || $uporabnik->jeSkrbnik()) {
+            return Uporabnik::findOrFail($idUporabnika);
+        }
+
+        return abort(404);
     }
 }

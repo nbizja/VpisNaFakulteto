@@ -19,6 +19,9 @@
                         <p class="col-md-12">
                             <span class="pregled">Priimek:</span> {{ $osebniPodatki->priimek }}
                         </p>
+                        <p class="col-md-12">
+                            <span class="pregled">spol:</span> {{ $osebniPodatki->spol == 5 ? 'Ženski' : 'Moški' }}
+                        </p>
                         <p>
                             <span class="pregled">Država rojstva: </span>{{ $osebniPodatki->drzavaRojstva->ime }}
                         </p>
@@ -110,13 +113,41 @@
                     </div>
                 </div>
 
-                    @if(empty($datum_oddaje_prijave))
-                        <form method="post" class="form-horizontal" action="{{ url('vpis/oddaja_prijave') }}">
+                    @if($admin && !empty($datum_oddaje_prijave))
+
+                    <form method="post" class="form-horizontal" action="{{ url('vpis/'. $id .'/oddaja_prijave') }}">
+                        {{ csrf_field() }}
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-5">
+                                <button type="submit" name="shraniPogoj" class="btn btn-danger pull-right">
+                                    <i class="fa fa-btn fa-sign-in"></i>Izbriši prijavo
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-5">
+                                <a href="{{ url('vpis/'. $id .'/prijava_za_studij') }}" class="btn btn-danger pull-left">
+                                    <i class="fa fa-btn fa-sign-in"></i>Nazaj
+                                </a>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-6 col-md-offset-5">
+                                    <a href="{{ url('vpis/'. $id .'/tisk_prijave') }}" class="btn btn-primary pull-right">
+                                        <i class="fa fa-btn fa-sign-in"></i>Natisni prijavo
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    @elseif(empty($datum_oddaje_prijave))
+                        <form method="post" class="form-horizontal" action="{{ url('vpis/'. $id .'/oddaja_prijave') }}">
                             {{ csrf_field() }}
 
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-5">
-                                    <a href="{{ url('vpis/prijava_za_studij') }}" class="btn btn-danger pull-left">
+                                    <a href="{{ url('vpis/'. $id .'/prijava_za_studij') }}" class="btn btn-danger pull-left">
                                         <i class="fa fa-btn fa-sign-in"></i>Nazaj
                                     </a>
                                     <button type="submit" name="shraniPogoj" class="btn btn-primary pull-right">
@@ -126,7 +157,7 @@
                             </div>
                         </form>
                     @else
-                        <form method="post" class="form-horizontal" action="{{ url('vpis/izbris_prijave') }}">
+                        <form method="post" class="form-horizontal" action="{{ url('vpis/'. $id .'/izbris_prijave') }}">
                             {{ csrf_field() }}
 
                             <div class="form-group">
@@ -139,7 +170,7 @@
 
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-5">
-                                    <a href="{{ url('vpis/tisk_prijave') }}" class="btn btn-primary pull-right">
+                                    <a href="{{ url('vpis/'. $id .'/tisk_prijave') }}" class="btn btn-primary pull-right">
                                         <i class="fa fa-btn fa-sign-in"></i>Natisni prijavo
                                     </a>
                                 </div>

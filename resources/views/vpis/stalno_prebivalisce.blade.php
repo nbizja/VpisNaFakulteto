@@ -6,7 +6,7 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
 
-                        <form class="form-horizontal" role="form" method="post" action="{{ url('vpis/stalno_prebivalisce') }}">
+                        <form class="form-horizontal" role="form" method="post" action="{{ url('vpis/'. $id .'/stalno_prebivalisce') }}">
                             {!! csrf_field() !!}
                             <div class="panel-heading">Stalno prebivališče</div>
 
@@ -131,7 +131,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-5">
-                                    <a href="{{ url('vpis/srednjesolska_izobrazba') }}" class="btn btn-danger pull-left">
+                                    <a href="{{ url('vpis/'. $id .'/srednjesolska_izobrazba') }}" class="btn btn-danger pull-left">
                                         <i class="fa fa-btn fa-sign-in"></i>Nazaj
                                     </a>
                                     <button type="submit" name="shraniPogoj" class="btn btn-primary pull-right">

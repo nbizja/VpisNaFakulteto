@@ -7,14 +7,14 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Osebni podatki</div>
                     <div class="panel-body">
-                        <form class="form-horizontal pull-left" role="form" method="post" action="{{ url('vpis/osebni_podatki') }}">
+                        <form class="form-horizontal pull-left" role="form" method="post" action="{{ url('vpis/'. $id .'/osebni_podatki') }}">
                             {!! csrf_field() !!}
 
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Emšo: </label>
                                 <div class="col-md-9">
                                     <input type="text" class="form-control" id="emso" name="emso" data-emso="{{ $osebniPodatki->emso ?? '' }}" placeholder="0101998500123" value="{{ $osebniPodatki->emso ?? old('emso') }}" required
-                                    @if($osebniPodatki->id_drzavljanstva ?? 4 != 4){{ 'disabled' }}@endif
+                                    @if($osebniPodatki->id_drzavljanstva ?? 4 != 4){{ 'readonly' }}@endif
                                     >
                                 </div>
                             </div>
@@ -28,6 +28,13 @@
                                 <label class="col-md-3 control-label">Priimek: </label>
                                 <div class="col-md-9">
                                     <input type="text" class="form-control" name="priimek" value="{{ $osebniPodatki->priimek ?? old('priimek') }}" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Spol: </label>
+                                <div class="input-group col-md-9">
+                                    <input type="radio" name="spol" value="5" style="margin-left: 20px;;" @if($osebniPodatki->spol ?? 5 == 5) {{ 'checked' }}@endif> Ženski
+                                    <input type="radio" name="spol" value="0" style="margin-left: 20px;;" @if($osebniPodatki->spol ?? 5 == 0) {{ 'checked' }}@endif> Moški
                                 </div>
                             </div>
                             <div class="form-group">
@@ -80,7 +87,7 @@
 
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-5">
-                                    <a href="{{ url('vpis/prijava_za_studij') }}" class="btn btn-danger pull-left">
+                                    <a href="{{ url('vpis/'. $id .'/prijava_za_studij') }}" class="btn btn-danger pull-left">
                                         <i class="fa fa-btn fa-sign-in"></i>Nazaj
                                     </a>
                                     <button type="submit" name="shraniPogoj" class="btn btn-primary pull-right">

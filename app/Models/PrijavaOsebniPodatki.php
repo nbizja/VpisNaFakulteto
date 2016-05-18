@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class PrijavaOsebniPodatki extends Model
 {
     protected $table = 'prijava_osebni_podatki';
-    protected $fillable = ['id_kandidata', 'emso', 'ime', 'priimek', 'datum_rojstva', 'id_drzave_rojstva', 'kraj_rojstva', 'id_drzavljanstva', 'kontaktni_telefon', 'veljavno'];
+    protected $fillable = ['id_kandidata', 'emso', 'ime', 'priimek', 'spol', 'datum_rojstva', 'id_drzave_rojstva', 'kraj_rojstva', 'id_drzavljanstva', 'kontaktni_telefon', 'veljavno'];
     protected $guarded = ['id'];
     public $timestamps = true;
 

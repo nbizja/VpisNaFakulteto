@@ -20,6 +20,7 @@ class CreatePrijavaOsebniPodatki extends Migration
             $table->string('emso');
             $table->string('ime');
             $table->string('priimek');
+            $table->integer('spol');
             $table->date('datum_rojstva');
             $table->integer('id_drzave_rojstva');
             $table->string('kraj_rojstva');

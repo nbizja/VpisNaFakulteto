@@ -83,20 +83,22 @@ Route::group(['middleware' => ['prijavljen']], function () {
     Route::any('/sifranti/{ime_sifranta}/razveljavi/{id_vnosa}', 'SifrantiController@razveljavi');
     Route::any('/sifranti/{ime_sifranta}/povrni/{id_vnosa}', 'SifrantiController@povrni');
 
-    Route::get('vpis', 'VpisController@prikazi');
-    Route::get('vpis/osebni_podatki', 'VpisController@osebniPodatki');
-    Route::post('vpis/osebni_podatki', 'VpisController@shraniOsebnePodatke');
-    Route::get('vpis/stalno_prebivalisce', 'VpisController@stalnoPrebivalisce');
-    Route::post('vpis/stalno_prebivalisce', 'VpisController@shraniStalnoPrebivalisce');
-    Route::get('vpis/srednjesolska_izobrazba', 'VpisController@srednjeSolskaIzobrazbaPrikaz');
-    Route::post('vpis/srednjesolska_izobrazba', 'VpisController@shraniSrednjeSolskoIzobrazbo');
-    Route::get('vpis/prijava_za_studij', 'VpisController@prijavaZaStudijPrikaz');
-    Route::post('vpis/prijava_za_studij', 'VpisController@shraniPrijavoZaStudij');
-    Route::get('vpis/pregled', 'VpisController@pregled');
-    Route::post('vpis/izbris_prijave', 'VpisController@izbrisPrijave');
-    Route::post('vpis/oddaja_prijave', 'VpisController@oddajaPrijave');
-    Route::get('vpis/tisk_prijave', 'VpisController@tiskPrijave');
+    Route::get('vpis/{id}/osebni_podatki',           'VpisController@osebniPodatki');
+    Route::post('vpis/{id}/osebni_podatki',          'VpisController@shraniOsebnePodatke');
+    Route::get('vpis/{id}/stalno_prebivalisce',      'VpisController@stalnoPrebivalisce');
+    Route::post('vpis/{id}/stalno_prebivalisce',     'VpisController@shraniStalnoPrebivalisce');
+    Route::get('vpis/{id}/srednjesolska_izobrazba',  'VpisController@srednjeSolskaIzobrazbaPrikaz');
+    Route::post('vpis/{id}/srednjesolska_izobrazba', 'VpisController@shraniSrednjeSolskoIzobrazbo');
+    Route::get('vpis/{id}/prijava_za_studij',        'VpisController@prijavaZaStudijPrikaz');
+    Route::post('vpis/{id}/prijava_za_studij',       'VpisController@shraniPrijavoZaStudij');
+    Route::get('vpis/{id}/pregled',                  'VpisController@pregled');
+    Route::post('vpis/{id}/izbris_prijave',          'VpisController@izbrisPrijave');
+    Route::post('vpis/{id}/oddaja_prijave',          'VpisController@oddajaPrijave');
+    Route::get('vpis/{id}/tisk_prijave',             'VpisController@tiskPrijave');
 });
+
+
+
 
 //TODO Strašno grdo. Prestavi to v kontroler.
 Route::get('/seznamKandidatov/{zavod_id?}', function($zavod_id){

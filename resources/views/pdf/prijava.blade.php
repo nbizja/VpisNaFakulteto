@@ -56,6 +56,9 @@
                     <td  style="padding-left: 10px;width:25%">Emšo: </td><td style="padding-left: 10px;background-color: #cccccc;">{{ $osebniPodatki->emso }}</td>
                 </tr>
                 <tr>
+                    <td  style="padding-left: 10px;width:25%">Spol: </td><td style="padding-left: 10px;background-color: #cccccc;">{{ $osebniPodatki->spol == 5 ? 'Ž' : 'M' }}</td>
+                </tr>
+                <tr>
                     <td  style="padding-left: 10px;width:25%;">Datum rojstva: </td><td style="padding-left: 10px;background-color: #cccccc;">{{ date('d.m.Y', strtotime($osebniPodatki->datum_rojstva)) }}</td>
                 </tr>
                 <tr>

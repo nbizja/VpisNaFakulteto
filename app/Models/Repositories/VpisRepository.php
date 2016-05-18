@@ -42,6 +42,17 @@ class VpisRepository
         return Element::where('id', 'like', 'M%')->get()->sortBy('ime');
     }
 
+    public function stalnoPrebivalisce(Uporabnik $uporabnik)
+    {
+        return [
+            'stalnoPrebivalisce' => $uporabnik->prebivalisce()->first(),
+            'naslovZaPosiljanje' => $uporabnik->naslovZaPosiljanje()->first(),
+            'drzave' => $this->drzave(),
+            'obcine' => $this->obcine(),
+            'poste' => $this->poste()
+        ];
+    }
+
     public function srednjesolskaIzobrazba(Uporabnik $uporabnik)
     {
         return [
