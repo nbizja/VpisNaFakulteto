@@ -16,6 +16,8 @@ class KriterijSeeder extends Seeder
     public function run()
     {
 
+        // NE SPREMINJAJ VRSTNEGA REDA, KER SE BO PODRLO!
+
         DB::table('kriterij')->truncate();
 
         //Ri-UN, redni
