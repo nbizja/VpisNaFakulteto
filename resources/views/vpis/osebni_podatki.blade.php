@@ -96,14 +96,6 @@
                                 </div>
                             </div>
 
-                            @if (!empty(session('errors')))
-                                <div class="alert alert-danger">
-                                    @foreach (array_unique(session('errors')) as $error)
-                                        {{ $error }}<br>
-                                    @endforeach
-                                </div>
-                            @endif
-
                             @include('flash_message')
                         </form>
                     </div>

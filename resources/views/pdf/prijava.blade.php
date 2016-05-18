@@ -110,7 +110,7 @@
                     <td  style="padding-left: 10px;width:25%">Spričevalo že imam: </td><td style="padding-left: 10px;background-color: #cccccc;">{{ $srednjesolskaIzobrazba->ima_spricevalo ? 'Da' : 'Ne' }}</td>
                 </tr>
                 <tr>
-                    <td  style="padding-left: 10px;width:25%">Način zakljuka srednje šole: </td><td style="padding-left: 10px;background-color: #cccccc;">{{ $srednjesolskaIzobrazba->nacinZakljucka->ime }}</td>
+                    <td  style="padding-left: 10px;width:25%">Način zaključka srednje šole: </td><td style="padding-left: 10px;background-color: #cccccc;">{{ $srednjesolskaIzobrazba->nacinZakljucka->ime }}</td>
                 </tr>
                 <tr>
                     <td  style="padding-left: 10px;width:25%">Država srednje šole: </td><td style="padding-left: 10px;background-color: #cccccc;">{{ $srednjesolskaIzobrazba->drzava->ime }}</td>
