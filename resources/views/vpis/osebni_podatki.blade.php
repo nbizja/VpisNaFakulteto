@@ -14,7 +14,7 @@
                                 <label class="col-md-3 control-label">Emšo: </label>
                                 <div class="col-md-9">
                                     <input type="text" class="form-control" id="emso" name="emso" data-emso="{{ $osebniPodatki->emso ?? '' }}" placeholder="0101998500123" value="{{ $osebniPodatki->emso ?? old('emso') }}" required
-                                    @if($osebniPodatki->id_drzavljanstva ?? 4 != 4){{ 'readonly' }}@endif
+                                    @if(($osebniPodatki->id_drzavljanstva ?? 2) != 2){{ 'readonly' }}@endif
                                     >
                                 </div>
                             </div>
@@ -69,8 +69,7 @@
                                     <select id="drzavljanstvo" name="drzavljanstvo" class="form-control col-md-9">
                                         @foreach($drzavljanstva as $drzavljanstvo)
                                             <option value="{{ $drzavljanstvo->id }}"
-                                                @if(!empty($osebniPodatki) && $osebniPodatki->id_drzavljanstva == $drzavljanstvo->id
-                                                    || $drzavljanstvo->id == 2) {{ 'selected' }} @endif>
+                                                @if(($osebniPodatki->id_drzavljanstva ?? 2) == $drzavljanstvo->id) {{ 'selected' }} @endif>
                                                 {{ $drzavljanstvo->ime }}
                                             </option>
                                         @endforeach

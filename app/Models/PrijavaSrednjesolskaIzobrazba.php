@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 class PrijavaSrednjesolskaIzobrazba extends Model
 {
     protected $table = 'prijava_srednjesolska_izobrazba';
-    protected $fillable = ['id_kandidata', 'ima_spricevalo', 'id_nacina_zakljucka', 'id_drzave', 'id_srednje_sole', 'id_maturitetnega_predmeta', 'ime_srednje_sole', 'datum_izdaje_spricevala'];
+    protected $fillable = ['id_kandidata', 'ima_spricevalo', 'id_nacina_zakljucka', 'id_drzave', 'id_srednje_sole', 'sifra_maturitetnega_predmeta', 'ime_srednje_sole', 'datum_izdaje_spricevala'];
     protected $guarded = ['id'];
     public $timestamps = true;
 
@@ -31,7 +31,7 @@ class PrijavaSrednjesolskaIzobrazba extends Model
 
     public function maturitetniPredmet()
     {
-        return $this->belongsTo('App\Models\Element', 'id_maturitetnega_predmeta', 'id');
+        return $this->belongsTo('App\Models\Element', 'sifra_maturitetnega_predmeta', 'id');
     }
     
     public function srednjesolskaIzobrazba()

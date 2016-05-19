@@ -78,7 +78,7 @@
                                         <option value="0" @if(!isset($srednjesolskaIzobrazba)){{ 'selected' }}@endif>Brez maturitetnega predmeta</option>
 
                                         @foreach($splosniPredmeti as $splosniPredmet)
-                                            <option value="{{ $splosniPredmet->id }}" <?php if($srednjesolskaIzobrazba->id_maturitetnega_predmeta ?? 0 == $splosniPredmet->id) echo 'selected';?>>
+                                            <option value="{{ $splosniPredmet->id }}" <?php if(($srednjesolskaIzobrazba->sifra_maturitetnega_predmeta ?? '0') == $splosniPredmet->id) echo 'selected';?>>
                                                 {{ $splosniPredmet->ime }}
                                             </option>
                                         @endforeach
@@ -88,7 +88,7 @@
 
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-5">
-                                    <a href="{{ url('vpis/'. $id .'/osebni_podatki') }}" class="btn btn-danger pull-left">
+                                    <a href="{{ url('vpis/'. $id .'/stalno_prebivalisce') }}" class="btn btn-danger pull-left">
                                         <i class="fa fa-btn fa-sign-in"></i>Nazaj
                                     </a>
                                     <button type="submit" name="shraniPogoj" class="btn btn-primary pull-right">

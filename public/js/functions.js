@@ -430,10 +430,10 @@ $(document).ready(function() {
         var emso = $('#emso');
         if ($(this).val() == 2) {
             emso.val(emso.data('emso'));
-            emso.attr('disabled', false);
+            emso.attr('readonly', false);
         } else {
             emso.val('Emšo bo samodejno ustvarjen');
-            emso.attr('disabled', true);
+            emso.attr('readonly', true);
         }
     });
     

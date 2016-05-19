@@ -132,7 +132,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-5">
-                                    <a href="{{ url('vpis/'. $id .'/srednjesolska_izobrazba') }}" class="btn btn-danger pull-left">
+                                    <a href="{{ url('vpis/'. $id .'/osebni_podatki') }}" class="btn btn-danger pull-left">
                                         <i class="fa fa-btn fa-sign-in"></i>Nazaj
                                     </a>
                                     <button type="submit" name="shraniPogoj" class="btn btn-primary pull-right">
