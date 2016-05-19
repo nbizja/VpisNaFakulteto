@@ -13,7 +13,7 @@ class ModifySifraMaturitetnegaPredmeta extends Migration
     public function up()
     {
         Schema::table('prijava_srednjesolska_izobrazba', function(Blueprint $table) {
-            $table->string('sifra_srednjesolskega_predmeta', 5)->change();
+            $table->string('sifra_maturitetnega_predmeta', 5)->change();
         });
     }
 
@@ -25,7 +25,7 @@ class ModifySifraMaturitetnegaPredmeta extends Migration
     public function down()
     {
         Schema::table('prijava_srednjesolska_izobrazba', function(Blueprint $table) {
-            $table->integer('sifra_srednjesolskega_predmeta', 5)->change();
+            $table->integer('sifra_maturitetnega_predmeta', 5)->change();
         });
     }
 }
