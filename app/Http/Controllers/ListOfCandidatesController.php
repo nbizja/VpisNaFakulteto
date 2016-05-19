@@ -96,14 +96,28 @@ class ListOfCandidatesController extends Controller
             else if($kandidat->vloga != VlogaUporabnika::KANDIDAT) unset($kandidati[$key]);
         }
 
+        $kandidati = $kandidati->sort(function ($a, $b) {
+            if ($a->priimek === $b->priimek) {
+                if ($a->ime === $b->ime) {
+                    return 0;
+                }
+                return $a->ime < $b->ime ? -1 : 1;
+            }
+            return $a->priimek < $b->priimek ? -1 : 1;
+        });
+
         return view('iskanje_kandidatov')
             ->with([
-                'kandidati' => $kandidati
+                'kandidati' => $kandidati,
+                'niz' => $search_string
             ]);
     }
 
     public function loadCandidates(){
-        return view('iskanje_kandidatov');
+        return view('iskanje_kandidatov')
+            ->with([
+                'niz' => ''
+            ]);
     }
 
     public function getList(Request $request)

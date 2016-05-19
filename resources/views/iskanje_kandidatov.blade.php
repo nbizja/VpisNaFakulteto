@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    <br>
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -9,11 +10,10 @@
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="post" action="{{action('ListOfCandidatesController@findCandidates')}}">
                         {!! csrf_field() !!}
-
                         <div class="form-group">
                             <label class="col-md-4 control-label">Emšo, ime ali priimek kandidata</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="podatki" value="{{ old('podatki') }}">
+                                <input type="text" class="form-control" name="podatki" value="{{ $niz }}">
                             </div>
                         </div>
 

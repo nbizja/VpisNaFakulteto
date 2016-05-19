@@ -90,6 +90,7 @@
                             </li>
                             <li class="active"><a href="{{ action('SifrantiController@index')}}">Vzdrževanje šifrantov</a></li>
                             <li class=""><a href="{{ action('ListOfCandidatesController@loadPage')}}">Seznam prijavljenih kandidatov</a></li>
+                            <li class=""><a href="{{ action('ListOfCandidatesController@loadCandidates')}}">Iskanje po kandidatih</a></li>
                         </ul>
                     </div>
                 @endif
@@ -106,6 +107,7 @@
                             <ul class="nav navbar-nav">
                                 <li class="active"><a href="#">Domov</a></li>
                                 <li class=""><a href="{{ action('ListOfCandidatesController@loadPage')}}">Seznam prijavljenih kandidatov</a></li>
+                                <li class=""><a href="{{ action('ListOfCandidatesController@loadCandidates')}}">Iskanje po kandidatih</a></li>
                             </ul>
                         </div>
                     @endif
