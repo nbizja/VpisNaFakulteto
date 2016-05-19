@@ -75,7 +75,13 @@ class PrijavaValidator
             return false;
         }
 
-        return true;
+        $emsoSum = 0;
+        $utezi = [7,6,5,4,3,2,7,6,5,4,3,2];
+        foreach ($utezi as $i => $utez) {
+            $emsoSum += $emso[$i] * $utez;
+        }
+
+        return (11 - ($emsoSum % 11) == $emso[12]);
     }
 
     public function prebivalisce($input)
