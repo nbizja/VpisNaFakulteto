@@ -75,6 +75,16 @@ class PrijavaValidator
             return false;
         }
 
+        $emso_sum = 0;
+        $weights = array(7, 6, 5, 4, 3, 2, 7, 6, 5, 4, 3, 2);
+        for($i = 0; $i < strlen($emso) - 1; $i++){
+            $emso_sum += $emso[$i] * $weights[$i];
+        }
+        $modulo = $emso_sum % 11;
+        if(11 - $modulo != $emso[12]){
+            return false;
+        }
+
         return true;
     }
 
