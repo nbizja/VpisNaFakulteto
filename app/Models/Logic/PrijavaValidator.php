@@ -80,8 +80,7 @@ class PrijavaValidator
         for($i = 0; $i < strlen($emso) - 1; $i++){
             $emso_sum += $emso[$i] * $weights[$i];
         }
-        $modulo = $emso_sum % 11;
-        if(11 - $modulo != $emso[12]){
+        if(11 - ($emso_sum % 11) != $emso[12]){
             return false;
         }
 
