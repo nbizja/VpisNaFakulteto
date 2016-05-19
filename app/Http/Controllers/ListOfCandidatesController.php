@@ -66,6 +66,46 @@ class ListOfCandidatesController extends Controller
         return redirect('prijava');
     }
 
+    public function findCandidates(Request $request){
+        $search_string = $request->get('podatki');
+        $parts = explode(" ", $search_string);
+
+        $kandidati = new \Illuminate\Database\Eloquent\Collection;
+        foreach ($parts as $part) {
+            $k = Uporabnik::where('ime', '=', $part)
+                ->orWhere('priimek', '=', $part)
+                ->orWhere('emso', '=', $part)
+                ->get();
+            $kandidati = $kandidati->merge($k);
+        }
+
+        $matches = array();
+        foreach ($kandidati as $kandidat) {
+            $no_matches = 0;
+            foreach ($parts as $part) {
+                if(strcasecmp($kandidat->ime, $part) == 0 || strcasecmp($kandidat->priimek, $part) == 0 || $kandidat->emso == $part){
+                    if($kandidat->vloga == VlogaUporabnika::KANDIDAT) $no_matches += 1;
+                }
+            }
+            array_push($matches, $no_matches);
+        }
+
+        $highest = max($matches);
+        foreach ($kandidati as $key=>$kandidat) {
+            if($matches[$key] != $highest) unset($kandidati[$key]);
+            else if($kandidat->vloga != VlogaUporabnika::KANDIDAT) unset($kandidati[$key]);
+        }
+
+        return view('iskanje_kandidatov')
+            ->with([
+                'kandidati' => $kandidati
+            ]);
+    }
+
+    public function loadCandidates(){
+        return view('iskanje_kandidatov');
+    }
+
     public function getList(Request $request)
     {
         $zavod_id = $request->get('zavod');

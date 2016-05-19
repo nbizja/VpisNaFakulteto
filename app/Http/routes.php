@@ -53,6 +53,9 @@ Route::group(['middleware' => ['prijavljen']], function () {
     Route::post('/vpisniPogoji/shraniDeleze', 'StudijskiProgrami\VpisniPogojiController@shraniDeleze');
     Route::get('/vpisniPogoji/shraniDeleze', 'StudijskiProgrami\VpisniPogojiController@shraniDeleze');
 
+    Route::get('iskanje', 'ListOfCandidatesController@loadCandidates');
+    Route::post('iskanje', 'ListOfCandidatesController@findCandidates');
+
 
     Route::get('odjava', 'Auth\AuthController@logout');
 
@@ -97,10 +100,6 @@ Route::group(['middleware' => ['prijavljen']], function () {
     Route::get('vpis/{id}/tisk_prijave',             'VpisController@tiskPrijave');
 });
 
-
-
-
-//TODO Strašno grdo. Prestavi to v kontroler.
 Route::get('/seznamKandidatov/{zavod_id?}', function($zavod_id){
     $zavodi =  \App\Models\VisokosolskiZavod::orderBy('ime')->pluck('id');
     if($zavod_id > 0) {
