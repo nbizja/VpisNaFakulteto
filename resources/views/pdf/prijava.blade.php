@@ -121,7 +121,7 @@
                 <tr>
                     <td  style="padding-left: 10px;width:25%">Datum izdaje spričevala: </td><td style="padding-left: 10px;background-color: #cccccc;">{{ date('d.m.Y', strtotime($srednjesolskaIzobrazba->datum_izdaje_spricevala)) }}</td>
                 </tr>
-                @if($srednjesolskaIzobrazba->id_maturitetnega_predmeta > 0 )
+                @if($srednjesolskaIzobrazba->sifra_maturitetnega_predmeta > 0 )
                     <tr>
                         <td  style="padding-left: 10px;width:25%">Maturitetni predmet: </td><td style="padding-left: 10px;background-color: #cccccc;">{{ $srednjesolskaIzobrazba->maturitetniPredmet->ime }}</td>
                     </tr>

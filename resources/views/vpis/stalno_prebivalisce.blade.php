@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-8">
                 <div class="panel panel-default">
 
                         <form class="form-horizontal" role="form" method="post" action="{{ url('vpis/'. $id .'/stalno_prebivalisce') }}">
@@ -63,18 +63,18 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label">Naslov za pošiljanje: </label>
-                                    <input class="isti_naslov_za_posiljanje" type="radio" name="isti_naslov_za_posiljanje"
-                                           @if(!(isset($stalnoPrebivalisce) && isset($naslovZaPosiljanje) && $stalnoPrebivalisce->naslov != $naslovZaPosiljanje->naslov)) {{ 'checked' }} @endif
-                                           value="1" >  Isti kot stalno prebivališče
-                                    <input class="isti_naslov_za_posiljanje" type="radio" name="isti_naslov_za_posiljanje"
-                                           @if(isset($stalnoPrebivalisce) && isset($naslovZaPosiljanje) && $stalnoPrebivalisce->naslov != $naslovZaPosiljanje->naslov) {{ 'checked'}} @endif
-                                           value="0" style="margin-left: 20px;">  Drugi
+                                    <label class="col-md-4 control-label">Naslov za pošiljanje: </label>
+                                    <div class="input-group col-md-4">
+                                        <input class="isti_naslov_za_posiljanje" type="radio" name="isti_naslov_za_posiljanje"
+                                               @if(!(isset($stalnoPrebivalisce) && isset($naslovZaPosiljanje) && $stalnoPrebivalisce->naslov != $naslovZaPosiljanje->naslov)) {{ 'checked' }} @endif
+                                               value="1" >  Isti kot stalno prebivališče
+                                        <input class="isti_naslov_za_posiljanje" type="radio" name="isti_naslov_za_posiljanje"
+                                               @if(isset($stalnoPrebivalisce) && isset($naslovZaPosiljanje) && $stalnoPrebivalisce->naslov != $naslovZaPosiljanje->naslov) {{ 'checked'}} @endif
+                                               value="0" style="margin-left: 20px;">  Drugi
+                                     </div>
                                 </div>
                             </div>
 
-
-                            <div class="panel-heading">Naslov za pošiljanje:</div>
                             <div class="panel-body">
                                 <div class="obrazec" @if(!(isset($stalnoPrebivalisce) && isset($naslovZaPosiljanje) && $stalnoPrebivalisce->naslov != $naslovZaPosiljanje->naslov)) {!! 'style="display:none;"' !!} @endif>
                                     <div class="form-group">
@@ -132,7 +132,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-5">
-                                    <a href="{{ url('vpis/'. $id .'/srednjesolska_izobrazba') }}" class="btn btn-danger pull-left">
+                                    <a href="{{ url('vpis/'. $id .'/osebni_podatki') }}" class="btn btn-danger pull-left">
                                         <i class="fa fa-btn fa-sign-in"></i>Nazaj
                                     </a>
                                     <button type="submit" name="shraniPogoj" class="btn btn-primary pull-right">

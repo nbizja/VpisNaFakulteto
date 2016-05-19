@@ -88,7 +88,7 @@
                         <p class="col-md-12">
                             <span class="pregled">Datum izdaje spričevala:</span> {{ date('d.m.Y', strtotime($srednjesolskaIzobrazba->datum_izdaje_spricevala)) }}
                         </p>
-                        @if($srednjesolskaIzobrazba->id_maturitetnega_predmeta > 0 )
+                        @if($srednjesolskaIzobrazba->sifra_maturitetnega_predmeta > 0 )
                             <p class="col-md-12">
                                 <span class="pregled">Maturitetni predmet</span> {{ $srednjesolskaIzobrazba->maturitetniPredmet->ime }}
                             </p>

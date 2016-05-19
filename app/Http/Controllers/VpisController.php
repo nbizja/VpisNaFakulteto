@@ -268,6 +268,7 @@ class VpisController extends Controller
             return back()->with('errors', $validator->errors()->all());
         }
         $input['datum_izdaje_spricevala'] = date('Y-m-d', strtotime($input['datum_izdaje_spricevala']));
+        //dd($input);
         $srednjesolskaIzobrazba = new PrijavaSrednjesolskaIzobrazba($input);
         if ($srednjesolskaIzobrazba->id_srednje_sole == 0 && empty($srednjesolskaIzobrazba->ime_srednje_sole)) {
             return back()->with([

@@ -430,14 +430,33 @@ $(document).ready(function() {
         var emso = $('#emso');
         if ($(this).val() == 2) {
             emso.val(emso.data('emso'));
-            emso.attr('disabled', false);
+            emso.attr('readonly', false);
         } else {
             emso.val('Emšo bo samodejno ustvarjen');
-            emso.attr('disabled', true);
+            emso.attr('readonly', true);
         }
     });
     
-    
+    $('#stalno_prebivalisce_drzava').change(function() {
+        if ($(this).val() != 705) {
+            $('#stalno_prebivalisce_obcina').children().each(function() {
+                if ($(this).val() == 1) {
+                    $(this).attr('selected', true);
+                } else {
+                    $(this).attr('selected', false);
+                }
+            });
+
+            $('#stalno_prebivalisce_posta').children().each(function() {
+                if ($(this).val() == 0) {
+                    $(this).attr('selected', true);
+                } else {
+                    $(this).attr('selected', false);
+                }
+            });
+        }
+
+    });
 
 });
 
