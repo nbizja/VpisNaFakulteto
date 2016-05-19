@@ -68,49 +68,73 @@ class ListOfCandidatesController extends Controller
 
     public function findCandidates(Request $request){
         $search_string = $request->get('podatki');
-        $parts = explode(" ", $search_string);
+        if($search_string != '') {
+            $parts = explode(" ", $search_string);
 
-        $kandidati = new \Illuminate\Database\Eloquent\Collection;
-        foreach ($parts as $part) {
-            $k = Uporabnik::where('ime', '=', $part)
-                ->orWhere('priimek', '=', $part)
-                ->orWhere('emso', '=', $part)
-                ->get();
-            $kandidati = $kandidati->merge($k);
-        }
-
-        $matches = array();
-        foreach ($kandidati as $kandidat) {
-            $no_matches = 0;
+            $kandidati = new \Illuminate\Database\Eloquent\Collection;
             foreach ($parts as $part) {
-                if(strcasecmp($kandidat->ime, $part) == 0 || strcasecmp($kandidat->priimek, $part) == 0 || $kandidat->emso == $part){
-                    if($kandidat->vloga == VlogaUporabnika::KANDIDAT) $no_matches += 1;
-                }
+                $k = Uporabnik::where('ime', '=', $part)
+                    ->orWhere('priimek', '=', $part)
+                    ->orWhere('emso', '=', $part)
+                    ->get();
+                $kandidati = $kandidati->merge($k);
             }
-            array_push($matches, $no_matches);
-        }
 
-        $highest = max($matches);
-        foreach ($kandidati as $key=>$kandidat) {
-            if($matches[$key] != $highest) unset($kandidati[$key]);
-            else if($kandidat->vloga != VlogaUporabnika::KANDIDAT) unset($kandidati[$key]);
-        }
-
-        $kandidati = $kandidati->sort(function ($a, $b) {
-            if ($a->priimek === $b->priimek) {
-                if ($a->ime === $b->ime) {
-                    return 0;
+            $matches = array();
+            foreach ($kandidati as $kandidat) {
+                $no_matches = 0;
+                foreach ($parts as $part) {
+                    if (strcasecmp($kandidat->ime, $part) == 0 || strcasecmp($kandidat->priimek, $part) == 0 || $kandidat->emso == $part) {
+                        if ($kandidat->vloga == VlogaUporabnika::KANDIDAT) $no_matches += 1;
+                    }
                 }
-                return $a->ime < $b->ime ? -1 : 1;
+                array_push($matches, $no_matches);
             }
-            return $a->priimek < $b->priimek ? -1 : 1;
-        });
+
+            $highest = max($matches);
+            foreach ($kandidati as $key => $kandidat) {
+                if ($matches[$key] != $highest) unset($kandidati[$key]);
+                else if ($kandidat->vloga != VlogaUporabnika::KANDIDAT) unset($kandidati[$key]);
+
+                $prijave = $kandidat->Prijave;
+                if (count($prijave) == 0) unset($kandidati[$key]);
+                else {
+                    if (Auth::user()->vloga == 'fakulteta') {
+                        $id = Auth::user()->id;
+                        $temp = 0;
+                        foreach ($prijave as $prijava) {
+                            $program = StudijskiProgram::where('id', '=', $prijava->id_studijskega_programa)->get();
+                            $zavod = VisokosolskiZavod::where('id', '=', $program[0]->id_zavoda)->get();
+                            if ($zavod[0]->id_skrbnika == $id) $temp = 1;
+                        }
+                        if ($temp == 0) unset($kandidati[$key]);
+                    }
+                }
+
+            }
+
+            $kandidati = $kandidati->sort(function ($a, $b) {
+                if ($a->priimek === $b->priimek) {
+                    if ($a->ime === $b->ime) {
+                        return 0;
+                    }
+                    return $a->ime < $b->ime ? -1 : 1;
+                }
+                return $a->priimek < $b->priimek ? -1 : 1;
+            });
+
+            return view('iskanje_kandidatov')
+                ->with([
+                    'kandidati' => $kandidati,
+                    'niz' => $search_string
+                ]);
+        }
 
         return view('iskanje_kandidatov')
             ->with([
-                'kandidati' => $kandidati,
                 'niz' => $search_string
             ]);
+
     }
 
     public function loadCandidates(){
