@@ -13,11 +13,13 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label">Kandidat: </label>
                             <div class="col-md-6">
-                                <input value="{{$id_kandidata}}" class="form-control" readonly>
+                                <input value="{{$kandidat->ime.' '.$kandidat->priimek}}" class="form-control" readonly>
                             </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-md-4 control-label">EMŠO: </label>
                             <div class="col-md-6">
-                                <input value="{{$id_kandidata}}" class="form-control" readonly>
+                                <input value="{{$kandidat->emso}}" class="form-control" readonly>
                             </div>
                         </div>
 
@@ -32,47 +34,20 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label">Tip mature: </label>
                             <div class="col-md-6">
-                                <input name="nacin" id="nacin_studija" class="form-control" readonly>
+                                <input value="{{$tipMature == 0 ? "Splošna matura" : "Poklicna matura"}}" class="form-control" readonly>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-md-4 control-label">Opravljena matura: </label>
                             <div class="col-md-6">
-                                <input name="vrsta" id="vrsta_studija" class="form-control" readonly>
+                                <input value="{{$matura->opravil == 0 ? "Ne" : "Da"}}" class="form-control" readonly>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-md-4 control-label">Izbirni maturitetni predmeti (samo ob specifičnih vpisnih pogojih): </label>
                             <div class="col-md-6">
-                                <input name="vrsta" id="vrsta_studija" class="form-control" readonly>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="panel panel-default">
-                    <div class="panel-heading">1. želja</div>
-                    <div class="panel-body">
-
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Visokošolski zavod: </label>
-                            <div class="col-md-6">
-                                <input class="form-control" readonly>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Študijski program: </label>
-                            <div class="col-md-6">
-                                <input class="form-control" readonly>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Kandidat ustreza pogojem: </label>
-                            <div class="col-md-6">
                                 <input class="form-control" readonly>
                             </div>
                         </div>
@@ -80,57 +55,32 @@
                 </div>
 
                 <div class="panel panel-default">
-                    <div class="panel-heading">2. želja</div>
-                    <div class="panel-body">
+                    @foreach($prijave as $prijava)
+                        <div class="panel-heading">{{$prijava->zelja}}. želja</div>
+                        <div class="panel-body">
 
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Visokošolski zavod: </label>
-                            <div class="col-md-6">
-                                <input class="form-control" readonly>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Visokošolski zavod: </label>
+                                <div class="col-md-6">
+                                    <input value="{{$prijava->studijskiProgram->visokosolskiZavod->ime}}" class="form-control" readonly>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Študijski program: </label>
+                                <div class="col-md-6">
+                                    <input value="{{$prijava->studijskiProgram->ime.' ('.$prijava->studijskiProgram->nacin_studija.')'}}" class="form-control" readonly>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Kandidat ustreza pogojem: </label>
+                                <div class="col-md-6">
+                                    <input class="form-control" readonly>
+                                </div>
                             </div>
                         </div>
-
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Študijski program: </label>
-                            <div class="col-md-6">
-                                <input class="form-control" readonly>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Kandidat ustreza pogojem: </label>
-                            <div class="col-md-6">
-                                <input class="form-control" readonly>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="panel panel-default">
-                    <div class="panel-heading">3. želja</div>
-                    <div class="panel-body">
-
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Visokošolski zavod: </label>
-                            <div class="col-md-6">
-                                <input class="form-control" readonly>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Študijski program: </label>
-                            <div class="col-md-6">
-                                <input class="form-control" readonly>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Kandidat ustreza pogojem: </label>
-                            <div class="col-md-6">
-                                <input class="form-control" readonly>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
 
             </div>

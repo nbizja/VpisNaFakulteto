@@ -8,21 +8,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Repositories\VpisRepository;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Repositories\StudijskiProgramiRepository;
-use App\Models\Repositories\VpisniPogojiRepository;;
+use App\Models\Repositories\PrijavaRepository;;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use App\Models\Uporabnik;
 
 class UspehKandidatovController extends Controller
 {
-    private $studijskiProgrami;
-    private $vpisniPogoji;
+    private $prijavaRepo;
+    private $vpisRepo;
 
-    public function __construct(StudijskiProgramiRepository $sp, VpisniPogojiRepository $vp)
+    public function __construct(PrijavaRepository $pr, VpisRepository $vr)
     {
-        $this->studijskiProgrami = $sp;
-        $this->vpisniPogoji = $vp;
+        $this->prijavaRepo = $pr;
+        $this->vpisRepo = $vr;
     }
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
@@ -33,7 +34,16 @@ class UspehKandidatovController extends Controller
     {
         if (Auth::check()) {
             if (Auth::user()->vloga == 'skrbnik') {
-                return view('ustrezanjePogojem', ['id_kandidata' => $idKandidata]);
+                $kandidat = $this->prijavaRepo->uporabnikById($idKandidata);
+                if (!($kandidat->poklicnaMatura->isEmpty())) {
+                    $tipMature = 1;
+                    $matura = $kandidat->poklicnaMatura->first();
+                } else if (!($kandidat->matura->isEmpty())) {
+                    $tipMature = 0;
+                    $matura = $kandidat->matura->first();
+                };
+                return view('ustrezanjePogojem', ['kandidat' => $kandidat, 'matura' => $matura, 'tipMature' => $tipMature])
+                    ->with($this->vpisRepo->pregledPrijave($kandidat));
             }
         }
 
