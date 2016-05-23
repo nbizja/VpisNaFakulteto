@@ -10,6 +10,7 @@ include 'PrijavniRokSeeder.php';
 include 'PrijavaSeeder.php';
 include 'MaturaSeeder.php';
 include 'PoklicnaMaturaSeeder.php';
+include 'PoklicnaMaturaPredmetSeeder.php';
 include 'PrijavaSrednjaSolaSeeder.php';
 
 /**
@@ -36,7 +37,9 @@ class DatabaseSeeder extends CsvSeeder
              ObcinaSeeder::class, PoklicSeeder::class, PostaSeeder::class,
              SrednjaSolaSeeder::class, StudijskiProgramSeeder::class,
              VpisniPogojSeeder::class, KriterijSeeder::class,
-             VisokosolskiZavodSeeder::class, PrijavaSeeder::class, PoklicnaMaturaSeeder::class, MaturaSeeder::class, PrijavaSrednjaSolaSeeder::class);
+             VisokosolskiZavodSeeder::class, PrijavaSeeder::class, PoklicnaMaturaSeeder::class,
+             PoklicnaMaturaPredmetSeeder::class,
+             MaturaSeeder::class, PrijavaSrednjaSolaSeeder::class);
      }
 
     /**
