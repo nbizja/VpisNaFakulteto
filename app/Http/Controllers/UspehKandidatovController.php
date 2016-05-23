@@ -29,12 +29,11 @@ class UspehKandidatovController extends Controller
 
     protected $redirectTo = '/';
 
-    public function preveriPogoje()
+    public function preveriPogoje($idKandidata)
     {
         if (Auth::check()) {
             if (Auth::user()->vloga == 'skrbnik') {
-                return view('ustrezanjePogojem', ['id_kandidata' => 1]);
-
+                return view('ustrezanjePogojem', ['id_kandidata' => $idKandidata]);
             }
         }
 
