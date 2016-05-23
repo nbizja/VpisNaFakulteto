@@ -54,8 +54,9 @@
                     </div>
                 </div>
 
-                <div class="panel panel-default">
-                    @foreach($prijave as $prijava)
+
+                @foreach($prijave as $prijava)
+                    <div class="panel panel-default">
                         <div class="panel-heading">{{$prijava->zelja}}. želja</div>
                         <div class="panel-body">
 
@@ -80,8 +81,8 @@
                                 </div>
                             </div>
                         </div>
-                    @endforeach
-                </div>
+                    </div>
+                @endforeach
 
             </div>
 
