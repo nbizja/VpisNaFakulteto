@@ -125,7 +125,7 @@ class PoklicnaMaturaPredmetSeeder extends Seeder
 
         DB::table('poklicna_matura_predmet')->insert([
             'emso' => '1911997500131',
-            'id_predmeta' => 'L431',
+            'id_predmeta' => 'L421',
             'ocena' => 4,
             'opravil' => 1,
             'ocena_3_letnik' => 4,
@@ -135,6 +135,15 @@ class PoklicnaMaturaPredmetSeeder extends Seeder
         DB::table('poklicna_matura_predmet')->insert([
             'emso' => '1911997500131',
             'id_predmeta' => 'L501',
+            'ocena' => 4,
+            'opravil' => 1,
+            'ocena_3_letnik' => 4,
+            'ocena_4_letnik' => 4,
+        ]);
+
+        DB::table('poklicna_matura_predmet')->insert([
+            'emso' => '1911997500131',
+            'id_predmeta' => 'M431',
             'ocena' => 4,
             'opravil' => 1,
             'ocena_3_letnik' => 4,
@@ -178,6 +187,7 @@ class PoklicnaMaturaPredmetSeeder extends Seeder
             'ocena_3_letnik' => 4,
             'ocena_4_letnik' => 4,
         ]);
+
     }
 }
 

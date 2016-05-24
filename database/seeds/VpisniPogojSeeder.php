@@ -314,7 +314,8 @@ class VpisniPogojSeeder extends Seeder
             'splosna_matura' => '0',
             'poklicna_matura' => '1',
             'id_poklica' => '51001',
-            'id_elementa' => 'M421'    //gozdarski tehnik + biologija na maturi
+            'id_elementa' => 'L421',    //gozdarski tehnik + biologija na poklicni maturi + mat.predmet
+            'id_elementa2' => 'SM'
         ]);
 
         DB::table('vpisni_pogoj')->insert([
@@ -323,9 +324,9 @@ class VpisniPogojSeeder extends Seeder
             'splosna_matura' => '0',
             'poklicna_matura' => '1',
             'id_poklica' => '51001',
-            'id_elementa' => 'L421',    //gozdarski tehnik + biologija na poklicni maturi + mat.predmet
-            'id_elementa2' => 'SM'
+            'id_elementa' => 'M421'    //gozdarski tehnik + biologija na maturi
         ]);
+
 
         //Gozdarstvo, izredni
         DB::table('vpisni_pogoj')->insert([

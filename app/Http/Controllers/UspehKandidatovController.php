@@ -86,7 +86,7 @@ class UspehKandidatovController extends Controller
 
             foreach ($pogoji as $pogoj) {
                 $ustreza[$i] = $this->preveriPogoj($pogoj, $predmeti, $matura);
-                if ($ustreza)
+                if ($ustreza[$i])
                     break;
             }
 
@@ -102,71 +102,62 @@ class UspehKandidatovController extends Controller
             return $predmet->predmet->id;
         })->toArray();
 
-        if (!(empty($pogoj->id_poklica))) {
-            if ($pogoj->id_poklica == $matura->id_poklica) {  // poklic se sklada
-                if (!(empty($pogoj->id_elementa))) {
-                    if (in_array($pogoj->id_elementa, $predmetiIds)) {  //poklic + 1.element se skladata
-                        if (!(empty($pogoj->id_elementa2))) {
-                            if (in_array($pogoj->id_elementa2, $predmetiIds)) {
-                                return true;
-                            } else {
-                                if ($pogoj->id_elementa2 == 'SM') {
-                                    if (empty(array_filter($predmetiIds, function($id) {
-                                        return substr($id, 0, 1) == 'M';
-                                    }))) {
-                                        return false;
-                                    } else {
-                                        //ne sme imeti bio na obeh maturah!
-                                        if ($this->checkDoubles($predmetiIds)) {
-                                            return true;
-                                        } else {
-                                            return false;
-                                        }
-                                    }
-                                } else {
-                                    return false;
-                                }
-                            }
-                        } else {
-                            return true;  // poklic + 1.element se skladata, 2.elementa NI
-                        }
-                    }
-                }
-            } else {
+
+        if (!empty($pogoj->id_poklica)) {
+            if ($pogoj->id_poklica != $matura->id_poklica) {  // poklic se sklada
                 return false;
             }
-        } else if (!(empty($pogoj->id_elementa))) {  //poklic je empty
-            if (in_array($pogoj->id_elementa, $predmetiIds)) {
-                if (!(empty($pogoj->id_elementa2))) {
-                    if (in_array($pogoj->id_elementa2, $predmetiIds)) {
-                        return true;
-                    } else {
-                        if ($pogoj->id_elementa2 == 'SM') {
-                            if (empty(array_filter($predmetiIds, function($id) {
-                                return substr($id, 0, 1) == 'M';
-                            }))) {
-                                return false;
-                            } else {
-                                //ne sme imeti bio na obeh maturah!
-                                if ($this->checkDoubles($predmetiIds)) {
-                                    return true;
-                                } else {
-                                    return false;
-                                }
-                            }
-                        } else {
-                            return false;
-                        }
-                    }
-                } else {
-                    return true;
-                }
+            if (empty($pogoj->id_elementa)) {
+                return false;
             }
-        } else {
-            return true;
+
+            if (!in_array($pogoj->id_elementa, $predmetiIds)) {  //poklic + 1.element se skladata
+                return false;
+            }
+
+            if (empty($pogoj->id_elementa2)) {
+                return true;
+            }
+
+            if (in_array($pogoj->id_elementa2, $predmetiIds)) {
+                return true;
+            }
+
+            if ($pogoj->id_elementa2 != 'SM') {
+                return false;
+            }
+
+            if (!empty(array_filter($predmetiIds, function($id) {
+                return substr($id, 0, 1) == 'M';
+            }))) {
+                return $this->checkDoubles($predmetiIds);
+            }
+            return false;
+
+        } else if (!empty($pogoj->id_elementa)) {  //poklic je empty
+            if (!in_array($pogoj->id_elementa, $predmetiIds)) {
+                return false;
+            }
+
+            if (empty($pogoj->id_elementa2)) {
+                return true;
+            }
+            if (in_array($pogoj->id_elementa2, $predmetiIds)) {
+                return true;
+            }
+
+            if ($pogoj->id_elementa2 != 'SM') {
+                return false;
+            }
+            if (!empty(array_filter($predmetiIds, function($id) {
+                return substr($id, 0, 1) == 'M';
+            }))) {
+                return $this->checkDoubles($predmetiIds);
+            }
+            return false;
         }
 
-        return false;
+        return true;
     }
 
     // Vrne false, ce ima tabela podvojene predmete pri poklicni in splosni maturi.
@@ -174,16 +165,12 @@ class UspehKandidatovController extends Controller
     public function checkDoubles($predmetIds)
     {
         $i = 0;
+        $ids = [];
         foreach ($predmetIds as $id)
         {
             $ids[$i] = substr($id, 1, 3);
             $i++;
         }
-        $ids = array_unique($ids);
-        if (count($ids) != count($predmetIds)) {
-            return false;
-        } else {
-            return true;
-        }
+        return count(array_unique($ids)) == count($predmetIds);
     }
 }
