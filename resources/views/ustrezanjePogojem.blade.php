@@ -41,7 +41,7 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label">Poklic: </label>
                             <div class="col-md-6">
-                                <input value="{{$matura->id_poklica}}" class="form-control" readonly>
+                                <input value="{{$matura->poklic->ime}}" class="form-control" readonly>
                             </div>
                         </div>
 

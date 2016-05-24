@@ -55,8 +55,6 @@ class UspehKandidatovController extends Controller
                     $rezultat = array(false, false, false);
                 }
 
-
-
                 return view('ustrezanjePogojem', ['kandidat' => $kandidat, 'matura' => $matura,
                                                   'tipMature' => $tipMature, 'predmeti' => $predmeti,
                                                   'rezultat' => $rezultat])
