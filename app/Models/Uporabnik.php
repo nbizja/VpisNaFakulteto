@@ -68,6 +68,18 @@ class Uporabnik extends Model implements AuthenticatableContract, CanResetPasswo
 
     }
 
+    public function matura()
+    {
+        return $this->hasMany('App\Models\Matura', 'emso', 'emso');
+
+    }
+
+    public function poklicnaMatura()
+    {
+        return $this->hasMany('App\Models\PoklicnaMatura', 'emso', 'emso');
+
+    }
+
 
 
 }

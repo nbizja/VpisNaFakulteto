@@ -53,6 +53,8 @@ Route::group(['middleware' => ['prijavljen']], function () {
     Route::post('/vpisniPogoji/shraniDeleze', 'StudijskiProgrami\VpisniPogojiController@shraniDeleze');
     Route::get('/vpisniPogoji/shraniDeleze', 'StudijskiProgrami\VpisniPogojiController@shraniDeleze');
 
+    Route::get('/ustrezanjePogojem/{id_kandidata}', 'UspehKandidatovController@preveriPogoje');
+
     Route::get('iskanje', 'ListOfCandidatesController@loadCandidates');
     Route::post('iskanje', 'ListOfCandidatesController@findCandidates');
 
@@ -117,21 +119,3 @@ Route::get('/seznamKandidatov/{zavod_id?}', function($zavod_id){
 });
 
 Route::get('seznamKandidatov/pdf', 'ListOfCandidatesController@exportPdf');
-
-
-
-
-
-
-
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| This route group applies the "web" middleware group to every route
-| it contains. The "web" middleware group is defined in your HTTP
-| kernel and includes session state, CSRF protection, and more.
-|
-*/
-
