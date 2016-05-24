@@ -38,6 +38,9 @@ class UspehKandidatovController extends Controller
         if (Auth::check()) {
             if (Auth::user()->vloga == 'skrbnik') {
                 $kandidat = $this->prijavaRepo->uporabnikById($idKandidata);
+                $matura = null;
+                $tipMature = 0;
+                $predmeti = null;
                 if (!($kandidat->poklicnaMatura->isEmpty())) {
                     $tipMature = 1;
                     $matura = $kandidat->poklicnaMatura->first();
@@ -48,12 +51,15 @@ class UspehKandidatovController extends Controller
                     $predmeti = $kandidat->predmetiSplosna()->with('predmet')->get();
                 };
 
-
-                if ($matura->opravil == 1) {
-                    $rezultat = $this->preveriZelje($tipMature, $predmeti, $matura, $kandidat);
-                } else {
-                    $rezultat = array(false, false, false);
+                $rezultat = array(false, false, false);
+                if ($matura != null) {
+                    if ($matura->opravil == 1) {
+                        $rezultat = $this->preveriZelje($tipMature, $predmeti, $matura, $kandidat);
+                    } else {
+                        $rezultat = array(false, false, false);
+                    }
                 }
+
 
                 return view('ustrezanjePogojem', ['kandidat' => $kandidat, 'matura' => $matura,
                                                   'tipMature' => $tipMature, 'predmeti' => $predmeti,
