@@ -36,6 +36,9 @@
 							</div>
 							
 							@include('flash_message')
+							@if (Session::has('flash_message'))
+								{{ Session::get('flash_message') }}
+							@endif
 							
 						{{ Form::close() }}
                     </div>
