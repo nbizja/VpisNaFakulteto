@@ -29,6 +29,11 @@ class ListOfCandidatesController extends Controller
         return -1;
     }
 
+    public function urediPodatke()
+    {
+        return view('urediPodatkeUspeh');
+    }
+
     public function loadPage()
     {
         if (Auth::check()) {

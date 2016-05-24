@@ -39,11 +39,19 @@
                 <th>  </th>
                 <th>Emšo</th>
                 <th>Priimek in ime</th>
+                <th></th>
             </tr>
             @foreach($kandidati as $kandidat)
                 <tr>
                     <td> {{$kandidat->emso}}  </td>
                     <td> {{$kandidat->priimek}} {{$kandidat->ime}} </td>
+                    <td>
+                        <form action="{{ action('ListOfCandidatesController@urediPodatke') }}">
+                            <button type="submit" name="uredi{{$kandidat->id}}" class="btn btn-primary pull-right">
+                                Popravi podatke o uspehu
+                            </button>
+                        </form>
+                    </td>
                 </tr>
             @endforeach
         </table>
