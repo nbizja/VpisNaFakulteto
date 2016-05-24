@@ -38,11 +38,13 @@ class UspehKandidatovController extends Controller
                 if (!($kandidat->poklicnaMatura->isEmpty())) {
                     $tipMature = 1;
                     $matura = $kandidat->poklicnaMatura->first();
+                    $predmeti = $kandidat->predmetiPoklicna()->with('predmet')->get();
                 } else if (!($kandidat->matura->isEmpty())) {
                     $tipMature = 0;
                     $matura = $kandidat->matura->first();
+                    $predmeti = $kandidat->predmetiSplosna()->with('predmet')->get();
                 };
-                return view('ustrezanjePogojem', ['kandidat' => $kandidat, 'matura' => $matura, 'tipMature' => $tipMature])
+                return view('ustrezanjePogojem', ['kandidat' => $kandidat, 'matura' => $matura, 'tipMature' => $tipMature, 'predmeti' => $predmeti])
                     ->with($this->vpisRepo->pregledPrijave($kandidat));
             }
         }

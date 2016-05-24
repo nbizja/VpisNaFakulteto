@@ -10,4 +10,9 @@ class PoklicnaMaturaPredmet extends Model
     protected $table = 'poklicna_matura_predmet';
     protected $fillable = ['emso', 'id_predmeta', 'ocena', 'opravil', 'ocena_3_letnik', 'ocena_4_letnik', 'tip_predmeta'];
     protected $guarded = ['id'];
+
+    public function predmet()
+    {
+        return $this->belongsTo('App\Models\Element', 'id_predmeta', 'id');
+    }
 }

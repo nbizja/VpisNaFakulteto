@@ -44,13 +44,20 @@
                                 <input value="{{$matura->opravil == 0 ? "Ne" : "Da"}}" class="form-control" readonly>
                             </div>
                         </div>
+                    </div>
+                </div>
 
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Izbirni maturitetni predmeti (samo ob specifičnih vpisnih pogojih): </label>
-                            <div class="col-md-6">
-                                <input class="form-control" readonly>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Maturitetni predmeti</div>
+                    <div class="panel-body">
+
+                        @foreach($predmeti as $predmet)
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <label class="col-md-10">{{$predmet->predmet->ime}}</label>
+                                </div> <br>
                             </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
 

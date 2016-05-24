@@ -26,7 +26,7 @@ class PoklicnaMaturaSeeder extends Seeder
             'maksimum' => 23
         ]);
 
-        DB::table('matura')->insert([
+        DB::table('poklicna_matura')->insert([
             'emso' => '1407997500080',
             'ime' => 'Miha',
             'priimek' => 'Balon',
@@ -40,7 +40,7 @@ class PoklicnaMaturaSeeder extends Seeder
             'maksimum' => 23
         ]);
 
-        DB::table('matura')->insert([
+        DB::table('poklicna_matura')->insert([
             'emso' => '1408997500686',
             'ime' => 'Matej',
             'priimek' => 'Kosec',
