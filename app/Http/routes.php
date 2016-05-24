@@ -58,6 +58,8 @@ Route::group(['middleware' => ['prijavljen']], function () {
     Route::get('iskanje', 'ListOfCandidatesController@loadCandidates');
     Route::post('iskanje', 'ListOfCandidatesController@findCandidates');
 
+    Route::get('urejanjePodatkovoUspehu', 'ListOfCandidatesController@urediPodatke');
+
 
     Route::get('odjava', 'Auth\AuthController@logout');
 
