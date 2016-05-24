@@ -57,6 +57,53 @@ class MaturaPredmetSeeder extends Seeder
             'ocena_3_letnik' => 4,
             'ocena_4_letnik' => 4,
         ]);
+
+        /*SOFIJA BEZER - predmeti*/
+        DB::table('matura_predmet')->insert([
+            'emso' => '1412998500684',
+            'id_predmeta' => 'M101',
+            'ocena' => 1,
+            'opravil' => 1,
+            'ocena_3_letnik' => 2,
+            'ocena_4_letnik' => 3,
+        ]);
+
+        DB::table('matura_predmet')->insert([
+            'emso' => '1412998500684',
+            'id_predmeta' => 'M241',
+            'ocena' => 2,
+            'opravil' => 1,
+            'ocena_3_letnik' => 4,
+            'ocena_4_letnik' => 4,
+        ]);
+
+        DB::table('matura_predmet')->insert([
+            'emso' => '1412998500684',
+            'id_predmeta' => 'M401',
+            'ocena' => 1,
+            'opravil' => 1,
+            'ocena_3_letnik' => 4,
+            'ocena_4_letnik' => 4,
+        ]);
+
+        DB::table('matura_predmet')->insert([
+            'emso' => '1412998500684',
+            'id_predmeta' => 'M781',
+            'ocena' => 2,
+            'opravil' => 1,
+            'ocena_3_letnik' => 4,
+            'ocena_4_letnik' => 4,
+        ]);
+
+        DB::table('matura_predmet')->insert([
+            'emso' => '1412998500684',
+            'id_predmeta' => 'M411',
+            'ocena' => 2,
+            'opravil' => 1,
+            'ocena_3_letnik' => 4,
+            'ocena_4_letnik' => 4,
+        ]);
+
     }
 }
 

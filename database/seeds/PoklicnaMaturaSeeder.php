@@ -54,6 +54,20 @@ class PoklicnaMaturaSeeder extends Seeder
             'maksimum' => 23
         ]);
 
+
+        DB::table('poklicna_matura')->insert([
+            'emso' => '1911997500131',
+            'ime' => 'Peter',
+            'priimek' => 'Visok',
+            'ocena' => 16,  //tocke na maturi
+            'opravil' => 1,
+            'ocena_3_letnik' => 3.6,
+            'ocena_4_letnik' => 3.2,
+            'tip_kandidata' => 'redni',
+            'id_srednje_sole' => 39001,  //Gozdarska Postojna
+            'id_poklica' => 51001,   //gozdarski tehnik
+            'maksimum' => 23
+        ]);
     }
 }
 

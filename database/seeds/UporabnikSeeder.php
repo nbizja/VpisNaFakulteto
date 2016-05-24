@@ -129,5 +129,25 @@ class UporabnikSeeder extends Seeder
             'password' => bcrypt('matejkosec'),
             'vloga' => VlogaUporabnika::KANDIDAT
         ]);
+
+        DB::table('uporabnik')->insert([
+            'emso' => '1412998500684',
+            'ime' => 'Sofija',
+            'priimek' => 'Bezer',
+            'username' => 'sofijabezer',
+            'email' => 'sofijabezer@gmail.com',
+            'password' => bcrypt('sofijabezer'),
+            'vloga' => VlogaUporabnika::KANDIDAT
+        ]);
+
+        DB::table('uporabnik')->insert([
+            'emso' => '1911997500131',
+            'ime' => 'Peter',
+            'priimek' => 'Visok',
+            'username' => 'petervisok',
+            'email' => 'petervisok@gmail.com',
+            'password' => bcrypt('petervisok'),
+            'vloga' => VlogaUporabnika::KANDIDAT
+        ]);
     }
 }

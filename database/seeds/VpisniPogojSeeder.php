@@ -312,7 +312,7 @@ class VpisniPogojSeeder extends Seeder
             'id_programa' => '776',
             'vnos_veljaven' => '1',
             'splosna_matura' => '0',
-            'poklicna_matura' => '0',
+            'poklicna_matura' => '1',
             'id_poklica' => '51001',
             'id_elementa' => 'M421'    //gozdarski tehnik + biologija na maturi
         ]);
@@ -321,7 +321,7 @@ class VpisniPogojSeeder extends Seeder
             'id_programa' => '776',
             'vnos_veljaven' => '1',
             'splosna_matura' => '0',
-            'poklicna_matura' => '0',
+            'poklicna_matura' => '1',
             'id_poklica' => '51001',
             'id_elementa' => 'L421',    //gozdarski tehnik + biologija na poklicni maturi + mat.predmet
             'id_elementa2' => 'SM'
@@ -339,7 +339,7 @@ class VpisniPogojSeeder extends Seeder
             'id_programa' => '859',
             'vnos_veljaven' => '1',
             'splosna_matura' => '0',
-            'poklicna_matura' => '0',
+            'poklicna_matura' => '1',
             'id_poklica' => '51001',
             'id_elementa' => 'L421',
             'id_elementa2' => 'SM'
@@ -349,7 +349,7 @@ class VpisniPogojSeeder extends Seeder
             'id_programa' => '859',
             'vnos_veljaven' => '1',
             'splosna_matura' => '0',
-            'poklicna_matura' => '0',
+            'poklicna_matura' => '1',
             'id_poklica' => '51001',
             'id_elementa' => 'M421',
         ]);

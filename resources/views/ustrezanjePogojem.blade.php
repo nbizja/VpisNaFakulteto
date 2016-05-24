@@ -39,6 +39,13 @@
                         </div>
 
                         <div class="form-group">
+                            <label class="col-md-4 control-label">Poklic: </label>
+                            <div class="col-md-6">
+                                <input value="{{$matura->id_poklica}}" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label class="col-md-4 control-label">Opravljena matura: </label>
                             <div class="col-md-6">
                                 <input value="{{$matura->opravil == 0 ? "Ne" : "Da"}}" class="form-control" readonly>
@@ -84,7 +91,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Kandidat ustreza pogojem: </label>
                                 <div class="col-md-6">
-                                    <input class="form-control" readonly>
+                                    <input value="{{$rezultat[$prijava->zelja-1] == 0 ? 'Ne' : 'Da'}}" class="form-control" readonly>
                                 </div>
                             </div>
                         </div>
