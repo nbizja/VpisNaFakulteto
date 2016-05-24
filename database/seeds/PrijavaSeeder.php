@@ -155,6 +155,141 @@ class PrijavaSeeder extends Seeder
             'datum_prijave' => '2016-05-13',
         ]);
 
+        /*************PRIJAVE (Sofija Bezer)****************/
+        DB::table('prijava')->insert([
+            'id_kandidata' => '12',
+            'id_studijskega_programa' => '852',
+            'zelja' => 1,
+            'datum_prijave' => '2016-05-13',
+        ]);
+
+        DB::table('prijava')->insert([
+            'id_kandidata' => '12',
+            'id_studijskega_programa' => '858',
+            'zelja' => 2,
+            'datum_prijave' => '2016-05-13',
+        ]);
+
+
+        /*************PRIJAVE (Peter Visok)****************/
+        DB::table('prijava')->insert([
+            'id_kandidata' => '13',
+            'id_studijskega_programa' => '838',
+            'zelja' => 1,
+            'datum_prijave' => '2016-05-13',
+        ]);
+
+        DB::table('prijava')->insert([
+            'id_kandidata' => '13',
+            'id_studijskega_programa' => '776',
+            'zelja' => 2,
+            'datum_prijave' => '2016-05-13',
+        ]);
+
+        DB::table('prijava')->insert([
+            'id_kandidata' => '13',
+            'id_studijskega_programa' => '828',
+            'zelja' => 3,
+            'datum_prijave' => '2016-05-13',
+        ]);
+
+        /*************PRIJAVE (Vida Sedmak)****************/
+        DB::table('prijava')->insert([
+            'id_kandidata' => '14',
+            'id_studijskega_programa' => '828',
+            'zelja' => 1,
+            'datum_prijave' => '2016-05-13',
+        ]);
+
+        DB::table('prijava')->insert([
+            'id_kandidata' => '14',
+            'id_studijskega_programa' => '848',
+            'zelja' => 2,
+            'datum_prijave' => '2016-05-13',
+        ]);
+
+        DB::table('prijava')->insert([
+            'id_kandidata' => '14',
+            'id_studijskega_programa' => '858',
+            'zelja' => 3,
+            'datum_prijave' => '2016-05-13',
+        ]);
+
+        /*************PRIJAVE (Stanislav Stanič)****************/
+        DB::table('prijava')->insert([
+            'id_kandidata' => '15',
+            'id_studijskega_programa' => '776',
+            'zelja' => 1,
+            'datum_prijave' => '2016-05-13',
+        ]);
+
+        DB::table('prijava')->insert([
+            'id_kandidata' => '15',
+            'id_studijskega_programa' => '838',
+            'zelja' => 2,
+            'datum_prijave' => '2016-05-13',
+        ]);
+
+        DB::table('prijava')->insert([
+            'id_kandidata' => '15',
+            'id_studijskega_programa' => '18',
+            'zelja' => 3,
+            'datum_prijave' => '2016-05-13',
+        ]);
+
+        /*************PRIJAVE (Peter Planinsek)****************/
+        DB::table('prijava')->insert([
+            'id_kandidata' => '16',
+            'id_studijskega_programa' => '848',
+            'zelja' => 1,
+            'datum_prijave' => '2016-05-13',
+        ]);
+
+        DB::table('prijava')->insert([
+            'id_kandidata' => '16',
+            'id_studijskega_programa' => '828',
+            'zelja' => 2,
+            'datum_prijave' => '2016-05-13',
+        ]);
+
+        DB::table('prijava')->insert([
+            'id_kandidata' => '16',
+            'id_studijskega_programa' => '858',
+            'zelja' => 3,
+            'datum_prijave' => '2016-05-13',
+        ]);
+
+        /*************PRIJAVE (Stefan Stefancic)****************/
+        DB::table('prijava')->insert([
+            'id_kandidata' => '17',
+            'id_studijskega_programa' => '838',
+            'zelja' => 1,
+            'datum_prijave' => '2016-05-13',
+        ]);
+
+        DB::table('prijava')->insert([
+            'id_kandidata' => '17',
+            'id_studijskega_programa' => '852',
+            'zelja' => 2,
+            'datum_prijave' => '2016-05-13',
+        ]);
+
+
+        /*************PRIJAVE (Tomaz Velikonja)****************/
+        DB::table('prijava')->insert([
+            'id_kandidata' => '18',
+            'id_studijskega_programa' => '838',
+            'zelja' => 1,
+            'datum_prijave' => '2016-05-13',
+        ]);
+
+        DB::table('prijava')->insert([
+            'id_kandidata' => '18',
+            'id_studijskega_programa' => '852',
+            'zelja' => 2,
+            'datum_prijave' => '2016-05-13',
+        ]);
+
     }
 }
 

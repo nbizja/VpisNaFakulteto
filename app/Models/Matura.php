@@ -14,4 +14,9 @@ class Matura extends Model
     {
         return $this->required;
     }
+
+    public function poklic()
+    {
+        return $this->belongsTo('App\Models\Poklic', 'id_poklica', 'id');
+    }
 }
