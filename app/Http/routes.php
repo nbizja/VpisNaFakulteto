@@ -74,8 +74,10 @@ Route::group(['middleware' => ['prijavljen']], function () {
     Route::any('/sifranti/{ime_sifranta}/povrni/{id_vnosa}', 'SifrantiController@povrni');
 
     Route::get('/matura/uvozPodatkov', 'Matura\MaturaController@uvoziPodatke');
-    Route::get('/poklicnaMatura/uvozPodatkov', 'Matura\PoklicnaMaturaController@uvoziPodatke');
     Route::post('/matura/naloziDatoteko', 'Matura\MaturaController@naloziDatoteko');
+	
+    Route::get('/poklicnaMatura/uvozPodatkov', 'Matura\PoklicnaMaturaController@uvoziPodatke');
+    Route::post('/poklicnaMatura/naloziDatoteko', 'Matura\PoklicnaMaturaController@naloziDatoteko');
 
 });
 
