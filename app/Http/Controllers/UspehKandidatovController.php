@@ -98,7 +98,6 @@ class UspehKandidatovController extends Controller
 
                 $ustreza[$i] = $this->preveriPogoj($pogoj, $predmeti, $matura);
 
-
                     if ($ustreza[$i])
                     break;
             }
@@ -155,10 +154,10 @@ class UspehKandidatovController extends Controller
             }
 
             if (empty($pogoj->id_elementa2)) {
-                return true;
+                return $this->checkDoubles($predmetiIds);
             }
             if (in_array($pogoj->id_elementa2, $predmetiIds)) {
-                return true;
+                return $this->checkDoubles($predmetiIds);
             }
 
             if ($pogoj->id_elementa2 != 'SM') {
@@ -167,6 +166,7 @@ class UspehKandidatovController extends Controller
             if (!empty(array_filter($predmetiIds, function($id) {
                 return substr($id, 0, 1) == 'M';
             }))) {
+
                 return $this->checkDoubles($predmetiIds);
             }
             return false;
