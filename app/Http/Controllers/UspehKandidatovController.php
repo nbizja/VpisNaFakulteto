@@ -40,16 +40,22 @@ class UspehKandidatovController extends Controller
                 $kandidat = $this->prijavaRepo->uporabnikById($idKandidata);
                 $matura = null;
                 $tipMature = 0;
+                $predmetiS = null;
+                $predmetiP = null;
                 $predmeti = null;
                 if (!($kandidat->poklicnaMatura->isEmpty())) {
                     $tipMature = 1;
                     $matura = $kandidat->poklicnaMatura->first();
-                    $predmeti = $kandidat->predmetiPoklicna()->with('predmet')->get();
+
                 } else if (!($kandidat->matura->isEmpty())) {
                     $tipMature = 0;
                     $matura = $kandidat->matura->first();
-                    $predmeti = $kandidat->predmetiSplosna()->with('predmet')->get();
+
                 };
+
+                $predmetiS = $kandidat->predmetiPoklicna()->with('predmet')->get();
+                $predmetiP = $kandidat->predmetiSplosna()->with('predmet')->get();
+                $predmeti = $predmetiS->merge($predmetiP);
 
                 $rezultat = array(false, false, false);
                 if ($matura != null) {
@@ -89,8 +95,10 @@ class UspehKandidatovController extends Controller
             }
 
             foreach ($pogoji as $pogoj) {
+
                 $ustreza[$i] = $this->preveriPogoj($pogoj, $predmeti, $matura);
-                if ($ustreza[$i])
+
+                    if ($ustreza[$i])
                     break;
             }
 
@@ -108,6 +116,7 @@ class UspehKandidatovController extends Controller
 
 
         if (!empty($pogoj->id_poklica)) {
+
             if ($pogoj->id_poklica != $matura->id_poklica) {  // poklic se sklada
                 return false;
             }
@@ -139,15 +148,16 @@ class UspehKandidatovController extends Controller
             return false;
 
         } else if (!empty($pogoj->id_elementa)) {  //poklic je empty
+
             if (!in_array($pogoj->id_elementa, $predmetiIds)) {
                 return false;
             }
 
             if (empty($pogoj->id_elementa2)) {
-                return true;
+                return $this->checkDoubles($predmetiIds);
             }
             if (in_array($pogoj->id_elementa2, $predmetiIds)) {
-                return true;
+                return $this->checkDoubles($predmetiIds);
             }
 
             if ($pogoj->id_elementa2 != 'SM') {
@@ -156,11 +166,11 @@ class UspehKandidatovController extends Controller
             if (!empty(array_filter($predmetiIds, function($id) {
                 return substr($id, 0, 1) == 'M';
             }))) {
+
                 return $this->checkDoubles($predmetiIds);
             }
             return false;
         }
-
         return true;
     }
 

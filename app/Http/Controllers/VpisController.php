@@ -176,7 +176,9 @@ class VpisController extends Controller
         $uporabnik->osebniPodatki()->get()->each(function($op) {
            $op->delete();
         });
-        PrijavaOsebniPodatki::create($opInput);
+        $osebniPodatki = PrijavaOsebniPodatki::create($opInput);
+        $uporabnik->emso = $osebniPodatki->emso;
+        $uporabnik->save();
 
         return redirect('vpis/'. $id .'/stalno_prebivalisce');
     }
