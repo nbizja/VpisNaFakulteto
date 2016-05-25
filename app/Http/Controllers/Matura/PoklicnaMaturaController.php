@@ -38,6 +38,9 @@ class PoklicnaMaturaController extends Controller
 	
 	private function preberiVrsticoMaturant($vrstica)
 	{
+		if (strlen($vrstica) < 89 || $vrstica[13] != 'Q' || $vrstica[39] != 'Q') {
+			return null;
+		}
 		$emso = trim(substr($vrstica, 0, 13));
 		$ime = trim(substr($vrstica, 14, 25));
 		$ime = iconv('CP1250', 'UTF-8', $ime);
@@ -65,6 +68,9 @@ class PoklicnaMaturaController extends Controller
 	
 	private function preberiVrsticoMaturantPre($vrstica)
 	{
+	if (strlen($vrstica) < 28 || $vrstica[13] != 'Q' || $vrstica[18] != 'Q') {
+			return null;
+		}
 		$emso = trim(substr($vrstica, 0, 13));
 		$id_predmeta = trim(substr($vrstica, 14, 4));
 		$ocena = trim(substr($vrstica, 19, 1));
@@ -96,22 +102,32 @@ class PoklicnaMaturaController extends Controller
 				$matPre = False;
 				
 				if ($request->hasFile('datotekaMaturant')) {
+					$model = new PoklicnaMatura;
+					
 					$maturant = $request->file('datotekaMaturant');
 					DB::statement('SET FOREIGN_KEY_CHECKS = 0');
 					foreach(file($maturant) as $line) {
 						$maturant_podatki = $this->preberiVrsticoMaturant($line);
-						PoklicnaMatura::insert($maturant_podatki);
+						if ($maturant_podatki == null) {
+							return back()->withFlashMessage('Napaka v datoteki maturant.');
+						}
+						$model->dodaj($maturant_podatki);
 					}
 					DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 					$mat = True;
 				}
 				
 				if ($request->hasFile('datotekaMaturPre')) {
+					$model = new PoklicnaMaturaPredmet;
+					
 					$maturantpre = $request->file('datotekaMaturPre');
 					DB::statement('SET FOREIGN_KEY_CHECKS = 0');
 					foreach(file($maturantpre) as $line) {
 						$maturantpre_podatki = $this->preberiVrsticoMaturantPre($line);
-						PoklicnaMaturaPredmet::insert($maturantpre_podatki);
+						if ($maturantpre_podatki == null) {
+							return back()->withFlashMessage('Napaka v datoteki maturpre.');
+						}
+						$model->dodaj($maturantpre_podatki);
 					}
 					DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 					

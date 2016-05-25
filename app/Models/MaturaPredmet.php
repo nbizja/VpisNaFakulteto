@@ -20,4 +20,16 @@ class MaturaPredmet extends Model
     {
        return $this->belongsTo('App\Models\Element', 'id_predmeta', 'id');
     }
+	
+	public function dodaj($polja)
+	{
+		$emso = $polja['emso'];
+		$id_predmeta = $polja['id_predmeta'];
+		$obstojeci = $this->where('emso', '=', $emso)->where('id_predmeta', '=', $id_predmeta)->first();
+		if (is_null($obstojeci)) {
+			$this->insert($polja);
+		} else {
+			$this->where('id', $obstojeci['id'])->update($polja);
+		}
+	}
 }
