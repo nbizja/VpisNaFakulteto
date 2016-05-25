@@ -97,23 +97,23 @@ class MaturaController extends Controller
 				
 				if ($request->hasFile('datotekaMaturant')) {
 					$maturant = $request->file('datotekaMaturant');
-					DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+					//DB::statement('SET FOREIGN_KEY_CHECKS = 0');
 					foreach(file($maturant) as $line) {
 						$maturant_podatki = $this->preberiVrsticoMaturant($line);
 						Matura::insert($maturant_podatki);
 					}
-					DB::statement('SET FOREIGN_KEY_CHECKS = 1');
+					//DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 					$mat = True;
 				}
 				
 				if ($request->hasFile('datotekaMaturPre')) {
 					$maturantpre = $request->file('datotekaMaturPre');
-					DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+					//DB::statement('SET FOREIGN_KEY_CHECKS = 0');
 					foreach(file($maturantpre) as $line) {
 						$maturantpre_podatki = $this->preberiVrsticoMaturantPre($line);
 						MaturaPredmet::insert($maturantpre_podatki);
 					}
-					DB::statement('SET FOREIGN_KEY_CHECKS = 1');
+					//DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 					$matPre = True;
 				}
 				
