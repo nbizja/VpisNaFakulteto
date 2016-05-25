@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Matura;
 
+use DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
