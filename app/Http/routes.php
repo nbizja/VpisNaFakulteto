@@ -16,8 +16,10 @@ Route::get('/helper', function () {
 });
 
 
-Route::group(['middleware' => ['prijavljen']], function () {
+Route::group(['middleware' => ['web']], function () {
     Route::post('prijava', 'Auth\AuthController@login');
+    Route::get('prijava', 'Auth\AuthController@showLoginForm');
+
 });
 
 Route::group(['middleware' => ['web']], function () {
@@ -42,8 +44,23 @@ Route::group(['middleware' => ['prijavljen']], function () {
     Route::get('studijskiProgrami/izpis', 'StudijskiProgrami\StudijskiProgramiController@izpisPodatkov');
     Route::post('studijskiProgrami/izpis/izvoz', 'StudijskiProgrami\StudijskiProgramiController@izvozPodatkov');
 
+    Route::get('vpisniPogoji/urejanje', 'StudijskiProgrami\VpisniPogojiController@urediPogoje');
+    Route::post('vpisniPogoji/urediPogoj', 'StudijskiProgrami\VpisniPogojiController@urediPogoj');
+    Route::post('vpisniPogoji/urediDelez', 'StudijskiProgrami\VpisniPogojiController@urediPogoj');
+    Route::post('vpisniPogoji/shraniPogoj', 'StudijskiProgrami\VpisniPogojiController@shraniPogoj');
+    Route::get('vpisniPogoji/dodajPogoj', 'StudijskiProgrami\VpisniPogojiController@dodajPogoj');
+    Route::post('vpisniPogoji/novPogoj', 'StudijskiProgrami\VpisniPogojiController@novPogoj');
+    Route::post('/vpisniPogoji/shraniDeleze', 'StudijskiProgrami\VpisniPogojiController@shraniDeleze');
+    Route::get('/vpisniPogoji/shraniDeleze', 'StudijskiProgrami\VpisniPogojiController@shraniDeleze');
 
-    Route::get('prijava', 'Auth\AuthController@showLoginForm');
+    Route::get('/ustrezanjePogojem/{id_kandidata}', 'UspehKandidatovController@preveriPogoje');
+
+    Route::get('iskanje', 'ListOfCandidatesController@loadCandidates');
+    Route::post('iskanje', 'ListOfCandidatesController@findCandidates');
+
+    Route::get('urejanjePodatkovoUspehu', 'ListOfCandidatesController@urediPodatke');
+
+
     Route::get('odjava', 'Auth\AuthController@logout');
 
     Route::get('/', 'HomeController@index');
@@ -73,6 +90,19 @@ Route::group(['middleware' => ['prijavljen']], function () {
     Route::any('/sifranti/{ime_sifranta}/razveljavi/{id_vnosa}', 'SifrantiController@razveljavi');
     Route::any('/sifranti/{ime_sifranta}/povrni/{id_vnosa}', 'SifrantiController@povrni');
 
+    Route::get('vpis/{id}/osebni_podatki',           'VpisController@osebniPodatki');
+    Route::post('vpis/{id}/osebni_podatki',          'VpisController@shraniOsebnePodatke');
+    Route::get('vpis/{id}/stalno_prebivalisce',      'VpisController@stalnoPrebivalisce');
+    Route::post('vpis/{id}/stalno_prebivalisce',     'VpisController@shraniStalnoPrebivalisce');
+    Route::get('vpis/{id}/srednjesolska_izobrazba',  'VpisController@srednjeSolskaIzobrazbaPrikaz');
+    Route::post('vpis/{id}/srednjesolska_izobrazba', 'VpisController@shraniSrednjeSolskoIzobrazbo');
+    Route::get('vpis/{id}/prijava_za_studij',        'VpisController@prijavaZaStudijPrikaz');
+    Route::post('vpis/{id}/prijava_za_studij',       'VpisController@shraniPrijavoZaStudij');
+    Route::get('vpis/{id}/pregled',                  'VpisController@pregled');
+    Route::post('vpis/{id}/izbris_prijave',          'VpisController@izbrisPrijave');
+    Route::post('vpis/{id}/oddaja_prijave',          'VpisController@oddajaPrijave');
+    Route::get('vpis/{id}/tisk_prijave',             'VpisController@tiskPrijave');
+    
     Route::get('/matura/uvozPodatkov', 'Matura\MaturaController@uvoziPodatke');
     Route::post('/matura/naloziDatoteko', 'Matura\MaturaController@naloziDatoteko');
 	
@@ -82,30 +112,17 @@ Route::group(['middleware' => ['prijavljen']], function () {
 });
 
 Route::get('/seznamKandidatov/{zavod_id?}', function($zavod_id){
-    $zavodi =  \App\VisokosolskiZavod::orderBy('ime')->pluck('id');
+    $zavodi =  \App\Models\VisokosolskiZavod::orderBy('ime')->pluck('id');
     if($zavod_id > 0) {
         $zavod_id = $zavodi[$zavod_id - 1];
-        $programi = \App\StudijskiProgram::where('id_zavoda', '=', $zavod_id)->orderBy('ime')->pluck('ime');
+        $programi = \App\Models\StudijskiProgram::where('id_zavoda', '=', $zavod_id)->orderBy('ime')->pluck('ime');
+        $programi_nacin = \App\Models\StudijskiProgram::where('id_zavoda', '=', $zavod_id)->orderBy('ime')->pluck('nacin_studija');
+        for ($i = 0; $i < count($programi); $i++) {
+            $programi[$i] = $programi[$i] .  ", " . strtoupper($programi_nacin[$i]);
+        }
         return Response::json($programi);
     }
     else return Response::json();
-
 });
 
-
-
-
-
-
-
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| This route group applies the "web" middleware group to every route
-| it contains. The "web" middleware group is defined in your HTTP
-| kernel and includes session state, CSRF protection, and more.
-|
-*/
-
+Route::get('seznamKandidatov/pdf', 'ListOfCandidatesController@exportPdf');

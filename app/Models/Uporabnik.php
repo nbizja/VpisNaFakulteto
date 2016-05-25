@@ -14,8 +14,8 @@ class Uporabnik extends Model implements AuthenticatableContract, CanResetPasswo
     use Authenticatable, CanResetPassword;
 
     protected $table = 'uporabnik';
-    protected $fillable = ['ime', 'priimek', 'email', 'username','password', 'zeton', 'zadnja_prijava'];
-    protected $guarded = ['remember_token'];
+    protected $fillable = ['vloga', 'ime', 'priimek', 'email', 'username','password', 'zeton', 'zadnja_prijava', 'datum_oddaje_prijave'];
+    protected $guarded = ['id', 'remember_token'];
     protected $hidden = ['password', 'remember_token'];
     public $timestamps = true;
 
@@ -31,7 +31,7 @@ class Uporabnik extends Model implements AuthenticatableContract, CanResetPasswo
 
     public function jeKandidat()
     {
-        return $this->vloga = VlogaUporabnika::KANDIDAT;
+        return $this->vloga == VlogaUporabnika::KANDIDAT;
     }
     public function prikazVloge()
     {
@@ -41,5 +41,53 @@ class Uporabnik extends Model implements AuthenticatableContract, CanResetPasswo
 
         return ucfirst($this->vloga);
     }
+
+    public function osebniPodatki()
+    {
+        return $this->hasMany('App\Models\PrijavaOsebniPodatki', 'id_kandidata', 'id');
+    }
+
+    public function prebivalisce()
+    {
+        return $this->hasMany('App\Models\PrijavaPrebivalisce', 'id_kandidata', 'id');
+    }
+
+    public function naslovZaPosiljanje()
+    {
+        return $this->hasMany('App\Models\PrijavaNaslovZaPosiljanje', 'id_kandidata', 'id');
+    }
+    
+    public function srednjesolskaIzobrazba()
+    {
+        return $this->hasMany('App\Models\PrijavaSrednjesolskaIzobrazba', 'id_kandidata', 'id');
+    }
+
+    public function prijave()
+    {
+        return $this->hasMany('App\Models\Prijava', 'id_kandidata', 'id');
+    }
+
+    public function predmetiPoklicna()
+    {
+        return $this->hasMany('App\Models\PoklicnaMaturaPredmet', 'emso', 'emso');
+    }
+
+    public function predmetiSplosna()
+    {
+        return $this->hasMany('App\Models\MaturaPredmet', 'emso', 'emso');
+    }
+
+    public function matura()
+    {
+        return $this->hasMany('App\Models\Matura', 'emso', 'emso');
+
+    }
+
+    public function poklicnaMatura()
+    {
+        return $this->hasMany('App\Models\PoklicnaMatura', 'emso', 'emso');
+    }
+
+
 
 }

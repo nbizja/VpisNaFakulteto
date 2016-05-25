@@ -1,12 +1,18 @@
 <?php
 
 
-use database\seeds\UporabnikSeeder;
-use database\seeds\SifrantiSeeder;
-use Illuminate\Database\Seeder;
+use database\seeds\KriterijSeeder;
+use database\seeds\VpisniPogojSeeder;
 use Flynsarmy\CsvSeeder\CsvSeeder;
 
 include 'UporabnikSeeder.php';
+include 'PrijavniRokSeeder.php';
+include 'PrijavaSeeder.php';
+include 'MaturaSeeder.php';
+include 'PoklicnaMaturaSeeder.php';
+include 'PoklicnaMaturaPredmetSeeder.php';
+include 'MaturaPredmetSeeder.php';
+include 'PrijavaSrednjaSolaSeeder.php';
 
 /**
  * Calls seeders specified in list.
@@ -31,7 +37,10 @@ class DatabaseSeeder extends CsvSeeder
              KoncanaSrednjaSolaSeeder::class, 
              ObcinaSeeder::class, PoklicSeeder::class, PostaSeeder::class,
              SrednjaSolaSeeder::class, StudijskiProgramSeeder::class,
-             VisokosolskiZavodSeeder::class);
+             VpisniPogojSeeder::class, KriterijSeeder::class,
+             VisokosolskiZavodSeeder::class, PrijavaSeeder::class, PoklicnaMaturaSeeder::class,
+             PoklicnaMaturaPredmetSeeder::class, MaturaPredmetSeeder::class,
+             MaturaSeeder::class, PrijavaSrednjaSolaSeeder::class);
      }
 
     /**
@@ -44,6 +53,7 @@ class DatabaseSeeder extends CsvSeeder
         DB::disableQueryLog();
 		Eloquent::unguard();
         $this->call(UporabnikSeeder::class);
+        $this->call(PrijavniRokSeeder::class);
 
         foreach ($this->seeder_list as $seeder) {
             $this->call($seeder);

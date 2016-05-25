@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\KoncanaSrednjaSola;
-use App\VisokosolskiZavod;
+use App\Models\KoncanaSrednjaSola;
+use App\Models\PrijavaSrednjesolskaIzobrazba;
+use App\Models\StudijskiProgram;
+use App\Models\Uporabnik;
+use App\Models\VisokosolskiZavod;
 use Illuminate\Http\Request;
+use App\Models\Enums\VlogaUporabnika;
+use Illuminate\Support\Facades\Auth;
 
 class ListOfCandidatesController extends Controller
 {
@@ -14,23 +19,247 @@ class ListOfCandidatesController extends Controller
         // $this->middleware('auth');
     }
 
+    public function getNumberZavod($id)
+    {
+        $zavodi = VisokosolskiZavod::orderBy('ime')->pluck('id');
+        foreach ($zavodi as $i => $zavod){
+            if($zavod == $id) return $i;
+        }
+
+        return -1;
+    }
+
+    public function urediPodatke()
+    {
+        return view('urediPodatkeUspeh');
+    }
+
     public function loadPage()
     {
-        return view('list_candidates')
+        if (Auth::check()) {
+            if (Auth::user()->vloga == 'skrbnik') {
+                return view('list_candidates')
+                    ->with([
+                        'vz' => VisokosolskiZavod::orderBy('ime')->pluck('ime'),
+                        'zavod_id' => -1,
+                        'program_id' => -1,
+                        'nacin' => -1,
+                        'srednja' => -1,
+                        'talent' => -1,
+                        'koncana_srednja' => KoncanaSrednjaSola::pluck('ime'),
+                        'idz' => -1
+                    ]);
+            }
+
+            else if (Auth::user()->vloga == 'fakulteta') {
+                $id = Auth::user() -> id;
+                $idp = VisokosolskiZavod::where('id_skrbnika', '=', $id)->orderBy('ime')->pluck('id')->first();
+                $id_prog = $this->getNumberZavod($idp);
+                return view('list_candidates')
+                    ->with([
+                        'vz' => VisokosolskiZavod::where('id_skrbnika', '=', $id)->orderBy('ime')->pluck('ime'),
+                        'zavod_id' => -1,
+                        'idz' => $id_prog,
+                        'program_id' => -1,
+                        'nacin' => -1,
+                        'srednja' => -1,
+                        'talent' => -1,
+                        'koncana_srednja' => KoncanaSrednjaSola::pluck('ime')
+                    ]);
+            }
+        }
+        return redirect('prijava');
+    }
+
+    public function findCandidates(Request $request){
+        $search_string = $request->get('podatki');
+        if($search_string != '') {
+            $parts = explode(" ", $search_string);
+
+            $kandidati = new \Illuminate\Database\Eloquent\Collection;
+            foreach ($parts as $part) {
+                $k = Uporabnik::where('ime', '=', $part)
+                    ->orWhere('priimek', '=', $part)
+                    ->orWhere('emso', '=', $part)
+                    ->get();
+                $kandidati = $kandidati->merge($k);
+            }
+
+            $matches = array();
+            foreach ($kandidati as $kandidat) {
+                $no_matches = 0;
+                foreach ($parts as $part) {
+                    if (strcasecmp($kandidat->ime, $part) == 0 || strcasecmp($kandidat->priimek, $part) == 0 || $kandidat->emso == $part) {
+                        if ($kandidat->vloga == VlogaUporabnika::KANDIDAT) $no_matches += 1;
+                    }
+                }
+                array_push($matches, $no_matches);
+            }
+
+            $highest = max($matches);
+            foreach ($kandidati as $key => $kandidat) {
+                if ($matches[$key] != $highest) unset($kandidati[$key]);
+                else if ($kandidat->vloga != VlogaUporabnika::KANDIDAT) unset($kandidati[$key]);
+
+                $prijave = $kandidat->Prijave;
+                if (count($prijave) == 0) unset($kandidati[$key]);
+                else {
+                    if (Auth::user()->vloga == 'fakulteta') {
+                        $id = Auth::user()->id;
+                        $temp = 0;
+                        foreach ($prijave as $prijava) {
+                            $program = StudijskiProgram::where('id', '=', $prijava->id_studijskega_programa)->get();
+                            $zavod = VisokosolskiZavod::where('id', '=', $program[0]->id_zavoda)->get();
+                            if ($zavod[0]->id_skrbnika == $id) $temp = 1;
+                        }
+                        if ($temp == 0) unset($kandidati[$key]);
+                    }
+                }
+
+            }
+
+            $kandidati = $kandidati->sort(function ($a, $b) {
+                if ($a->priimek === $b->priimek) {
+                    if ($a->ime === $b->ime) {
+                        return 0;
+                    }
+                    return $a->ime < $b->ime ? -1 : 1;
+                }
+                return $a->priimek < $b->priimek ? -1 : 1;
+            });
+
+            return view('iskanje_kandidatov')
+                ->with([
+                    'kandidati' => $kandidati,
+                    'niz' => $search_string
+                ]);
+        }
+
+        return view('iskanje_kandidatov')
             ->with([
-                'vz' => VisokosolskiZavod::orderBy('ime')->pluck('ime'),
-                'koncana_srednja' => KoncanaSrednjaSola::pluck('ime')
+                'niz' => $search_string
+            ]);
+
+    }
+
+    public function loadCandidates(){
+        return view('iskanje_kandidatov')
+            ->with([
+                'niz' => ''
             ]);
     }
 
     public function getList(Request $request)
     {
         $zavod_id = $request->get('zavod');
-        $zavod_id1 = $request->get('zavod1');
-        echo $zavod_id;
-        echo $zavod_id1;
+        $program_id = $request->get('program');
+        $nacin = $request->get('nacin');
+        $srednja = $request->get('izob');
 
+        $zavod_id1 = $request->get('zavod');
+        $program_id1 = $request->get('program');
+        $nacin1 = $request->get('nacin');
+        $srednja1 = $request->get('izob');
 
-        $zavodi =  \App\VisokosolskiZavod::orderBy('ime')->pluck('id');
+        $id = Auth::user() -> id;
+
+        if(Auth::user()->vloga == 'fakulteta'){
+            $zavod_id = VisokosolskiZavod::where('id_skrbnika', '=', $id)->orderBy('ime')->pluck('id')->first();
+            $zavod_id1 =  $zavod_id;
+        }
+
+        if ($zavod_id != -1) {
+            $zavodi = VisokosolskiZavod::orderBy('ime')->pluck('id');
+            if(Auth::user()->vloga != 'fakulteta') $zavod_id = $zavodi[$zavod_id];
+
+            if ($program_id != -1) {
+                $programi = StudijskiProgram::where('id_zavoda', '=', $zavod_id)->orderBy('ime')->pluck('id');
+                $program_id = $programi[$program_id];
+            }
+        }
+
+        if ($nacin == 0) $nacin = 'Redni';
+        else if ($nacin == 1) $nacin = 'Izredni';
+
+        // vsi uporabniki
+        $kandidati = Uporabnik::where('vloga', '=', VlogaUporabnika::KANDIDAT)
+            ->join('prijava', function ($join) {
+                $join->on('uporabnik.id', '=', 'prijava.id_kandidata');
+            })->join('studijski_program', function ($join) {
+                $join->on('prijava.id_studijskega_programa', '=', 'studijski_program.id');
+            })->join('visokosolski_zavod', function ($join) {
+                $join->on('studijski_program.id_zavoda', '=', 'visokosolski_zavod.id');
+            })->get(array('uporabnik.id as id' ,'uporabnik.emso as emso', 'uporabnik.ime as ime', 'uporabnik.priimek as priimek', 'visokosolski_zavod.ime as zavod', 'studijski_program.ime as program', 'studijski_program.nacin_studija as nacin'));
+
+        foreach ($kandidati as $key => $kandidat) {
+            $kandidat->srednja = "";
+            $zakljucek = PrijavaSrednjesolskaIzobrazba::where('id_kandidata', '=', $kandidat->id)->get();
+            if(count($zakljucek)  > 0){
+                $srednjasola = KoncanaSrednjaSola::where('id', '=', $zakljucek[0]->id_nacina_zakljucka)->get();
+                $kandidat->srednja = $srednjasola[0]->ime;
+                if ($srednja == 0) {
+                    if ($zakljucek[0]->id_nacina_zakljucka != 2) unset($kandidati[$key]);
+                }
+                if ($srednja == 1) {
+                    if ($zakljucek[0]->id_nacina_zakljucka != 3) unset($kandidati[$key]);
+                }
+                if ($srednja == 2) {
+                    if ($zakljucek[0]->id_nacina_zakljucka != 4) unset($kandidati[$key]);
+                }
+            }
+            if($zavod_id != -1){
+                $zavod = VisokosolskiZavod::where('id', '=', $zavod_id)->get();
+                if($kandidat->zavod != $zavod[0] -> ime) unset($kandidati[$key]);
+            }
+            if($program_id != -1){
+                $program = StudijskiProgram::where('id', '=', $program_id)->get();
+                if($kandidat->program != $program[0]->ime) unset($kandidati[$key]);
+                if($kandidat->nacin != $program[0]->nacin_studija) unset($kandidati[$key]);
+            }
+            if($nacin != -1){
+                if($kandidat->nacin != $nacin) unset($kandidati[$key]);
+            }
+        }
+
+        $kandidati = $kandidati->sort(function ($a, $b) {
+            if ($a->zavod === $b->zavod) {
+                if ($a->program === $b->program) {
+                    if ($a->priimek === $b->priimek) return 0;
+                    return $a->priimek < $b->priimek ? -1 : 1;
+                }
+                return $a->program < $b->program ? -1 : 1;
+            }
+            return $a->zavod < $b->zavod ? -1 : 1;
+        });
+
+        $count = 1;
+        foreach ($kandidati as $kandidat) {
+            $kandidat->st = $count;
+            $count += 1;
+        }
+
+        $zavodi = VisokosolskiZavod::where('id_skrbnika', '=', $id)->orderBy('ime')->pluck('ime');
+        if(Auth::user()->vloga != 'fakulteta') $zavodi = VisokosolskiZavod::orderBy('ime')->pluck('ime');
+
+        if ($request->get('izpisi')){
+            return view('list_candidates')
+                ->with([
+                    'vz' => $zavodi,
+                    'zavod_id' => $zavod_id1,
+                    'program_id' => $program_id1,
+                    'nacin' => $nacin1,
+                    'srednja' => $srednja1,
+                    'kandidati' => $kandidati,
+                    'idz' => $this-> getNumberZavod(VisokosolskiZavod::where('id_skrbnika', '=', $id)->orderBy('ime')->pluck('id')->first())
+                ]);
+        }
+        else {
+            $pdf = \App::make('dompdf.wrapper');
+            ini_set('max_execution_time', 300);
+            $pdf->loadHTML(\View::make('pdf/seznamKandidatov')->with([
+                'kandidati' => $kandidati
+            ]));
+            return $pdf->download('seznamKandidatov.pdf');
+        }
     }
 }

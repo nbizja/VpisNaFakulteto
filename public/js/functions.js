@@ -7,13 +7,16 @@ $(document).ready(function() {
         var id = $(this).val();
 
         $('#vzdrzevanjeProgramov_programi').children().each(function() {
+
             if ($(this).attr('data-fakulteta') == -1) {
                 $(this).show();
                 $(this).prop('selected', true);
             } else if ($(this).attr('data-fakulteta') == id) {
+
                 $(this).show();
                 $(this).prop('selected', false);
             } else {
+
                 $(this).prop('selected', false);
                 $(this).hide();
             }
@@ -29,19 +32,33 @@ $(document).ready(function() {
             if ($(this).val() == '') {
                 steviloMest = '';
                 steviloMestOmejitev = '';
+                steviloSprejetih= '';
+                steviloMestTujci = '';
+                steviloMestOmejitevTujci = '';
+                steviloSprejetihTujci = '';
                 nacin = '';
                 vrsta = '';
                 omejitev = '';
+                omejitevTujci = '';
             } else if ($(this).val() == id) {
                 steviloMest = $(this).attr('data-mesta');
                 steviloMestOmejitev = $(this).attr('data-mesta_omejitev');
+                steviloSprejetih = $(this).attr('data-stevilo_sprejetih');
+                steviloMestTujci = $(this).attr('data-mesta_tujci');
+                steviloMestOmejitevTujci = $(this).attr('data-mesta_omejitev_tujci');
+                steviloSprejetihTujci = $(this).attr('data-stevilo_sprejetih_tujci');
                 nacin = $(this).attr('data-nacin');
                 vrsta = $(this).attr('data-vrsta');
                 omejitev = $(this).attr('data-omejitev');
+                omejitevTujci = $(this).attr('data-omejitev_tujci');
             }
         });
         $('#stevilo_vpisnih_mest').val(steviloMest);
         $('#stevilo_mest_omejitev').val(steviloMestOmejitev);
+        $('#stevilo_sprejetih').val(steviloSprejetih);
+        $('#stevilo_vpisnih_mest_tujci').val(steviloMestTujci);
+        $('#stevilo_mest_omejitev_tujci').val(steviloMestOmejitevTujci);
+        $('#stevilo_sprejetih_tujci').val(steviloSprejetihTujci);
 
         if (vrsta == '') {
             $('#vrsta_studija').val([]);
@@ -66,7 +83,50 @@ $(document).ready(function() {
         } else {
             $('#omejitev').val("ne");
         }
+
+        if (omejitevTujci == '') {
+            $('#omejitev_tujci').val([]);
+        }else if (omejitevTujci == 1) {
+            $('#omejitev_tujci').val("da");
+        } else {
+            $('#omejitev_tujci').val("ne");
+        }
     });
+
+//****************POGOJI
+
+    $('#vzdrzevanjePogojev_fakultete').change(function(){
+        var id = $(this).val();
+        $('.vpisni_pogoji').hide();
+        $('#vzdrzevanjePogojev_programi').children().each(function() {
+
+            if ($(this).attr('data-fakulteta') == -1) {
+                $(this).show();
+                $(this).prop('selected', true);
+            } else if ($(this).attr('data-fakulteta') == id) {
+
+                $(this).show();
+                $(this).prop('selected', false);
+            } else {
+
+                $(this).prop('selected', false);
+                $(this).hide();
+            }
+        });
+
+        $('#vzdrzevanjePogojev_programi').trigger("change");
+    });
+
+    $('#vzdrzevanjePogojev_programi').change(function() {
+        var id = $(this).val();
+        if (id > 0) {
+            $('.vpisni_pogoji').show();
+            $('.vpisni_pogoj').hide();
+            $('.program_'+id).show();
+        }
+    });
+
+    //***********seznam studijskih programov**************
 
     $('#filtri').change(function() {
         var id = $(this).val();
@@ -144,6 +204,20 @@ $(document).ready(function() {
             $('.stevilo').hide();
     });
 
+    $('#steviloCO').change(function() {
+        if ($('#steviloCO').is(":checked"))
+            $('.stevilo_omejitev').show();
+        else
+            $('.stevilo_omejitev').hide();
+    });
+
+    $('#steviloCS').change(function() {
+        if ($('#steviloCS').is(":checked"))
+            $('.stevilo_sprejetih').show();
+        else
+            $('.stevilo_sprejetih').hide();
+    });
+
     $('#omejitevC').change(function() {
         if ($('#omejitevC').is(":checked"))
             $('.omejitev').show();
@@ -151,9 +225,34 @@ $(document).ready(function() {
             $('.omejitev').hide();
     });
 
-    $('#izvoz').click(function() {
-
+    $('#steviloCT').change(function() {
+        if ($('#steviloCT').is(":checked"))
+            $('.steviloT').show();
+        else
+            $('.steviloT').hide();
     });
+
+    $('#steviloCOT').change(function() {
+        if ($('#steviloCOT').is(":checked"))
+            $('.stevilo_omejitevT').show();
+        else
+            $('.stevilo_omejitevT').hide();
+    });
+
+    $('#steviloCST').change(function() {
+        if ($('#steviloCST').is(":checked"))
+            $('.stevilo_sprejetihT').show();
+        else
+            $('.stevilo_sprejetihT').hide();
+    });
+
+    $('#omejitevCT').change(function() {
+        if ($('#omejitevCT').is(":checked"))
+            $('.omejitevT').show();
+        else
+            $('.omejitevT').hide();
+    });
+
 
     $('#izpisProgramov_fakultete').change(function(){
         var id = $(this).val();
@@ -181,21 +280,35 @@ $(document).ready(function() {
             if ($(this).val() == '') {
                 steviloMest = '';
                 steviloMestOmejitev = '';
+                steviloSprejetih = '';
+                steviloMestTujci = '';
+                steviloMestOmejitevTujci = '';
+                steviloSprejetihTujci = '';
                 nacin = '';
                 vrsta = '';
                 omejitev = -1;
+                omejitevTujci = -1;
                 $('#gumbIzvozi').attr("disabled", true);
             } else if ($(this).val() == id) {
                 steviloMest = $(this).attr('data-mesta');
                 steviloMestOmejitev = $(this).attr('data-mesta_omejitev');
+                steviloMestTujci = $(this).attr('data-mesta_tujci');
+                steviloMestOmejitevTujci = $(this).attr('data-mesta_omejitev_tujci');
+                steviloSprejetih = $(this).attr('data-stevilo_sprejetih');
+                steviloSprejetihTujci = $(this).attr('data-stevilo_sprejetih_tujci');
                 nacin = $(this).attr('data-nacin');
                 vrsta = $(this).attr('data-vrsta');
                 omejitev = $(this).attr('data-omejitev');
+                omejitevTujci = $(this).attr('data-omejitev_tujci');
                 $('#gumbIzvozi').attr("disabled", false);
             }
         });
         $('#stevilo_vpisnih_mest').val(steviloMest);
         $('#stevilo_mest_omejitev').val(steviloMestOmejitev);
+        $('#stevilo_spr').val(steviloSprejetih);
+        $('#stevilo_vpisnih_mest_tujci').val(steviloMestTujci);
+        $('#stevilo_mest_omejitev_tujci').val(steviloMestOmejitevTujci);
+        $('#stevilo_spr_tujci').val(steviloSprejetihTujci);
 
         $('#vrsta_studija').val(vrsta);
         $('#nacin_studija').val(nacin);
@@ -206,6 +319,143 @@ $(document).ready(function() {
         } else {
             $('#omejitev').val("");
         }
+        if (omejitevTujci == 1) {
+            $('#omejitev_tujci').val("Da");
+        } else if (omejitevTujci == 0) {
+            $('#omejitev_tujci').val("Ne");
+        } else {
+            $('#omejitev_tujci').val("");
+        }
+
+
+        if (id > 0) {
+            $('.vpisni_pogoji').show();
+            $('.vpisni_pogoj').hide();
+            $('.program_'+id).show();
+        }
+
+    });
+
+    $('#visokosolski_zavod_1').change(function(){
+        var id_zavoda = $(this).val();
+        var zelja = $('#studijski_program_1');
+        if (id_zavoda > 0) {
+            zelja.children('.program').hide();
+            zelja.children('.zavod_' + id_zavoda).show();
+        } else {
+            $('#visokosolski_zavod_2').val(0);
+            $('#studijski_program_2').val(0);
+            $('#visokosolski_zavod_3').val(0);
+            $('#studijski_program_3').val(0);
+            $('#zelja_2').hide();
+            $('#zelja_3').hide();
+        }
+    });
+
+    $('#visokosolski_zavod_2').change(function(){
+        var id_zavoda = $(this).val();
+        var zelja = $('#studijski_program_2');
+        if (id_zavoda > 0) {
+            zelja.children('.program').hide();
+            zelja.children('.zavod_' + id_zavoda).show();
+        } else {
+            $('#visokosolski_zavod_3').val(0);
+            $('#studijski_program_3').val(0);
+            $('#zelja_3').hide();
+        }
+    });
+
+    $('#visokosolski_zavod_3').change(function(){
+        var id_zavoda = $(this).val();
+        var zelja = $('#studijski_program_3');
+        if (id_zavoda > 0) {
+            zelja.children('.program').hide();
+            zelja.children('.zavod_' + id_zavoda).show();
+        }
+    });
+    
+    $('#studijski_program_1').change(function () {
+       var id_programa = $(this).val();
+        if (id_programa > 0) {
+            $('#zelja_2').show();
+        } else {
+            $('#visokosolski_zavod_2').val(0);
+            $('#studijski_program_2').val(0);
+            $('#visokosolski_zavod_3').val(0);
+            $('#studijski_program_3').val(0);
+            $('#zelja_2').hide();
+            $('#zelja_3').hide();
+        }
+    });
+
+    $('#studijski_program_2').change(function () {
+        var id_programa = $(this).val();
+        if (id_programa > 0) {
+            $('#zelja_3').show();
+        } else {
+            $('#visokosolski_zavod_3').val(0);
+            $('#studijski_program_3').val(0);
+            $('#zelja_3').hide();
+        }
+    });
+
+    $('#nacin_zakljucka').change(function() {
+       var id_nacina_zakljucka = $(this).val();
+        if (id_nacina_zakljucka == 3) {
+            $('#maturitetni_predmet').show();
+        } else {
+            $('#maturitetni_predmet').hide();
+        }
+    });
+
+    $('.isti_naslov_za_posiljanje').change(function() {
+        if ($(this).val() == 1) {
+            $('.obrazec').hide();
+        } else {
+            $('.obrazec').show();
+        }
+    });
+
+    $('#drzava_srednje_sole').change(function() {
+        if ($(this).val() != 705) {
+            $('#srednja_sola_slo').hide();
+            $('#srednja_sola_tujina').show();
+        } else {
+            $('#srednja_sola_slo').show();
+            $('#srednja_sola_tujina').hide();
+        }
+    });
+    
+    $('#drzavljanstvo').change(function() {
+        var emso = $('#emso');
+        if ($(this).val() == 2) {
+            emso.val(emso.data('emso'));
+            emso.attr('readonly', false);
+        } else {
+            emso.val('Emšo bo samodejno ustvarjen');
+            emso.attr('readonly', true);
+        }
+    });
+    
+    $('#stalno_prebivalisce_drzava').change(function() {
+        if ($(this).val() != 705) {
+            $('#stalno_prebivalisce_obcina').children().each(function() {
+                if ($(this).val() == 1) {
+                    $(this).attr('selected', true);
+                } else {
+                    $(this).attr('selected', false);
+                }
+            });
+
+            $('#stalno_prebivalisce_posta').children().each(function() {
+                if ($(this).val() == 0) {
+                    $(this).attr('selected', true);
+                } else {
+                    $(this).attr('selected', false);
+                }
+            });
+        }
+
     });
 
 });

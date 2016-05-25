@@ -39,10 +39,28 @@
                     <th class="vrsta">Vrsta vpisa</th>
                 @endif
                 @if($stevilo)
-                    <th class="stevilo" style="width: 100px">Število vpisnih mest</th>
+                    <th class="stevilo">Število vpisnih mest</th>
+                @endif
+                @if($steviloO)
+                    <th class="stevilo_omejitev">Število vpisnih mest po omejitvi</th>
+                @endif
+                @if($steviloS)
+                    <th class="stevilo_sprejetih">Število sprejetih kandidatov</th>
                 @endif
                 @if($omejitev)
                     <th class="omejitev">Omejitev vpisa</th>
+                @endif
+                @if($steviloT)
+                    <th class="steviloT">Število vpisnih mest (tujci)</th>
+                @endif
+                @if($steviloOT)
+                    <th class="stevilo_omejitevT">Število vpisnih mest po omejitvi(tujci)</th>
+                @endif
+                @if($steviloST)
+                    <th class="stevilo_sprejetihT">Število sprejetih kandidatov (tujci)</th>
+                @endif
+                @if($omejitevT)
+                    <th class="omejitevT">Omejitev vpisa (tujci)</th>
                 @endif
             </tr>
             </thead>
@@ -65,8 +83,26 @@
                     @if($stevilo)
                         <td class="stevilo">{{$program->stevilo_vpisnih_mest}}</td>
                     @endif
+                    @if($steviloO)
+                        <td class="stevilo_omejitev" >{{$program->stevilo_mest_po_omejitvi}}</td>
+                    @endif
+                    @if($steviloS)
+                        <td class="stevilo_sprejetih">{{$program->stevilo_sprejetih}}</td>
+                    @endif
                     @if($omejitev)
                         <td class="omejitev">{{$program->omejitev_vpisa == 1 ? 'Da':'Ne'}}</td>
+                    @endif
+                    @if($steviloT)
+                        <td class="steviloT">{{$program->stevilo_vpisnih_mest_tujci}}</td>
+                    @endif
+                    @if($steviloOT)
+                        <td class="stevilo_omejitevT">{{$program->stevilo_mest_po_omejitvi_tujci}}</td>
+                    @endif
+                    @if($steviloST)
+                        <td class="stevilo_sprejetihT">{{$program->stevilo_sprejetih_tujci}}</td>
+                    @endif
+                    @if($omejitevT)
+                        <td class="omejitevT">{{$program->omejitev_vpisa_tujci == 1 ? 'Da':'Ne'}}</td>
                     @endif
                 </tr>
             @endforeach

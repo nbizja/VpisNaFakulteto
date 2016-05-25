@@ -11,8 +11,16 @@ class VisokosolskiZavod extends Model
     protected $fillable = ['ime', 'kratica', 'id_obcine', 'id_skrbnika', 'vnos_veljaven'];
     protected $guarded = ['id'];
 	protected $required = ['ime', 'kratica', 'id_obcine'];
+
     public function getRequired()
     {
         return $this->required;
     }
+
+    public function obcina()
+    {
+        return $this->belongsTo('App\Models\Obcina', 'id_obcine', 'id');
+    }
+
+
 }

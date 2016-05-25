@@ -20,6 +20,7 @@ class CreatePrijava extends Migration
             $table->integer('zelja');
             $table->date('datum_prijave');
             $table->integer('tocke');
+            $table->string('izredni_talent');
             $table->timestamps();
         });
     }
