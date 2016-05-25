@@ -239,6 +239,31 @@ class VpisniPogojSeeder extends Seeder
             'id_elementa' => 'M401'   //matematika(splošna m., osn.) + poklicna matura
         ]);
 
+        //Matematika UN, redni
+        DB::table('vpisni_pogoj')->insert([
+            'id_programa' => '848',
+            'vnos_veljaven' => '1',
+            'splosna_matura' => '1',
+            'poklicna_matura' => '0',
+        ]);
+
+        DB::table('vpisni_pogoj')->insert([
+            'id_programa' => '848',
+            'vnos_veljaven' => '1',
+            'splosna_matura' => '0',
+            'poklicna_matura' => '1',
+            'id_elementa' => 'L401',   //matematika + poklicna matura
+            'id_elementa2' => 'SM'
+        ]);
+
+        DB::table('vpisni_pogoj')->insert([
+            'id_programa' => '848',
+            'vnos_veljaven' => '1',
+            'splosna_matura' => '0',
+            'poklicna_matura' => '1',
+            'id_elementa' => 'M401'   //matematika(splošna m., osn.) + poklicna matura
+        ]);
+
 
         //Matematika UN, izredni
         DB::table('vpisni_pogoj')->insert([
