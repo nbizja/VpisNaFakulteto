@@ -96,22 +96,26 @@ class PoklicnaMaturaController extends Controller
 				$matPre = False;
 				
 				if ($request->hasFile('datotekaMaturant')) {
+					$model = new PoklicnaMatura;
+					
 					$maturant = $request->file('datotekaMaturant');
 					DB::statement('SET FOREIGN_KEY_CHECKS = 0');
 					foreach(file($maturant) as $line) {
 						$maturant_podatki = $this->preberiVrsticoMaturant($line);
-						PoklicnaMatura::insert($maturant_podatki);
+						$model->dodaj($maturant_podatki);
 					}
 					DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 					$mat = True;
 				}
 				
 				if ($request->hasFile('datotekaMaturPre')) {
+					$model = new PoklicnaMaturaPredmet;
+					
 					$maturantpre = $request->file('datotekaMaturPre');
 					DB::statement('SET FOREIGN_KEY_CHECKS = 0');
 					foreach(file($maturantpre) as $line) {
 						$maturantpre_podatki = $this->preberiVrsticoMaturantPre($line);
-						PoklicnaMaturaPredmet::insert($maturantpre_podatki);
+						$model->dodaj($maturantpre_podatki);
 					}
 					DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 					

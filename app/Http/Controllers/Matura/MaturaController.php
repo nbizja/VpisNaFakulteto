@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Matura;
 
+use DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -90,27 +91,31 @@ class MaturaController extends Controller
 					'datotekaMaturant' => 'mimes:txt',
 					'datotekaMaturPre' => 'mimetypes:text/plain',
 					]);
-					
+				
 				$mat = False;
 				$matPre = False;
 				
 				if ($request->hasFile('datotekaMaturant')) {
+					$model = new Matura;
+					
 					$maturant = $request->file('datotekaMaturant');
 					DB::statement('SET FOREIGN_KEY_CHECKS = 0');
 					foreach(file($maturant) as $line) {
 						$maturant_podatki = $this->preberiVrsticoMaturant($line);
-						Matura::insert($maturant_podatki);
+						$model->dodaj($maturant_podatki);
 					}
 					DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 					$mat = True;
 				}
 				
 				if ($request->hasFile('datotekaMaturPre')) {
+					$model = new MaturaPredmet;
+					
 					$maturantpre = $request->file('datotekaMaturPre');
 					DB::statement('SET FOREIGN_KEY_CHECKS = 0');
 					foreach(file($maturantpre) as $line) {
 						$maturantpre_podatki = $this->preberiVrsticoMaturantPre($line);
-						MaturaPredmet::insert($maturantpre_podatki);
+						$model->dodaj($maturantpre_podatki);
 					}
 					DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 					$matPre = True;
