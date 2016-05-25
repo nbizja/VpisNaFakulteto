@@ -102,6 +102,13 @@ Route::group(['middleware' => ['prijavljen']], function () {
     Route::post('vpis/{id}/izbris_prijave',          'VpisController@izbrisPrijave');
     Route::post('vpis/{id}/oddaja_prijave',          'VpisController@oddajaPrijave');
     Route::get('vpis/{id}/tisk_prijave',             'VpisController@tiskPrijave');
+    
+    Route::get('/matura/uvozPodatkov', 'Matura\MaturaController@uvoziPodatke');
+    Route::post('/matura/naloziDatoteko', 'Matura\MaturaController@naloziDatoteko');
+	
+    Route::get('/poklicnaMatura/uvozPodatkov', 'Matura\PoklicnaMaturaController@uvoziPodatke');
+    Route::post('/poklicnaMatura/naloziDatoteko', 'Matura\PoklicnaMaturaController@naloziDatoteko');
+
 });
 
 Route::get('/seznamKandidatov/{zavod_id?}', function($zavod_id){
