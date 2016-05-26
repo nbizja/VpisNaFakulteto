@@ -41,6 +41,21 @@ class MaturaSeeder extends Seeder
             'vnos_veljaven' => 1,
             'maksimum' => 34
         ]);
+
+        DB::table('matura')->insert([
+            'emso' => '1412998500684',
+            'ime' => 'Sofija',
+            'priimek' => 'Bezer',
+            'ocena' => 8,  //tocke na maturi
+            'opravil' => 0,
+            'ocena_3_letnik' => 2.5,
+            'ocena_4_letnik' => 3.7,
+            'tip_kandidata' => 'redni',
+            'id_srednje_sole' => 17003,  //gimnazija Koper
+            'id_poklica' => 59911,   //gimnazija
+            'vnos_veljaven' => 1,
+            'maksimum' => 29
+        ]);
     }
 }
 

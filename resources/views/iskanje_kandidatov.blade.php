@@ -52,6 +52,9 @@
                             </button>
                         </form>
                     </td>
+                    <td>
+                        <a class="btn btn-primary" href="{{ url('/ustrezanjePogojem/'.$kandidat->id) }}">Preveri vpisne pogoje</a>
+                    </td>
                 </tr>
             @endforeach
         </table>

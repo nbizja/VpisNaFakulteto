@@ -65,7 +65,16 @@ class Uporabnik extends Model implements AuthenticatableContract, CanResetPasswo
     public function prijave()
     {
         return $this->hasMany('App\Models\Prijava', 'id_kandidata', 'id');
+    }
 
+    public function predmetiPoklicna()
+    {
+        return $this->hasMany('App\Models\PoklicnaMaturaPredmet', 'emso', 'emso');
+    }
+
+    public function predmetiSplosna()
+    {
+        return $this->hasMany('App\Models\MaturaPredmet', 'emso', 'emso');
     }
 
     public function matura()
@@ -77,7 +86,6 @@ class Uporabnik extends Model implements AuthenticatableContract, CanResetPasswo
     public function poklicnaMatura()
     {
         return $this->hasMany('App\Models\PoklicnaMatura', 'emso', 'emso');
-
     }
 
 

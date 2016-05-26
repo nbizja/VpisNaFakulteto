@@ -91,6 +91,15 @@
                             <li class="active"><a href="{{ action('SifrantiController@index')}}">Vzdrževanje šifrantov</a></li>
                             <li class=""><a href="{{ action('ListOfCandidatesController@loadPage')}}">Seznam prijavljenih kandidatov</a></li>
                             <li class="active"><a href="{{ action('ListOfCandidatesController@loadCandidates')}}">Iskanje po kandidatih</a></li>
+
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Matura<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ action('Matura\MaturaController@uvoziPodatke') }}">Uvoz podatkov o maturi</a></li>
+                                    <li><a href="{{ action('Matura\PoklicnaMaturaController@uvoziPodatke') }}">Uvoz podatkov o poklicni maturi</a></li>
+                                </ul>
+                            </li>
+
                         </ul>
                     </div>
                 @endif

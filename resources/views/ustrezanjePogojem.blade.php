@@ -27,35 +27,59 @@
                 </div>
 
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">Podatku o zaključku srednje šole</div>
-                    <div class="panel-body">
+                @if ($matura != null)
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Podatku o zaključku srednje šole</div>
+                        <div class="panel-body">
 
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Tip mature: </label>
-                            <div class="col-md-6">
-                                <input value="{{$tipMature == 0 ? "Splošna matura" : "Poklicna matura"}}" class="form-control" readonly>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Tip mature: </label>
+                                <div class="col-md-6">
+                                    <input value="{{$tipMature == 0 ? "Splošna matura" : "Poklicna matura"}}" class="form-control" readonly>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Opravljena matura: </label>
-                            <div class="col-md-6">
-                                <input value="{{$matura->opravil == 0 ? "Ne" : "Da"}}" class="form-control" readonly>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Poklic: </label>
+                                <div class="col-md-6">
+                                    <input value="{{$matura->poklic->ime}}" class="form-control" readonly>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Izbirni maturitetni predmeti (samo ob specifičnih vpisnih pogojih): </label>
-                            <div class="col-md-6">
-                                <input class="form-control" readonly>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Opravljena matura: </label>
+                                <div class="col-md-6">
+                                    <input value="{{$matura->opravil == 0 ? "Ne" : "Da"}}" class="form-control" readonly>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="panel panel-default">
-                    @foreach($prijave as $prijava)
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Maturitetni predmeti</div>
+                        <div class="panel-body">
+
+                            @foreach($predmeti as $predmet)
+                                <div class="form-group">
+                                    <div class="col-md-6">
+                                        <label class="col-md-10">{{$predmet->predmet->ime}}</label>
+                                    </div> <br>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @else
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Podatku o zaključku srednje šole</div>
+                        <div class="panel-body">
+                            Podatki o zaključku še niso vnešeni.
+                        </div>
+                    </div>
+                @endif
+
+
+                @foreach($prijave as $prijava)
+                    <div class="panel panel-default">
                         <div class="panel-heading">{{$prijava->zelja}}. želja</div>
                         <div class="panel-body">
 
@@ -76,12 +100,12 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Kandidat ustreza pogojem: </label>
                                 <div class="col-md-6">
-                                    <input class="form-control" readonly>
+                                    <input value="{{$rezultat[$prijava->zelja-1] == 0 ? 'Ne' : 'Da'}}" class="form-control" readonly>
                                 </div>
                             </div>
                         </div>
-                    @endforeach
-                </div>
+                    </div>
+                @endforeach
 
             </div>
 
