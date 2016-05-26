@@ -59,13 +59,21 @@
                         <div class="panel-heading">Maturitetni predmeti</div>
                         <div class="panel-body">
 
+                        <table class="table table-hover">
+                            <tr>
+                                <th>Šifra predmeta</th>
+                                <th>Predmet</th>
+                                <th>Ocena</th>
+                            </tr>
                             @foreach($predmeti as $predmet)
-                                <div class="form-group">
-                                    <div class="col-md-6">
-                                        <label class="col-md-10">{{$predmet->predmet->ime}}</label>
-                                    </div> <br>
-                                </div>
+                                <tr>
+                                    <td>{{$predmet->predmet->id}}</td>
+                                    <td>{{$predmet->predmet->ime}}</td>
+                                    <td> </td>
+                                </tr>
                             @endforeach
+                        </table>
+
                         </div>
                     </div>
                 @else
