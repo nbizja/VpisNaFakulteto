@@ -40,6 +40,8 @@
                 <th>Emšo</th>
                 <th>Priimek in ime</th>
                 <th></th>
+                <th></th>
+                <th>Vpis</th>
             </tr>
             @foreach($kandidati as $kandidat)
                 <tr>
@@ -54,6 +56,9 @@
                     </td>
                     <td>
                         <a class="btn btn-primary" href="{{ url('/ustrezanjePogojem/'.$kandidat->id) }}">Preveri vpisne pogoje</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" href="{{ url('/vpis/' . $kandidat->id .'/osebni_podatki') }}">Vpis</a>
                     </td>
                 </tr>
             @endforeach
