@@ -215,7 +215,7 @@ class VpisniPogojSeeder extends Seeder
         /**************************************/
 
         //Matematika UN, redni
-        DB::table('vpisni_pogoj')->insert([
+        DB::table('vpisni_pogoj')->insert([   //id 25
             'id_programa' => '828',
             'vnos_veljaven' => '1',
             'splosna_matura' => '1',
@@ -239,8 +239,8 @@ class VpisniPogojSeeder extends Seeder
             'id_elementa' => 'M401'   //matematika(splošna m., osn.) + poklicna matura
         ]);
 
-        //Matematika UN, redni
-        DB::table('vpisni_pogoj')->insert([
+        //Matematika UN, izredni
+        DB::table('vpisni_pogoj')->insert([   //id 28
             'id_programa' => '848',
             'vnos_veljaven' => '1',
             'splosna_matura' => '1',
@@ -266,7 +266,7 @@ class VpisniPogojSeeder extends Seeder
 
 
         //Matematika UN, izredni
-        DB::table('vpisni_pogoj')->insert([
+        DB::table('vpisni_pogoj')->insert([   //id 31
             'id_programa' => '857',
             'vnos_veljaven' => '1',
             'splosna_matura' => '1',
@@ -294,7 +294,7 @@ class VpisniPogojSeeder extends Seeder
         /**************************************/
 
         //Praktična matematika, redni
-        DB::table('vpisni_pogoj')->insert([
+        DB::table('vpisni_pogoj')->insert([    //id 34
             'id_programa' => '858',
             'vnos_veljaven' => '1',
             'splosna_matura' => '1',
@@ -326,14 +326,14 @@ class VpisniPogojSeeder extends Seeder
         /**************************************/
 
         //Gozdarstvo, redni
-        DB::table('vpisni_pogoj')->insert([
+        DB::table('vpisni_pogoj')->insert([   //id 38
             'id_programa' => '776',
             'vnos_veljaven' => '1',
             'splosna_matura' => '1',
             'poklicna_matura' => '0',
         ]);
 
-        DB::table('vpisni_pogoj')->insert([
+        DB::table('vpisni_pogoj')->insert([    //id 39
             'id_programa' => '776',
             'vnos_veljaven' => '1',
             'splosna_matura' => '0',
@@ -343,7 +343,7 @@ class VpisniPogojSeeder extends Seeder
             'id_elementa2' => 'SM'
         ]);
 
-        DB::table('vpisni_pogoj')->insert([
+        DB::table('vpisni_pogoj')->insert([    //id 40
             'id_programa' => '776',
             'vnos_veljaven' => '1',
             'splosna_matura' => '0',
@@ -354,7 +354,7 @@ class VpisniPogojSeeder extends Seeder
 
 
         //Gozdarstvo, izredni
-        DB::table('vpisni_pogoj')->insert([
+        DB::table('vpisni_pogoj')->insert([   //id 41
             'id_programa' => '859',
             'vnos_veljaven' => '1',
             'splosna_matura' => '1',

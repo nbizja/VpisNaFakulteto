@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <h4>Ustreznost vpisnih pogojev kandidata</h4>
-        <form class="form-horizontal" role="form" method="POST" action="{{ action('StudijskiProgrami\StudijskiProgramiController@izvozPodatkov') }}">
+        <form class="form-horizontal" role="form" method="get" action="{{ url('/ustrezanjePogojem/'.$kandidat->id.'/pdf') }}">
             <div class="panel-group">
                 {!! csrf_field() !!}
                 <div class="panel panel-default">
@@ -56,16 +56,52 @@
                     </div>
 
                     <div class="panel panel-default">
+                        <div class="panel-heading">Uspeh 3. in 4. letnika srednje šole</div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">3.letnik: </label>
+                                <div class="col-md-6">
+                                    <input value="{{$matura->ocena_3_letnik}}" class="form-control" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">4.letnik: </label>
+                                <div class="col-md-6">
+                                    <input value="{{$matura->ocena_4_letnik}}" class="form-control" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Število točk na maturi: </label>
+                                <div class="col-md-6">
+                                    <input value="{{$matura->ocena}}" class="form-control" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
                         <div class="panel-heading">Maturitetni predmeti</div>
                         <div class="panel-body">
 
+                        <table class="table table-hover">
+                            <tr>
+                                <th>Šifra predmeta</th>
+                                <th>Predmet</th>
+                                <th>Ocena (3.letnik)</th>
+                                <th>Ocena (4.letnik)</th>
+                                <th>Ocena (matura)</th>
+                            </tr>
                             @foreach($predmeti as $predmet)
-                                <div class="form-group">
-                                    <div class="col-md-6">
-                                        <label class="col-md-10">{{$predmet->predmet->ime}}</label>
-                                    </div> <br>
-                                </div>
+                                <tr>
+                                    <td>{{$predmet->predmet->id}}</td>
+                                    <td>{{$predmet->predmet->ime}}</td>
+                                    <td>{{$predmet->ocena_3_letnik}}</td>
+                                    <td>{{$predmet->ocena_4_letnik}}</td>
+                                    <td>{{$predmet->ocena}}</td>
+                                </tr>
                             @endforeach
+                        </table>
+
                         </div>
                     </div>
                 @else
@@ -103,10 +139,67 @@
                                     <input value="{{$rezultat[$prijava->zelja-1] == 0 ? 'Ne' : 'Da'}}" class="form-control" readonly>
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Število točk: </label>
+                                <div class="col-md-6">
+                                    <input value="{{$tocke[$prijava->zelja-1] == 0 ? '/' : $tocke[$prijava->zelja-1]}}" class="form-control" readonly>
+                                </div>
+                            </div>
+
                         </div>
+
+                        <hr>
+                        <?php $i = 0; ?>
+                        @foreach($prijava->studijskiProgram->VpisniPogoji as $pogoj)
+                            <?php $i++; ?>
+                            <div class="panel-group"><div class="panel-default"><div class="panel-heading">{{$i}}.vpisni pogoj:</div><div class="panel-body">
+                                <div class="col-md-6">
+                                    <ul>
+                                        @if ($pogoj->splosna_matura == 1)
+                                            <li>Splošna matura</li>
+                                        @elseif($pogoj->poklicna_matura == 1)
+                                            <li>Poklicna matura</li>
+                                        @elseif($pogoj->id_poklica != null)
+                                            <li>Poklic: {{$pogoj->Poklic->ime}}</li>
+                                        @endif
+                                        @if ($pogoj->id_elementa != null)
+                                            <li>{{ ucfirst(mb_strtolower($pogoj->Element->ime)) }}</li>
+                                        @endif
+                                        @if ($pogoj->id_elementa2 != null)
+                                            <li>{{ ucfirst(mb_strtolower($pogoj->Element2->ime)) }}</li>
+                                        @endif
+                                    </ul>
+                                </div>
+                                <br/><br/><br/><br/>
+                                <div style="width: 100%">
+                                    @if(count($pogoj->Kriterij) > 0)
+                                        <div class="well" style="display: inline-block; width: 50%; height: 100%">
+                                            <label>Kriterij za izračun točk:</label>
+                                            <br>
+                                            <ul>
+                                                @foreach($pogoj->Kriterij as $kriterij)
+                                                    @if($kriterij->id_elementa == null)
+                                                        @if($kriterij->maturitetni_uspeh == 1)
+                                                            <li>{{$kriterij->utez}}<span class="col-md-6">Uspeh na maturi: </span></li>
+                                                        @elseif($kriterij->ocene_34_letnika == 1 && $kriterij->utez > 0)
+                                                            <li>{{$kriterij->utez}}<span class="col-md-6">Uspeh v 3. in 4. letniku:</span></li>
+                                                        @endif
+                                                    @else
+                                                        <li>{{$kriterij->utez}} <span class="col-md-6">{{ucfirst(strtolower($kriterij->Element->ime))}}:</span></li>
+                                                    @endif
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    @endif
+                                </div>
+                             </div></div></div>
+                        @endforeach
                     </div>
                 @endforeach
-
+                <div class="text-right">
+                    <input class="btn btn-primary pull-right" type="submit" name="pdf" id="izvoz" value="Izvoz v PDF">
+                </div>
             </div>
 
         </form>
