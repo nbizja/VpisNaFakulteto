@@ -87,12 +87,16 @@
                             <tr>
                                 <th>Šifra predmeta</th>
                                 <th>Predmet</th>
-                                <th>Ocena</th>
+                                <th>Ocena (3.letnik)</th>
+                                <th>Ocena (4.letnik)</th>
+                                <th>Ocena (matura)</th>
                             </tr>
                             @foreach($predmeti as $predmet)
                                 <tr>
                                     <td>{{$predmet->predmet->id}}</td>
                                     <td>{{$predmet->predmet->ime}}</td>
+                                    <td>{{$predmet->ocena_3_letnik}}</td>
+                                    <td>{{$predmet->ocena_4_letnik}}</td>
                                     <td>{{$predmet->ocena}}</td>
                                 </tr>
                             @endforeach

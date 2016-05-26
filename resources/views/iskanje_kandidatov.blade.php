@@ -41,7 +41,6 @@
                 <th>Priimek in ime</th>
                 <th></th>
                 <th></th>
-                <th>Vpis</th>
             </tr>
             @foreach($kandidati as $kandidat)
                 <tr>
