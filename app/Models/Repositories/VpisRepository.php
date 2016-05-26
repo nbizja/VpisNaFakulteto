@@ -7,6 +7,9 @@ use App\Models\Drzava;
 use App\Models\Drzavljanstvo;
 use App\Models\Element;
 use App\Models\KoncanaSrednjaSola;
+use App\Models\Matura;
+use App\Models\MaturaPredmet;
+use App\Models\PoklicnaMaturaPredmet;
 use App\Models\Obcina;
 use App\Models\Posta;
 use App\Models\Prijava;
@@ -93,5 +96,15 @@ class VpisRepository
             'prijave' => $uporabnik->prijave()->with('studijskiProgram', 'studijskiProgram.visokosolskiZavod')->get()->sortBy('zelja'),
             'datum_oddaje_prijave' => $uporabnik->datum_oddaje_prijave
         ];
+    }
+
+    public function predmetMaturaById($id, $emso)
+    {
+        return MaturaPredmet::where('id_predmeta', $id)->where('emso', $emso)->first();
+    }
+
+    public function predmetMaturaPoklicnaById($id, $emso)
+    {
+        return PoklicnaMaturaPredmet::where('id_predmeta', $id)->where('emso', $emso)->first();
     }
 }

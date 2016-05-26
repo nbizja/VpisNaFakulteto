@@ -561,7 +561,7 @@ class KriterijSeeder extends Seeder
             'utez' => '0.2'
         ]);
 
-        // matemanita UN redni
+        // matematika UN redni
 
         DB::table('kriterij')->insert([
             'id_pogoja' => '25',
@@ -577,31 +577,6 @@ class KriterijSeeder extends Seeder
             'maturitetni_uspeh' => '1',
             'ocene_34_letnika' => '0',
             'utez' => '0.6'
-        ]);
-
-        DB::table('kriterij')->insert([
-            'id_pogoja' => '26',
-            'vnos_veljaven' => '1',
-            'ocene_34_letnika' => '1',
-            'maturitetni_uspeh' => '0',
-            'utez' => '0.4'
-        ]);
-
-        DB::table('kriterij')->insert([
-            'id_pogoja' => '26',
-            'vnos_veljaven' => '1',
-            'ocene_34_letnika' => '0',
-            'maturitetni_uspeh' => '1',
-            'utez' => '0.4'
-        ]);
-
-        DB::table('kriterij')->insert([
-            'id_pogoja' => '26',
-            'vnos_veljaven' => '1',
-            'id_elementa' => 'L401',
-            'ocene_34_letnika' => '0',
-            'maturitetni_uspeh' => '0',
-            'utez' => '0.2'
         ]);
 
         DB::table('kriterij')->insert([
@@ -628,6 +603,7 @@ class KriterijSeeder extends Seeder
             'maturitetni_uspeh' => '0',
             'utez' => '0.2'
         ]);
+
 
         //matematika UN izredni
 
@@ -648,31 +624,6 @@ class KriterijSeeder extends Seeder
         ]);
 
         DB::table('kriterij')->insert([
-            'id_pogoja' => '29',
-            'vnos_veljaven' => '1',
-            'ocene_34_letnika' => '1',
-            'maturitetni_uspeh' => '0',
-            'utez' => '0.4'
-        ]);
-
-        DB::table('kriterij')->insert([
-            'id_pogoja' => '29',
-            'vnos_veljaven' => '1',
-            'ocene_34_letnika' => '0',
-            'maturitetni_uspeh' => '1',
-            'utez' => '0.4'
-        ]);
-
-        DB::table('kriterij')->insert([
-            'id_pogoja' => '29',
-            'vnos_veljaven' => '1',
-            'id_elementa' => 'L401',
-            'ocene_34_letnika' => '0',
-            'maturitetni_uspeh' => '0',
-            'utez' => '0.2'
-        ]);
-
-        DB::table('kriterij')->insert([
             'id_pogoja' => '30',
             'vnos_veljaven' => '1',
             'ocene_34_letnika' => '1',
@@ -697,10 +648,11 @@ class KriterijSeeder extends Seeder
             'utez' => '0.2'
         ]);
 
+
         // prakticna matematika redni
 
         DB::table('kriterij')->insert([
-            'id_pogoja' => '31',
+            'id_pogoja' => '34',
             'vnos_veljaven' => '1',
             'ocene_34_letnika' => '1',
             'maturitetni_uspeh' => '0',
@@ -708,7 +660,7 @@ class KriterijSeeder extends Seeder
         ]);
 
         DB::table('kriterij')->insert([
-            'id_pogoja' => '31',
+            'id_pogoja' => '34',
             'vnos_veljaven' => '1',
             'maturitetni_uspeh' => '1',
             'ocene_34_letnika' => '0',
@@ -716,7 +668,7 @@ class KriterijSeeder extends Seeder
         ]);
 
         DB::table('kriterij')->insert([
-            'id_pogoja' => '32',
+            'id_pogoja' => '35',
             'vnos_veljaven' => '1',
             'ocene_34_letnika' => '1',
             'maturitetni_uspeh' => '0',
@@ -724,7 +676,7 @@ class KriterijSeeder extends Seeder
         ]);
 
         DB::table('kriterij')->insert([
-            'id_pogoja' => '32',
+            'id_pogoja' => '35',
             'vnos_veljaven' => '1',
             'maturitetni_uspeh' => '1',
             'ocene_34_letnika' => '0',
@@ -734,7 +686,7 @@ class KriterijSeeder extends Seeder
         // prakticna matematika izredni
 
         DB::table('kriterij')->insert([
-            'id_pogoja' => '33',
+            'id_pogoja' => '36',
             'vnos_veljaven' => '1',
             'ocene_34_letnika' => '1',
             'maturitetni_uspeh' => '0',
@@ -742,7 +694,7 @@ class KriterijSeeder extends Seeder
         ]);
 
         DB::table('kriterij')->insert([
-            'id_pogoja' => '33',
+            'id_pogoja' => '36',
             'vnos_veljaven' => '1',
             'maturitetni_uspeh' => '1',
             'ocene_34_letnika' => '0',
@@ -750,7 +702,7 @@ class KriterijSeeder extends Seeder
         ]);
 
         DB::table('kriterij')->insert([
-            'id_pogoja' => '34',
+            'id_pogoja' => '37',
             'vnos_veljaven' => '1',
             'ocene_34_letnika' => '1',
             'maturitetni_uspeh' => '0',
@@ -758,7 +710,7 @@ class KriterijSeeder extends Seeder
         ]);
 
         DB::table('kriterij')->insert([
-            'id_pogoja' => '34',
+            'id_pogoja' => '37',
             'vnos_veljaven' => '1',
             'maturitetni_uspeh' => '1',
             'ocene_34_letnika' => '0',
@@ -768,7 +720,7 @@ class KriterijSeeder extends Seeder
         //gozdarstvo redni
 
         DB::table('kriterij')->insert([
-            'id_pogoja' => '35',
+            'id_pogoja' => '38',
             'vnos_veljaven' => '1',
             'ocene_34_letnika' => '1',
             'maturitetni_uspeh' => '0',
@@ -776,7 +728,7 @@ class KriterijSeeder extends Seeder
         ]);
 
         DB::table('kriterij')->insert([
-            'id_pogoja' => '35',
+            'id_pogoja' => '38',
             'vnos_veljaven' => '1',
             'maturitetni_uspeh' => '1',
             'ocene_34_letnika' => '0',
@@ -784,7 +736,7 @@ class KriterijSeeder extends Seeder
         ]);
 
         DB::table('kriterij')->insert([
-            'id_pogoja' => '36',
+            'id_pogoja' => '40',
             'vnos_veljaven' => '1',
             'ocene_34_letnika' => '1',
             'maturitetni_uspeh' => '0',
@@ -792,26 +744,26 @@ class KriterijSeeder extends Seeder
         ]);
 
         DB::table('kriterij')->insert([
-            'id_pogoja' => '36',
+            'id_pogoja' => '40',
             'vnos_veljaven' => '1',
             'maturitetni_uspeh' => '1',
             'ocene_34_letnika' => '0',
-            'utez' => '0.4'
+            'utez' => '0.2'
         ]);
 
         DB::table('kriterij')->insert([
-            'id_pogoja' => '36',
+            'id_pogoja' => '40',
             'vnos_veljaven' => '1',
-            'id_elementa' => 'L421',
+            'id_elementa' => 'M421',
             'ocene_34_letnika' => '0',
             'maturitetni_uspeh' => '0',
-            'utez' => '0.2'
+            'utez' => '0.4'
         ]);
 
         // gozdarstvo izredni
 
         DB::table('kriterij')->insert([
-            'id_pogoja' => '37',
+            'id_pogoja' => '41',
             'vnos_veljaven' => '1',
             'ocene_34_letnika' => '1',
             'maturitetni_uspeh' => '0',
@@ -819,7 +771,7 @@ class KriterijSeeder extends Seeder
         ]);
 
         DB::table('kriterij')->insert([
-            'id_pogoja' => '37',
+            'id_pogoja' => '41',
             'vnos_veljaven' => '1',
             'maturitetni_uspeh' => '1',
             'ocene_34_letnika' => '0',
@@ -827,7 +779,7 @@ class KriterijSeeder extends Seeder
         ]);
 
         DB::table('kriterij')->insert([
-            'id_pogoja' => '38',
+            'id_pogoja' => '43',
             'vnos_veljaven' => '1',
             'ocene_34_letnika' => '1',
             'maturitetni_uspeh' => '0',
@@ -835,20 +787,20 @@ class KriterijSeeder extends Seeder
         ]);
 
         DB::table('kriterij')->insert([
-            'id_pogoja' => '38',
+            'id_pogoja' => '43',
             'vnos_veljaven' => '1',
             'maturitetni_uspeh' => '1',
             'ocene_34_letnika' => '0',
-            'utez' => '0.4'
+            'utez' => '0.2'
         ]);
 
         DB::table('kriterij')->insert([
-            'id_pogoja' => '38',
+            'id_pogoja' => '43',
             'vnos_veljaven' => '1',
             'id_elementa' => 'L421',
             'ocene_34_letnika' => '0',
             'maturitetni_uspeh' => '0',
-            'utez' => '0.2'
+            'utez' => '0.4'
         ]);
 
 
