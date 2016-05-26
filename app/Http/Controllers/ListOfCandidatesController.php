@@ -120,7 +120,9 @@ class ListOfCandidatesController extends Controller
                     else if ($kandidat->vloga != VlogaUporabnika::KANDIDAT) unset($kandidati[$key]);
 
                     $prijave = $kandidat->Prijave;
-                    if (count($prijave) == 0) unset($kandidati[$key]);
+                    if (Auth::user()->vloga == 'fakulteta') {
+                        if (count($prijave) == 0) unset($kandidati[$key]);
+                    }
                     else {
                         if (Auth::user()->vloga == 'fakulteta') {
                             $id = Auth::user()->id;
