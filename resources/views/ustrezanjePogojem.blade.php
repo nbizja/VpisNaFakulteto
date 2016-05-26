@@ -70,6 +70,12 @@
                                     <input value="{{$matura->ocena_4_letnik}}" class="form-control" readonly>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Število točk na maturi: </label>
+                                <div class="col-md-6">
+                                    <input value="{{$matura->ocena}}" class="form-control" readonly>
+                                </div>
+                            </div>
                         </div>
                     </div>
 

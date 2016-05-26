@@ -163,7 +163,7 @@ class UporabnikSeeder extends Seeder
         DB::table('uporabnik')->insert([
             'emso' => '0606997500097 ',
             'ime' => 'Stanislav',
-            'priimek' => 'Stanic',
+            'priimek' => 'Stanič',
             'username' => 'stanko',
             'email' => 'stanko@gmail.com',
             'password' => bcrypt('stanko'),

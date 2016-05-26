@@ -52,6 +52,10 @@ class DatabaseSeeder extends CsvSeeder
     {
         DB::disableQueryLog();
 		Eloquent::unguard();
+        DB::table('prijava_naslov_za_posiljanje')->truncate();
+        DB::table('prijava_osebni_podatki')->truncate();
+        DB::table('prijava_stalno_prebivalisce')->truncate();
+        DB::table('prijava_srednjesolska_izobrazba')->truncate();
         $this->call(UporabnikSeeder::class);
         $this->call(PrijavniRokSeeder::class);
 

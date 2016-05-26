@@ -229,6 +229,7 @@ class UspehKandidatovController extends Controller
                         $vsota[$i-1] += NormiraneTocke::OCENE_34_LETNIK[($matura->ocena_3_letnik + $matura->ocena_4_letnik)] * floatval($k1->utez);
                     } else if (!empty($k1->id_elementa)) {
                         $predmet = (substr($k1->id_elementa, 0,1) == 'M') ? $this->vpisRepo->predmetMaturaById($k1->id_elementa, $kandidat->emso) : $this->vpisRepo->predmetMaturaPoklicnaById($k1->id_elementa, $kandidat->emso);
+                        dd($predmet->ocena);
                         $vsota[$i-1] += NormiraneTocke::LESTVICA_5[$predmet->ocena] * floatval($k1->utez);
                     }
                 }
