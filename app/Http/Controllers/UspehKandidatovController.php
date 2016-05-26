@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 use App\Models\Enums\NormiraneTocke;
 use App\Models\Repositories\VpisRepository;
 use App\Models\Repositories\VpisniPogojiRepository;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Repositories\PrijavaRepository;;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -33,6 +34,57 @@ class UspehKandidatovController extends Controller
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
     protected $redirectTo = '/';
+
+    public function izvozPodatkov($idKandidata) {
+        if (Auth::check()) {
+            if (Auth::user()->vloga == 'skrbnik') {
+
+                $kandidat = $this->prijavaRepo->uporabnikById($idKandidata);
+                $matura = null;
+                $tipMature = 0;
+                $predmetiS = null;
+                $predmetiP = null;
+                $predmeti = null;
+                if (!($kandidat->poklicnaMatura->isEmpty())) {
+                    $tipMature = 1;
+                    $matura = $kandidat->poklicnaMatura->first();
+
+                } else if (!($kandidat->matura->isEmpty())) {
+                    $tipMature = 0;
+                    $matura = $kandidat->matura->first();
+
+                };
+
+
+                $predmetiS = $kandidat->predmetiPoklicna()->with('predmet')->get();
+                $predmetiP = $kandidat->predmetiSplosna()->with('predmet')->get();
+                $predmeti = $predmetiS->merge($predmetiP);
+
+                $rezultat = array(false, false, false, 0, 0, 0);
+                if ($matura != null) {
+                    if ($matura->opravil == 1) {
+                        $rezultat = $this->preveriZelje($tipMature, $predmeti, $matura, $kandidat);
+                    } else {
+                        $rezultat = array(false, false, false, 0, 0, 0);
+                    }
+                }
+
+                $tocke = $this->izracunajTocke($rezultat, $predmeti, $matura, $tipMature, $kandidat);
+
+                $pdf = \App::make('dompdf.wrapper');
+                ini_set('max_execution_time', 300);
+                $pdf->loadHTML(\View::make('pdf/UspehKandidata',
+                    ['kandidat' => $kandidat, 'matura' => $matura,
+                        'tipMature' => $tipMature, 'predmeti' => $predmeti,
+                        'rezultat' => $rezultat, 'tocke' => $tocke])->with($this->vpisRepo->pregledPrijave($kandidat)));
+
+                return $pdf->download('uspehKandidata.pdf');
+
+            }
+        }
+
+        return redirect('prijava');
+    }
 
     public function preveriPogoje($idKandidata)
     {

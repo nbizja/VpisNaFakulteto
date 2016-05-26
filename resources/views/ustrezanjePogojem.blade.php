@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <h4>Ustreznost vpisnih pogojev kandidata</h4>
-        <form class="form-horizontal" role="form" method="POST" action="{{ action('StudijskiProgrami\StudijskiProgramiController@izvozPodatkov') }}">
+        <form class="form-horizontal" role="form" method="get" action="{{ url('/ustrezanjePogojem/'.$kandidat->id.'/pdf') }}">
             <div class="panel-group">
                 {!! csrf_field() !!}
                 <div class="panel panel-default">
@@ -197,7 +197,9 @@
                         @endforeach
                     </div>
                 @endforeach
-
+                <div class="text-right">
+                    <input class="btn btn-primary pull-right" type="submit" name="pdf" id="izvoz" value="Izvoz v PDF">
+                </div>
             </div>
 
         </form>
