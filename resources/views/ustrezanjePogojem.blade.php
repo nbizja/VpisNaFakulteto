@@ -95,8 +95,8 @@
                                 <tr>
                                     <td>{{$predmet->predmet->id}}</td>
                                     <td>{{$predmet->predmet->ime}}</td>
-                                    <td>{{$predmet->ocena_3_letnik}}</td>
-                                    <td>{{$predmet->ocena_4_letnik}}</td>
+                                    <td>{{$predmet->ocena_3_letnik == 0 ? '/' : $predmet->ocena_3_letnik}}</td>
+                                    <td>{{$predmet->ocena_4_letnik == 0 ? '/' : $predmet->ocena_4_letnik}}</td>
                                     <td>{{$predmet->ocena}}</td>
                                 </tr>
                             @endforeach

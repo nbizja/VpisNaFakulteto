@@ -803,6 +803,33 @@ class KriterijSeeder extends Seeder
             'utez' => '0.4'
         ]);
 
+        //gozdarstvo dodatni pogoj
+
+        DB::table('kriterij')->insert([
+            'id_pogoja' => '39',
+            'vnos_veljaven' => '1',
+            'ocene_34_letnika' => '1',
+            'maturitetni_uspeh' => '0',
+            'utez' => '0.4'
+        ]);
+
+        DB::table('kriterij')->insert([
+            'id_pogoja' => '39',
+            'vnos_veljaven' => '1',
+            'maturitetni_uspeh' => '1',
+            'ocene_34_letnika' => '0',
+            'utez' => '0.2'
+        ]);
+
+        DB::table('kriterij')->insert([
+            'id_pogoja' => '39',
+            'vnos_veljaven' => '1',
+            'id_elementa' => 'SM',
+            'ocene_34_letnika' => '0',
+            'maturitetni_uspeh' => '0',
+            'utez' => '0.4'
+        ]);
+
 
     }
 }
