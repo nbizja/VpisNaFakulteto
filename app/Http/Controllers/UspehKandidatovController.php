@@ -73,7 +73,7 @@ class UspehKandidatovController extends Controller
 
                 $pdf = \App::make('dompdf.wrapper');
                 ini_set('max_execution_time', 300);
-                $pdf->loadHTML(\View::make('pdf/UspehKandidata',
+                $pdf->loadHTML(\View::make('pdf/uspehKandidata',
                     ['kandidat' => $kandidat, 'matura' => $matura,
                         'tipMature' => $tipMature, 'predmeti' => $predmeti,
                         'rezultat' => $rezultat, 'tocke' => $tocke])->with($this->vpisRepo->pregledPrijave($kandidat)));
@@ -119,6 +119,7 @@ class UspehKandidatovController extends Controller
                         $rezultat = array(false, false, false, 0, 0, 0);
                     }
                 }
+
 
                 $tocke = $this->izracunajTocke($rezultat, $predmeti, $matura, $tipMature, $kandidat);
 
@@ -198,6 +199,7 @@ class UspehKandidatovController extends Controller
             }
 
             if (!empty(array_filter($predmetiIds, function($id) {
+
                 return substr($id, 0, 1) == 'M';
             }))) {
                 return $this->checkDoubles($predmetiIds);
@@ -272,7 +274,6 @@ class UspehKandidatovController extends Controller
             $kriteriji3 = null;
         }
 
-
         $vsota = [0,0,0];
         for ($i = 1; $i < 4; $i++ ) {
             $kriterij = 'kriteriji'.$i;
@@ -287,7 +288,16 @@ class UspehKandidatovController extends Controller
                     } else if ($k1->ocene_34_letnika == 1) {
                         $vsota[$i-1] += NormiraneTocke::OCENE_34_LETNIK[($matura->ocena_3_letnik + $matura->ocena_4_letnik)] * floatval($k1->utez);
                     } else if (!empty($k1->id_elementa)) {
-                        $predmet = (substr($k1->id_elementa, 0,1) == 'M') ? $this->vpisRepo->predmetMaturaById($k1->id_elementa, $kandidat->emso) : $this->vpisRepo->predmetMaturaPoklicnaById($k1->id_elementa, $kandidat->emso);
+                        if ($k1->id_elementa == 'SM') {
+                            foreach ($predmeti as $p) {
+                                if (substr($p->predmet->id, 0,1) == 'M') {
+                                    $predmet = $p;
+                                    break;
+                                }
+                            }
+                        } else {
+                            $predmet = (substr($k1->id_elementa, 0,1) == 'M') ? $this->vpisRepo->predmetMaturaById($k1->id_elementa, $kandidat->emso) : $this->vpisRepo->predmetMaturaPoklicnaById($k1->id_elementa, $kandidat->emso);
+                        }
                         $vsota[$i-1] += NormiraneTocke::LESTVICA_5[$predmet->ocena] * floatval($k1->utez);
                     }
                 }
