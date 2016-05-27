@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\KoncanaSrednjaSola;
+use App\Models\MaturaPredmet;
+use App\Models\PoklicnaMaturaPredmet;
 use App\Models\PrijavaSrednjesolskaIzobrazba;
 use App\Models\StudijskiProgram;
 use App\Models\Uporabnik;
@@ -29,9 +31,23 @@ class ListOfCandidatesController extends Controller
         return -1;
     }
 
-    public function urediPodatke()
+    public function urediPodatke(Request $request)
     {
-        return view('urediPodatkeUspeh');
+        $all = $request->all();
+        foreach ($all as $key => $i) {
+            if(stripos($key,'uredi') !== false) {
+                $id_kandidata = substr($key, 5, strlen($key)-5);
+            }
+        }
+
+        $kandidat = Uporabnik::find($id_kandidata);
+        $predmeti_uspeh = MaturaPredmet::where('emso', '=', $kandidat->emso)->get();
+        $predmeti_uspeh = $predmeti_uspeh->merge(PoklicnaMaturaPredmet::where('emso', '=', $kandidat->emso)->get());
+        return view('urediPodatkeUspeh')
+            ->with([
+                'kandidat' => $kandidat,
+                'predmeti' => $predmeti_uspeh
+            ]);
     }
 
     public function loadPage()
@@ -86,6 +102,7 @@ class ListOfCandidatesController extends Controller
             }
 
             $matches = array();
+            $no_matches = 0;
             foreach ($kandidati as $kandidat) {
                 $no_matches = 0;
                 foreach ($parts as $part) {
@@ -96,43 +113,48 @@ class ListOfCandidatesController extends Controller
                 array_push($matches, $no_matches);
             }
 
-            $highest = max($matches);
-            foreach ($kandidati as $key => $kandidat) {
-                if ($matches[$key] != $highest) unset($kandidati[$key]);
-                else if ($kandidat->vloga != VlogaUporabnika::KANDIDAT) unset($kandidati[$key]);
+            if($no_matches != 0) {
+                $highest = max($matches);
+                foreach ($kandidati as $key => $kandidat) {
+                    if ($matches[$key] != $highest) unset($kandidati[$key]);
+                    else if ($kandidat->vloga != VlogaUporabnika::KANDIDAT) unset($kandidati[$key]);
 
-                $prijave = $kandidat->Prijave;
-                if (count($prijave) == 0) unset($kandidati[$key]);
-                else {
+                    $prijave = $kandidat->Prijave;
                     if (Auth::user()->vloga == 'fakulteta') {
-                        $id = Auth::user()->id;
-                        $temp = 0;
-                        foreach ($prijave as $prijava) {
-                            $program = StudijskiProgram::where('id', '=', $prijava->id_studijskega_programa)->get();
-                            $zavod = VisokosolskiZavod::where('id', '=', $program[0]->id_zavoda)->get();
-                            if ($zavod[0]->id_skrbnika == $id) $temp = 1;
+                        if (count($prijave) == 0) unset($kandidati[$key]);
+                    }
+                    else {
+                        if (Auth::user()->vloga == 'fakulteta') {
+                            $id = Auth::user()->id;
+                            $temp = 0;
+                            foreach ($prijave as $prijava) {
+                                $program = StudijskiProgram::where('id', '=', $prijava->id_studijskega_programa)->get();
+                                $zavod = VisokosolskiZavod::where('id', '=', $program[0]->id_zavoda)->get();
+                                if ($zavod[0]->id_skrbnika == $id) $temp = 1;
+                            }
+                            if ($temp == 0) unset($kandidati[$key]);
                         }
-                        if ($temp == 0) unset($kandidati[$key]);
                     }
                 }
 
+                $kandidati = $kandidati->sort(function ($a, $b) {
+                    if ($a->priimek === $b->priimek) {
+                        if ($a->ime === $b->ime) {
+                            return 0;
+                        }
+                        return $a->ime < $b->ime ? -1 : 1;
+                    }
+                    return $a->priimek < $b->priimek ? -1 : 1;
+                });
             }
 
-            $kandidati = $kandidati->sort(function ($a, $b) {
-                if ($a->priimek === $b->priimek) {
-                    if ($a->ime === $b->ime) {
-                        return 0;
-                    }
-                    return $a->ime < $b->ime ? -1 : 1;
-                }
-                return $a->priimek < $b->priimek ? -1 : 1;
-            });
-
-            return view('iskanje_kandidatov')
-                ->with([
-                    'kandidati' => $kandidati,
-                    'niz' => $search_string
-                ]);
+            if(count($kandidati) > 0) {
+                return view('iskanje_kandidatov')
+                    ->with([
+                        'kandidati' => $kandidati,
+                        'niz' => $search_string
+                    ]);
+            }
         }
 
         return view('iskanje_kandidatov')

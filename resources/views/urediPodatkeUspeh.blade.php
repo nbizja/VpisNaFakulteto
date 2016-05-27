@@ -2,23 +2,40 @@
 
 @section('content')
     <div class="container">
+        <h4>Urejanje podatkov za {{$kandidat->ime}} {{$kandidat->priimek}}</h4>
         <form class="form-horizontal" role="form" method="POST" action="">
             <div class="panel-group">
                 {!! csrf_field() !!}
 
                 <div class="panel panel-default">
-                    <div class="panel-heading">Uspeh pri predmetih v 3. in 4. letniku</div>
+                    <div class="panel-heading">Uspeh v 3. letniku</div>
                     <div class="panel-body">
-                        <div class="form-group">
-                            <label class="col-md-2 control-label">Ime predmeta: </label>
-                            <div class="col-md-4">
-                                <input type="text" id="stevilo_vpisnih_mest" class="form-control" name="stevilo_mest" style="width: 10px">
-                            </div>
-                            <label class="col-md-6 control-label">Ime predmeta: </label>
-                            <div class="col-md-8">
-                                <input type="text" id="stevilo_vpisnih_mest" class="form-control" name="stevilo_mest" style="width: 10px">
-                            </div>
-                        </div>
+                        @foreach($predmeti as $predmet)
+                            @if($predmet->ocena_3_letnik > 0)
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">{{$predmet->id_predmeta}}</label>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" name="ocena3{{$predmet->id_predmeta}}" value="{{$predmet->ocena_3_letnik}}">
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
+                <br>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Uspeh v 4. letniku</div>
+                    <div class="panel-body">
+                        @foreach($predmeti as $predmet)
+                            @if($predmet->ocena_4_letnik > 0)
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">{{$predmet->id_predmeta}}</label>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" name="ocena4{{$predmet->id_predmeta}}" value="{{$predmet->ocena_4_letnik}}">
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
                     </div>
                 </div>
                 <br>
