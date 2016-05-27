@@ -410,8 +410,6 @@ class VpisController extends Controller
     public function tiskPrijave($id = 0)
     {
         $uporabnik = $this->pridobiUporabnika($id);
-        
-
         $pdf = \App::make('dompdf.wrapper');
         ini_set('max_execution_time', 300);
 
@@ -439,7 +437,10 @@ class VpisController extends Controller
         }
 
         $up = Uporabnik::find($idUporabnika);
+        if ($uporabnik->id != $up->id) {
+            return abort(404);
 
+        }
         return $up;
     }
 }
