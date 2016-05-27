@@ -295,10 +295,22 @@ class UspehKandidatovController extends Controller
                                     break;
                                 }
                             }
-                        } else {
-                            $predmet = (substr($k1->id_elementa, 0,1) == 'M') ? $this->vpisRepo->predmetMaturaById($k1->id_elementa, $kandidat->emso) : $this->vpisRepo->predmetMaturaPoklicnaById($k1->id_elementa, $kandidat->emso);
+                            $vsota[$i-1] += NormiraneTocke::LESTVICA_5[$predmet->ocena] * floatval($k1->utez);
+                        } else if ($k1->id_elementa == 'MAT') {
+                            foreach ($predmeti as $p) {
+                                if (($p->predmet->id == 'M401') || ($p->predmet->id == 'L401')) {
+                                    $predmet = $p;
+                                    break;
+                                }
+                            }
+                            $ocene = $p->ocena_3_letnik + $p->ocena_4_letnik;
+                            $vsota[$i-1] += NormiraneTocke::OCENE_34_LETNIK[$ocene] * floatval($k1->utez);
                         }
-                        $vsota[$i-1] += NormiraneTocke::LESTVICA_5[$predmet->ocena] * floatval($k1->utez);
+                        else {
+                            $predmet = (substr($k1->id_elementa, 0,1) == 'M') ? $this->vpisRepo->predmetMaturaById($k1->id_elementa, $kandidat->emso) : $this->vpisRepo->predmetMaturaPoklicnaById($k1->id_elementa, $kandidat->emso);
+                            $vsota[$i-1] += NormiraneTocke::LESTVICA_5[$predmet->ocena] * floatval($k1->utez);
+                        }
+
                     }
                 }
             }

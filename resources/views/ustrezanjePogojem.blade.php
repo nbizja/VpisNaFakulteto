@@ -186,7 +186,7 @@
                                                             <li>{{$kriterij->utez}}<span class="col-md-6">Uspeh v 3. in 4. letniku:</span></li>
                                                         @endif
                                                     @else
-                                                        <li>{{$kriterij->utez}} <span class="col-md-6">{{ucfirst(strtolower($kriterij->Element->ime))}}:</span></li>
+                                                        <li>{{$kriterij->utez}} <span class="col-md-6">{{ucfirst(strtolower($kriterij->Element->ime))}}:</span></li><br>
                                                     @endif
                                                 @endforeach
                                             </ul>
