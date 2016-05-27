@@ -73,7 +73,7 @@ class UspehKandidatovController extends Controller
 
                 $pdf = \App::make('dompdf.wrapper');
                 ini_set('max_execution_time', 300);
-                $pdf->loadHTML(\View::make('pdf/UspehKandidata',
+                $pdf->loadHTML(\View::make('pdf/uspehKandidata',
                     ['kandidat' => $kandidat, 'matura' => $matura,
                         'tipMature' => $tipMature, 'predmeti' => $predmeti,
                         'rezultat' => $rezultat, 'tocke' => $tocke])->with($this->vpisRepo->pregledPrijave($kandidat)));
