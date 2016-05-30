@@ -33,6 +33,7 @@ class Uporabnik extends Model implements AuthenticatableContract, CanResetPasswo
     {
         return $this->vloga == VlogaUporabnika::KANDIDAT;
     }
+
     public function prikazVloge()
     {
         if ($this->vloga == VlogaUporabnika::SKRBNIK_PROGRAMA) {
@@ -88,6 +89,9 @@ class Uporabnik extends Model implements AuthenticatableContract, CanResetPasswo
         return $this->hasMany('App\Models\PoklicnaMatura', 'emso', 'emso');
     }
 
-
+    public function razvrstitev()
+    {
+        return $this->hasOne('App\Models\Razvrstitev', 'id_kandidata');
+    }
 
 }

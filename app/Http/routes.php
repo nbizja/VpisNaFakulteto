@@ -106,6 +106,8 @@ Route::group(['middleware' => ['prijavljen']], function () {
     Route::post('vpis/{id}/oddaja_prijave',          'VpisController@oddajaPrijave');
     Route::get('vpis/{id}/tisk_prijave',             'VpisController@tiskPrijave');
     
+    Route::get('rezultati_razvrscanja', 'RazvrscanjeController@prikazi');
+    
     Route::get('/matura/uvozPodatkov', 'Matura\MaturaController@uvoziPodatke');
     Route::post('/matura/naloziDatoteko', 'Matura\MaturaController@naloziDatoteko');
 	
