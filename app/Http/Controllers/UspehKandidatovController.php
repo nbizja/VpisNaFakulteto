@@ -64,7 +64,7 @@ class UspehKandidatovController extends Controller
                 $this->ustrezanjePogojem($kandidat, true);
             });
 
-        return redirect('rezultati_razvrscanja');
+        return redirect('razvrscanje');
     }
 
     public function ustrezanjePogojem(Uporabnik $kandidat, $zapisiTocke = false)
