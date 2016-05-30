@@ -49,7 +49,7 @@ class PoklicnaMaturaPredmetSeeder extends Seeder
             'ocena_4_letnik' => 4,
         ]);
 
-        DB::table('poklicna_matura_predmet')->insert([
+        DB::table('matura_predmet')->insert([
             'emso' => '1307997505077',
             'id_predmeta' => 'M411',   //Nusa Pepel ima fiziko kot 5.predmet.
             'ocena' => 4,
@@ -95,7 +95,7 @@ class PoklicnaMaturaPredmetSeeder extends Seeder
             'ocena_4_letnik' => 4,
         ]);
 
-        DB::table('poklicna_matura_predmet')->insert([
+        DB::table('matura_predmet')->insert([
             'emso' => '1407997500080',
             'id_predmeta' => 'M421',
             'ocena' => 4,

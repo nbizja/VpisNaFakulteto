@@ -55,6 +55,7 @@ Route::group(['middleware' => ['prijavljen']], function () {
 
     Route::get('/ustrezanjePogojem/{id_kandidata}', 'UspehKandidatovController@preveriPogoje');
     Route::get('/ustrezanjePogojem/{id_kandidata}/pdf', 'UspehKandidatovController@izvozPodatkov');
+    Route::get('/izracunTock', 'UspehKandidatovController@zapisiTocke');
 
 
     Route::get('iskanje', 'ListOfCandidatesController@loadCandidates');

@@ -16,4 +16,9 @@ class Prijava extends Model
     {
         return $this->belongsTo('App\Models\StudijskiProgram', 'id_studijskega_programa');
     }
+
+    public function kandidat()
+    {
+        return $this->belongsTo('App\Models\Uporabnik', 'id_kandidata');
+    }
 }

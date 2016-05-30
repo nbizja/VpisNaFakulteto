@@ -1,22 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Neza
- * Date: 23.5.2016
- * Time: 11:22
- */
 
 namespace App\Http\Controllers;
 
 use App\Models\Enums\NormiraneTocke;
-use App\Models\Repositories\VpisRepository;
+use App\Models\Repositories\PrijavaRepository;
 use App\Models\Repositories\VpisniPogojiRepository;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Repositories\PrijavaRepository;;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use App\Models\Repositories\VpisRepository;
 use App\Models\Uporabnik;
+use Illuminate\Support\Facades\Auth;
+
+;
 
 class UspehKandidatovController extends Controller
 {
@@ -31,56 +24,19 @@ class UspehKandidatovController extends Controller
         $this->vpisniPogoji = $vp;
     }
 
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
-
-    protected $redirectTo = '/';
 
     public function izvozPodatkov($idKandidata) {
-        if (Auth::check()) {
-            if (Auth::user()->vloga == 'skrbnik') {
-
-                $kandidat = $this->prijavaRepo->uporabnikById($idKandidata);
-                $matura = null;
-                $tipMature = 0;
-                $predmetiS = null;
-                $predmetiP = null;
-                $predmeti = null;
-                if (!($kandidat->poklicnaMatura->isEmpty())) {
-                    $tipMature = 1;
-                    $matura = $kandidat->poklicnaMatura->first();
-
-                } else if (!($kandidat->matura->isEmpty())) {
-                    $tipMature = 0;
-                    $matura = $kandidat->matura->first();
-
-                };
+        if (Auth::user()->vloga == 'skrbnik') {
+            $kandidat = $this->prijavaRepo->uporabnikById($idKandidata);
 
 
-                $predmetiS = $kandidat->predmetiPoklicna()->with('predmet')->get();
-                $predmetiP = $kandidat->predmetiSplosna()->with('predmet')->get();
-                $predmeti = $predmetiS->merge($predmetiP);
+            $pdf = \App::make('dompdf.wrapper');
+            ini_set('max_execution_time', 300);
+            $pdf->loadHTML(\View::make('pdf/uspehKandidata',
+                $this->ustrezanjePogojem($kandidat))->with($this->vpisRepo->pregledPrijave($kandidat)));
 
-                $rezultat = array(false, false, false, 0, 0, 0);
-                if ($matura != null) {
-                    if ($matura->opravil == 1) {
-                        $rezultat = $this->preveriZelje($tipMature, $predmeti, $matura, $kandidat);
-                    } else {
-                        $rezultat = array(false, false, false, 0, 0, 0);
-                    }
-                }
+            return $pdf->download('uspehKandidata.pdf');
 
-                $tocke = $this->izracunajTocke($rezultat, $predmeti, $matura, $tipMature, $kandidat);
-
-                $pdf = \App::make('dompdf.wrapper');
-                ini_set('max_execution_time', 300);
-                $pdf->loadHTML(\View::make('pdf/uspehKandidata',
-                    ['kandidat' => $kandidat, 'matura' => $matura,
-                        'tipMature' => $tipMature, 'predmeti' => $predmeti,
-                        'rezultat' => $rezultat, 'tocke' => $tocke])->with($this->vpisRepo->pregledPrijave($kandidat)));
-
-                return $pdf->download('uspehKandidata.pdf');
-
-            }
         }
 
         return redirect('prijava');
@@ -88,50 +44,76 @@ class UspehKandidatovController extends Controller
 
     public function preveriPogoje($idKandidata)
     {
-        if (Auth::check()) {
-            if (Auth::user()->vloga == 'skrbnik') {
-                $kandidat = $this->prijavaRepo->uporabnikById($idKandidata);
-                $matura = null;
-                $tipMature = 0;
-                $predmetiS = null;
-                $predmetiP = null;
-                $predmeti = null;
-                if (!($kandidat->poklicnaMatura->isEmpty())) {
-                    $tipMature = 1;
-                    $matura = $kandidat->poklicnaMatura->first();
-
-                } else if (!($kandidat->matura->isEmpty())) {
-                    $tipMature = 0;
-                    $matura = $kandidat->matura->first();
-
-                };
+        if (Auth::user()->vloga == 'skrbnik') {
+            $kandidat = $this->prijavaRepo->uporabnikById($idKandidata);
 
 
-                $predmetiS = $kandidat->predmetiPoklicna()->with('predmet')->get();
-                $predmetiP = $kandidat->predmetiSplosna()->with('predmet')->get();
-                $predmeti = $predmetiS->merge($predmetiP);
-
-                $rezultat = array(false, false, false, 0, 0, 0);
-                if ($matura != null) {
-                    if ($matura->opravil == 1) {
-                        $rezultat = $this->preveriZelje($tipMature, $predmeti, $matura, $kandidat);
-                    } else {
-                        $rezultat = array(false, false, false, 0, 0, 0);
-                    }
-                }
-
-
-                $tocke = $this->izracunajTocke($rezultat, $predmeti, $matura, $tipMature, $kandidat);
-
-                return view('ustrezanjePogojem', ['kandidat' => $kandidat, 'matura' => $matura,
-                                                  'tipMature' => $tipMature, 'predmeti' => $predmeti,
-                                                  'rezultat' => $rezultat, 'tocke' => $tocke])
-                    ->with($this->vpisRepo->pregledPrijave($kandidat));
-            }
+            return view('ustrezanjePogojem', $this->ustrezanjePogojem($kandidat))
+                ->with($this->vpisRepo->pregledPrijave($kandidat));
         }
+
 
         return redirect('prijava');
 
+    }
+
+    public function zapisiTocke()
+    {
+        $this->prijavaRepo->prijavljeniKandidati()
+            ->each(function($kandidat) {
+                $this->ustrezanjePogojem($kandidat, true);
+            });
+
+        return redirect('razvrscanje');
+    }
+
+    public function ustrezanjePogojem(Uporabnik $kandidat, $zapisiTocke = false)
+    {
+        $matura = null;
+        $tipMature = 0;
+        $predmetiS = null;
+        $predmetiP = null;
+        $predmeti = null;
+        if (!($kandidat->poklicnaMatura->isEmpty())) {
+            $tipMature = 1;
+            $matura = $kandidat->poklicnaMatura->first();
+
+        } else if (!($kandidat->matura->isEmpty())) {
+            $tipMature = 0;
+            $matura = $kandidat->matura->first();
+
+        };
+
+
+        $predmetiS = $kandidat->predmetiPoklicna()->with('predmet')->get();
+        $predmetiP = $kandidat->predmetiSplosna()->with('predmet')->get();
+        $predmeti = $predmetiS->merge($predmetiP);
+
+        $rezultat = array(false, false, false, 0, 0, 0);
+        if ($matura != null) {
+            if ($matura->opravil == 1) {
+                $rezultat = $this->preveriZelje($tipMature, $predmeti, $matura, $kandidat);
+            } else {
+                $rezultat = array(false, false, false, 0, 0, 0);
+            }
+        }
+
+
+        $tocke = $this->izracunajTocke($rezultat, $predmeti, $matura, $tipMature, $kandidat);
+
+        if ($zapisiTocke) {
+            $kandidat->prijave
+                ->sortBy('zelja')
+                ->each(function($prijava) use($tocke) {
+                    $prijava->tocke = $tocke[$prijava->zelja - 1];
+                    $prijava->save();
+                });
+
+        }
+
+        return ['kandidat' => $kandidat, 'matura' => $matura,
+            'tipMature' => $tipMature, 'predmeti' => $predmeti,
+            'rezultat' => $rezultat, 'tocke' => $tocke];
     }
 
     public function preveriZelje($tipMature, $predmeti, $matura, $kandidat)
@@ -307,8 +289,12 @@ class UspehKandidatovController extends Controller
                             $vsota[$i-1] += NormiraneTocke::OCENE_34_LETNIK[$ocene] * floatval($k1->utez);
                         }
                         else {
-                            $predmet = (substr($k1->id_elementa, 0,1) == 'M') ? $this->vpisRepo->predmetMaturaById($k1->id_elementa, $kandidat->emso) : $this->vpisRepo->predmetMaturaPoklicnaById($k1->id_elementa, $kandidat->emso);
-                            $vsota[$i-1] += NormiraneTocke::LESTVICA_5[$predmet->ocena] * floatval($k1->utez);
+                            $predmet = (substr($k1->id_elementa, 0,1) == 'M') ?
+                                $this->vpisRepo->predmetMaturaById($k1->id_elementa, $kandidat->emso) :
+                                $this->vpisRepo->predmetMaturaPoklicnaById($k1->id_elementa, $kandidat->emso);
+
+                            $vsota[$i-1] += NormiraneTocke::LESTVICA_5[$predmet->ocena] *
+                                floatval($k1->utez);
                         }
 
                     }
