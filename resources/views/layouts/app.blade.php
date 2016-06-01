@@ -97,6 +97,7 @@
                                 <ul class="dropdown-menu">
                                     <li><a href="{{ action('Matura\MaturaController@uvoziPodatke') }}">Uvoz podatkov o maturi</a></li>
                                     <li><a href="{{ action('Matura\PoklicnaMaturaController@uvoziPodatke') }}">Uvoz podatkov o poklicni maturi</a></li>
+                                    <li><a href="{{ action('RazvrscanjeController@prikazi') }}">Rezultati razvrščanja</a></li>
                                 </ul>
                             </li>
 

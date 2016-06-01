@@ -3,7 +3,6 @@
 namespace App\Models\Logic;
 
 
-use App\Models\Razvrstitev;
 use App\Models\StudijskiProgram;
 use Illuminate\Support\Collection;
 
@@ -20,7 +19,7 @@ class Razvrscanje
     /**
      * @param StudijskiProgram[] $programi
      */
-    public function razvrstiSlovence($programi)
+    public function razvrsti($programi)
     {
         $this->programi = $programi;
         $this->obravnava = new Collection();
@@ -28,31 +27,32 @@ class Razvrscanje
         //Vstavimo 1. želje (Že vstavljeno v queryiju)
         //Inicializiramo spremenljivko obravnava
         $this->inicializacija();
-        
         //Razvrscanje
         $this->obravnava();
-
         //Preverimo, da se komu ni zgodila krivica
         $this->preveriPravilnostObravnave();
+
+        //Zapišemo v bazo
+        $this->shraniRezultate();
 
     }
 
     private function inicializacija()
     {
-        $this->programi->each(function($program) {
+        $this->programi->each(function(&$program) {
 
             //Sortiramo prijave po točkah
-            $program->prijave->sortBy('tocke');
+            $program->prijave = $program->prijave->sortByDesc('tocke');
 
-            $this->obravnava->merge(
+            $this->obravnava = $this->obravnava->merge(
                 $program->prijave
-                    ->pluck('id_kandidata')
-                    ->flip()
+                    ->keyBy(function($prijava){
+                        return 'K'. $prijava->id_kandidata;
+                    })
                     ->transform(function($val, $id) {
                         return 1; //Obravnavamo prvo željo
                     })
             );
-
         });
     }
 
@@ -67,7 +67,7 @@ class Razvrscanje
                 //Filtriramo samo obravnavane prijave
                 $obravnavanePrijave = $program->prijave
                     ->filter(function($prijava) {
-                        return $prijava->zelja == $this->obravnava[$prijava->id_kandidata];
+                        return $prijava->zelja == $this->obravnava->get('K'. $prijava->id_kandidata);
                     });
 
                 $program->stevilo_sprejetih = $obravnavanePrijave->take($program->stevilo_vpisnih_mest - 1)->count();
@@ -80,7 +80,7 @@ class Razvrscanje
                     //Preverimo, če imajo naslednje zavrnjene prijave enako število točk kot zadnja sprejeta prijava
                     $obravnavanePrijave
                         ->slice($program->stevilo_vpisnih_mest - 1)
-                        ->each(function($prijava) use($program) {
+                        ->each(function($prijava) use(&$program) {
                             if ($prijava->tocke < $program->omejitev_vpisa) {
                                 return false;
                             }
@@ -95,8 +95,8 @@ class Razvrscanje
                     ->slice($program->stevilo_sprejetih)
                     ->each(function($prijava) {
                         //Kandidat s trenutno zeljo ima premalo tock.
-                        if ($this->obravnava[$prijava->id_kandidata] < 3) {
-                            $this->obravnava[$prijava->id_kandidata]++;
+                        if ($this->obravnava->get('K'. $prijava->id_kandidata) < 3) {
+                            $this->obravnava['K'. $prijava->id_kandidata]++;
                         }
                     });
             });
@@ -113,14 +113,22 @@ class Razvrscanje
     private function shraniRezultate()
     {
         $this->programi->each(function($program) {
-           $program->prijave
+            $program->prijave
                ->take($program->stevilo_sprejetih)
-               ->map(function($priava) {
-                   return Razvrstitev::create([
-                       ''
-                   ])
+               ->each(function($prijava) {
+                   $prijava->sprejet = 1;
+                   $prijava->save();
                });
+
+            $program->prijave
+                ->slice($program->stevilo_sprejetih)
+                ->each(function($prijava) {
+                    $prijava->sprejet = 0;
+                    $prijava->save();
+                });
         });
+
+        return true;
     }
 
 }

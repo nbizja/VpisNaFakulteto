@@ -9,6 +9,9 @@
                     <div class="panel-heading">Rezultati razvrstitve</div>
 
                     <div class="panel-body">
+
+                        <a class="btn btn-primary" href="{{ action('UspehKandidatovController@zapisiTocke') }}">Razvrsti kandidate</a>
+
                         @foreach($programi as $program)
                             <table class="table table-bordered table-hover table-striped">
                                 <caption>{{ $program->ime }}</caption>
