@@ -20,7 +20,15 @@ class RazvrscanjeController extends Controller
 
     public function prikazi()
     {
-        return view('razvrscanje.vsi_rezultati')->with('programi', $this->razvrscanjeRepo->programiZRavrstitvami() );
+        $programi = $this->razvrscanjeRepo->programiZRavrstitvami()->get();
+        $programi->each(function(&$program) {
+           $program->prijave = $program->prijave
+               ->filter(function($prijava) {
+                   return $prijava->sprejet;
+               })
+               ->sortByDesc('tocke');
+        });
+        return view('razvrscanje.vsi_rezultati')->with(['programi' => $programi]);
     }
     
     public function razvrsti()

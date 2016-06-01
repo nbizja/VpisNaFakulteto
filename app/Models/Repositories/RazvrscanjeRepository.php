@@ -15,7 +15,13 @@ class RazvrscanjeRepository
     
     public function programiZRavrstitvami()
     {
-        return StudijskiProgram::with('rezultatiRazvrstitve')->with('kandidat');
+        return StudijskiProgram::with('prijave')
+            ->with('prijave.kandidat')
+            ->whereExists(function($query) {
+                $query->select('prijava.id')
+                    ->from('prijava')
+                    ->whereRaw('prijava.id_studijskega_programa = studijski_program.id');
+            });
     }
     
     public function vrniProgrameSPrijavamiSlovencev()

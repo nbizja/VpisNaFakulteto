@@ -114,13 +114,19 @@ class Razvrscanje
     {
         $this->programi->each(function($program) {
             $program->prijave
-               ->take($program->stevilo_sprejetih)
-               ->each(function($prijava) {
+                ->filter(function($prijava) {
+                    return $prijava->zelja == $this->obravnava->get('K'. $prijava->id_kandidata);
+                })
+                ->take($program->stevilo_sprejetih)
+                ->each(function($prijava) {
                    $prijava->sprejet = 1;
                    $prijava->save();
                });
 
             $program->prijave
+                ->filter(function($prijava) {
+                    return $prijava->zelja == $this->obravnava->get('K'. $prijava->id_kandidata);
+                })
                 ->slice($program->stevilo_sprejetih)
                 ->each(function($prijava) {
                     $prijava->sprejet = 0;

@@ -11,7 +11,6 @@
                     <div class="panel-body">
 
                         <a class="btn btn-primary" href="{{ action('UspehKandidatovController@zapisiTocke') }}">Razvrsti kandidate</a>
-
                         @foreach($programi as $program)
                             <table class="table table-bordered table-hover table-striped">
                                 <caption>{{ $program->ime }}</caption>
@@ -23,15 +22,17 @@
                                     <th>Stevilo tock</th>
                                     <th>Želja</th>
                                 </tr>
-                                @foreach($program->rezultatiRazvrstitve as $razvrstitev)
+                                <?php $mesto = 1; ?>
+                                @foreach($program->prijave as $prijava)
                                     <tr>
-                                        <td>{{ $razvrstitev->mesto }}</td>
-                                        <td>{{ $razvrstitev->kandidat->emso }}</td>
-                                        <td>{{ $razvrstitev->kandidat->ime }}</td>
-                                        <td>{{ $razvrstitev->kandidat->priimek }}</td>
-                                        <td>{{ $razvrstitev->stevilo_tock }}</td>
-                                        <td>{{ $razvrstitev->zelja }}</td>
+                                        <td>{{ $mesto }}</td>
+                                        <td>{{ $prijava->kandidat->emso }}</td>
+                                        <td>{{ $prijava->kandidat->ime }}</td>
+                                        <td>{{ $prijava->kandidat->priimek }}</td>
+                                        <td>{{ $prijava->tocke }}</td>
+                                        <td>{{ $prijava->zelja }}</td>
                                     </tr>
+                                    <?php $mesto++; ?>
                                 @endforeach
                             </table>
                         @endforeach

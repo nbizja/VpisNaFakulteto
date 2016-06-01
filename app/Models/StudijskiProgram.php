@@ -29,11 +29,6 @@ class StudijskiProgram extends Model
         return $this->required;
     }
 
-    public function rezultatiRazvrstitve()
-    {
-        return $this->hasMany('App\Models\Razvrstitev', 'id_programa');
-    }
-
     public function prijave()
     {
         return $this->hasMany('App\Models\Prijava', 'id_studijskega_programa');
