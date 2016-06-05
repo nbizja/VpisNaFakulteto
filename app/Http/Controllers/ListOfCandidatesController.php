@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Element;
+use App\Models\Matura;
+use App\Models\PoklicnaMatura;
 use App\Models\KoncanaSrednjaSola;
 use App\Models\MaturaPredmet;
 use App\Models\PoklicnaMaturaPredmet;
@@ -43,10 +46,19 @@ class ListOfCandidatesController extends Controller
         $kandidat = Uporabnik::find($id_kandidata);
         $predmeti_uspeh = MaturaPredmet::where('emso', '=', $kandidat->emso)->get();
         $predmeti_uspeh = $predmeti_uspeh->merge(PoklicnaMaturaPredmet::where('emso', '=', $kandidat->emso)->get());
+
+        $matura = Matura::where('emso', '=', $kandidat->emso)->get();
+        $matura = $matura->merge(PoklicnaMatura::where('emso', '=', $kandidat->emso)->get())[0];
+
+        foreach($predmeti_uspeh as $p) {
+            $p->ime_predmeta = Element::where('id', '=', $p->id_predmeta)->pluck('ime')[0];
+        }
+
         return view('urediPodatkeUspeh')
             ->with([
                 'kandidat' => $kandidat,
-                'predmeti' => $predmeti_uspeh
+                'predmeti' => $predmeti_uspeh,
+                'matura' => $matura
             ]);
     }
 
