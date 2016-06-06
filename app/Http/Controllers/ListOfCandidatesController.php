@@ -58,8 +58,107 @@ class ListOfCandidatesController extends Controller
             ->with([
                 'kandidat' => $kandidat,
                 'predmeti' => $predmeti_uspeh,
-                'matura' => $matura
+                'matura' => $matura,
+                'sporocilo' => ''
             ]);
+    }
+
+    public function shraniPodatke(Request $request)
+    {
+        if (Auth::check()) {
+
+            $id_kandidata = -1;
+            $all = $request->all();
+            foreach ($all as $key => $i) {
+                if(stripos($key, 'shrani') !== false) {
+                    $id_kandidata = substr($key, 6, strlen($key)-6);
+                }
+            }
+
+            $kandidat = Uporabnik::find($id_kandidata);
+            $emso = $kandidat->emso;
+            $vsota = 0;
+            $isValid = true;
+
+            if(Matura::where('emso', '=', $emso)->exists()) $tip_mature = 0;
+            else $tip_mature = 1;
+
+            foreach ($all as $key => $i) {
+                if((stripos($key,'o3') !== false) || (stripos($key,'o4') !== false) || ($key == 'ocena3letnik') || $key == 'ocena4letnik'){
+                    if($i > 5 || $i < 1) $isValid = false;
+                }
+                else if (stripos($key,'om') !== false) {
+                    $id_predmeta = substr($key, 2, strlen($key)-2);
+                    $predmet = Element::where('id', '=', $id_predmeta)->first();
+
+                    if(stripos($predmet->ime,'VIŠJA') || ($predmet->ime == "SLOVENSKI JEZIK IN KNJIŽEVNOST (NA MATURI)")){
+                        if($i > 8 || $i < 1) $isValid = false;
+                    }
+                    else if($i > 5 || $i < 1) $isValid = false;
+                }
+            }
+
+            if($isValid) {
+
+                foreach ($all as $key => $i) {
+                    if (stripos($key, 'o3') !== false) {
+                        $id_predmeta = substr($key, 2, strlen($key) - 2);
+                        if ($tip_mature == 0) {
+                            MaturaPredmet::where('emso', '=', $emso)->where('id_predmeta', '=', $id_predmeta)->update(array('ocena_3_letnik' => $i));
+                        } else {
+                            PoklicnaMaturaPredmet::where('emso', '=', $emso)->where('id_predmeta', '=', $id_predmeta)->update(array('ocena_3_letnik' => $i));
+                        }
+                    } else if (stripos($key, 'o4') !== false) {
+                        $id_predmeta = substr($key, 2, strlen($key) - 2);
+                        if ($tip_mature == 0) {
+                            MaturaPredmet::where('emso', '=', $emso)->where('id_predmeta', '=', $id_predmeta)->update(array('ocena_4_letnik' => $i));
+                        } else {
+                            PoklicnaMaturaPredmet::where('emso', '=', $emso)->where('id_predmeta', '=', $id_predmeta)->update(array('ocena_4_letnik' => $i));
+                        }
+                    } else if (stripos($key, 'om') !== false) {
+                        $id_predmeta = substr($key, 2, strlen($key) - 2);
+                        if ($tip_mature == 0) {
+                            MaturaPredmet::where('emso', '=', $emso)->where('id_predmeta', '=', $id_predmeta)->update(array('ocena' => $i));
+                        } else {
+                            PoklicnaMaturaPredmet::where('emso', '=', $emso)->where('id_predmeta', '=', $id_predmeta)->update(array('ocena' => $i));
+                        }
+                        $vsota += $i;
+                    } else if ($key == 'ocena3letnik') {
+                        if ($tip_mature == 0) Matura::where('emso', '=', $emso)->update(array('ocena_3_letnik' => $i));
+                        else PoklicnaMatura::where('emso', '=', $emso)->update(array('ocena_3_letnik' => $i));
+                    } else if ($key == 'ocena4letnik') {
+                        if ($tip_mature == 0) Matura::where('emso', '=', $emso)->update(array('ocena_4_letnik' => $i));
+                        else PoklicnaMatura::where('emso', '=', $emso)->update(array('ocena_4_letnik' => $i));
+                    }
+                }
+
+                if ($tip_mature == 0) Matura::where('emso', '=', $emso)->update(array('ocena' => $vsota));
+                else PoklicnaMatura::where('emso', '=', $emso)->update(array('ocena' => $vsota));
+            }
+
+            if($isValid) $sporocilo = "Podatki so bili uspešno shranjeni!";
+            else $sporocilo = "Ocene morajo biti znotraj predpisanih mej!";
+
+            $predmeti_uspeh = MaturaPredmet::where('emso', '=', $emso)->get();
+            $predmeti_uspeh = $predmeti_uspeh->merge(PoklicnaMaturaPredmet::where('emso', '=', $emso)->get());
+
+            $matura = Matura::where('emso', '=', $emso)->get();
+            $matura = $matura->merge(PoklicnaMatura::where('emso', '=', $emso)->get())[0];
+
+            foreach ($predmeti_uspeh as $p) {
+                $p->ime_predmeta = Element::where('id', '=', $p->id_predmeta)->pluck('ime')[0];
+            }
+
+            return view('urediPodatkeUspeh')
+                ->with([
+                    'kandidat' => $kandidat,
+                    'predmeti' => $predmeti_uspeh,
+                    'matura' => $matura,
+                    'sporocilo' => $sporocilo
+                ]);
+
+        }
+        return redirect('prijava');
     }
 
     public function loadPage()
