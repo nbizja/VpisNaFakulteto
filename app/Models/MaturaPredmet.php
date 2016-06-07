@@ -18,7 +18,7 @@ class MaturaPredmet extends Model
 
     public function predmet()
     {
-       return $this->belongsTo('App\Models\Element', 'id', 'id_predmeta');
+       return $this->belongsTo('App\Models\Element', 'id_predmeta', 'id');
     }
 	
 	public function dodaj($polja)
