@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <form class="form-horizontal" role="form" method="POST" action="{{ url('/nekipac') }}">
+        <form class="form-horizontal" role="form" method="POST" action="{{ url('nalepke_kandidati/isci') }}">
         <div class="panel-group">
             {!! csrf_field() !!}
             <h4>Nalepke z naslovi kandidatov</h4>
@@ -40,7 +40,8 @@
                         <label class="col-md-4 control-label">Način študija: </label>
                         <div class="col-md-6">
                             <select name="nacin_studija_kandidati" class="form-control" id="nacin_studija_kandidati">
-                                <option selected value="redni">Redni.</option>
+                                <option selected value="">Izberite način študija.</option>
+                                <option value="redni">Redni.</option>
                                 <option value="izredni">Izredni.</option>
                             </select>
                         </div>
@@ -50,6 +51,7 @@
                         <label class="col-md-4 control-label">Način zaključka srednje šole: </label>
                         <div class="col-md-6">
                             <select name="zakljucek" class="form-control" id="nacin_zakljucka">
+                                <option selected value="">Izberite način zaključka srednje šole.</option>
                                 <option value="splosna">Splošna matura.</option>
                                 <option value="poklicna">Poklicna matura.</option>
                             </select>

@@ -28,13 +28,24 @@ class NalepkeKandidatovController extends Controller
 
     protected $redirectTo = '/';
 
-    public function pridobiSeznam()
+    public function isci()
     {
         if (Auth::check()) {
             if (Auth::user()->vloga == 'skrbnik') {
                 $fakultete = $this->studijskiProgrami->ZavodiAll();
                 $programi = $this->studijskiProgrami->ProgramiAll();
                 return view('nalepke_kandidati', ['fakultete' => $fakultete, 'programi' => $programi]);
+            }
+        }
+
+        return redirect('prijava');
+    }
+
+    public function pridobiSeznam()
+    {
+        if (Auth::check()) {
+            if (Auth::user()->vloga == 'skrbnik') {
+                return "seznam";
             }
         }
 
