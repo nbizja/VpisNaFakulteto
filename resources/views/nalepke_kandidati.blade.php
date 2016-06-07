@@ -77,25 +77,27 @@
                 </div>
             </div>
 
-            <div class="panel panel-default" style="display: none">
-                <div class="panel-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-hover table-striped" id="kandidati_seznam">
-                            <thead>
-                            <tr>
-                                <th>Emšo</th>
-                                <th>Ime in priimek kandidata</th>
-                                <th>Fakulteta in študijski program</th>
-                                <th>Naslov za pošiljanje</th>
-                            </tr>
-                            </thead>
-                            <tbody>
+            @if($prikaziSeznam)
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover table-striped" id="kandidati_seznam">
+                                <thead>
+                                <tr>
+                                    <th>Emšo</th>
+                                    <th>Ime in priimek kandidata</th>
+                                    <th>Fakulteta in študijski program</th>
+                                    <th>Naslov za pošiljanje</th>
+                                </tr>
+                                </thead>
+                                <tbody>
 
-                            </tbody>
-                        </table>
-                    </div>
-                <div>
-            </div>
+                                </tbody>
+                            </table>
+                        </div>
+                    <div>
+                </div>
+            @endif
 
         </div>
         </form>

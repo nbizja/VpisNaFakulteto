@@ -34,7 +34,8 @@ class NalepkeKandidatovController extends Controller
             if (Auth::user()->vloga == 'skrbnik') {
                 $fakultete = $this->studijskiProgrami->ZavodiAll();
                 $programi = $this->studijskiProgrami->ProgramiAll();
-                return view('nalepke_kandidati', ['fakultete' => $fakultete, 'programi' => $programi]);
+                $prikaziSeznam = 0;
+                return view('nalepke_kandidati', ['fakultete' => $fakultete, 'programi' => $programi])->with('prikaziSeznam', $prikaziSeznam);
             }
         }
 
@@ -45,7 +46,10 @@ class NalepkeKandidatovController extends Controller
     {
         if (Auth::check()) {
             if (Auth::user()->vloga == 'skrbnik') {
-                return "seznam";
+                $fakultete = $this->studijskiProgrami->ZavodiAll();
+                $programi = $this->studijskiProgrami->ProgramiAll();
+                $prikaziSeznam = 1;
+                return view('nalepke_kandidati', ['fakultete' => $fakultete, 'programi' => $programi])->with('prikaziSeznam', $prikaziSeznam);
             }
         }
 
