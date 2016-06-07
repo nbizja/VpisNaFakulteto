@@ -62,6 +62,8 @@ Route::group(['middleware' => ['prijavljen']], function () {
     Route::post('iskanje', 'ListOfCandidatesController@findCandidates');
 
     Route::get('urejanjePodatkovoUspehu', 'ListOfCandidatesController@urediPodatke');
+    Route::get('urejanjePodatkovoUspehu/shrani', 'ListOfCandidatesController@shraniPodatke');
+    Route::post('urejanjePodatkovoUspehu/shrani', 'ListOfCandidatesController@shraniPodatke');
 
 
     Route::get('odjava', 'Auth\AuthController@logout');
