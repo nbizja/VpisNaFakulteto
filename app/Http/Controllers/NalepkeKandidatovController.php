@@ -42,13 +42,14 @@ class NalepkeKandidatovController extends Controller
         return redirect('prijava');
     }
 
-    public function pridobiSeznam()
+    public function pridobiSeznam(Request $request)
     {
         if (Auth::check()) {
             if (Auth::user()->vloga == 'skrbnik') {
                 $fakultete = $this->studijskiProgrami->ZavodiAll();
                 $programi = $this->studijskiProgrami->ProgramiAll();
                 $prikaziSeznam = 1;
+                return $request->request->all();
                 return view('nalepke_kandidati', ['fakultete' => $fakultete, 'programi' => $programi])->with('prikaziSeznam', $prikaziSeznam);
             }
         }
