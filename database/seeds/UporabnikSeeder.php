@@ -229,5 +229,131 @@ class UporabnikSeeder extends Seeder
             'password' => bcrypt('ppadel'),
             'vloga' => VlogaUporabnika::KANDIDAT
         ]);
+
+        //ID 22
+        DB::table('uporabnik')->insert([
+            'emso' => '0604997505029',
+            'ime' => 'Anita',
+            'priimek' => 'Čebokli',
+            'username' => 'acebokli',
+            'email' => 'acebokli@gmail.com',
+            'password' => bcrypt('acebokli'),
+            'vloga' => VlogaUporabnika::KANDIDAT
+        ]);
+
+        //ID 23
+        DB::table('uporabnik')->insert([
+            'emso' => '1212994500008',
+            'ime' => 'Mihael',
+            'priimek' => 'Novak',
+            'username' => 'mnovak',
+            'email' => 'mnovak@gmail.com',
+            'password' => bcrypt('mnovak'),
+            'vloga' => VlogaUporabnika::KANDIDAT
+        ]);
+
+        //ID 24
+        DB::table('uporabnik')->insert([
+            'emso' => '0212997500013',
+            'ime' => 'Stanko',
+            'priimek' => 'Kocjančič',
+            'username' => 'skocjancic',
+            'email' => 'skocjancic@gmail.com',
+            'password' => bcrypt('skocjancic'),
+            'vloga' => VlogaUporabnika::KANDIDAT
+        ]);
+
+        //ID 25
+        DB::table('uporabnik')->insert([
+            'emso' => '0212997505015',
+            'ime' => 'Petra',
+            'priimek' => 'Petek',
+            'username' => 'ppetek',
+            'email' => 'ppetek@gmail.com',
+            'password' => bcrypt('ppetek'),
+            'vloga' => VlogaUporabnika::KANDIDAT
+        ]);
+
+        //ID 26
+        DB::table('uporabnik')->insert([
+            'emso' => '1210997505016',
+            'ime' => 'Bernarda',
+            'priimek' => 'Bensa',
+            'username' => 'bbensa',
+            'email' => 'bbensa@gmail.com',
+            'password' => bcrypt('bbensa'),
+            'vloga' => VlogaUporabnika::KANDIDAT
+        ]);
+
+        //ID 27
+        DB::table('uporabnik')->insert([
+            'emso' => '0303998500187',
+            'ime' => 'Bojan',
+            'priimek' => 'Bojec',
+            'username' => 'bojanb',
+            'email' => 'bojanb@gmail.com',
+            'password' => bcrypt('bojanb'),
+            'vloga' => VlogaUporabnika::KANDIDAT
+        ]);
+
+        DB::table('uporabnik')->insert([
+            'emso' => '0303998505189',
+            'ime' => 'Bojana',
+            'priimek' => 'Bojec',
+            'username' => 'bojanab',
+            'email' => 'bojanab@gmail.com',
+            'password' => bcrypt('bojanab'),
+            'vloga' => VlogaUporabnika::KANDIDAT
+        ]);
+
+        DB::table('uporabnik')->insert([
+            'emso' => '0607997505095',
+            'ime' => 'Jana',
+            'priimek' => 'Klinar',
+            'username' => 'janak',
+            'email' => 'janak@gmail.com',
+            'password' => bcrypt('janak'),
+            'vloga' => VlogaUporabnika::KANDIDAT
+        ]);
+
+        DB::table('uporabnik')->insert([
+            'emso' => '0606997505099',
+            'ime' => 'Mira',
+            'priimek' => 'Varl Juhant',
+            'username' => 'miraj',
+            'email' => 'miraj@gmail.com',
+            'password' => bcrypt('miraj'),
+            'vloga' => VlogaUporabnika::KANDIDAT
+        ]);
+
+        DB::table('uporabnik')->insert([
+            'emso' => '101998505039',
+            'ime' => 'Pavla',
+            'priimek' => 'Pavlin',
+            'username' => 'pavlap',
+            'email' => 'pavlap@gmail.com',
+            'password' => bcrypt('pavlap'),
+            'vloga' => VlogaUporabnika::KANDIDAT
+        ]);
+
+        DB::table('uporabnik')->insert([
+            'emso' => '0101998500037',
+            'ime' => 'Pavel',
+            'priimek' => 'Pavlin',
+            'username' => 'pavelp',
+            'email' => 'pavelp@gmail.com',
+            'password' => bcrypt('pavelp'),
+            'vloga' => VlogaUporabnika::KANDIDAT
+        ]);
+
+        DB::table('uporabnik')->insert([
+            'emso' => '0201998505033',
+            'ime' => 'Cita',
+            'priimek' => 'Janša',
+            'username' => 'cjansa',
+            'email' => 'cjansa@gmail.com',
+            'password' => bcrypt('cjansa'),
+            'vloga' => VlogaUporabnika::KANDIDAT
+        ]);
     }
 }
