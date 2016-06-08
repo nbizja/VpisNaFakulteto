@@ -66,10 +66,10 @@ class NalepkeKandidatovController extends Controller
 
                         //nacin studija
                         if ($request->request->get("nacin_studija_kandidati") == "redni") {
-                            $nacin = 1;
+                            $nacin = "Redni";
                         }
                         else if ($request->request->get("nacin_studija_kandidati") == "izredni") {
-                            $nacin = 2;
+                            $nacin = "Izredni";
                         }
 
                         //zakljucek studija
@@ -78,6 +78,10 @@ class NalepkeKandidatovController extends Controller
                         }
                         else if ($request->request->get("zakljucek") == "poklicna") {
                             $zakljucek = 2;
+                        }
+
+                        if ($program == 0 && $fakulteta != 0) {
+                            
                         }
 
                         if ($program != 0) {
