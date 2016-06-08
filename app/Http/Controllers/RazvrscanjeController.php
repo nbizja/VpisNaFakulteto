@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Logic\Razvrscanje;
 use App\Models\Repositories\RazvrscanjeRepository;
+use Illuminate\Support\Facades\Auth;
 
 class RazvrscanjeController extends Controller
 {
@@ -31,7 +32,7 @@ class RazvrscanjeController extends Controller
         });
         return view('razvrscanje.vsi_rezultati')->with(['programi' => $programi]);
     }
-    
+
     public function razvrsti()
     {
         $this->razvrscanje->razvrsti(
@@ -40,5 +41,18 @@ class RazvrscanjeController extends Controller
 
         return redirect('rezultati_razvrscanja');
     }
-    
+
+    public function izvoziSklepe()
+    {
+        if (Auth::user()->vloga == 'skrbnik') {
+            $kandidati = $this->razvrscanjeRepo->kandidati()->get();
+            $pdf = \App::make('dompdf.wrapper');
+            ini_set('max_execution_time', 300);
+            $pdf->loadHTML(\View::make('pdf/sklepi', ['kandidati' => $kandidati]));
+            return $pdf->download('sklepi.pdf');
+
+        }
+
+        return redirect('prijava');
+    }
 }

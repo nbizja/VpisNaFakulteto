@@ -5,6 +5,7 @@ namespace App\Models\Repositories;
 
 use App\Models\Prijava;
 use App\Models\StudijskiProgram;
+use App\Models\Uporabnik;
 
 class RazvrscanjeRepository
 {
@@ -35,4 +36,11 @@ class RazvrscanjeRepository
                     ->whereRaw('prijava.id_studijskega_programa = studijski_program.id');
             });
     }
+
+
+    public function kandidati()
+    {
+        return Uporabnik::where('vloga','kandidat');
+    }
+
 }
