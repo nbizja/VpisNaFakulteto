@@ -67,19 +67,25 @@ class Razvrscanje
                 //Filtriramo samo obravnavane prijave
                 $obravnavanePrijave = $program->prijave
                     ->filter(function($prijava) {
-                        return $prijava->zelja == $this->obravnava->get('K'. $prijava->id_kandidata);
-                    });
+                        return $prijava->zelja == $this->obravnava->get('K'. $prijava->id_kandidata)
+                            && $prijava->tocke > 0;
+                    })
+                    ->values(); //Reset array keys
 
-                $program->stevilo_sprejetih = $obravnavanePrijave->take($program->stevilo_vpisnih_mest - 1)->count();
+                $program->stevilo_sprejetih = $obravnavanePrijave->take($program->stevilo_vpisnih_mest)->count();
 
-                //Zadnja sprejeta prijava.
-                $zadnjaSprejetaPrijava = $obravnavanePrijave->get($program->stevilo_vpisnih_mest - 1);
-                if (!is_null($zadnjaSprejetaPrijava)) {
+
+                $program->omejitev_vpisa = 0;
+
+                if ($program->stevilo_sprejetih == $program->stevilo_vpisnih_mest) {
+                    //Zadnja sprejeta prijava.
+                    $zadnjaSprejetaPrijava = $obravnavanePrijave->get($program->stevilo_sprejetih - 1);
+
                     $program->omejitev_vpisa = $zadnjaSprejetaPrijava->tocke;
 
                     //Preverimo, če imajo naslednje zavrnjene prijave enako število točk kot zadnja sprejeta prijava
                     $obravnavanePrijave
-                        ->slice($program->stevilo_vpisnih_mest - 1)
+                        ->slice($program->stevilo_vpisnih_mest)
                         ->each(function($prijava) use(&$program) {
                             if ($prijava->tocke < $program->omejitev_vpisa) {
                                 return false;
@@ -90,15 +96,21 @@ class Razvrscanje
                         });
                 }
 
+
                 //Vsem nesprejetim povečamo obvravnavano željo
                 $obravnavanePrijave
                     ->slice($program->stevilo_sprejetih)
                     ->each(function($prijava) {
                         //Kandidat s trenutno zeljo ima premalo tock.
                         if ($this->obravnava->get('K'. $prijava->id_kandidata) < 3) {
-                            $this->obravnava['K'. $prijava->id_kandidata]++;
+                            $this->obravnava['K'. $prijava->id_kandidata] = $this->obravnava['K'. $prijava->id_kandidata] + 1;
                         }
                     });
+                /*if ($program->id == 838) {
+                    dd($this->obravnava);
+                }*/
+
+
             });
         }
 

@@ -190,6 +190,7 @@ class UporabnikSeeder extends Seeder
             'vloga' => VlogaUporabnika::KANDIDAT
         ]);
 
+        //ID 18
         DB::table('uporabnik')->insert([
             'emso' => '1607997500097',
             'ime' => 'Tomaž',
@@ -200,6 +201,7 @@ class UporabnikSeeder extends Seeder
             'vloga' => VlogaUporabnika::KANDIDAT
         ]);
 
+        //ID 19
         DB::table('uporabnik')->insert([
             'emso' => '0604997500124',
             'ime' => 'Primož',
@@ -210,6 +212,7 @@ class UporabnikSeeder extends Seeder
             'vloga' => VlogaUporabnika::KANDIDAT
         ]);
 
+        //ID 20
         DB::table('uporabnik')->insert([
             'emso' => '2607997500082',
             'ime' => 'Jernej',

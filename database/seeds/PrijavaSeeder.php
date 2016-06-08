@@ -30,7 +30,7 @@ class PrijavaSeeder extends Seeder
     {
         DB::table('prijava')->truncate();
 
-        DB::table('prijava')->insert([
+       /* DB::table('prijava')->insert([
             'id_kandidata' => '1',
             'id_studijskega_programa' => '838',
             'zelja' => 1,
@@ -66,6 +66,7 @@ class PrijavaSeeder extends Seeder
             'tocke' => '11',
             'izredni_talent' => 'NE'
         ]);
+       */
 
         /*************PRIJAVE (Spela Bordon)****************/
         DB::table('prijava')->insert([
@@ -314,21 +315,21 @@ class PrijavaSeeder extends Seeder
 
         /*************PRIJAVE (Jernej Jerančič)****************/
         DB::table('prijava')->insert([
-            'id_kandidata' => '19',
+            'id_kandidata' => '20',
             'id_studijskega_programa' => '838', //FRI, UNI
             'zelja' => 1,
             'datum_prijave' => '2016-05-13',
         ]);
 
         DB::table('prijava')->insert([
-            'id_kandidata' => '19',
+            'id_kandidata' => '20',
             'id_studijskega_programa' => '828', //FMF, Mat
             'zelja' => 2,
             'datum_prijave' => '2016-05-13',
         ]);
 
         DB::table('prijava')->insert([
-            'id_kandidata' => '19',
+            'id_kandidata' => '20',
             'id_studijskega_programa' => '18', //FU, UJS
             'zelja' => 3,
             'datum_prijave' => '2016-05-13',
@@ -346,6 +347,28 @@ class PrijavaSeeder extends Seeder
             'id_kandidata' => '17',
             'id_studijskega_programa' => '852', //FRI VSS
             'zelja' => 2,
+            'datum_prijave' => '2016-05-13',
+        ]);
+
+        /*************PRIJAVE (Anita Čebokli)****************/
+        DB::table('prijava')->insert([
+            'id_kandidata' => '22',
+            'id_studijskega_programa' => '852', //FRI, VSS
+            'zelja' => 1,
+            'datum_prijave' => '2016-05-13',
+        ]);
+
+        DB::table('prijava')->insert([
+            'id_kandidata' => '22',
+            'id_studijskega_programa' => '18', //FU
+            'zelja' => 2,
+            'datum_prijave' => '2016-05-13',
+        ]);
+
+        DB::table('prijava')->insert([
+            'id_kandidata' => '22',
+            'id_studijskega_programa' => '776', //GOZD
+            'zelja' => 3,
             'datum_prijave' => '2016-05-13',
         ]);
 
@@ -499,21 +522,21 @@ class PrijavaSeeder extends Seeder
 
         /*************PRIJAVE (Pavla Pavlin)****************/
         DB::table('prijava')->insert([
-            'id_kandidata' => '30',
+            'id_kandidata' => '31',
             'id_studijskega_programa' => '18', //FU
             'zelja' => 1,
             'datum_prijave' => '2016-05-13',
         ]);
 
         DB::table('prijava')->insert([
-            'id_kandidata' => '30',
+            'id_kandidata' => '31',
             'id_studijskega_programa' => '776', //Gozd
             'zelja' => 2,
             'datum_prijave' => '2016-05-13',
         ]);
 
         DB::table('prijava')->insert([
-            'id_kandidata' => '30',
+            'id_kandidata' => '31',
             'id_studijskega_programa' => '852', //FRI VSS
             'zelja' => 3,
             'datum_prijave' => '2016-05-13',
@@ -521,14 +544,14 @@ class PrijavaSeeder extends Seeder
 
         /*************PRIJAVE (Pavel Pavlin)****************/
         DB::table('prijava')->insert([
-            'id_kandidata' => '31',
+            'id_kandidata' => '32',
             'id_studijskega_programa' => '838', //FRI UNI
             'zelja' => 1,
             'datum_prijave' => '2016-05-13',
         ]);
 
         DB::table('prijava')->insert([
-            'id_kandidata' => '31',
+            'id_kandidata' => '32',
             'id_studijskega_programa' => '852', //FRI VSS
             'zelja' => 2,
             'datum_prijave' => '2016-05-13',
@@ -536,14 +559,14 @@ class PrijavaSeeder extends Seeder
 
         /*************PRIJAVE (Cita Janša)****************/
         DB::table('prijava')->insert([
-            'id_kandidata' => '32',
+            'id_kandidata' => '33',
             'id_studijskega_programa' => '18', //FU
             'zelja' => 1,
             'datum_prijave' => '2016-05-13',
         ]);
 
         DB::table('prijava')->insert([
-            'id_kandidata' => '32',
+            'id_kandidata' => '33',
             'id_studijskega_programa' => '852', //FRI VSS
             'zelja' => 2,
             'datum_prijave' => '2016-05-13',

@@ -10,7 +10,8 @@
 
                     <div class="panel-body">
 
-                        <a class="btn btn-primary" href="{{ action('UspehKandidatovController@zapisiTocke') }}">Razvrsti kandidate</a>
+                        <a class="btn btn-primary" href="{{ action('UspehKandidatovController@zapisiTocke') }}">Izracunaj točke</a>
+                        <a class="btn btn-primary" href="{{ action('RazvrscanjeController@razvrsti') }}">Razvrsti kandidate</a>
                         @foreach($programi as $program)
                             <table class="table table-bordered table-hover table-striped">
                                 <caption>{{ $program->ime }}</caption>
