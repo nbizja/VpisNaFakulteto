@@ -69,7 +69,7 @@ class StudijskiProgramiRepository
     }
 
     public function ProgramiOmejitev() {
-        return StudijskiProgram::where('omejitev_vpisa', '1')->orderBy('ime', 'asc')->get();
+        return StudijskiProgram::where('omejitev_vpisa', '>', '0')->orderBy('ime', 'asc')->get();
     }
 
     public function ProgramiBrezOmejitve() {

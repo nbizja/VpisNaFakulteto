@@ -90,7 +90,7 @@
                         <td class="stevilo_sprejetih">{{$program->stevilo_sprejetih}}</td>
                     @endif
                     @if($omejitev)
-                        <td class="omejitev">{{$program->omejitev_vpisa == 1 ? 'Da':'Ne'}}</td>
+                        <td class="omejitev">{{$program->omejitev_vpisa > 0 ? 'Da':'Ne'}}</td>
                     @endif
                     @if($steviloT)
                         <td class="steviloT">{{$program->stevilo_vpisnih_mest_tujci}}</td>
@@ -102,7 +102,7 @@
                         <td class="stevilo_sprejetihT">{{$program->stevilo_sprejetih_tujci}}</td>
                     @endif
                     @if($omejitevT)
-                        <td class="omejitevT">{{$program->omejitev_vpisa_tujci == 1 ? 'Da':'Ne'}}</td>
+                        <td class="omejitevT">{{$program->omejitev_vpisa_tujci > 0 ? 'Da':'Ne'}}</td>
                     @endif
                 </tr>
             @endforeach

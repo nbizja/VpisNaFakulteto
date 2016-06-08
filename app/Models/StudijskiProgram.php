@@ -28,4 +28,9 @@ class StudijskiProgram extends Model
     {
         return $this->required;
     }
+
+    public function prijave()
+    {
+        return $this->hasMany('App\Models\Prijava', 'id_studijskega_programa');
+    }
 }

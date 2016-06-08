@@ -55,6 +55,7 @@ Route::group(['middleware' => ['prijavljen']], function () {
 
     Route::get('/ustrezanjePogojem/{id_kandidata}', 'UspehKandidatovController@preveriPogoje');
     Route::get('/ustrezanjePogojem/{id_kandidata}/pdf', 'UspehKandidatovController@izvozPodatkov');
+    Route::get('/izracunTock', 'UspehKandidatovController@zapisiTocke');
 
     Route::get('nalepke_kandidati', 'NalepkeKandidatovController@isci');
     Route::post('nalepke_kandidati/isci', 'NalepkeKandidatovController@pridobiSeznam');
@@ -108,6 +109,9 @@ Route::group(['middleware' => ['prijavljen']], function () {
     Route::post('vpis/{id}/izbris_prijave',          'VpisController@izbrisPrijave');
     Route::post('vpis/{id}/oddaja_prijave',          'VpisController@oddajaPrijave');
     Route::get('vpis/{id}/tisk_prijave',             'VpisController@tiskPrijave');
+
+    Route::get('razvrscanje', 'RazvrscanjeController@razvrsti');
+    Route::get('rezultati_razvrscanja', 'RazvrscanjeController@prikazi');
     
     Route::get('/matura/uvozPodatkov', 'Matura\MaturaController@uvoziPodatke');
     Route::post('/matura/naloziDatoteko', 'Matura\MaturaController@naloziDatoteko');
