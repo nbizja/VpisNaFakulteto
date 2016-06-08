@@ -340,21 +340,7 @@ class PrijavaSeeder extends Seeder
             'zelja' => 3,
             'datum_prijave' => '2016-05-13',
         ]);
-
-        /*************PRIJAVE (Štefan Štefančič)****************/
-        DB::table('prijava')->insert([
-            'id_kandidata' => '17',
-            'id_studijskega_programa' => '838', //FRI, UNI
-            'zelja' => 1,
-            'datum_prijave' => '2016-05-13',
-        ]);
-
-        DB::table('prijava')->insert([
-            'id_kandidata' => '17',
-            'id_studijskega_programa' => '852', //FRI VSS
-            'zelja' => 2,
-            'datum_prijave' => '2016-05-13',
-        ]);
+        
 
         /*************PRIJAVE (Anita Čebokli)****************/
         DB::table('prijava')->insert([

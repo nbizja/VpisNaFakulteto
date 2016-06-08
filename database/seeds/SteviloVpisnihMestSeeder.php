@@ -22,6 +22,11 @@ class SteviloVpisnihMestSeeder extends Seeder
             ->where('id', 18)
             ->update(['stevilo_vpisnih_mest' => 5]);
 
+        //FU Izredni
+        DB::table('studijski_program')
+            ->where('id', 856)
+            ->update(['stevilo_vpisnih_mest' => 3]);
+
         //Gozdarstvo
         DB::table('studijski_program')
             ->where('id', 776)

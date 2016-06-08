@@ -25,22 +25,16 @@ class RazvrscanjeRepository
             });
     }
     
-    public function vrniProgrameSPrijavamiSlovencev()
+    public function vrniProgrameSPrijavami()
     {
         return StudijskiProgram::with('prijave')
             ->with('prijave.kandidat')
+            ->with('prijave.kandidat.osebniPodatki')
             ->whereExists(function($query) {
                 $query->select('prijava.id')
                     ->from('prijava')
                     ->whereRaw('prijava.id_studijskega_programa = studijski_program.id');
             });
-        /*
-            ->where(function($query) {
-                $query->aelect('1')->from('prijava_osebni_podatki')
-                    ->where('prijava_osebni_podatki.id_kandidata', 'prijave.id_kandidata')
-                    ->whereRaw('id_drzavljanstva NOT IN (2,6)');
-            });
-        */
     }
 
 
@@ -49,8 +43,4 @@ class RazvrscanjeRepository
         return Uporabnik::where('vloga','kandidat');
     }
 
-    public function vrniProgrameSPrijavamiTujcev()
-    {
-
-    }
 }

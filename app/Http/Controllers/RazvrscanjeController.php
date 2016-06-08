@@ -32,16 +32,15 @@ class RazvrscanjeController extends Controller
         });
         return view('razvrscanje.vsi_rezultati')->with(['programi' => $programi]);
     }
-    
+
     public function razvrsti()
     {
         $this->razvrscanje->razvrsti(
-            $this->razvrscanjeRepo->vrniProgrameSPrijavamiSlovencev()->get()
+            $this->razvrscanjeRepo->vrniProgrameSPrijavami()->get()
         );
 
         return redirect('rezultati_razvrscanja');
     }
-
 
     public function izvoziSklepe()
     {
@@ -55,15 +54,5 @@ class RazvrscanjeController extends Controller
         }
 
         return redirect('prijava');
-    }
-
-    public function razvrstiTujce()
-    {
-        $this->razvrscanje->razvrsti(
-            $this->razvrscanjeRepo->vrniProgrameSPrijavamiTujcev()->get()
-        );
-
-        return redirect('rezultati_razvrscanja');
-
     }
 }
