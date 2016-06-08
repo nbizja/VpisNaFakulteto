@@ -12,8 +12,8 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label">Fakulteta: </label>
                         <div class="col-md-6">
-                            <select class="form-control" id="vzdrzevanjeProgramov_fakultete">
-                                <option selected value="">Izberite visokošolski zavod.</option>
+                            <select name="fakultete" class="form-control" id="vzdrzevanjeProgramov_fakultete">
+                                <option selected value="0">Izberite visokošolski zavod.</option>
                                 @foreach($fakultete as $fakulteta)
                                     <option value="{{$fakulteta->id}}">{{$fakulteta->ime}}</option>
                                 @endforeach
@@ -25,7 +25,7 @@
                         <label class="col-md-4 control-label">Študijski program: </label>
                         <div class="col-md-6">
                             <select name="program" class="form-control" id="vzdrzevanjeProgramov_programi">
-                                <option selected data-fakulteta="-1" value="">Izberite program izbranega visokošolskega zavoda.</option>
+                                <option selected data-fakulteta="-1" value="0">Izberite program izbranega visokošolskega zavoda.</option>
                                 @foreach($programi as $program)
                                     <option data-fakulteta="{{ $program->id_zavoda }}"
                                             data-mesta="{{ $program->stevilo_vpisnih_mest }}" data-mesta_omejitev="{{ $program->stevilo_mest_po_omejitvi }}" data-omejitev="{{$program->omejitev_vpisa}}" data-stevilo_sprejetih="{{$program->stevilo_sprejetih}}"
@@ -86,12 +86,20 @@
                                 <tr>
                                     <th>Emšo</th>
                                     <th>Ime in priimek kandidata</th>
-                                    <th>Fakulteta in študijski program</th>
                                     <th>Naslov za pošiljanje</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-
+                                    @foreach($prijave as $prijava)
+                                        <tr>
+                                            <td>{{$prijava->kandidat->emso}}</td>
+                                            <td>{{$prijava->kandidat->ime.' '.$prijava->kandidat->priimek}}</td>
+                                            <td>{{($prijava->kandidat->naslovZaPosiljanje()->first()->naslov ?? '').', '.
+                                                  ($prijava->kandidat->naslovZaPosiljanje()->first()->posta->postna_stevilka ?? '').' '.
+                                                  ($prijava->kandidat->naslovZaPosiljanje()->first()->posta->ime ?? '').', '.
+                                                  ($prijava->kandidat->naslovZaPosiljanje()->first()->drzava->ime ?? '')}}</td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
