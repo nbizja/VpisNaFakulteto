@@ -43,10 +43,14 @@ class RazvrscanjeRepository
         */
     }
 
+
     public function kandidati()
     {
         return Uporabnik::where('vloga','kandidat');
     }
 
-    
+    public function vrniProgrameSPrijavamiTujcev()
+    {
+
+    }
 }

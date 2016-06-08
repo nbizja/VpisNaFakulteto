@@ -14,6 +14,7 @@ include 'PoklicnaMaturaPredmetSeeder.php';
 include 'MaturaPredmetSeeder.php';
 include 'PrijavaSrednjaSolaSeeder.php';
 include 'SteviloVpisnihMestSeeder.php';
+include 'PrijavaOsebniPodatkiSeeder.php';
 
 /**
  * Calls seeders specified in list.
@@ -42,7 +43,6 @@ class DatabaseSeeder extends CsvSeeder
              VisokosolskiZavodSeeder::class, PrijavaSeeder::class, PoklicnaMaturaSeeder::class,
              PoklicnaMaturaPredmetSeeder::class, MaturaPredmetSeeder::class,
              MaturaSeeder::class, PrijavaSrednjaSolaSeeder::class,
-
              );
      }
 
@@ -67,6 +67,7 @@ class DatabaseSeeder extends CsvSeeder
         }
 
         $this->call(SteviloVpisnihMestSeeder::class);
+        $this->call(PrijavaOsebniPodatkiSeeder::class);
 
     }
 }
