@@ -42,5 +42,10 @@ class RazvrscanjeRepository
         */
     }
 
+    public function vrniProgrameSPrijavamiTujcev()
+    {
+   
+    }
+
     
 }
