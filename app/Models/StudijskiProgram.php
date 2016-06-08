@@ -36,6 +36,6 @@ class StudijskiProgram extends Model
     
     public function prijaveSlovenci()
     {
-        return $this->prijave->filter()
+        return $this->prijave->filter();
     }
 }
