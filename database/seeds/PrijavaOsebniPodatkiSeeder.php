@@ -65,7 +65,7 @@ class PrijavaOsebniPodatkiSeeder extends Seeder
             'id_kandidata' => 18,
             'emso' => '1607997500097',
             'ime' => 'Tomaž',
-            'priimek' => '1607997500097',
+            'priimek' => 'Velikonja',
             'spol' => 5,
             'datum_rojstva' => '1997-07-16',
             'id_drzave_rojstva' => 705,
