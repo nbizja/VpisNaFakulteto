@@ -28,13 +28,19 @@ class Razvrscanje
         //Vstavimo 1. želje (Že vstavljeno v queryiju)
         //Inicializiramo spremenljivko obravnava
         $this->inicializacija();
+
         //Razvrscanje
         $this->obravnava();
         //Preverimo, da se komu ni zgodila krivica
-        $this->preveriPravilnostObravnave();
+        $nepravilneObravnave = $this->preveriPravilnostObravnave();
+        //Popravimo nepravilne obravnave
+
+        $this->popraviNepravilneObravnave($nepravilneObravnave);
 
         //Zapišemo v bazo
         $this->shraniRezultate();
+
+        dd($nepravilneObravnave);
 
     }
 
@@ -120,18 +126,42 @@ class Razvrscanje
                     ->slice($program->stevilo_sprejetih)
                     ->each(function($prijava) {
                         //Kandidat s trenutno zeljo ima premalo tock.
-                        $this->obravnava['K'. $prijava->id_kandidata] =
-                            (($this->obravnava['K'. $prijava->id_kandidata] + 1) % ($this->steviloZelj['K'. $prijava->id_kandidata] + 1)) + 1;
+                        $novaObravnava = ($this->obravnava['K'. $prijava->id_kandidata] + 1) % $this->steviloZelj['K'. $prijava->id_kandidata];
+                        $this->obravnava['K'. $prijava->id_kandidata] =$novaObravnava ? $novaObravnava : $novaObravnava + 1;
+
                     });
             });
+
+
         }
 
         return true;
     }
-    
+
     private function preveriPravilnostObravnave()
     {
-        
+        $neustreznePrijave = [];
+        $this->programi->each(function($program) use(&$neustreznePrijave) {
+            $np = $program->prijave->filter(function($prijava) use($program, &$neustreznePrijave) {
+                return $prijava->zelja <= $this->obravnava['K'. $prijava->id_kandidata]
+                    && $prijava->tocke >= $program->omejitev_vpisa
+                    && $prijava->tocke > 0
+                    && $prijava->sprejet == 0;
+
+            })->all();
+
+            $neustreznePrijave = array_merge($neustreznePrijave, $np);
+        });
+
+        return collect($neustreznePrijave);
+    }
+
+    private function popraviNepravilneObravnave($prijave)
+    {
+        $prijave->each(function($prijava) {
+            $novaObravnava = ($this->obravnava['K'. $prijava->id_kandidata] + 1) % $this->steviloZelj['K'. $prijava->id_kandidata];
+            $this->obravnava['K'. $prijava->id_kandidata] =$novaObravnava ? $novaObravnava : $novaObravnava + 1;
+        });
     }
     
     private function shraniRezultate()
@@ -151,7 +181,7 @@ class Razvrscanje
 
             $program->prijave
                 ->filter(function($prijava) use($program) {
-                    return ($prijava->zelja != $this->obravnava['K'. $prijava->id_kandidata])
+                    return $prijava->zelja != $this->obravnava['K'. $prijava->id_kandidata]
                     || $prijava->tocke == 0
                     || $prijava->tocke < $program->omejitev_vpisa;
                 })
