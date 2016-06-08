@@ -44,6 +44,16 @@ class RazvrscanjeController extends Controller
 
     public function izvoziSklepe()
     {
-        return "sklepi";
+        if (Auth::user()->vloga == 'skrbnik') {
+            $kandidati = $this->razvrscanjeRepo->kandidati();
+            $pdf = \App::make('dompdf.wrapper');
+            ini_set('max_execution_time', 300);
+            $pdf->loadHTML(\View::make('pdf/sklepi', $kandidati));
+
+            return $pdf->download('sklepi.pdf');
+
+        }
+
+        return redirect('prijava');
     }
 }

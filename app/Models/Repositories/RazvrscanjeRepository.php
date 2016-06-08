@@ -5,6 +5,7 @@ namespace App\Models\Repositories;
 
 use App\Models\Prijava;
 use App\Models\StudijskiProgram;
+use App\Models\Uporabnik;
 
 class RazvrscanjeRepository
 {
@@ -40,6 +41,11 @@ class RazvrscanjeRepository
                     ->whereRaw('id_drzavljanstva NOT IN (2,6)');
             });
         */
+    }
+
+    public function kandidati()
+    {
+        return Uporabnik::where('vloga','kandidat');
     }
 
     
