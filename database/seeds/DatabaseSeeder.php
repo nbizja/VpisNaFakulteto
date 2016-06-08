@@ -13,6 +13,7 @@ include 'PoklicnaMaturaSeeder.php';
 include 'PoklicnaMaturaPredmetSeeder.php';
 include 'MaturaPredmetSeeder.php';
 include 'PrijavaSrednjaSolaSeeder.php';
+include 'NaslovZaPosiljanjeSeeder.php';
 include 'SteviloVpisnihMestSeeder.php';
 
 /**
@@ -42,7 +43,7 @@ class DatabaseSeeder extends CsvSeeder
              VisokosolskiZavodSeeder::class, PrijavaSeeder::class, PoklicnaMaturaSeeder::class,
              PoklicnaMaturaPredmetSeeder::class, MaturaPredmetSeeder::class,
              MaturaSeeder::class, PrijavaSrednjaSolaSeeder::class,
-
+             NaslovZaPosiljanjeSeeder::class
              );
      }
 
