@@ -22,9 +22,21 @@
 <div class="panel panel-default">
 
     @foreach($kandidati as $kandidat)
-        <h4 style="color: #005580">Kandidat</h4>
-        <label class="col-md-4 control-label">Kandidat: {{$kandidat->ime.' '.$kandidat->priimek}}</label> <br>
-        <label class="col-md-4 control-label">EMŠO: {{$kandidat->emso}}</label><br>
+        @if(!$kandidat->prijave->isEmpty())
+            <h4 style="color: #005580">Kandidat</h4>
+            <label class="col-md-4 control-label">Kandidat: {{$kandidat->ime.' '.$kandidat->priimek}}</label> <br>
+            <label class="col-md-4 control-label">EMŠO: {{$kandidat->emso}}</label><br>
+
+            <?php foreach($kandidat->prijave as $prijava){ ?>
+                <label class="col-md-4 control-label">Želja: {{$prijava->zelja.'.'}}</label> <br>
+                <label class="col-md-4 control-label">Visokošolski zavod: {{$prijava->studijskiProgram->visokosolskiZavod->ime}}</label> <br>
+                <label class="col-md-4 control-label">Študijski program: {{$prijava->studijskiProgram->ime.', '.$prijava->studijskiProgram->nacin_studija}}</label> <br>
+                <label class="col-md-4 control-label">Sprejet: {{$prijava->sprejet == '1' ? 'Da' : 'Ne'}}</label> <br>
+                @if($prijava->sprejet == '1')
+                    <?php break; ?>
+                @endif
+            <?php } ?>
+        @endif
     @endforeach
 
 </div>
