@@ -330,7 +330,7 @@ class UporabnikSeeder extends Seeder
         ]);
 
         DB::table('uporabnik')->insert([
-            'emso' => '101998505039',
+            'emso' => '0101998505039',
             'ime' => 'Pavla',
             'priimek' => 'Pavlin',
             'username' => 'pavlap',

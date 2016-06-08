@@ -232,7 +232,7 @@ class PrijavaOsebniPodatkiSeeder extends Seeder
 
         DB::table('prijava_osebni_podatki')->insert([
             'id_kandidata' => 31,
-            'emso' => '101998505039',
+            'emso' => '0101998505039',
             'ime' => 'Pavla',
             'priimek' => 'Pavlin',
             'spol' => 5,
