@@ -112,7 +112,8 @@ Route::group(['middleware' => ['prijavljen']], function () {
 
     Route::get('razvrscanje', 'RazvrscanjeController@razvrsti');
     Route::get('rezultati_razvrscanja', 'RazvrscanjeController@prikazi');
-    
+    Route::get('izvozi_sklepe', 'RazvrscanjeController@izvoziSklepe');
+
     Route::get('/matura/uvozPodatkov', 'Matura\MaturaController@uvoziPodatke');
     Route::post('/matura/naloziDatoteko', 'Matura\MaturaController@naloziDatoteko');
 	
