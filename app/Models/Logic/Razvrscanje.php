@@ -9,10 +9,10 @@ use Illuminate\Support\Collection;
 class Razvrscanje
 {
     const STEVILO_ITERACIJ = 50;
-    /**
-     * @var Collection  [id_kandidata => 1 | 2 | 3 ]  X pomeni, da na X željo ni sprejet.
-     */
+
     private $obravnava;
+
+    private $steviloZelj;
 
     private $programi;
 
@@ -22,7 +22,8 @@ class Razvrscanje
     public function razvrsti($programi)
     {
         $this->programi = $programi;
-        $this->obravnava = new Collection();
+        $this->obravnava = [];
+        $this->steviloZelj = [];
 
         //Vstavimo 1. želje (Že vstavljeno v queryiju)
         //Inicializiramo spremenljivko obravnava
@@ -44,7 +45,7 @@ class Razvrscanje
             //Sortiramo prijave po točkah
             $program->prijave = $program->prijave->sortByDesc('tocke');
 
-            $this->obravnava = $this->obravnava->merge(
+            $this->obravnava = array_merge($this->obravnava,
                 $program->prijave
                     ->keyBy(function($prijava){
                         return 'K'. $prijava->id_kandidata;
@@ -52,7 +53,14 @@ class Razvrscanje
                     ->transform(function($val, $id) {
                         return 1; //Obravnavamo prvo željo
                     })
+                ->all()
             );
+
+            $program->prijave->each(function($prijava) {
+               if (!array_key_exists('K'. $prijava->id_kandidata, $this->steviloZelj) || $this->steviloZelj['K'. $prijava->id_kandidata] < $prijava->zelja) {
+                   $this->steviloZelj['K'. $prijava->id_kandidata] = $prijava->zelja;
+               }
+            });
         });
     }
 
@@ -64,11 +72,21 @@ class Razvrscanje
         for($i = 0; $i < self::STEVILO_ITERACIJ; $i++) {
             $this->programi->each(function(&$program) {
 
+                //Vsem, ki ne ustrezajo pogojem (tocke == 0) povečamo obravnavano željo
+                $program->prijave
+                    ->filter(function($prijava) {
+                        return $prijava->tocke == 0;
+                    })
+                    ->each(function($prijava) {
+                        $this->obravnava['K'. $prijava->id_kandidata] =
+                            (($this->obravnava['K'. $prijava->id_kandidata] + 1) % ($this->steviloZelj['K'. $prijava->id_kandidata] + 1)) + 1;
+
+                    });
+
                 //Filtriramo samo obravnavane prijave
                 $obravnavanePrijave = $program->prijave
                     ->filter(function($prijava) {
-                        return $prijava->zelja == $this->obravnava->get('K'. $prijava->id_kandidata)
-                            && $prijava->tocke > 0;
+                        return $prijava->zelja == $this->obravnava['K'. $prijava->id_kandidata];
                     })
                     ->values(); //Reset array keys
 
@@ -102,15 +120,9 @@ class Razvrscanje
                     ->slice($program->stevilo_sprejetih)
                     ->each(function($prijava) {
                         //Kandidat s trenutno zeljo ima premalo tock.
-                        if ($this->obravnava->get('K'. $prijava->id_kandidata) < 3) {
-                            $this->obravnava['K'. $prijava->id_kandidata] = $this->obravnava['K'. $prijava->id_kandidata] + 1;
-                        }
+                        $this->obravnava['K'. $prijava->id_kandidata] =
+                            (($this->obravnava['K'. $prijava->id_kandidata] + 1) % ($this->steviloZelj['K'. $prijava->id_kandidata] + 1)) + 1;
                     });
-                /*if ($program->id == 838) {
-                    dd($this->obravnava);
-                }*/
-
-
             });
         }
 
@@ -125,10 +137,12 @@ class Razvrscanje
     private function shraniRezultate()
     {
         $this->programi->each(function($program) {
+
             $program->prijave
                 ->filter(function($prijava) {
-                    return $prijava->zelja == $this->obravnava->get('K'. $prijava->id_kandidata);
+                    return $prijava->zelja == $this->obravnava['K'. $prijava->id_kandidata];
                 })
+                ->values()
                 ->take($program->stevilo_sprejetih)
                 ->each(function($prijava) {
                    $prijava->sprejet = 1;
@@ -136,10 +150,11 @@ class Razvrscanje
                });
 
             $program->prijave
-                ->filter(function($prijava) {
-                    return $prijava->zelja == $this->obravnava->get('K'. $prijava->id_kandidata);
+                ->filter(function($prijava) use($program) {
+                    return ($prijava->zelja != $this->obravnava['K'. $prijava->id_kandidata])
+                    || $prijava->tocke == 0
+                    || $prijava->tocke < $program->omejitev_vpisa;
                 })
-                ->slice($program->stevilo_sprejetih)
                 ->each(function($prijava) {
                     $prijava->sprejet = 0;
                     $prijava->save();

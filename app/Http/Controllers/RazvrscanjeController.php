@@ -22,6 +22,7 @@ class RazvrscanjeController extends Controller
     {
         $programi = $this->razvrscanjeRepo->programiZRavrstitvami()->get();
         $programi->each(function(&$program) {
+
            $program->prijave = $program->prijave
                ->filter(function($prijava) {
                    return $prijava->sprejet;
