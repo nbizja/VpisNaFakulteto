@@ -24,22 +24,37 @@
                                     <th>Stevilo tock</th>
                                     <th>Želja</th>
                                 </tr>
-                                <?php $mesto = 1; ?>
-                                @foreach($program->prijave as $prijava)
+                                <?php $uvrstitevSlo = $uvrstitevTujci =  1; ?>
+                                @foreach($program->prijave->filter(function($prijava) {
+                                    return !$prijava->tujec;
+                                }) as $prijava)
                                     <tr>
-                                        <td>{{ $mesto }}</td>
+                                        <td>{{ $uvrstitevSlo }}</td>
                                         <td>{{ $prijava->kandidat->emso }}</td>
                                         <td>{{ $prijava->kandidat->ime }}</td>
                                         <td>{{ $prijava->kandidat->priimek }}</td>
                                         <td>{{ $prijava->tocke }}</td>
                                         <td>{{ $prijava->zelja }}</td>
                                     </tr>
-                                    <?php $mesto++; ?>
+                                    <?php $uvrstitevSlo++; ?>
                                 @endforeach
 
                                 <tr>
                                     <td colspan="6">Tujci</td>
                                 </tr>
+                                @foreach($program->prijave->filter(function($prijava) {
+                                            return $prijava->tujec;
+                                        }) as $prijava)
+                                    <tr>
+                                        <td>{{ $uvrstitevTujci }}</td>
+                                        <td>{{ $prijava->kandidat->emso }}</td>
+                                        <td>{{ $prijava->kandidat->ime }}</td>
+                                        <td>{{ $prijava->kandidat->priimek }}</td>
+                                        <td>{{ $prijava->tocke }}</td>
+                                        <td>{{ $prijava->zelja }}</td>
+                                    </tr>
+                                    <?php $uvrstitevTujci++; ?>
+                                @endforeach
 
                             </table>
 

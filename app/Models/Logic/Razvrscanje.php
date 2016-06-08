@@ -206,7 +206,7 @@ class Razvrscanje
         $steviloSprejetih = $tujci ? 'stevilo_sprejetih_tujci' : 'stevilo_sprejetih';
         $omejitev = $tujci ? 'omejitev_vpisa_tujci' : 'omejitev_vpisa';
 
-        $this->programi->each(function($program) use($steviloSprejetih, $omejitev) {
+        $this->programi->each(function($program) use($steviloSprejetih, $omejitev, $tujci) {
 
             $uvrstitev = 1;
             $program->prijave
@@ -215,7 +215,10 @@ class Razvrscanje
                 })
                 ->values()
                 ->take($program->$steviloSprejetih)
-                ->each(function($prijava) use(&$uvrstitev) {
+                ->each(function($prijava) use(&$uvrstitev, $tujci) {
+                    if ($tujci) {
+                        $prijava->tujec = 1;
+                    }
                     $prijava->sprejet = 1;
                     $prijava->uvrstitev = $uvrstitev;
                     $prijava->save();
@@ -229,7 +232,10 @@ class Razvrscanje
                     || $prijava->tocke == 0
                     || $prijava->tocke < $program->$omejitev;
                 })
-                ->each(function($prijava) {
+                ->each(function($prijava) use($tujci) {
+                    if ($tujci) {
+                        $prijava->tujec = 1;
+                    }
                     $prijava->sprejet = 0;
                     $prijava->save();
                 });
