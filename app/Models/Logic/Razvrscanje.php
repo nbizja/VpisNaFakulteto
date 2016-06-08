@@ -31,16 +31,16 @@ class Razvrscanje
 
         //Razvrscanje
         $this->obravnava();
-        //Preverimo, da se komu ni zgodila krivica
-        $nepravilneObravnave = $this->preveriPravilnostObravnave();
-        //Popravimo nepravilne obravnave
-
-        $this->popraviNepravilneObravnave($nepravilneObravnave);
 
         //Zapišemo v bazo
         $this->shraniRezultate();
 
-        dd($nepravilneObravnave);
+        //Preverimo, da se komu ni zgodila krivica
+        $nepravilneObravnave = $this->preveriPravilnostObravnave();
+        //Popravimo nepravilne obravnave
+        
+        //$this->popraviNepravilneObravnave($nepravilneObravnave);
+
 
     }
 
@@ -63,10 +63,12 @@ class Razvrscanje
             );
 
             $program->prijave->each(function($prijava) {
-               if (!array_key_exists('K'. $prijava->id_kandidata, $this->steviloZelj) || $this->steviloZelj['K'. $prijava->id_kandidata] < $prijava->zelja) {
-                   $this->steviloZelj['K'. $prijava->id_kandidata] = $prijava->zelja;
-               }
+                $trenutnaZelja = $this->steviloZelj['K'. $prijava->id_kandidata] ?? 1;
+                if ($prijava->zelja > $trenutnaZelja) {
+                    $this->steviloZelj['K'. $prijava->id_kandidata] = $prijava->zelja;
+                }
             });
+
         });
     }
 
@@ -76,16 +78,21 @@ class Razvrscanje
     private function obravnava()
     {
         for($i = 0; $i < self::STEVILO_ITERACIJ; $i++) {
-            $this->programi->each(function(&$program) {
+            $this->programi->each(function(&$program) use($i) {
 
                 //Vsem, ki ne ustrezajo pogojem (tocke == 0) povečamo obravnavano željo
                 $program->prijave
                     ->filter(function($prijava) {
-                        return $prijava->tocke == 0;
+                        return $prijava->tocke == 0
+                        && $prijava->zelja == $this->obravnava['K'. $prijava->id_kandidata];
                     })
                     ->each(function($prijava) {
+                        //Kandidat s trenutno zeljo ima premalo tock.
+                        $novaObravnava = $this->obravnava['K'. $prijava->id_kandidata] + 1;
+
                         $this->obravnava['K'. $prijava->id_kandidata] =
-                            (($this->obravnava['K'. $prijava->id_kandidata] + 1) % ($this->steviloZelj['K'. $prijava->id_kandidata] + 1)) + 1;
+                            $novaObravnava <= $this->steviloZelj['K'. $prijava->id_kandidata]
+                                ? $novaObravnava : 1;
 
                     });
 
@@ -96,6 +103,7 @@ class Razvrscanje
                     })
                     ->values(); //Reset array keys
 
+
                 $program->stevilo_sprejetih = $obravnavanePrijave->take($program->stevilo_vpisnih_mest)->count();
 
 
@@ -103,7 +111,7 @@ class Razvrscanje
 
                 if ($program->stevilo_sprejetih == $program->stevilo_vpisnih_mest) {
                     //Zadnja sprejeta prijava.
-                    $zadnjaSprejetaPrijava = $obravnavanePrijave->get($program->stevilo_sprejetih - 1);
+                    $zadnjaSprejetaPrijava = $obravnavanePrijave->get($program->stevilo_vpisnih_mest - 1);
 
                     $program->omejitev_vpisa = $zadnjaSprejetaPrijava->tocke;
 
@@ -111,28 +119,25 @@ class Razvrscanje
                     $obravnavanePrijave
                         ->slice($program->stevilo_vpisnih_mest)
                         ->each(function($prijava) use(&$program) {
-                            if ($prijava->tocke < $program->omejitev_vpisa) {
-                                return false;
+                            if ($prijava->tocke >= $program->omejitev_vpisa) {
+                                $program->stevilo_sprejetih++;
                             }
-                            $program->stevilo_sprejetih++;
-
-                            return true;
                         });
                 }
-
 
                 //Vsem nesprejetim povečamo obvravnavano željo
                 $obravnavanePrijave
                     ->slice($program->stevilo_sprejetih)
                     ->each(function($prijava) {
                         //Kandidat s trenutno zeljo ima premalo tock.
-                        $novaObravnava = ($this->obravnava['K'. $prijava->id_kandidata] + 1) % $this->steviloZelj['K'. $prijava->id_kandidata];
-                        $this->obravnava['K'. $prijava->id_kandidata] =$novaObravnava ? $novaObravnava : $novaObravnava + 1;
+                        $novaObravnava = $this->obravnava['K'. $prijava->id_kandidata] + 1;
+
+                        $this->obravnava['K'. $prijava->id_kandidata] =
+                            $novaObravnava <= $this->steviloZelj['K'. $prijava->id_kandidata]
+                                ? $novaObravnava : 1;
 
                     });
             });
-
-
         }
 
         return true;
@@ -177,7 +182,7 @@ class Razvrscanje
                 ->each(function($prijava) {
                    $prijava->sprejet = 1;
                    $prijava->save();
-               });
+                });
 
             $program->prijave
                 ->filter(function($prijava) use($program) {
