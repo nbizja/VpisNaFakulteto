@@ -5,6 +5,7 @@ namespace App\Models\Repositories;
 
 use App\Models\Prijava;
 use App\Models\StudijskiProgram;
+use App\Models\Uporabnik;
 
 class RazvrscanjeRepository
 {
@@ -42,10 +43,14 @@ class RazvrscanjeRepository
         */
     }
 
-    public function vrniProgrameSPrijavamiTujcev()
+
+    public function kandidati()
     {
-   
+        return Uporabnik::where('vloga','kandidat');
     }
 
-    
+    public function vrniProgrameSPrijavamiTujcev()
+    {
+
+    }
 }

@@ -49,4 +49,5 @@ class PrijavaRepository
             })
             ->unique('id');
     }
+    
 }
