@@ -15,6 +15,7 @@ class AddUvrstitevToPrijava extends Migration
     {
         Schema::table('prijava', function(Blueprint $table) {
             $table->integer('uvrstitev')->default(0);
+            $table->tinyInteger('tujec')->default(0);
         });
     }
 
@@ -27,6 +28,7 @@ class AddUvrstitevToPrijava extends Migration
     {
         Schema::table('prijava', function(Blueprint $table) {
             $table->dropColumn('uvrstitev');
+            $table->dropColumn('tujec');
         });
     }
 }

@@ -36,7 +36,13 @@
                                     </tr>
                                     <?php $mesto++; ?>
                                 @endforeach
+
+                                <tr>
+                                    <td colspan="6">Tujci</td>
+                                </tr>
+
                             </table>
+
                         @endforeach
                     </div>
                 </div>
