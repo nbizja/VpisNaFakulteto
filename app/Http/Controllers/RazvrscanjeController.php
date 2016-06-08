@@ -41,4 +41,9 @@ class RazvrscanjeController extends Controller
 
         return redirect('rezultati_razvrscanja');
     }
+
+    public function izvoziSklepe()
+    {
+        return "sklepi";
+    }
 }
