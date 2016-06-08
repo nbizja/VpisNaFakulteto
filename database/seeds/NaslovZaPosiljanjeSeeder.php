@@ -31,6 +31,30 @@ class NaslovZaPosiljanjeSeeder extends Seeder
         DB::table('prijava_naslov_za_posiljanje')->truncate();
 
         DB::table('prijava_naslov_za_posiljanje')->insert([
+            'id_kandidata' => '14',
+            'naslov' => 'Tržaška 22',
+            'id_obcine' => '62',
+            'postna_stevilka' => 1000,
+            'id_drzave' => 705,
+        ]);
+
+        DB::table('prijava_naslov_za_posiljanje')->insert([
+            'id_kandidata' => '15',
+            'naslov' => 'Aljaževa 5',
+            'id_obcine' => '62',
+            'postna_stevilka' => 1000,
+            'id_drzave' => 705,
+        ]);
+
+        DB::table('prijava_naslov_za_posiljanje')->insert([
+            'id_kandidata' => '16',
+            'naslov' => 'Slovenčeva 45',
+            'id_obcine' => '62',
+            'postna_stevilka' => 1000,
+            'id_drzave' => 705,
+        ]);
+
+        DB::table('prijava_naslov_za_posiljanje')->insert([
             'id_kandidata' => '17',
             'naslov' => 'Hubadova 3',
             'id_obcine' => '62',
@@ -67,6 +91,92 @@ class NaslovZaPosiljanjeSeeder extends Seeder
             'naslov' => 'Pohorska ulica 99',
             'id_obcine' => '71',
             'postna_stevilka' => 2000,
+            'id_drzave' => 705,
+        ]);
+
+        DB::table('prijava_naslov_za_posiljanje')->insert([
+            'id_kandidata' => '22',
+            'naslov' => 'Podravska 33',
+            'id_obcine' => '71',
+            'postna_stevilka' => 2000,
+            'id_drzave' => 705,
+        ]);
+
+        DB::table('prijava_naslov_za_posiljanje')->insert([
+            'id_kandidata' => '23',
+            'naslov' => 'Večna pot 35',
+            'id_obcine' => '71',
+            'postna_stevilka' => 2000,
+            'id_drzave' => 705,
+        ]);
+
+        DB::table('prijava_naslov_za_posiljanje')->insert([
+            'id_kandidata' => '24',
+            'naslov' => 'Petrovska ulica 1',
+            'postna_stevilka' => 1230,
+            'id_drzave' => 705,
+        ]);
+
+        DB::table('prijava_naslov_za_posiljanje')->insert([
+            'id_kandidata' => '25',
+            'naslov' => 'Litijska pot 2',
+            'postna_stevilka' => 1270,
+            'id_drzave' => 705,
+        ]);
+
+        DB::table('prijava_naslov_za_posiljanje')->insert([
+            'id_kandidata' => '26',
+            'naslov' => 'Zvezdna ulica 2',
+            'postna_stevilka' => 1270,
+            'id_drzave' => 705,
+        ]);
+
+        DB::table('prijava_naslov_za_posiljanje')->insert([
+            'id_kandidata' => '27',
+            'naslov' => 'Sončna pot 5',
+            'postna_stevilka' => 1270,
+            'id_drzave' => 705,
+        ]);
+
+        DB::table('prijava_naslov_za_posiljanje')->insert([
+            'id_kandidata' => '28',
+            'naslov' => 'Kamniška 22',
+            'postna_stevilka' => 1270,
+            'id_drzave' => 705,
+        ]);
+
+        DB::table('prijava_naslov_za_posiljanje')->insert([
+            'id_kandidata' => '29',
+            'naslov' => 'Jagovče 4',
+            'postna_stevilka' => 1270,
+            'id_drzave' => 705,
+        ]);
+
+        DB::table('prijava_naslov_za_posiljanje')->insert([
+            'id_kandidata' => '30',
+            'naslov' => 'Rifengozd 99',
+            'postna_stevilka' => 1270,
+            'id_drzave' => 705,
+        ]);
+
+        DB::table('prijava_naslov_za_posiljanje')->insert([
+            'id_kandidata' => '31',
+            'naslov' => 'Slap 44',
+            'postna_stevilka' => 1241,
+            'id_drzave' => 705,
+        ]);
+
+        DB::table('prijava_naslov_za_posiljanje')->insert([
+            'id_kandidata' => '32',
+            'naslov' => 'Bistrica 34',
+            'postna_stevilka' => 1241,
+            'id_drzave' => 705,
+        ]);
+
+        DB::table('prijava_naslov_za_posiljanje')->insert([
+            'id_kandidata' => '33',
+            'naslov' => 'Hruševje 33',
+            'postna_stevilka' => 1270,
             'id_drzave' => 705,
         ]);
     }
