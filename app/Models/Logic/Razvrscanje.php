@@ -5,6 +5,7 @@ namespace App\Models\Logic;
 
 use App\Models\StudijskiProgram;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class Razvrscanje
 {
@@ -53,7 +54,8 @@ class Razvrscanje
         $this->steviloZelj = [];
 
         $this->inicializacija(true);
-
+        $this->obravnava(true);
+        $this->shraniRezultate(true);
 
     }
 
@@ -65,8 +67,8 @@ class Razvrscanje
             $program->prijave = $program->prijave
                 ->filter(function($prijava) use($tujci) {
                     return $tujci ?
-                        $prijava->kandidat->osebniPodatki->first()->id_drzavljanstva != 4 :
-                        $prijava->kandidat->osebniPodatki->first()->id_drzavljanstva == 4;
+                        $prijava->kandidat->osebniPodatki->first()->id_drzavljanstva != 2 :
+                        $prijava->kandidat->osebniPodatki->first()->id_drzavljanstva == 2;
                 })
                 ->sortByDesc('tocke');
 
@@ -122,44 +124,51 @@ class Razvrscanje
                     })
                     ->values(); //Reset array keys
 
+                if (!$obravnavanePrijave->isEmpty()) {
 
-                $steviloSprejetih = $tujci ? 'stevilo_sprejetih_tujci' : 'stevilo_sprejetih';
-                $omejitev = $tujci ? 'omejitev_vpisa_tujci' : 'omejitev_vpisa';
-                $steviloVpisnihMest = $tujci ? 'stevilo_vpisnih_mest_tujci' : 'stevilo_vpisnih_mest';
+                    $steviloSprejetih = $tujci ? 'stevilo_sprejetih_tujci' : 'stevilo_sprejetih';
+                    $omejitev = $tujci ? 'omejitev_vpisa_tujci' : 'omejitev_vpisa';
+                    $steviloVpisnihMest = $tujci ? 'stevilo_vpisnih_mest_tujci' : 'stevilo_vpisnih_mest';
 
-                $program->$steviloSprejetih = $obravnavanePrijave->take($program->stevilo_vpisnih_mest)->count();
+                    $program->$steviloSprejetih = $obravnavanePrijave->take($program->$steviloVpisnihMest)->count();
 
 
-                $program->omejitev_vpisa = 0;
+                    $program->$omejitev = 0;
 
-                if ($program->$steviloSprejetih == $program->$steviloVpisnihMest) {
-                    //Zadnja sprejeta prijava.
-                    $zadnjaSprejetaPrijava = $obravnavanePrijave->get($program->stevilo_vpisnih_mest - 1);
+                    if ($program->$steviloSprejetih == $program->$steviloVpisnihMest) {
+                        //Zadnja sprejeta prijava.
+                        $zadnjaSprejetaPrijava = $obravnavanePrijave->get($program->$steviloVpisnihMest - 1);
+                        $program->$omejitev = $zadnjaSprejetaPrijava->tocke;
 
-                    $program->$omejitev = $zadnjaSprejetaPrijava->tocke;
+                        //Preverimo, če imajo naslednje zavrnjene prijave enako število točk kot zadnja sprejeta prijava
+                        $obravnavanePrijave
+                            ->slice($program->$steviloVpisnihMest)
+                            ->each(function ($prijava) use (&$program, $omejitev, $steviloSprejetih) {
+                                if ($prijava->tocke >= $program->$omejitev) {
+                                    $program->$steviloSprejetih++;
+                                }
+                            });
+                    }
 
-                    //Preverimo, če imajo naslednje zavrnjene prijave enako število točk kot zadnja sprejeta prijava
+                    //Vsem nesprejetim povečamo obvravnavano željo
                     $obravnavanePrijave
-                        ->slice($program->$steviloVpisnihMest)
-                        ->each(function($prijava) use(&$program, $omejitev, $steviloSprejetih) {
-                            if ($prijava->tocke >= $program->$omejitev) {
-                                $program->$steviloSprejetih++;
-                            }
+                        ->slice($program->$steviloSprejetih)
+                        ->each(function ($prijava) {
+                            //Kandidat s trenutno zeljo ima premalo tock.
+                            $novaObravnava = $this->obravnava['K' . $prijava->id_kandidata] + 1;
+
+                            $this->obravnava['K' . $prijava->id_kandidata] =
+                                $novaObravnava <= $this->steviloZelj['K' . $prijava->id_kandidata]
+                                    ? $novaObravnava : 1;
+
                         });
+                    DB::table('studijski_program')
+                        ->where('id', $program->id)
+                        ->update([
+                            $omejitev => $program->$omejitev,
+                            $steviloSprejetih => $program->$steviloSprejetih
+                        ]);
                 }
-
-                //Vsem nesprejetim povečamo obvravnavano željo
-                $obravnavanePrijave
-                    ->slice($program->$steviloSprejetih)
-                    ->each(function($prijava) {
-                        //Kandidat s trenutno zeljo ima premalo tock.
-                        $novaObravnava = $this->obravnava['K'. $prijava->id_kandidata] + 1;
-
-                        $this->obravnava['K'. $prijava->id_kandidata] =
-                            $novaObravnava <= $this->steviloZelj['K'. $prijava->id_kandidata]
-                                ? $novaObravnava : 1;
-
-                    });
             });
         }
 
