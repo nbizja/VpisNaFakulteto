@@ -49,5 +49,10 @@ class PrijavaRepository
             })
             ->unique('id');
     }
-    
+
+    public function prijaveStudij()
+    {
+
+    }
+
 }
