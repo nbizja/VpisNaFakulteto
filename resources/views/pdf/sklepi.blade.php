@@ -70,15 +70,15 @@
                                 <td  style="padding-left: 10px;width:25%">Število točk: </td><td style="padding-left: 10px;background-color: #cccccc;">{{$prijava->tocke}}</td>
                             </tr>
                             <tr>
-                                <td  style="padding-left: 10px;width:25%">Uvrstitev: </td><td style="padding-left: 10px;background-color: #cccccc;"></td>
+                                <td  style="padding-left: 10px;width:25%">Uvrstitev: </td><td style="padding-left: 10px;background-color: #cccccc;">{{$prijava->uvrstitev}}</td>
                             </tr>
                             @if($kandidat->osebniPodatki->first()->id_drzavljanstva != 2)
                                 <tr>
-                                    <td  style="padding-left: 10px;width:25%;">Meja za sprejem: </td><td style="padding-left: 10px;background-color: #cccccc;">{{$prijava->studijskiProgram->omejitev_vpisa_tujci}}</td>
+                                    <td  style="padding-left: 10px;width:25%;">Meja za sprejem: </td><td style="padding-left: 10px;background-color: #cccccc;">{{$prijava->studijskiProgram->omejitev_vpisa_tujci == 0 ? '/' : $prijava->studijskiProgram->omejitev_vpisa_tujci == 0}}</td>
                                 </tr>
                             @else
                                 <tr>
-                                    <td  style="padding-left: 10px;width:25%;">Meja za sprejem: </td><td style="padding-left: 10px;background-color: #cccccc;">{{$prijava->studijskiProgram->omejitev_vpisa}}</td>
+                                    <td  style="padding-left: 10px;width:25%;">Meja za sprejem: </td><td style="padding-left: 10px;background-color: #cccccc;">{{$prijava->studijskiProgram->omejitev_vpisa == 0 ? '/' : $prijava->studijskiProgram->omejitev_vpisa}}</td>
                                 </tr>
                             @endif
 
