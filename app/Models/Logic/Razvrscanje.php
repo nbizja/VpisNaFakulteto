@@ -208,15 +208,19 @@ class Razvrscanje
 
         $this->programi->each(function($program) use($steviloSprejetih, $omejitev) {
 
+            $uvrstitev = 1;
             $program->prijave
                 ->filter(function($prijava) {
                     return $prijava->zelja == $this->obravnava['K'. $prijava->id_kandidata];
                 })
                 ->values()
                 ->take($program->$steviloSprejetih)
-                ->each(function($prijava) {
-                   $prijava->sprejet = 1;
-                   $prijava->save();
+                ->each(function($prijava) use(&$uvrstitev) {
+                    $prijava->sprejet = 1;
+                    $prijava->uvrstitev = $uvrstitev;
+                    $prijava->save();
+
+                    $uvrstitev++;
                 });
 
             $program->prijave

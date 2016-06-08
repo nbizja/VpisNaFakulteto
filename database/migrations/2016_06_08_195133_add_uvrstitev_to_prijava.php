@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Schema;
 
 class AddUvrstitevToPrijava extends Migration
 {
@@ -12,8 +13,9 @@ class AddUvrstitevToPrijava extends Migration
      */
     public function up()
     {
-        DB::table('prijava', function(Blueprint $table) {
+        Schema::table('prijava', function(Blueprint $table) {
             $table->integer('uvrstitev')->default(0);
+            $table->tinyInteger('tujec')->default(0);
         });
     }
 
@@ -24,8 +26,9 @@ class AddUvrstitevToPrijava extends Migration
      */
     public function down()
     {
-        DB::table('prijava', function(Blueprint $table) {
+        Schema::table('prijava', function(Blueprint $table) {
             $table->dropColumn('uvrstitev');
+            $table->dropColumn('tujec');
         });
     }
 }
