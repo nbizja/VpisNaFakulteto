@@ -52,17 +52,11 @@ class NalepkeKandidatovController extends Controller
                 $programi = $this->studijskiProgrami->ProgramiAll();
                 $prikaziSeznam = 1;
 
-                /*nacin: 0 (brez), 1 (redni), 2 (izredni)
-                  zakljucek: 0 (brez), 1 (splosna), 2 (poklicna)
-                  program: 0 (brez), idPrograma
-                  fakulteta: 0(brez), idFakultete
-                */
-                $nacin = 0;
-                $zakljucek = 0;
+                $nacin = '';
+                $zakljucek = '';
                 $program = $request->request->get("program");
                 $fakulteta = $request->request->get("fakultete");
                 $prijave = null;
-                $naslovi = null;
 
                 foreach ($request->request->all() as $name => $value) {
                     if (stripos($name, 'isci') !== false) {
@@ -77,24 +71,44 @@ class NalepkeKandidatovController extends Controller
 
                         //zakljucek studija
                         if ($request->request->get("zakljucek") == "splosna") {
-                            $zakljucek = 1;
-                        }
-                        else if ($request->request->get("zakljucek") == "poklicna") {
                             $zakljucek = 2;
                         }
+                        else if ($request->request->get("zakljucek") == "poklicna") {
+                            $zakljucek = 3;
+                        }
 
+                        //filtriranje po fakultetah in programih
                         if ($fakulteta == 0) {
                             $prijave = $this->razvrscanje->vrniVsePrijave();
                         }
 
                         if ($program == 0 && $fakulteta != 0) {
-                            //$prijave = $this->razvrscanje->
+                            $prijave = $this->studijskiProgrami->ZavodByID($fakulteta)->prijave()->get()->pluck('prijave');
+                            $prijave = array_flatten($prijave);
                         }
 
                         if ($program != 0) {
                             $prijave = $this->studijskiProgrami->ProgramByID($program)->prijave()->get();
                         }
 
+                        //filtriranje po nacinu in zakljucku
+                        if (!empty($nacin)) {
+                            $prijave = $prijave->filter(function($prijava) use ($nacin) {
+                                return ($prijava->studijskiProgram->nacin_studija == $nacin);
+                            });
+                        }
+                        if (!empty($zakljucek)) {
+                            $prijave = $prijave->filter(function($prijava) use ($zakljucek) {
+                                return ($prijava->srednjesolskaIzobrazba->id_nacina_zakljucka == $zakljucek);
+                            });
+                        }
+
+                        dd($prijave);
+                        /*                $obravnavanePrijave = $program->prijave
+                    ->filter(function($prijava) {
+                        return $prijava->zelja == $this->obravnava['K'. $prijava->id_kandidata];
+                    })
+                    ->values(); //Reset array keys*/
                        /* foreach ($prijave as $prijava) {
                             if ($prijava)
                             dd ($prijava->kandidat->naslovZaPosiljanje()->first());

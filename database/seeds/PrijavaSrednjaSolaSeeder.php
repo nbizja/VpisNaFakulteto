@@ -136,6 +136,141 @@ class PrijavaSrednjaSolaSeeder extends Seeder
             'datum_izdaje_spricevala' => '2016-07-13'
         ]);
 
+        DB::table('prijava_srednjesolska_izobrazba')->insert([
+            'id_kandidata' => '19',
+            'ima_spricevalo' => '0',
+            'id_nacina_zakljucka' => '3',
+            'id_drzave' => 705,
+            'sifra_maturitetnega_predmeta' => 0,
+            'datum_izdaje_spricevala' => '2016-07-13'
+        ]);
+
+        DB::table('prijava_srednjesolska_izobrazba')->insert([
+            'id_kandidata' => '20',
+            'ima_spricevalo' => '0',
+            'id_nacina_zakljucka' => '2',
+            'id_drzave' => 705,
+            'sifra_maturitetnega_predmeta' => 0,
+            'datum_izdaje_spricevala' => '2016-07-13'
+        ]);
+
+        DB::table('prijava_srednjesolska_izobrazba')->insert([
+            'id_kandidata' => '21',
+            'ima_spricevalo' => '0',
+            'id_nacina_zakljucka' => '3',
+            'id_drzave' => 705,
+            'sifra_maturitetnega_predmeta' => 0,
+            'datum_izdaje_spricevala' => '2016-07-13'
+        ]);
+
+        DB::table('prijava_srednjesolska_izobrazba')->insert([
+            'id_kandidata' => '22',
+            'ima_spricevalo' => '0',
+            'id_nacina_zakljucka' => '3',
+            'id_drzave' => 705,
+            'sifra_maturitetnega_predmeta' => 0,
+            'datum_izdaje_spricevala' => '2016-07-13'
+        ]);
+
+        DB::table('prijava_srednjesolska_izobrazba')->insert([
+            'id_kandidata' => '23',
+            'ima_spricevalo' => '0',
+            'id_nacina_zakljucka' => '2',
+            'id_drzave' => 705,
+            'sifra_maturitetnega_predmeta' => 0,
+            'datum_izdaje_spricevala' => '2016-07-13'
+        ]);
+
+        DB::table('prijava_srednjesolska_izobrazba')->insert([
+            'id_kandidata' => '24',
+            'ima_spricevalo' => '0',
+            'id_nacina_zakljucka' => '2',
+            'id_drzave' => 705,
+            'sifra_maturitetnega_predmeta' => 0,
+            'datum_izdaje_spricevala' => '2016-07-13'
+        ]);
+
+        DB::table('prijava_srednjesolska_izobrazba')->insert([
+            'id_kandidata' => '25',
+            'ima_spricevalo' => '0',
+            'id_nacina_zakljucka' => '2',
+            'id_drzave' => 705,
+            'sifra_maturitetnega_predmeta' => 0,
+            'datum_izdaje_spricevala' => '2016-07-13'
+        ]);
+
+        DB::table('prijava_srednjesolska_izobrazba')->insert([
+            'id_kandidata' => '26',
+            'ima_spricevalo' => '0',
+            'id_nacina_zakljucka' => '2',
+            'id_drzave' => 705,
+            'sifra_maturitetnega_predmeta' => 0,
+            'datum_izdaje_spricevala' => '2016-07-13'
+        ]);
+
+        DB::table('prijava_srednjesolska_izobrazba')->insert([
+            'id_kandidata' => '27',
+            'ima_spricevalo' => '0',
+            'id_nacina_zakljucka' => '2',
+            'id_drzave' => 705,
+            'sifra_maturitetnega_predmeta' => 0,
+            'datum_izdaje_spricevala' => '2016-07-13'
+        ]);
+
+        DB::table('prijava_srednjesolska_izobrazba')->insert([
+            'id_kandidata' => '28',
+            'ima_spricevalo' => '0',
+            'id_nacina_zakljucka' => '2',
+            'id_drzave' => 705,
+            'sifra_maturitetnega_predmeta' => 0,
+            'datum_izdaje_spricevala' => '2016-07-13'
+        ]);
+
+        DB::table('prijava_srednjesolska_izobrazba')->insert([
+            'id_kandidata' => '29',
+            'ima_spricevalo' => '0',
+            'id_nacina_zakljucka' => '3',
+            'id_drzave' => 705,
+            'sifra_maturitetnega_predmeta' => 0,
+            'datum_izdaje_spricevala' => '2016-07-13'
+        ]);
+
+        DB::table('prijava_srednjesolska_izobrazba')->insert([
+            'id_kandidata' => '30',
+            'ima_spricevalo' => '0',
+            'id_nacina_zakljucka' => '3',
+            'id_drzave' => 705,
+            'sifra_maturitetnega_predmeta' => 0,
+            'datum_izdaje_spricevala' => '2016-07-13'
+        ]);
+
+        DB::table('prijava_srednjesolska_izobrazba')->insert([
+            'id_kandidata' => '31',
+            'ima_spricevalo' => '0',
+            'id_nacina_zakljucka' => '3',
+            'id_drzave' => 705,
+            'sifra_maturitetnega_predmeta' => 0,
+            'datum_izdaje_spricevala' => '2016-07-13'
+        ]);
+
+        DB::table('prijava_srednjesolska_izobrazba')->insert([
+            'id_kandidata' => '32',
+            'ima_spricevalo' => '0',
+            'id_nacina_zakljucka' => '3',
+            'id_drzave' => 705,
+            'sifra_maturitetnega_predmeta' => 0,
+            'datum_izdaje_spricevala' => '2016-07-13'
+        ]);
+
+        DB::table('prijava_srednjesolska_izobrazba')->insert([
+            'id_kandidata' => '33',
+            'ima_spricevalo' => '0',
+            'id_nacina_zakljucka' => '3',
+            'id_drzave' => 705,
+            'sifra_maturitetnega_predmeta' => 0,
+            'datum_izdaje_spricevala' => '2016-07-13'
+        ]);
+
     }
 }
 

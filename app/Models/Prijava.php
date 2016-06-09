@@ -21,4 +21,9 @@ class Prijava extends Model
     {
         return $this->belongsTo('App\Models\Uporabnik', 'id_kandidata');
     }
+
+    public function srednjesolskaIzobrazba()
+    {
+        return $this->belongsTo('App\Models\PrijavaSrednjesolskaIzobrazba', 'id_kandidata', 'id_kandidata');
+    }
 }
