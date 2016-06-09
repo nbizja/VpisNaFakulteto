@@ -22,7 +22,9 @@ class RazvrscanjeController extends Controller
     public function prikazi()
     {
         $programi = $this->razvrscanjeRepo->programiZRavrstitvami()->get();
-        $programi->each(function(&$program) {
+        $programi
+            ->sortBy('ime')
+            ->each(function(&$program) {
 
            $program->prijave = $program->prijave
                ->filter(function($prijava) {

@@ -15,7 +15,7 @@
                         <a class="btn btn-primary" href="{{ action('RazvrscanjeController@izvoziSklepe') }}">Izvozi sklepe</a>
                         @foreach($programi as $program)
                             <table class="table table-bordered table-hover table-striped">
-                                <caption>{{ $program->ime }}</caption>
+                                <caption>{{ $program->ime . '('. $program->nacin_studija  .')' }}</caption>
                                 <tr>
                                     <th>Mesto</th>
                                     <th>Emso</th>
