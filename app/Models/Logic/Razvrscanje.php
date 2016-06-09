@@ -20,7 +20,7 @@ class Razvrscanje
     /**
      * @param StudijskiProgram[] $programi
      */
-    public function razvrsti($programi)
+    public function razvrsti($programi, $tujci = false)
     {
         $this->programi = $programi;
 
@@ -32,13 +32,13 @@ class Razvrscanje
 
         //Vstavimo 1. želje (Že vstavljeno v queryiju)
         //Inicializiramo spremenljivko obravnava
-        $this->inicializacija();
+        $this->inicializacija($tujci);
 
         //Razvrscanje
-        $this->obravnava();
+        $this->obravnava($tujci);
 
         //Zapišemo v bazo
-        $this->shraniRezultate();
+        $this->shraniRezultate($tujci);
 
         //Preverimo, da se komu ni zgodila krivica
         $nepravilneObravnave = $this->preveriPravilnostObravnave();
@@ -46,22 +46,12 @@ class Razvrscanje
         
         //$this->popraviNepravilneObravnave($nepravilneObravnave);
 
-        /***********************************
-                    TUJCI
-         ***********************************/
-        $this->programi = $programi;
-        $this->obravnava = [];
-        $this->steviloZelj = [];
-
-        $this->inicializacija(true);
-        $this->obravnava(true);
-        $this->shraniRezultate(true);
 
     }
 
     private function inicializacija($tujci = false)
     {
-        $this->programi->each(function(&$program) use($tujci) {
+        $this->programi = $this->programi->map(function($program) use($tujci) {
 
             //Sortiramo prijave po točkah
             $program->prijave = $program->prijave
@@ -89,6 +79,8 @@ class Razvrscanje
                     $this->steviloZelj['K'. $prijava->id_kandidata] = $prijava->zelja;
                 }
             });
+
+            return $program;
 
         });
     }
