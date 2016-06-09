@@ -26,4 +26,10 @@ class Prijava extends Model
     {
         return $this->belongsTo('App\Models\PrijavaSrednjesolskaIzobrazba', 'id_kandidata', 'id_kandidata');
     }
+
+    public function osebniPodatki()
+    {
+        return $this->hasOne('App\Models\PrijavaOsebniPodatki', 'id_kandidata', 'id_kandidata');
+    }
+
 }
