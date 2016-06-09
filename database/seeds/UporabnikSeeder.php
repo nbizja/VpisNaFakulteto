@@ -28,12 +28,13 @@ class UporabnikSeeder extends Seeder
 
         DB::table('uporabnik')->insert(
             [
+                //'emso' => '0812992505278',
                 'ime' => 'Neža',
                 'priimek' => 'Belej',
                 'username' => 'nezabelej',
                 'email' => 'nezabelej@gmail.com',
                 'password' => bcrypt('nezabelej812'),
-                'vloga' => VlogaUporabnika::SKRBNIK_PROGRAMA
+                'vloga' => VlogaUporabnika::KANDIDAT
             ]);
 
         DB::table('uporabnik')->insert(
@@ -358,5 +359,84 @@ class UporabnikSeeder extends Seeder
             'password' => bcrypt('cjansa'),
             'vloga' => VlogaUporabnika::KANDIDAT
         ]);
+
+        DB::table('uporabnik')->insert(
+            [
+                //'emso' => '0106990500307',
+                'ime' => 'Primož',
+                'priimek' => 'Belej',
+                'username' => 'pbelej',
+                'email' => 'primozbelej@gmail.com',
+                'password' => bcrypt('primozbelej'),
+                'vloga' => VlogaUporabnika::KANDIDAT
+            ]);
+
+        DB::table('uporabnik')->insert(
+            [
+                //'emso' => '0101006500006',
+                'ime' => 'Testni',
+                'priimek' => 'Kandidat',
+                'username' => 'tkandidat',
+                'email' => 'tkandidat@gmail.com',
+                'password' => bcrypt('tkandidat'),
+                'vloga' => VlogaUporabnika::KANDIDAT
+            ]);
+
+        DB::table('uporabnik')->insert(
+            [
+                'emso' => '0604997500027',
+                'ime' => 'Klemen',
+                'priimek' => 'Klemenečič',
+                'username' => 'klemenk',
+                'email' => 'klemenk@gmail.com',
+                'password' => bcrypt('klemenk'),
+                'vloga' => VlogaUporabnika::KANDIDAT
+            ]);
+
+        DB::table('uporabnik')->insert(
+            [
+                'emso' => '1607997505099',
+                'ime' => 'Marjana',
+                'priimek' => 'Viktorija Jelinčič',
+                'username' => 'marjanavil',
+                'email' => 'marjanavil@gmail.com',
+                'password' => bcrypt('marjanavil'),
+                'vloga' => VlogaUporabnika::KANDIDAT
+            ]);
+
+        DB::table('uporabnik')->insert(
+            [
+                'emso' => '0201998500031',
+                'ime' => 'Božidar',
+                'priimek' => 'Božič',
+                'username' => 'bbozic',
+                'email' => 'bbozic@gmail.com',
+                'password' => bcrypt('bbozic'),
+                'vloga' => VlogaUporabnika::KANDIDAT
+            ]);
+
+        DB::table('uporabnik')->insert(
+            [
+                'emso' => '2607997505084',
+                'ime' => 'Fani',
+                'priimek' => 'Novak',
+                'username' => 'fanin',
+                'email' => 'fanin@gmail.com',
+                'password' => bcrypt('fanin'),
+                'vloga' => VlogaUporabnika::KANDIDAT
+            ]);
+
+        DB::table('uporabnik')->insert(
+            [
+                'emso' => '0604997500027',
+                'ime' => 'Ivan',
+                'priimek' => 'Ivančič',
+                'username' => 'ivanivan',
+                'email' => 'ivanivan@gmail.com',
+                'password' => bcrypt('ivanivan'),
+                'vloga' => VlogaUporabnika::KANDIDAT
+            ]);
+
+
     }
 }
