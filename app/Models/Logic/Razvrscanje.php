@@ -43,7 +43,7 @@ class Razvrscanje
         //Preverimo, da se komu ni zgodila krivica
         $nepravilneObravnave = $this->preveriPravilnostObravnave();
         //Popravimo nepravilne obravnave
-        
+        //dd($nepravilneObravnave);
         //$this->popraviNepravilneObravnave($nepravilneObravnave);
 
 
@@ -51,7 +51,7 @@ class Razvrscanje
 
     private function inicializacija($tujci = false)
     {
-        $this->programi = $this->programi->map(function($program) use($tujci) {
+        $this->programi->each(function(&$program) use($tujci) {
 
             //Sortiramo prijave po točkah
             $program->prijave = $program->prijave
@@ -75,12 +75,10 @@ class Razvrscanje
 
             $program->prijave->each(function($prijava) {
                 $trenutnaZelja = $this->steviloZelj['K'. $prijava->id_kandidata] ?? 1;
-                if ($prijava->zelja > $trenutnaZelja) {
+                if ($prijava->zelja >= $trenutnaZelja) {
                     $this->steviloZelj['K'. $prijava->id_kandidata] = $prijava->zelja;
                 }
             });
-
-            return $program;
 
         });
     }
@@ -115,6 +113,7 @@ class Razvrscanje
                         return $prijava->zelja == $this->obravnava['K'. $prijava->id_kandidata];
                     })
                     ->values(); //Reset array keys
+                
 
                 if (!$obravnavanePrijave->isEmpty()) {
 

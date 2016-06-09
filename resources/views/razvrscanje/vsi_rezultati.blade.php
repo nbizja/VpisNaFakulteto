@@ -24,6 +24,9 @@
                                     <th>Stevilo tock</th>
                                     <th>Želja</th>
                                 </tr>
+                                <tr>
+                                    <td colspan="6">Kandidati s slovenskim državljanstvom</td>
+                                </tr>
                                 <?php $uvrstitevSlo = $uvrstitevTujci =  1; ?>
                                 @foreach($program->prijave->filter(function($prijava) {
                                     return !$prijava->tujec;
@@ -38,9 +41,14 @@
                                     </tr>
                                     <?php $uvrstitevSlo++; ?>
                                 @endforeach
+                                @if($uvrstitevSlo == 1)
+                                    <tr>
+                                        <td colspan="6">/</td>
+                                    </tr>
+                                @endif
 
                                 <tr>
-                                    <td colspan="6">Tujci</td>
+                                    <td colspan="6">Kandidati brez slovenskega državljanstva</td>
                                 </tr>
                                 @foreach($program->prijave->filter(function($prijava) {
                                             return $prijava->tujec;
@@ -55,6 +63,11 @@
                                     </tr>
                                     <?php $uvrstitevTujci++; ?>
                                 @endforeach
+                                @if($uvrstitevTujci == 1)
+                                    <tr>
+                                        <td colspan="6">/</td>
+                                    </tr>
+                                @endif
 
                             </table>
 

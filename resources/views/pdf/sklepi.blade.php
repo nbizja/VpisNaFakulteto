@@ -67,7 +67,7 @@
                                 <td  style="padding-left: 10px;width:25%">Sprejet: </td><td style="padding-left: 10px;background-color: #cccccc;">{{$prijava->sprejet == '1' ? 'Da' : 'Ne'}}</td>
                             </tr>
                             <tr>
-                                <td  style="padding-left: 10px;width:25%">Število točk: </td><td style="padding-left: 10px;background-color: #cccccc;">{{$prijava->sprejet == '1' ? $prijava->tocke : '/'}}</td>
+                                <td  style="padding-left: 10px;width:25%">Število točk: </td><td style="padding-left: 10px;background-color: #cccccc;">{{$prijava->tocke}}</td>
                             </tr>
                             <tr>
                                 <td  style="padding-left: 10px;width:25%">Uvrstitev: </td><td style="padding-left: 10px;background-color: #cccccc;">{{$prijava->sprejet == '1' ? $prijava->uvrstitev : '/'}}</td>
