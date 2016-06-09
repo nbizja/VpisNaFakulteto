@@ -51,8 +51,8 @@ class ListOfCandidatesController extends Controller
             $matura = new Matura();
             $matura->emso = $kandidat->emso;
             $matura->ocena = 0;
-            $matura->ocena_3_letnik = 0;
-            $matura->ocena_4_letnik = 0;
+            $matura->ocena_3_letnik = 1;
+            $matura->ocena_4_letnik = 1;
             $matura->save();
         }
 
