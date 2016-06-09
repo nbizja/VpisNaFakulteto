@@ -20,7 +20,7 @@ class Razvrscanje
     /**
      * @param StudijskiProgram[] $programi
      */
-    public function razvrsti($programi)
+    public function razvrsti($programi, $tujci = false)
     {
         $this->programi = $programi;
 
@@ -32,30 +32,20 @@ class Razvrscanje
 
         //Vstavimo 1. želje (Že vstavljeno v queryiju)
         //Inicializiramo spremenljivko obravnava
-        $this->inicializacija();
+        $this->inicializacija($tujci);
 
         //Razvrscanje
-        $this->obravnava();
+        $this->obravnava($tujci);
 
         //Zapišemo v bazo
-        $this->shraniRezultate();
+        $this->shraniRezultate($tujci);
 
         //Preverimo, da se komu ni zgodila krivica
         $nepravilneObravnave = $this->preveriPravilnostObravnave();
         //Popravimo nepravilne obravnave
-        
+        //dd($nepravilneObravnave);
         //$this->popraviNepravilneObravnave($nepravilneObravnave);
 
-        /***********************************
-                    TUJCI
-         ***********************************/
-        $this->programi = $programi;
-        $this->obravnava = [];
-        $this->steviloZelj = [];
-
-        $this->inicializacija(true);
-        $this->obravnava(true);
-        $this->shraniRezultate(true);
 
     }
 
@@ -85,7 +75,7 @@ class Razvrscanje
 
             $program->prijave->each(function($prijava) {
                 $trenutnaZelja = $this->steviloZelj['K'. $prijava->id_kandidata] ?? 1;
-                if ($prijava->zelja > $trenutnaZelja) {
+                if ($prijava->zelja >= $trenutnaZelja) {
                     $this->steviloZelj['K'. $prijava->id_kandidata] = $prijava->zelja;
                 }
             });
@@ -123,6 +113,7 @@ class Razvrscanje
                         return $prijava->zelja == $this->obravnava['K'. $prijava->id_kandidata];
                     })
                     ->values(); //Reset array keys
+                
 
                 if (!$obravnavanePrijave->isEmpty()) {
 
@@ -206,7 +197,7 @@ class Razvrscanje
         $steviloSprejetih = $tujci ? 'stevilo_sprejetih_tujci' : 'stevilo_sprejetih';
         $omejitev = $tujci ? 'omejitev_vpisa_tujci' : 'omejitev_vpisa';
 
-        $this->programi->each(function($program) use($steviloSprejetih, $omejitev) {
+        $this->programi->each(function($program) use($steviloSprejetih, $omejitev, $tujci) {
 
             $uvrstitev = 1;
             $program->prijave
@@ -215,7 +206,10 @@ class Razvrscanje
                 })
                 ->values()
                 ->take($program->$steviloSprejetih)
-                ->each(function($prijava) use(&$uvrstitev) {
+                ->each(function($prijava) use(&$uvrstitev, $tujci) {
+                    if ($tujci) {
+                        $prijava->tujec = 1;
+                    }
                     $prijava->sprejet = 1;
                     $prijava->uvrstitev = $uvrstitev;
                     $prijava->save();
@@ -229,7 +223,10 @@ class Razvrscanje
                     || $prijava->tocke == 0
                     || $prijava->tocke < $program->$omejitev;
                 })
-                ->each(function($prijava) {
+                ->each(function($prijava) use($tujci) {
+                    if ($tujci) {
+                        $prijava->tujec = 1;
+                    }
                     $prijava->sprejet = 0;
                     $prijava->save();
                 });

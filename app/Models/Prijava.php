@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Prijava extends Model
 {
     protected $table = 'prijava';
-    protected $fillable = ['id_kandidata', 'id_studijskega_programa', 'zelja', 'datum_prijave', 'tocke', 'izredni_talent', 'sprejet'];
+    protected $fillable = ['id_kandidata', 'id_studijskega_programa', 'zelja', 'datum_prijave', 'tocke', 'izredni_talent', 'sprejet', 'uvrstitev', 'tujec'];
     protected $guarded = ['id'];
     protected $dates = ['created_at', 'updated_at', 'delete_at'];
     public $timestamps = false;
@@ -20,5 +20,10 @@ class Prijava extends Model
     public function kandidat()
     {
         return $this->belongsTo('App\Models\Uporabnik', 'id_kandidata');
+    }
+
+    public function srednjesolskaIzobrazba()
+    {
+        return $this->belongsTo('App\Models\PrijavaSrednjesolskaIzobrazba', 'id_kandidata', 'id_kandidata');
     }
 }

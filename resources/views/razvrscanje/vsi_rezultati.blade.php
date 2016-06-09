@@ -24,22 +24,50 @@
                                     <th>Stevilo tock</th>
                                     <th>Želja</th>
                                 </tr>
-                                <?php $mesto = 1; ?>
-                                @foreach($program->prijave as $prijava)
+                                <tr>
+                                    <td colspan="6">Kandidati s slovenskim državljanstvom</td>
+                                </tr>
+                                <?php $uvrstitevSlo = $uvrstitevTujci =  1; ?>
+                                @foreach($program->prijave->filter(function($prijava) {
+                                    return !$prijava->tujec;
+                                }) as $prijava)
                                     <tr>
-                                        <td>{{ $mesto }}</td>
+                                        <td>{{ $uvrstitevSlo }}</td>
                                         <td>{{ $prijava->kandidat->emso }}</td>
                                         <td>{{ $prijava->kandidat->ime }}</td>
                                         <td>{{ $prijava->kandidat->priimek }}</td>
                                         <td>{{ $prijava->tocke }}</td>
                                         <td>{{ $prijava->zelja }}</td>
                                     </tr>
-                                    <?php $mesto++; ?>
+                                    <?php $uvrstitevSlo++; ?>
                                 @endforeach
+                                @if($uvrstitevSlo == 1)
+                                    <tr>
+                                        <td colspan="6">/</td>
+                                    </tr>
+                                @endif
 
                                 <tr>
-                                    <td colspan="6">Tujci</td>
+                                    <td colspan="6">Kandidati brez slovenskega državljanstva</td>
                                 </tr>
+                                @foreach($program->prijave->filter(function($prijava) {
+                                            return $prijava->tujec;
+                                        }) as $prijava)
+                                    <tr>
+                                        <td>{{ $uvrstitevTujci }}</td>
+                                        <td>{{ $prijava->kandidat->emso }}</td>
+                                        <td>{{ $prijava->kandidat->ime }}</td>
+                                        <td>{{ $prijava->kandidat->priimek }}</td>
+                                        <td>{{ $prijava->tocke }}</td>
+                                        <td>{{ $prijava->zelja }}</td>
+                                    </tr>
+                                    <?php $uvrstitevTujci++; ?>
+                                @endforeach
+                                @if($uvrstitevTujci == 1)
+                                    <tr>
+                                        <td colspan="6">/</td>
+                                    </tr>
+                                @endif
 
                             </table>
 

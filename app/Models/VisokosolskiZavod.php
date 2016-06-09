@@ -22,5 +22,13 @@ class VisokosolskiZavod extends Model
         return $this->belongsTo('App\Models\Obcina', 'id_obcine', 'id');
     }
 
+    public function programi()
+    {
+        return $this->hasMany('App\Models\StudijskiProgram', 'id_zavoda', 'id');
+    }
 
+    public function prijave()
+    {
+        return $this->programi()->with('prijave');
+    }
 }

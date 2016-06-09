@@ -36,8 +36,12 @@ class RazvrscanjeController extends Controller
     public function razvrsti()
     {
         $this->razvrscanje->razvrsti(
-            $this->razvrscanjeRepo->vrniProgrameSPrijavami()->get()
+            $this->razvrscanjeRepo->vrniProgrameSPrijavami()->get(), false
         );
+        $this->razvrscanje->razvrsti(
+            $this->razvrscanjeRepo->vrniProgrameSPrijavami()->get(), true
+        );
+
 
         return redirect('rezultati_razvrscanja');
     }
