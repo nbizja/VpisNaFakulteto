@@ -108,6 +108,7 @@
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="#">Domov</a></li>
                             <li class=""><a href="{{ action('AddEmployeeController@loadPage')}}">Ustvari račun za zaposlene</a></li>
+                            <li class=""><a href="{{ action('HomeController@loadInicializacija')}}">Inicializacija</a></li>
                         </ul>
                     </div>
                 @endif

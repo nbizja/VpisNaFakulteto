@@ -69,6 +69,9 @@ Route::group(['middleware' => ['prijavljen']], function () {
 
     Route::get('/', 'HomeController@index');
 
+    Route::get('/inicializacija', 'HomeController@loadInicializacija');
+    Route::post('/inicializacija', 'HomeController@init');
+
     Route::get('/geslo', 'ProfilController@index');
     Route::post('/geslo/ponastavi', 'ProfilController@ponastaviGeslo');
     Route::get('/pozabljeno_geslo', 'ProfilController@pozabljenoGeslo');
