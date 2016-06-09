@@ -43,7 +43,7 @@
                             @if($predmet->ocena > 0)
                                 <div class="form-group">
                                     <div class="form-group">
-                                        <label style="padding-left: 5%" class="control-label" name="lab{{$predmet->id_predmeta}}">{{substr($predmet->ime_predmeta, 0, -11)}}</label>
+                                        <label style="padding-left: 5%" class="control-label" name="lab{{$predmet->id_predmeta}}">{{$predmet->ime_predmeta}}</label>
                                     </div><br>
                                     <div class="form-group">
                                         <div class="col-md-4" style="padding-left: 20%">Ocena v 3. letniku: </div>

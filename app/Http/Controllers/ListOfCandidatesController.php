@@ -47,6 +47,23 @@ class ListOfCandidatesController extends Controller
         $predmeti_uspeh = MaturaPredmet::where('emso', '=', $kandidat->emso)->get();
         $predmeti_uspeh = $predmeti_uspeh->merge(PoklicnaMaturaPredmet::where('emso', '=', $kandidat->emso)->get());
 
+        if(!(Matura::where('emso', '=', $kandidat->emso)->exists() || PoklicnaMatura::where('emso', '=', $kandidat->emso)->exists())){
+
+            $tocke = 0;
+            if(count($predmeti_uspeh) > 0){
+                foreach($predmeti as $predmet){
+                    $tocke += $predmet->ocena;
+                }
+            }
+
+            $matura = new Matura();
+            $matura->emso = $kandidat->emso;
+            $matura->ocena = $tocke;
+            $matura->ocena_3_letnik = 1;
+            $matura->ocena_4_letnik = 1;
+            $matura->save();
+        }
+
         $matura = Matura::where('emso', '=', $kandidat->emso)->get();
         $matura = $matura->merge(PoklicnaMatura::where('emso', '=', $kandidat->emso)->get())[0];
 
@@ -81,6 +98,7 @@ class ListOfCandidatesController extends Controller
             $matura_ocena = 0;
             $isValid = true;
             $matura = Matura::where('emso', '=', $emso)->get();
+            $matura = $matura->merge(PoklicnaMatura::where('emso', '=', $emso)->get())[0];
 
             if(Matura::where('emso', '=', $emso)->exists()) $tip_mature = 0;
             else $tip_mature = 1;
@@ -137,7 +155,7 @@ class ListOfCandidatesController extends Controller
                     }
                 }
 
-                if($matura[0]->ocena == $matura_ocena && $vsota > 0){
+                if($matura->ocena == $matura_ocena && $vsota > 0){
                     if ($tip_mature == 0) Matura::where('emso', '=', $emso)->update(array('ocena' => $vsota));
                     else PoklicnaMatura::where('emso', '=', $emso)->update(array('ocena' => $vsota));
                 }
