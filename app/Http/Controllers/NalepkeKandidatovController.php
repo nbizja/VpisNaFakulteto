@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Repositories\RazvrscanjeRepository;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Repositories\StudijskiProgramiRepository;;
 use Illuminate\Http\Request;
@@ -17,10 +18,12 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 class NalepkeKandidatovController extends Controller
 {
     private $studijskiProgrami;
+    private $razvrscanje;
 
-    public function __construct(StudijskiProgramiRepository $sp)
+    public function __construct(StudijskiProgramiRepository $sp, RazvrscanjeRepository $r)
     {
         $this->studijskiProgrami = $sp;
+        $this->razvrscanje = $r;
     }
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
@@ -80,8 +83,12 @@ class NalepkeKandidatovController extends Controller
                             $zakljucek = 2;
                         }
 
+                        if ($fakulteta == 0) {
+                            $prijave = $this->razvrscanje->vrniVsePrijave();
+                        }
+
                         if ($program == 0 && $fakulteta != 0) {
-                            
+                            //$prijave = $this->razvrscanje->
                         }
 
                         if ($program != 0) {
