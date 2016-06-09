@@ -6,6 +6,7 @@ namespace App\Models\Repositories;
 use App\Models\Prijava;
 use App\Models\PrijavaSrednjesolskaIzobrazba;
 use App\Models\StudijskiProgram;
+use App\Models\VisokosolskiZavod;
 use App\Models\Uporabnik;
 
 class RazvrscanjeRepository
@@ -13,6 +14,11 @@ class RazvrscanjeRepository
     public function vrniVsePrijave()
     {
         return Prijava::all();
+    }
+
+    public function getIdZavodaVloga($id)
+    {
+        return VisokosolskiZavod::where('id_skrbnika', '=', $id)->orderBy('ime')->pluck('id')->first();
     }
 
     public function vrniPrijavaSrednjaSola($idKandidata)

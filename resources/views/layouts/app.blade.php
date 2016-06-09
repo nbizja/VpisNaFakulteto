@@ -123,6 +123,7 @@
                                 <li class="active"><a href="#">Domov</a></li>
                                 <li class=""><a href="{{ action('ListOfCandidatesController@loadPage')}}">Seznam prijavljenih kandidatov</a></li>
                                 <li class="active"><a href="{{ action('ListOfCandidatesController@loadCandidates')}}">Iskanje po kandidatih</a></li>
+                                <li><a href="{{ action('NalepkeKandidatovController@isci') }}">Nalepke z naslovi kandidatov</a></li>
                             </ul>
                         </div>
                     @endif
