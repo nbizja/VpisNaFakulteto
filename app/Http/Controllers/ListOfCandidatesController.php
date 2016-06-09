@@ -47,10 +47,18 @@ class ListOfCandidatesController extends Controller
         $predmeti_uspeh = MaturaPredmet::where('emso', '=', $kandidat->emso)->get();
         $predmeti_uspeh = $predmeti_uspeh->merge(PoklicnaMaturaPredmet::where('emso', '=', $kandidat->emso)->get());
 
-        if(!Matura::where('emso', '=', $kandidat->emso)->exists()){
+        if(!(Matura::where('emso', '=', $kandidat->emso)->exists() || PoklicnaMatura::where('emso', '=', $kandidat->emso)->exists())){
+
+            $tocke = 0;
+            if(count($predmeti_uspeh) > 0){
+                foreach($predmeti as $predmet){
+                    $tocke += $predmet->ocena;
+                }
+            }
+
             $matura = new Matura();
             $matura->emso = $kandidat->emso;
-            $matura->ocena = 0;
+            $matura->ocena = $tocke;
             $matura->ocena_3_letnik = 1;
             $matura->ocena_4_letnik = 1;
             $matura->save();
