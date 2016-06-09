@@ -9,6 +9,7 @@
 namespace App\Models\Repositories;
 
 
+use App\Models\Prijava;
 use App\Models\Uporabnik;
 
 class PrijavaRepository
@@ -39,4 +40,19 @@ class PrijavaRepository
             ->where('username', $username)
             ->first();
     }
+
+    public function prijavljeniKandidati()
+    {
+        return Prijava::with('kandidat')->get()
+            ->map(function($prijava) {
+             return $prijava->kandidat;
+            })
+            ->unique('id');
+    }
+
+    public function prijaveStudij()
+    {
+
+    }
+
 }

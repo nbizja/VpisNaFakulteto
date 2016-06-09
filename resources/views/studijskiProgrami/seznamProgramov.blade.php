@@ -90,11 +90,11 @@
                             <td class="stevilo">{{$program->stevilo_vpisnih_mest}}</td>
                             <td class="stevilo_omejitev">{{$program->stevilo_mest_po_omejitvi}}</td>
                             <td class="stevilo_sprejetih">{{$program->stevilo_sprejetih}}</td>
-                            <td class="omejitev">{{$program->omejitev_vpisa == 1 ? 'Da':'Ne'}}</td>
+                            <td class="omejitev">{{$program->omejitev_vpisa > 0 ? 'Da':'Ne'}}</td>
                             <td style="display: none" class="steviloT">{{$program->stevilo_vpisnih_mest_tujci}}</td>
                             <td style="display: none" class="stevilo_omejitevT">{{$program->stevilo_mest_po_omejitvi_tujci}}</td>
                             <td style="display: none" class="stevilo_sprejetihT">{{$program->stevilo_sprejetih_tujci}}</td>
-                            <td style="display: none" class="omejitevT">{{$program->omejitev_vpisa_tujci == 1 ? 'Da':'Ne'}}</td>
+                            <td style="display: none" class="omejitevT">{{$program->omejitev_vpisa_tujci > 0 ? 'Da':'Ne'}}</td>
                         </tr>
                     @endforeach
                     </tbody>

@@ -88,15 +88,21 @@
 
                                 </ul>
                             </li>
-                            <li class="active"><a href="{{ action('SifrantiController@index')}}">Vzdrževanje šifrantov</a></li>
-                            <li class=""><a href="{{ action('ListOfCandidatesController@loadPage')}}">Seznam prijavljenih kandidatov</a></li>
-                            <li class="active"><a href="{{ action('ListOfCandidatesController@loadCandidates')}}">Iskanje po kandidatih</a></li>
-
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Matura<b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Kandidati<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ action('NalepkeKandidatovController@isci') }}">Nalepke z naslovi kandidatov</a></li>
+                                    <li class=""><a href="{{ action('ListOfCandidatesController@loadPage')}}">Seznam prijavljenih kandidatov</a></li>
+                                    <li class="active"><a href="{{ action('ListOfCandidatesController@loadCandidates')}}">Iskanje po kandidatih</a></li>
+                                </ul>
+                            </li>
+                            <li class="active"><a href="{{ action('SifrantiController@index')}}">Vzdrževanje šifrantov</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Uvoz podatkov<b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="{{ action('Matura\MaturaController@uvoziPodatke') }}">Uvoz podatkov o maturi</a></li>
                                     <li><a href="{{ action('Matura\PoklicnaMaturaController@uvoziPodatke') }}">Uvoz podatkov o poklicni maturi</a></li>
+                                    <li><a href="{{ action('RazvrscanjeController@prikazi') }}">Rezultati razvrščanja</a></li>
                                 </ul>
                             </li>
 

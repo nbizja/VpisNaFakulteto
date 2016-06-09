@@ -53,7 +53,7 @@
 		<dd>{{$p->stevilo_vpisnih_mest_tujci}}</dd>
 
 		<dt>Omejitev vpisa:</dt>
-		<dd>{{$p->omejitev_vpisa_tujci == 1 ? 'Da' : 'Ne'}}</dd>
+		<dd>{{$p->omejitev_vpisa_tujci > 0 ? 'Da' : 'Ne'}}</dd>
 
 		<dt>Število mest po omejitvi vpisa:</dt>
 		<dd>{{$p->stevilo_mest_po_omejitvi_tujci}}</dd>
