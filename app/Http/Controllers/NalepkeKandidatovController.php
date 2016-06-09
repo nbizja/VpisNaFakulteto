@@ -122,7 +122,7 @@ class NalepkeKandidatovController extends Controller
                     //IZVOZ
                     }  else if (stripos($name, 'izvozi_sprejeti') !== false) {
                         $prijave = $prijave->filter(function($prijava) {
-                            return ($prijava->sprejeti == 1);
+                            return ($prijava->sprejet == 1);
                         });
 
                         $uniques = array();
