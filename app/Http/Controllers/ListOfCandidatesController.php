@@ -78,7 +78,9 @@ class ListOfCandidatesController extends Controller
             $kandidat = Uporabnik::find($id_kandidata);
             $emso = $kandidat->emso;
             $vsota = 0;
+            $matura_ocena = 0;
             $isValid = true;
+            $matura = Matura::where('emso', '=', $emso)->get();
 
             if(Matura::where('emso', '=', $emso)->exists()) $tip_mature = 0;
             else $tip_mature = 1;
@@ -86,6 +88,9 @@ class ListOfCandidatesController extends Controller
             foreach ($all as $key => $i) {
                 if((stripos($key,'o3') !== false) || (stripos($key,'o4') !== false) || ($key == 'ocena3letnik') || $key == 'ocena4letnik'){
                     if($i > 5 || $i < 1) $isValid = false;
+                }
+                else if($key == 'maturatocke'){
+                    $matura_ocena = $i;
                 }
                 else if (stripos($key,'om') !== false) {
                     $id_predmeta = substr($key, 2, strlen($key)-2);
@@ -132,8 +137,20 @@ class ListOfCandidatesController extends Controller
                     }
                 }
 
-                if ($tip_mature == 0) Matura::where('emso', '=', $emso)->update(array('ocena' => $vsota));
-                else PoklicnaMatura::where('emso', '=', $emso)->update(array('ocena' => $vsota));
+                if($matura[0]->ocena == $matura_ocena && $vsota > 0){
+                    if ($tip_mature == 0) Matura::where('emso', '=', $emso)->update(array('ocena' => $vsota));
+                    else PoklicnaMatura::where('emso', '=', $emso)->update(array('ocena' => $vsota));
+                }
+                else {
+                    if ($matura_ocena >= 0 && $matura_ocena <= 34){
+                        if ($tip_mature == 0) Matura::where('emso', '=', $emso)->update(array('ocena' => $matura_ocena));
+                        else PoklicnaMatura::where('emso', '=', $emso)->update(array('ocena' => $matura_ocena));
+                    }
+                    else {
+                        $isValid = false;
+                    }
+                }
+
             }
 
             if($isValid) $sporocilo = "Podatki so bili uspešno shranjeni!";
