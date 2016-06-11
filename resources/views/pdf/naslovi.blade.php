@@ -25,7 +25,7 @@
             height: 1.2in; /* plus .125 inches from padding */
             padding: .125in .3in 0;
             margin-right: .125in; /* the gutter */
-
+            font-size: 80%;
             float: left;
 
             text-align: center;
