@@ -179,6 +179,41 @@ class NaslovZaPosiljanjeSeeder extends Seeder
             'postna_stevilka' => 1270,
             'id_drzave' => 705,
         ]);
+
+        DB::table('prijava_naslov_za_posiljanje')->insert([
+            'id_kandidata' => '36',
+            'naslov' => 'Podgrič 3',
+            'postna_stevilka' => 5373,
+            'id_drzave' => 705,
+        ]);
+
+        DB::table('prijava_naslov_za_posiljanje')->insert([
+            'id_kandidata' => '37',
+            'naslov' => 'Tovarniška cesta 3č',
+            'postna_stevilka' => 5270,
+            'id_drzave' => 705,
+        ]);
+
+        DB::table('prijava_naslov_za_posiljanje')->insert([
+            'id_kandidata' => '38',
+            'naslov' => 'Goriška cesta 44',
+            'postna_stevilka' => 5270,
+            'id_drzave' => 705,
+        ]);
+
+        DB::table('prijava_naslov_za_posiljanje')->insert([
+            'id_kandidata' => '39',
+            'naslov' => 'Lozice 20',
+            'postna_stevilka' => 5272,
+            'id_drzave' => 705,
+        ]);
+
+        DB::table('prijava_naslov_za_posiljanje')->insert([
+            'id_kandidata' => '40',
+            'naslov' => 'Cesta 5.maja 5',
+            'postna_stevilka' => 5270,
+            'id_drzave' => 705,
+        ]);
     }
 }
 
