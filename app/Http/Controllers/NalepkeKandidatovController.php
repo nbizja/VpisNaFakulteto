@@ -132,7 +132,7 @@ class NalepkeKandidatovController extends Controller
 
                         $pdf = \App::make('dompdf.wrapper');
                         ini_set('max_execution_time', 300);
-                        $pdf->loadHTML(\View::make('pdf/naslovi', ['prijave' => $uniques]));
+                        $pdf->loadHTML(\View::make('pdf/naslovi', ['prijave' => array_values($uniques)]));
                         return $pdf->download('naslovi.pdf');
                     } else if (stripos($name, 'izvozi') !== false){
                         $uniques = array();
@@ -142,7 +142,7 @@ class NalepkeKandidatovController extends Controller
 
                         $pdf = \App::make('dompdf.wrapper');
                         ini_set('max_execution_time', 300);
-                        $pdf->loadHTML(\View::make('pdf/naslovi', ['prijave' => $uniques]));
+                        $pdf->loadHTML(\View::make('pdf/naslovi', ['prijave' => array_values($uniques)]));
                         return $pdf->download('naslovi.pdf');
                     }
                 }
