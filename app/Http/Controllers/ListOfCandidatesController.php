@@ -47,6 +47,23 @@ class ListOfCandidatesController extends Controller
         $predmeti_uspeh = MaturaPredmet::where('emso', '=', $kandidat->emso)->get();
         $predmeti_uspeh = $predmeti_uspeh->merge(PoklicnaMaturaPredmet::where('emso', '=', $kandidat->emso)->get());
 
+        if(!(Matura::where('emso', '=', $kandidat->emso)->exists() || PoklicnaMatura::where('emso', '=', $kandidat->emso)->exists())){
+
+            $tocke = 0;
+            if(count($predmeti_uspeh) > 0){
+                foreach($predmeti as $predmet){
+                    $tocke += $predmet->ocena;
+                }
+            }
+
+            $matura = new Matura();
+            $matura->emso = $kandidat->emso;
+            $matura->ocena = $tocke;
+            $matura->ocena_3_letnik = 1;
+            $matura->ocena_4_letnik = 1;
+            $matura->save();
+        }
+
         $matura = Matura::where('emso', '=', $kandidat->emso)->get();
         $matura = $matura->merge(PoklicnaMatura::where('emso', '=', $kandidat->emso)->get())[0];
 
@@ -78,7 +95,10 @@ class ListOfCandidatesController extends Controller
             $kandidat = Uporabnik::find($id_kandidata);
             $emso = $kandidat->emso;
             $vsota = 0;
+            $matura_ocena = 0;
             $isValid = true;
+            $matura = Matura::where('emso', '=', $emso)->get();
+            $matura = $matura->merge(PoklicnaMatura::where('emso', '=', $emso)->get())[0];
 
             if(Matura::where('emso', '=', $emso)->exists()) $tip_mature = 0;
             else $tip_mature = 1;
@@ -86,6 +106,9 @@ class ListOfCandidatesController extends Controller
             foreach ($all as $key => $i) {
                 if((stripos($key,'o3') !== false) || (stripos($key,'o4') !== false) || ($key == 'ocena3letnik') || $key == 'ocena4letnik'){
                     if($i > 5 || $i < 1) $isValid = false;
+                }
+                else if($key == 'maturatocke'){
+                    $matura_ocena = $i;
                 }
                 else if (stripos($key,'om') !== false) {
                     $id_predmeta = substr($key, 2, strlen($key)-2);
@@ -132,8 +155,20 @@ class ListOfCandidatesController extends Controller
                     }
                 }
 
-                if ($tip_mature == 0) Matura::where('emso', '=', $emso)->update(array('ocena' => $vsota));
-                else PoklicnaMatura::where('emso', '=', $emso)->update(array('ocena' => $vsota));
+                if($matura->ocena == $matura_ocena && $vsota > 0){
+                    if ($tip_mature == 0) Matura::where('emso', '=', $emso)->update(array('ocena' => $vsota));
+                    else PoklicnaMatura::where('emso', '=', $emso)->update(array('ocena' => $vsota));
+                }
+                else {
+                    if ($matura_ocena >= 0 && $matura_ocena <= 34){
+                        if ($tip_mature == 0) Matura::where('emso', '=', $emso)->update(array('ocena' => $matura_ocena));
+                        else PoklicnaMatura::where('emso', '=', $emso)->update(array('ocena' => $matura_ocena));
+                    }
+                    else {
+                        $isValid = false;
+                    }
+                }
+
             }
 
             if($isValid) $sporocilo = "Podatki so bili uspešno shranjeni!";

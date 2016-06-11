@@ -25,9 +25,17 @@
                                 <input type="text" class="form-control" name="ocena4letnik" value="{{$matura->ocena_4_letnik}}">
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Skupno število točk na maturi: * </label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="maturatocke" value="{{$matura->ocena}}">
+                                <label>* v primeru, da števila točk ne spreminjate, se bodo same izračunale iz doseženega števila točk pri posameznih predmetih</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <br>
+                @if(count($predmeti) > 2)
                 <div class="panel panel-default">
                     <div class="panel-heading">Uspeh na maturi</div>
                     <div class="panel-body">
@@ -35,7 +43,7 @@
                             @if($predmet->ocena > 0)
                                 <div class="form-group">
                                     <div class="form-group">
-                                        <label style="padding-left: 5%" class="control-label" name="lab{{$predmet->id_predmeta}}">{{substr($predmet->ime_predmeta, 0, -11)}}</label>
+                                        <label style="padding-left: 5%" class="control-label" name="lab{{$predmet->id_predmeta}}">{{$predmet->ime_predmeta}}</label>
                                     </div><br>
                                     <div class="form-group">
                                         <div class="col-md-4" style="padding-left: 20%">Ocena v 3. letniku: </div>
@@ -61,6 +69,7 @@
                         @endforeach
                     </div>
                 </div>
+                @endif
                 <br>
                 <div class="form-group">
                     <div class="col-md-12">
