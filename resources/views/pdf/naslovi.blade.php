@@ -5,15 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>E-študij FRI</title>
-    <script src="{{ asset('js/jquery-te-1.4.0.min.js') }}"></script>
-    <script src="{{ asset('js/functions.js') }}"></script>
 
-    <link href="labels.css" rel="stylesheet" type="text/css" >
     <style>
         h1, h2, h3, h4, h5, h6 {
             font-family:  DejaVu Sans;
         }
-        p, div {
+        p, div, td {
             font-family: DejaVu Sans;
         }
 
@@ -24,7 +21,7 @@
         }
         .label{
             /* Avery 5160 labels -- CSS and HTML by MM at Boulder Information Services */
-            width: 2.025in; /* plus .6 inches from padding */
+            width: 1.8in; /* plus .6 inches from padding */
             height: 1.2in; /* plus .125 inches from padding */
             padding: .125in .3in 0;
             margin-right: .125in; /* the gutter */
@@ -46,12 +43,23 @@
 </head>
 
 <body>
-    @foreach($prijave as $prijava)
-        <div class="label">{{$prijava->kandidat->ime.' '.$prijava->kandidat->priimek}}<br>
+<table>
+    @for($i = 0; $i < count($prijave); $i++)
+        <?php $prijava = $prijave[$i]; ?>
+        @if($i % 3 == 0)
+            <tr>
+        @endif
+        <td class="label">{{$prijava->kandidat->ime.' '.$prijava->kandidat->priimek}}<br>
             {{$prijava->kandidat->naslovZaPosiljanje()->first()->naslov}}<br>
             {{$prijava->kandidat->naslovZaPosiljanje()->first()->posta->postna_stevilka.' '.$prijava->kandidat->naslovZaPosiljanje()->first()->posta->ime}}<br>
-            {{$prijava->kandidat->naslovZaPosiljanje()->first()->drzava->ime}}</div>
-        </div>
-    @endforeach
+            {{$prijava->kandidat->naslovZaPosiljanje()->first()->drzava->ime}}
+        </td>
+
+        @if($i % 3 == 2)
+            </tr>
+        @endif
+    @endfor
+</table>
+
 </body>
 </html>

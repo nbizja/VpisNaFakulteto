@@ -152,7 +152,7 @@ class Razvrscanje
                             });
 
                         if($program->id == 18) {
-                            dd($sprejetiSBD);
+                         //   dd($sprejetiSBD);
                         }
                         $program->steviloSprejetih = $sprejetiSBD->count();
 
