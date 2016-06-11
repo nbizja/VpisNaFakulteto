@@ -151,7 +151,9 @@ class Razvrscanje
                                 return !$idSprejetihSBD->contains($prijava->osebniPodatki->id_drzavljanstva);
                             });
 
-
+                        if($program->id == 18) {
+                            dd($sprejetiSBD);
+                        }
                         $program->steviloSprejetih = $sprejetiSBD->count();
 
                         $program->$omejitev = 0;
