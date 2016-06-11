@@ -133,7 +133,7 @@
                                         <tr>
                                             <td>{{$prijava->kandidat->emso}}</td>
                                             <td>{{$prijava->kandidat->ime.' '.$prijava->kandidat->priimek}}</td>
-                                            <td>{{$prijava->studijskiProgram->visokosolskiZavod->ime}},<br>{{$prijava->studijskiProgram->ime.'('.$prijava->studijskiProgram->nacin.')'}}</td>
+                                            <td>{{$prijava->studijskiProgram->visokosolskiZavod->ime}},<br>{{$prijava->studijskiProgram->ime.' ('.$prijava->zelja.'. želja)'}}</td>
                                             <td>{{($prijava->kandidat->naslovZaPosiljanje()->first()->naslov ?? '').', '.
                                                   ($prijava->kandidat->naslovZaPosiljanje()->first()->posta->postna_stevilka ?? '').' '.
                                                   ($prijava->kandidat->naslovZaPosiljanje()->first()->posta->ime ?? '').', '.
