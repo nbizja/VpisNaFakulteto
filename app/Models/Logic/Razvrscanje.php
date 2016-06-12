@@ -56,9 +56,7 @@ class Razvrscanje
             //Sortiramo prijave po točkah
             $program->prijave = $program->prijave
                 ->filter(function($prijava) use($tujci) {
-                    return $tujci ?
-                        $prijava->kandidat->osebniPodatki->first()->id_drzavljanstva != 2 :
-                        $prijava->kandidat->osebniPodatki->first()->id_drzavljanstva == 2;
+                    return $tujci ^ in_array($prijava->kandidat->osebniPodatki->first()->id_drzavljanstva, [2, 6, 7]);
                 })
                 ->sortByDesc('tocke');
 
@@ -121,38 +119,111 @@ class Razvrscanje
                     $omejitev = $tujci ? 'omejitev_vpisa_tujci' : 'omejitev_vpisa';
                     $steviloVpisnihMest = $tujci ? 'stevilo_vpisnih_mest_tujci' : 'stevilo_vpisnih_mest';
 
-                    $program->$steviloSprejetih = $obravnavanePrijave->take($program->$steviloVpisnihMest)->count();
+                    $slovenciBrezDrzavljanstva = $ostaliTujci = new Collection();
+                    if ($tujci) {
+                        $slovenciBrezDrzavljanstva = $obravnavanePrijave
+                            ->filter(function($prijava) {
+                                return $prijava->osebniPodatki->id_drzavljanstva == 5;
+                            });
+
+                        $zadnjeMestoSBD = (int)round($program->$steviloVpisnihMest / 2);
+                        $sprejetiSBD = $slovenciBrezDrzavljanstva
+                            ->take($zadnjeMestoSBD);
+                        if ($sprejetiSBD->count() == $zadnjeMestoSBD) {
+                            $zadnjiSprejetiSBD = $sprejetiSBD->last();
+                            $slovenciBrezDrzavljanstva
+                                ->slice($zadnjeMestoSBD)
+                                ->each(function($prijava) use(&$zadnjeMestoSBD, $zadnjiSprejetiSBD) {
+                                    if ($prijava->tocke >= $zadnjiSprejetiSBD->tocke) {
+                                        $zadnjeMestoSBD++;
+                                    }
+                                });
+                        }
+
+                        $idSprejetihSBD = $slovenciBrezDrzavljanstva->take($zadnjeMestoSBD)->pluck('id');
 
 
-                    $program->$omejitev = 0;
+                        $zadnjeMestoOstali = ($program->$steviloVpisnihMest - $zadnjeMestoSBD) > 0 ?
+                            $program->$steviloVpisnihMest - $zadnjeMestoSBD : 0;
 
-                    if ($program->$steviloSprejetih == $program->$steviloVpisnihMest) {
-                        //Zadnja sprejeta prijava.
-                        $zadnjaSprejetaPrijava = $obravnavanePrijave->get($program->$steviloVpisnihMest - 1);
-                        $program->$omejitev = $zadnjaSprejetaPrijava->tocke;
+                        $ostali = $obravnavanePrijave
+                            ->filter(function($prijava) use($idSprejetihSBD) {
+                                return !$idSprejetihSBD->contains($prijava->osebniPodatki->id_drzavljanstva);
+                            });
 
-                        //Preverimo, če imajo naslednje zavrnjene prijave enako število točk kot zadnja sprejeta prijava
-                        $obravnavanePrijave
-                            ->slice($program->$steviloVpisnihMest)
-                            ->each(function ($prijava) use (&$program, $omejitev, $steviloSprejetih) {
-                                if ($prijava->tocke >= $program->$omejitev) {
-                                    $program->$steviloSprejetih++;
+                        if($program->id == 18) {
+                         //   dd($sprejetiSBD);
+                        }
+                        $program->steviloSprejetih = $sprejetiSBD->count();
+
+                        $program->$omejitev = 0;
+
+                        $zadnjaSprejetaPrijava = $ostali->take($zadnjeMestoOstali)->last();
+
+                        if (!is_null($zadnjaSprejetaPrijava)) {
+                            //Zadnja sprejeta prijava.
+                            $program->$omejitev = $zadnjaSprejetaPrijava->tocke;
+
+                            //Preverimo, če imajo naslednje zavrnjene prijave enako število točk kot zadnja sprejeta prijava
+                            $ostali
+                                ->slice($zadnjeMestoOstali)
+                                ->each(function ($prijava) use (&$program, $omejitev, $steviloSprejetih) {
+                                    if ($prijava->tocke >= $program->$omejitev) {
+                                        $program->$steviloSprejetih++;
+                                    }
+                                });
+                        }
+
+                        //Vsem nesprejetim povečamo obvravnavano željo
+                        $ostali
+                            ->each(function ($prijava) use($program, $omejitev) {
+                                //Kandidat s trenutno zeljo ima premalo tock.
+                                if ($prijava->tocke < $program->$omejitev) {
+                                    $novaObravnava = $this->obravnava['K' . $prijava->id_kandidata] + 1;
+
+                                    $this->obravnava['K' . $prijava->id_kandidata] =
+                                        $novaObravnava <= $this->steviloZelj['K' . $prijava->id_kandidata]
+                                            ? $novaObravnava : 1;
                                 }
+                            });
+
+                    } else {
+                        $program->$steviloSprejetih = $obravnavanePrijave->take(
+                            $program->$steviloVpisnihMest
+                        )->count();
+
+                        $program->$omejitev = 0;
+
+                        if ($program->$steviloSprejetih == $program->$steviloVpisnihMest) {
+                            //Zadnja sprejeta prijava.
+                            $zadnjaSprejetaPrijava = $obravnavanePrijave->get($program->$steviloVpisnihMest - 1);
+                            $program->$omejitev = $zadnjaSprejetaPrijava->tocke;
+
+                            //Preverimo, če imajo naslednje zavrnjene prijave enako število točk kot zadnja sprejeta prijava
+                            $obravnavanePrijave
+                                ->slice($program->$steviloVpisnihMest)
+                                ->each(function ($prijava) use (&$program, $omejitev, $steviloSprejetih) {
+                                    if ($prijava->tocke >= $program->$omejitev) {
+                                        $program->$steviloSprejetih++;
+                                    }
+                                });
+                        }
+
+                        //Vsem nesprejetim povečamo obvravnavano željo
+                        $obravnavanePrijave
+                            ->slice($program->$steviloSprejetih)
+                            ->each(function ($prijava) {
+                                //Kandidat s trenutno zeljo ima premalo tock.
+                                $novaObravnava = $this->obravnava['K' . $prijava->id_kandidata] + 1;
+
+                                $this->obravnava['K' . $prijava->id_kandidata] =
+                                    $novaObravnava <= $this->steviloZelj['K' . $prijava->id_kandidata]
+                                        ? $novaObravnava : 1;
+
                             });
                     }
 
-                    //Vsem nesprejetim povečamo obvravnavano željo
-                    $obravnavanePrijave
-                        ->slice($program->$steviloSprejetih)
-                        ->each(function ($prijava) {
-                            //Kandidat s trenutno zeljo ima premalo tock.
-                            $novaObravnava = $this->obravnava['K' . $prijava->id_kandidata] + 1;
 
-                            $this->obravnava['K' . $prijava->id_kandidata] =
-                                $novaObravnava <= $this->steviloZelj['K' . $prijava->id_kandidata]
-                                    ? $novaObravnava : 1;
-
-                        });
                     DB::table('studijski_program')
                         ->where('id', $program->id)
                         ->update([

@@ -57,7 +57,7 @@ class PrijavaOsebniPodatkiSeeder extends Seeder
             'datum_rojstva' => '1997-07-06',
             'id_drzave_rojstva' => 705,
             'kraj_rojstva' => 'Ljubljana',
-            'id_drzavljanstva' => 2,
+            'id_drzavljanstva' => 5,
             'kontaktni_telefon' => '030123456',
         ]);
 
@@ -161,7 +161,7 @@ class PrijavaOsebniPodatkiSeeder extends Seeder
             'datum_rojstva' => '1997-12-02',
             'id_drzave_rojstva' => 705,
             'kraj_rojstva' => 'Ljubljana',
-            'id_drzavljanstva' => 2,
+            'id_drzavljanstva' => 3,
             'kontaktni_telefon' => '030123456',
         ]);
 
@@ -174,7 +174,7 @@ class PrijavaOsebniPodatkiSeeder extends Seeder
             'datum_rojstva' => '1997-10-12',
             'id_drzave_rojstva' => 705,
             'kraj_rojstva' => 'Ljubljana',
-            'id_drzavljanstva' => 2,
+            'id_drzavljanstva' => 5,
             'kontaktni_telefon' => '030123456',
         ]);
 
@@ -187,7 +187,7 @@ class PrijavaOsebniPodatkiSeeder extends Seeder
             'datum_rojstva' => '1999-03-03',
             'id_drzave_rojstva' => 705,
             'kraj_rojstva' => 'Ljubljana',
-            'id_drzavljanstva' => 2,
+            'id_drzavljanstva' => 5,
             'kontaktni_telefon' => '030123456',
         ]);
 
@@ -200,7 +200,7 @@ class PrijavaOsebniPodatkiSeeder extends Seeder
             'datum_rojstva' => '1998-03-03',
             'id_drzave_rojstva' => 705,
             'kraj_rojstva' => 'Ljubljana',
-            'id_drzavljanstva' => 2,
+            'id_drzavljanstva' => 3,
             'kontaktni_telefon' => '030123456',
         ]);
 
@@ -226,7 +226,7 @@ class PrijavaOsebniPodatkiSeeder extends Seeder
             'datum_rojstva' => '1997-06-06',
             'id_drzave_rojstva' => 705,
             'kraj_rojstva' => 'Ljubljana',
-            'id_drzavljanstva' => 2,
+            'id_drzavljanstva' => 3,
             'kontaktni_telefon' => '030123456',
         ]);
 
@@ -239,7 +239,8 @@ class PrijavaOsebniPodatkiSeeder extends Seeder
             'datum_rojstva' => '1998-10-19',
             'id_drzave_rojstva' => 705,
             'kraj_rojstva' => 'Ljubljana',
-            'id_drzavljanstva' => 2,
+            'id_drzavljanstva' => 3,
+            'id_drzavljanstva' => 3,
             'kontaktni_telefon' => '030123456',
         ]);
 
@@ -252,7 +253,7 @@ class PrijavaOsebniPodatkiSeeder extends Seeder
             'datum_rojstva' => '1998-01-01',
             'id_drzave_rojstva' => 705,
             'kraj_rojstva' => 'Ljubljana',
-            'id_drzavljanstva' => 2,
+            'id_drzavljanstva' => 5,
             'kontaktni_telefon' => '030123456',
         ]);
 
@@ -265,8 +266,78 @@ class PrijavaOsebniPodatkiSeeder extends Seeder
             'datum_rojstva' => '1998-02-19',
             'id_drzave_rojstva' => 705,
             'kraj_rojstva' => 'Ljubljana',
-            'id_drzavljanstva' => 2,
+            'id_drzavljanstva' => 5,
             'kontaktni_telefon' => '030123456',
         ]);
+
+        DB::table('prijava_osebni_podatki')->insert(
+            [
+                'id_kandidata' => 36,
+                'emso' => '0604997500027',
+                'ime' => 'Klemen',
+                'priimek' => 'Klemenečič',
+                'spol' => 5,
+                'datum_rojstva' => '1997-04-06',
+                'id_drzave_rojstva' => 705,
+                'kraj_rojstva' => 'Ljubljana',
+                'id_drzavljanstva' => 7,
+                'kontaktni_telefon' => '030123456',
+            ]);
+
+        DB::table('prijava_osebni_podatki')->insert(
+            [
+                'id_kandidata' => 37,
+                'emso' => '1607997505099',
+                'ime' => 'Marjana',
+                'priimek' => 'Viktorija Jelinčič',
+                'spol' => 5,
+                'datum_rojstva' => '1997-07-16',
+                'id_drzave_rojstva' => 705,
+                'kraj_rojstva' => 'Ljubljana',
+                'id_drzavljanstva' => 7,
+                'kontaktni_telefon' => '030123456',
+            ]);
+
+        DB::table('prijava_osebni_podatki')->insert(
+            [
+                'id_kandidata' => 38,
+                'emso' => '0201998500031',
+                'ime' => 'Božidar',
+                'priimek' => 'Božič',
+                'spol' => 5,
+                'datum_rojstva' => '1998-02-19',
+                'id_drzave_rojstva' => 705,
+                'kraj_rojstva' => 'Ljubljana',
+                'id_drzavljanstva' => 7,
+                'kontaktni_telefon' => '030123456',
+            ]);
+
+        DB::table('prijava_osebni_podatki')->insert(
+            [
+                'id_kandidata' => 39,
+                'emso' => '2607997505084',
+                'ime' => 'Fani',
+                'priimek' => 'Novak',
+                'spol' => 5,
+                'datum_rojstva' => '1997-07-26',
+                'id_drzave_rojstva' => 705,
+                'kraj_rojstva' => 'Ljubljana',
+                'id_drzavljanstva' => 7,
+                'kontaktni_telefon' => '030123456',
+            ]);
+
+        DB::table('prijava_osebni_podatki')->insert(
+            [
+                'id_kandidata' => 40,
+                'emso' => '0604997500027',
+                'ime' => 'Ivan',
+                'priimek' => 'Ivančič',
+                'spol' => 0,
+                'datum_rojstva' => '1997-04-06',
+                'id_drzave_rojstva' => 705,
+                'kraj_rojstva' => 'Ljubljana',
+                'id_drzavljanstva' => 7,
+                'kontaktni_telefon' => '030123456',
+            ]);
     }
 }
