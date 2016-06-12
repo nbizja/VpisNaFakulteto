@@ -165,7 +165,8 @@ class VpisController extends Controller
 
         if ($opInput['id_drzavljanstva'] != 2) {
             $datumRojstva = strtotime($opInput['datum_rojstva']);
-            $opInput['emso'] = date('d', $datumRojstva) . date('m', $datumRojstva) . substr(date('Y', $datumRojstva), 1) . '00' . $opInput['spol'] . str_pad($uporabnik->id, 3, '0', STR_PAD_LEFT);
+
+            $opInput['emso'] = $uporabnik->emso ? $uporabnik->emso : date('d', $datumRojstva) . date('m', $datumRojstva) . substr(date('Y', $datumRojstva), 1) . '00' . $opInput['spol'] . str_pad($uporabnik->id, 3, '0', STR_PAD_LEFT);
         } elseif (!$this->prijavaValidator->veljavenEmso($opInput['emso'], $opInput['datum_rojstva'], $opInput['spol'])) {
             $errors['emso'] = 'Emšo ni veljaven ali pa se ne ujema z datumom rojstva in spolom.';
         }

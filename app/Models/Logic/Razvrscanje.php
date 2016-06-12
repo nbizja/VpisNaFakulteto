@@ -130,6 +130,9 @@ class Razvrscanje
 
                         $zadnjeMestoSBD = (int)round($program->$steviloVpisnihMest / 2);
                         $sprejetiSBD = $slovenciBrezDrzavljanstva
+                            ->filter(function($prijava) {
+                                return $prijava->tocke > 0;
+                            })
                             ->take($zadnjeMestoSBD);
                         if ($sprejetiSBD->count() == $zadnjeMestoSBD) {
                             $zadnjiSprejetiSBD = $sprejetiSBD->last();
@@ -141,6 +144,8 @@ class Razvrscanje
                                         $zadnjeMestoSBD++;
                                     }
                                 });
+                        } else {
+                            $zadnjeMestoSBD = $sprejetiSBD->count();
                         }
 
                         $idSprejetihSBD = $slovenciBrezDrzavljanstva->take($zadnjeMestoSBD)->pluck('id');
@@ -161,7 +166,11 @@ class Razvrscanje
 
                         $program->$omejitev = 0;
 
-                        $zadnjaSprejetaPrijava = $ostali->take($zadnjeMestoOstali)->last();
+                        $zadnjaSprejetaPrijava = $ostali
+                            ->filter(function($prijava) {
+                                return $prijava->tocke > 0;
+                            })
+                            ->take($zadnjeMestoOstali)->last();
 
                         if (!is_null($zadnjaSprejetaPrijava)) {
                             //Zadnja sprejeta prijava.
@@ -181,7 +190,7 @@ class Razvrscanje
                         $ostali
                             ->each(function ($prijava) use($program, $omejitev) {
                                 //Kandidat s trenutno zeljo ima premalo tock.
-                                if ($prijava->tocke < $program->$omejitev) {
+                                if ($prijava->tocke < $program->$omejitev || $prijava->tocke == 0) {
                                     $novaObravnava = $this->obravnava['K' . $prijava->id_kandidata] + 1;
 
                                     $this->obravnava['K' . $prijava->id_kandidata] =
@@ -311,8 +320,9 @@ class Razvrscanje
                  $ostali =   $program->prijave
                         ->filter(function($prijava) use($SBDid) {
                             return $prijava->zelja == $this->obravnava['K'. $prijava->id_kandidata]
-                            && !$SBDid->contains($prijava->id);
+                                && !$SBDid->contains($prijava->id);
                         });
+
 
                 $ostali
                         ->values()
@@ -327,8 +337,13 @@ class Razvrscanje
 
                             $uvrstitevTujci++;
                         });
-                $ostali
-                    ->slice($program->stevilo_sprejetih_tujci)
+
+                $program->prijave
+                    ->filter(function($prijava) use($program, $SBDid) {
+                        return $prijava->zelja != $this->obravnava['K'. $prijava->id_kandidata]
+                            || (!$SBDid->contains($prijava->id)
+                            && ($prijava->tocke == 0 || $prijava->tocke < $program->omejitev_vpisa_tujci));
+                    })
                     ->each(function($prijava) use($tujci) {
                         if ($tujci) {
                             $prijava->tujec = 1;
