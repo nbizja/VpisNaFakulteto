@@ -17,6 +17,8 @@ class Razvrscanje
 
     private $programi;
 
+    private $programiSBD;
+
     /**
      * @param StudijskiProgram[] $programi
      */
@@ -29,6 +31,7 @@ class Razvrscanje
          *********************************/
         $this->obravnava = [];
         $this->steviloZelj = [];
+        $this->programiSBD = [];
 
         //Vstavimo 1. želje (Že vstavljeno v queryiju)
         //Inicializiramo spremenljivko obravnava
@@ -119,7 +122,6 @@ class Razvrscanje
                     $omejitev = $tujci ? 'omejitev_vpisa_tujci' : 'omejitev_vpisa';
                     $steviloVpisnihMest = $tujci ? 'stevilo_vpisnih_mest_tujci' : 'stevilo_vpisnih_mest';
 
-                    $slovenciBrezDrzavljanstva = $ostaliTujci = new Collection();
                     if ($tujci) {
                         $slovenciBrezDrzavljanstva = $obravnavanePrijave
                             ->filter(function($prijava) {
@@ -131,6 +133,7 @@ class Razvrscanje
                             ->take($zadnjeMestoSBD);
                         if ($sprejetiSBD->count() == $zadnjeMestoSBD) {
                             $zadnjiSprejetiSBD = $sprejetiSBD->last();
+
                             $slovenciBrezDrzavljanstva
                                 ->slice($zadnjeMestoSBD)
                                 ->each(function($prijava) use(&$zadnjeMestoSBD, $zadnjiSprejetiSBD) {
@@ -148,13 +151,13 @@ class Razvrscanje
 
                         $ostali = $obravnavanePrijave
                             ->filter(function($prijava) use($idSprejetihSBD) {
-                                return !$idSprejetihSBD->contains($prijava->osebniPodatki->id_drzavljanstva);
+                                return !$idSprejetihSBD->contains($prijava->id);
                             });
 
-                        if($program->id == 18) {
-                         //   dd($sprejetiSBD);
-                        }
-                        $program->steviloSprejetih = $sprejetiSBD->count();
+
+                        $this->programiSBD[$program->id] = $sprejetiSBD->count();
+                        $program->stevilo_sprejetih_tujci = $zadnjeMestoOstali;
+    
 
                         $program->$omejitev = 0;
 
@@ -268,39 +271,104 @@ class Razvrscanje
         $steviloSprejetih = $tujci ? 'stevilo_sprejetih_tujci' : 'stevilo_sprejetih';
         $omejitev = $tujci ? 'omejitev_vpisa_tujci' : 'omejitev_vpisa';
 
+
+
         $this->programi->each(function($program) use($steviloSprejetih, $omejitev, $tujci) {
 
             $uvrstitev = 1;
-            $program->prijave
-                ->filter(function($prijava) {
-                    return $prijava->zelja == $this->obravnava['K'. $prijava->id_kandidata];
-                })
-                ->values()
-                ->take($program->$steviloSprejetih)
-                ->each(function($prijava) use(&$uvrstitev, $tujci) {
-                    if ($tujci) {
-                        $prijava->tujec = 1;
-                    }
-                    $prijava->sprejet = 1;
-                    $prijava->uvrstitev = $uvrstitev;
-                    $prijava->save();
+            $uvrstitevTujci = 1;
+            if ($tujci) {
+                $SBD = $program->prijave
+                    ->filter(function($prijava) {
+                        return $prijava->zelja == $this->obravnava['K'. $prijava->id_kandidata]
+                            && $prijava->osebniPodatki->id_drzavljanstva == 5;
+                    });
 
-                    $uvrstitev++;
-                });
+                $SBDid = $SBD->pluck('id');
+                $SBD
+                    ->take($this->programiSBD[$program->id] ?? 0)
+                    ->each(function($prijava) use(&$uvrstitevTujci, $tujci) {
+                        if ($tujci) {
+                            $prijava->tujec = 1;
+                        }
+                        $prijava->sprejet = 1;
+                        $prijava->uvrstitev = $uvrstitevTujci;
+                        $prijava->save();
 
-            $program->prijave
-                ->filter(function($prijava) use($program, $omejitev) {
-                    return $prijava->zelja != $this->obravnava['K'. $prijava->id_kandidata]
-                    || $prijava->tocke == 0
-                    || $prijava->tocke < $program->$omejitev;
-                })
-                ->each(function($prijava) use($tujci) {
-                    if ($tujci) {
-                        $prijava->tujec = 1;
-                    }
-                    $prijava->sprejet = 0;
-                    $prijava->save();
-                });
+                        $uvrstitevTujci++;
+                    });
+
+                $SBD
+                    ->slice($this->programiSBD[$program->id] ?? 0)
+                    ->each(function($prijava) use($tujci) {
+                        if ($tujci) {
+                            $prijava->tujec = 1;
+                        }
+                        $prijava->sprejet = 0;
+                        $prijava->save();
+                    });
+
+                 $ostali =   $program->prijave
+                        ->filter(function($prijava) use($SBDid) {
+                            return $prijava->zelja == $this->obravnava['K'. $prijava->id_kandidata]
+                            && !$SBDid->contains($prijava->id);
+                        });
+
+                $ostali
+                        ->values()
+                        ->take($program->stevilo_sprejetih_tujci)
+                        ->each(function($prijava) use(&$uvrstitevTujci, $tujci) {
+                            if ($tujci) {
+                                $prijava->tujec = 1;
+                            }
+                            $prijava->sprejet = 1;
+                            $prijava->uvrstitev = $uvrstitevTujci;
+                            $prijava->save();
+
+                            $uvrstitevTujci++;
+                        });
+                $ostali
+                    ->slice($program->stevilo_sprejetih_tujci)
+                    ->each(function($prijava) use($tujci) {
+                        if ($tujci) {
+                            $prijava->tujec = 1;
+                        }
+                        $prijava->sprejet = 0;
+                        $prijava->save();
+                    });
+
+            } else {
+                $program->prijave
+                    ->filter(function($prijava) {
+                        return $prijava->zelja == $this->obravnava['K'. $prijava->id_kandidata];
+                    })
+                    ->values()
+                    ->take($program->$steviloSprejetih)
+                    ->each(function($prijava) use(&$uvrstitev, $tujci) {
+                        if ($tujci) {
+                            $prijava->tujec = 1;
+                        }
+                        $prijava->sprejet = 1;
+                        $prijava->uvrstitev = $uvrstitev;
+                        $prijava->save();
+
+                        $uvrstitev++;
+                    });
+
+                $program->prijave
+                    ->filter(function($prijava) use($program, $omejitev) {
+                        return $prijava->zelja != $this->obravnava['K'. $prijava->id_kandidata]
+                        || $prijava->tocke == 0
+                        || $prijava->tocke < $program->$omejitev;
+                    })
+                    ->each(function($prijava) use($tujci) {
+                        if ($tujci) {
+                            $prijava->tujec = 1;
+                        }
+                        $prijava->sprejet = 0;
+                        $prijava->save();
+                    });
+            }
         });
 
         return true;
